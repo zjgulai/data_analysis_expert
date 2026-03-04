@@ -122,7 +122,8 @@ cross-border-ecommerce-skills/
 ├── 02-attribution-analysis/      # 指标归因分析Skills
 │   ├── contribution-calculation/ # 贡献度计算
 │   ├── margin-attribution/       # 毛利率归因
-│   └── binning-contribution/     # 分箱贡献分析
+│   ├── binning-contribution/     # 分箱贡献分析
+│   └── complex-contribution/     # 复杂贡献度分析 ✨NEW (偏微分+全微分)
 │
 ├── 03-cost-analysis/             # 成本分析Skills
 │   └── cost-structure-analysis/  # 成本结构分析
@@ -149,7 +150,8 @@ cross-border-ecommerce-skills/
 │   └── pricing-optimization/     # 定价优化
 │
 ├── 10-supply-chain-analysis/     # 供应链分析Skills (母婴增强) ✨
-│   └── inventory-optimization/   # 库存优化
+│   ├── inventory-optimization/   # 库存优化
+│   └── supplier-performance/     # 供应商绩效分析 ✨ NEW
 │
 ├── 11-user-behavior-analysis/    # 用户行为分析Skills
 │   ├── conversion-funnel/        # 转化漏斗
@@ -159,6 +161,31 @@ cross-border-ecommerce-skills/
 │   └── ad-attribution/           # 广告归因
 │
 ├── 13-methodology-analysis/      # 方法论分析Skills
+│   ├── metrics-system-design/    # 指标体系设计
+│   ├── structural-analysis/      # 结构分析
+│   ├── cyclical-analysis/        # 周期分析
+│   ├── ab-testing/               # A/B测试
+│   └── causal-inference/         # 因果推断
+│
+├── 14-reporting-analysis/        # 报告分析Skills
+│   ├── dashboard-design/         # 看板设计
+│   └── data-reporting/           # 数据报告
+│
+├── 15-campaign-analysis/         # 活动分析Skills
+│   ├── promotion-analysis/       # 促销分析
+│   ├── competitive-analysis/     # 竞品分析
+│   └── sales-conversion-analysis/ # 销售转化分析
+│
+├── 16-channel-analysis/          # 渠道分析Skills ✨ NEW
+│   ├── channel-effect-analysis/  # 渠道效果分析
+│   ├── traffic-source-analysis/  # 流量来源分析
+│   └── ad-performance-analysis/  # 广告效果分析
+│
+├── 17-content-analysis/          # 内容分析Skills ✨ NEW
+│   └── social-media-analysis/    # 社交媒体分析
+│
+└── 19-risk-analysis/             # 风险分析Skills ✨ NEW
+    └── risk-warning-system/      # 风险预警系统
 │   ├── metrics-system-design/    # 指标体系设计
 │   ├── structural-analysis/      # 结构分析
 │   ├── cyclical-analysis/        # 周期分析
@@ -195,8 +222,11 @@ cross-border-ecommerce-skills/
 | 方法论分析 | 5 | 指标、结构、周期、A/B、因果 | 方法论支持 | - |
 | 报告分析 | 2 | 看板、报告 | 输出呈现 | - |
 | 活动分析 | 3 | 促销、竞品、转化 | 活动评估 | - |
+| **渠道分析** | 3 | 渠道效果、流量分析、广告分析 | 渠道优化、预算分配 | - |
+| **内容分析** | 1 | 社交媒体分析 | 社媒营销、内容优化 | - |
+| **风险分析** | 1 | 风险预警系统 | 业务监控、风险预警 | - |
 
-**总计**: 27个Skills (其中4个已完成母婴增强)
+**总计**: 37个Skills (其中4个已完成母婴增强，6个新增Skills)
 
 ---
 
@@ -783,6 +813,132 @@ for r in results:
 | inventory_management | 安全库存、库存周转、EOQ模型 |
 | user_behavior | 转化漏斗、留存分析、同期群分析 |
 | advertising | 广告归因、ROAS优化、多触点归因 |
+
+---
+
+## 新增Skills (v3.1 - Biji知识库萃取)
+
+### 渠道分析类
+
+#### 1. 渠道效果分析 (channel-effect-analysis)
+
+**Skill名称**: `cbec-channel-effect-analysis`
+**触发条件**: 用户询问"哪个渠道效果更好"、需要评估多渠道ROI、进行渠道预算分配时
+
+**核心功能**:
+- 渠道效果评估指标体系 (ROI, CAC, 转化率)
+- 渠道归因分析 (首次触点、末次触点、线性归因、位置归因)
+- 多渠道整合分析
+- 渠道组合优化建议
+
+**关键公式**:
+```
+渠道ROI = (渠道收入 - 渠道成本) / 渠道成本 × 100%
+CAC = 渠道总成本 / 新增客户数
+```
+
+---
+
+#### 2. 流量来源分析 (traffic-source-analysis)
+
+**Skill名称**: `cbec-traffic-source-analysis`
+**触发条件**: 用户询问"流量从哪里来"、需要分析流量质量、进行流量转化优化时
+
+**核心功能**:
+- 流量来源分类 (直接访问、搜索引擎、社交媒体、广告投放、邮件营销)
+- 流量质量评估 (三级评估体系)
+- 流量转化分析 (漏斗模型)
+- 流量优化建议
+
+**关键指标**:
+- Level 1: 访问时长、浏览页数、跳出率
+- Level 2: 注册转化率
+- Level 3: 购买转化率
+
+---
+
+#### 3. 广告效果分析 (ad-performance-analysis)
+
+**Skill名称**: `cbec-ad-performance-analysis`
+**触发条件**: 用户询问"广告效果怎么样"、需要优化广告投放策略、计算广告ROI时
+
+**核心功能**:
+- 广告效果指标监控 (CTR, CPC, CVR, ROAS)
+- 广告ROI计算与分析
+- 广告投放优化策略
+- A/B测试与迭代优化
+
+**关键公式**:
+```
+CTR = 点击数 / 展示数 × 100%
+CVR = 转化数 / 点击数 × 100%
+ROAS = 广告收入 / 广告成本
+```
+
+---
+
+### 内容分析类
+
+#### 4. 社交媒体分析 (social-media-analysis)
+
+**Skill名称**: `cbec-social-media-analysis`
+**触发条件**: 用户询问"社媒效果如何"、需要分析社媒内容表现、构建社媒用户画像时
+
+**核心功能**:
+- 社媒效果指标监控 (粉丝增长、互动率、转化率)
+- 社媒内容分析 (传播效果、情感分析)
+- 社媒用户画像 (基础属性、行为特征、内容偏好)
+- 内容策略优化建议
+
+**关键指标**:
+- 互动率 = (点赞 + 评论 + 分享) / 粉丝数 × 100%
+- 内容分享率 = 分享数 / 触达数 × 100%
+
+---
+
+### 供应链分析类
+
+#### 5. 供应商绩效分析 (supplier-performance)
+
+**Skill名称**: `cbec-supplier-performance`
+**触发条件**: 用户询问"供应商表现如何"、需要评估供应商绩效、进行供应商分级管理时
+
+**核心功能**:
+- 供应商多维度评估 (质量、交付、成本、服务)
+- 供应商分级管理 (战略、优选、资格未定、淘汰)
+- 供应商优化策略
+- 供应链风险预警
+
+**评估维度**:
+| 维度 | 权重 | 指标 |
+|------|------|------|
+| 质量 | 35% | 合格率、投诉率 |
+| 交付 | 30% | 准时率、提前期 |
+| 成本 | 20% | 价格、变动率 |
+| 服务 | 15% | 响应时间、解决率 |
+
+---
+
+### 风险分析类
+
+#### 6. 风险预警系统 (risk-warning-system)
+
+**Skill名称**: `cbec-risk-warning-system`
+**触发条件**: 用户询问"业务风险有哪些"、需要建立风险预警体系、监控指标异常时
+
+**核心功能**:
+- 风险指标监控体系 (1+6+4+3结构)
+- 多级预警规则设计 (乐观/保守/悲观)
+- 风险应对策略 (规避、承受、利用、减小、分担)
+- 预警触发与通知
+
+**风险指标体系**:
+```
+1个核心指标: GMV
+6个专项指标: 转化率、客单价、退款率、投诉率、库存周转、毛利率
+4个基础指标: 流量、成本、现金流、人员效率
+3个情景指标: 竞品动态、政策变化、汇率波动
+```
 
 ---
 
