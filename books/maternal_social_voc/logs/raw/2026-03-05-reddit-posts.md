@@ -1,6 +1,6 @@
 # Reddit 原始帖子与评论 2026-03-05
 
-> 由 `reddit_voc_fetch.py` 生成。数据来源：**PullPush（仅帖子，无 Reddit 凭证故无评论）**。范围：**最近 180 天**。共 **0** 条帖子（无评论）。
+> 由 `reddit_voc_fetch_playwright.py` 生成（**Playwright 浏览器**，无需 API）。范围：**最近 180 天**。共 **0** 条帖子。
 
 ---
 

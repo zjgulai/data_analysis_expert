@@ -107,6 +107,22 @@ python reddit_voc_fetch.py --pullpush
 
 成功时会打印：`已写入 xxx 条帖子 -> .../logs/raw/YYYY-MM-DD-reddit-posts.md`。
 
+**无法完成 Reddit API 注册时**，可选用下面两种方式之一：
+
+1. **公开 .json 接口**（简单，但易被 Reddit 403）：  
+   `python books/maternal_social_voc/scripts/reddit_voc_fetch_json.py`  
+   直接请求 `old.reddit.com/r/xxx/new.json`，仅需 `requests`。若返回 403，说明当前网络/环境被 Reddit 拦截。
+
+2. **Playwright 浏览器方式**（推荐，用真实浏览器绕过 403）：  
+   ```bash
+   pip install playwright
+   python -m playwright install chromium
+   python books/maternal_social_voc/scripts/reddit_voc_fetch_playwright.py
+   ```  
+   用 Chromium 打开 .json 页面，与主脚本输出相同（.md + .xlsx）。可选 `--no-comments` 只拉帖子。
+
+3. **RPA / 浏览器 MCP**：若本机脚本均 403，可用 Cursor 的 **Browser MCP** 手动采集：打开 `old.reddit.com/r/breastfeeding/new` 等页面，对页面做 snapshot，把帖子标题与链接整理到表格，再粘贴进 `logs/raw/` 下当日 Markdown 或 Excel 模板中使用。
+
 ---
 
 ## 5. 输出文件说明

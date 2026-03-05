@@ -27,10 +27,19 @@ def parse_daily_voc(md_path: Path):
         m = re.search(rf"{label}\s*\|\s*(\d+)", text)
         if m:
             out["counts"][key] = int(m.group(1))
-    # 今日简要洞察：- 开头的列表
+    # 今日简要洞察：仅收集「## 今日简要洞察」小节下的 - 列表，避免混入元信息
+    in_brief = False
     for line in text.split("\n"):
         s = line.strip()
-        if s.startswith("- **") and "**：" in s:
+        if s.startswith("## ") and "今日简要洞察" in s:
+            in_brief = True
+            continue
+        if in_brief and s.startswith("## "):
+            in_brief = False
+            continue
+        if not in_brief:
+            continue
+        if s.startswith("- **") and ("**：" in s or "**:" in s):
             out["insights"].append(s)
         elif s.startswith("- ") and len(s) > 20 and not s.startswith("- |"):
             out["insights"].append(s)
@@ -98,16 +107,51 @@ def build_unmet_needs(data: dict) -> list:
     ]
 
 
+def _insight_to_html(line: str) -> str:
+    """把 - **标题**：正文 转为 HTML，保留加粗与换行。"""
+    s = line.strip()
+    if not s.startswith("- "):
+        return f"<li>{_escape(s)}</li>"
+    s = s[2:].strip()
+    if s.startswith("**") and ("**：" in s or "**:" in s):
+        sep = "**：" if "**：" in s else "**:"
+        idx = s.index(sep) + len(sep)
+        title = s[2 : s.index("**", 2)]
+        body = s[idx:].strip()
+        return f"<li><strong>{_escape(title)}</strong>：{_escape(body)}</li>"
+    if s.startswith("**") and "**：" not in s and "**:" not in s and "**" in s[2:]:
+        end = s.index("**", 2)
+        title = s[2:end]
+        body = s[end + 2 :].strip().lstrip("：:")
+        return f"<li><strong>{_escape(title)}</strong>：{_escape(body)}</li>"
+    return f"<li>{_escape(s)}</li>"
+
+
+def _escape(s: str) -> str:
+    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
+
+
 def render_html(date_str: str, data: dict, counter_intuitive: list, gold_panning: list,
                 reverse: list, pain: list, strategy: list, unmet: list) -> str:
-    """生成新闻风格 HTML，简约专业美观。"""
+    """生成新闻风格 HTML，简约专业美观。若 daily-voc 中有「今日简要洞察」，优先展示。"""
     title = f"母婴出海 VOC 每日简讯"
     subtitle = f"{date_str} | 社媒用户声音 · 反直觉洞察 · 策略建议"
     total = data["total"]
     counts = data["counts"]
+    custom_insights = data.get("insights") or []
 
     def li(items):
-        return "".join(f"<li>{x}</li>" for x in items)
+        return "".join(f"<li>{_escape(x)}</li>" for x in items)
+
+    # 当日数据驱动的简要洞察（来自 daily-voc 的 - ** 列表）
+    data_driven_card = ""
+    if custom_insights:
+        data_driven_card = """
+<div class="card card-primary">
+<h2>当日数据洞察（基于本期 VOC）</h2>
+<ul>""" + "".join(_insight_to_html(line) for line in custom_insights) + """</ul>
+</div>
+"""
 
     return f"""<!DOCTYPE html>
 <html lang="zh-CN">
@@ -124,6 +168,7 @@ header {{ border-bottom: 2px solid var(--accent); padding-bottom: 12px; margin-b
 h1 {{ font-size: 1.5rem; font-weight: 700; margin: 0; color: var(--text); }}
 .subtitle {{ font-size: 0.875rem; color: var(--muted); margin-top: 4px; }}
 .card {{ background: var(--card); border-radius: 8px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }}
+.card.card-primary {{ border-left: 4px solid var(--accent); }}
 .card h2 {{ font-size: 0.95rem; font-weight: 600; margin: 0 0 12px 0; color: var(--accent); }}
 .card ul {{ margin: 0; padding-left: 1.2rem; }}
 .card li {{ margin-bottom: 6px; font-size: 0.9rem; }}
@@ -138,7 +183,7 @@ footer {{ font-size: 0.75rem; color: var(--muted); margin-top: 24px; padding-top
 <p class="subtitle">{subtitle}</p>
 </header>
 <p class="meta">当日采集 {total} 条 VOC · 功能 {counts.get('功能', 0)} / 场景 {counts.get('场景', 0)} / 情绪 {counts.get('情绪', 0)} / 价格 {counts.get('价格', 0)}</p>
-
+{data_driven_card}
 <div class="card">
 <h2>反直觉洞察</h2>
 <ul>{li(counter_intuitive)}</ul>
@@ -203,6 +248,11 @@ def main():
     insight_path = BRIEFS_DIR / f"{date_str}-insight.md"
     with open(insight_path, "w", encoding="utf-8") as f:
         f.write(f"# 每日洞察报告 {date_str}\n\n")
+        if data.get("insights"):
+            f.write("## 当日数据洞察（基于本期 VOC）\n\n")
+            for i in data["insights"]:
+                f.write(f"{i}\n")
+            f.write("\n")
         f.write("## 反直觉洞察\n\n")
         for i in counter_intuitive:
             f.write(f"- {i}\n")
