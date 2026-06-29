@@ -1,15 +1,15 @@
 :root {
-  --ink: #111820;
-  --ink-2: #243140;
-  --muted: #6d7885;
-  --line: #dde4eb;
-  --line-strong: #c3ced8;
-  --paper: #eef2f5;
-  --paper-lift: #f7f8fa;
+  --ink: #1d1f23;
+  --ink-2: #2b3440;
+  --muted: #66717d;
+  --line: #d8e0e7;
+  --line-strong: #b9c6d2;
+  --paper: #f3f5f7;
+  --paper-lift: #fbfcfd;
   --panel: #ffffff;
   --panel-soft: #f8fafb;
-  --sidebar-surface: rgba(239, 243, 246, 0.88);
-  --sidebar-surface-strong: rgba(255, 255, 255, 0.74);
+  --sidebar-surface: rgba(246, 248, 250, 0.9);
+  --sidebar-surface-strong: rgba(255, 255, 255, 0.82);
   --blue: #2167b8;
   --blue-soft: #e8f1fb;
   --teal: #278b87;
@@ -20,8 +20,8 @@
   --amber-soft: #fff2db;
   --rose: #bc4050;
   --rose-soft: #fde9ed;
-  --shadow: 0 16px 42px rgba(31, 43, 55, 0.065);
-  --shadow-soft: 0 8px 24px rgba(31, 43, 55, 0.045);
+  --shadow: 0 14px 36px rgba(31, 43, 55, 0.055);
+  --shadow-soft: 0 7px 20px rgba(31, 43, 55, 0.04);
   font-family: "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Noto Sans SC", "IBM Plex Sans", Arial, sans-serif;
 }
 
@@ -36,10 +36,7 @@ html {
 body {
   margin: 0;
   color: var(--ink);
-  background:
-    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.72), transparent 32rem),
-    radial-gradient(circle at 96% 14%, rgba(214, 224, 234, 0.58), transparent 28rem),
-    linear-gradient(135deg, var(--paper), var(--paper-lift) 48%, #edf3f6);
+  background: linear-gradient(180deg, var(--paper-lift), var(--paper) 64%, #edf2f6);
   background-attachment: fixed;
 }
 
@@ -63,14 +60,14 @@ p {
 
 h1 {
   margin-bottom: 0;
-  font-size: 30px;
+  font-size: 28px;
   line-height: 1.18;
   font-weight: 760;
 }
 
 h2 {
-  margin-bottom: 8px;
-  font-size: 21px;
+  margin-bottom: 7px;
+  font-size: 20px;
   line-height: 1.25;
   font-weight: 760;
 }
@@ -101,12 +98,12 @@ h3 {
   padding: 16px;
   color: var(--ink);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.54), rgba(231, 237, 243, 0.72)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.68), rgba(238, 243, 247, 0.76)),
     var(--sidebar-surface);
   backdrop-filter: blur(18px) saturate(120%);
   -webkit-backdrop-filter: blur(18px) saturate(120%);
   border-right: 1px solid var(--line);
-  box-shadow: 8px 0 26px rgba(31, 43, 55, 0.035);
+  box-shadow: 6px 0 20px rgba(31, 43, 55, 0.03);
   overflow: hidden;
   transition:
     padding 220ms ease,
@@ -327,17 +324,17 @@ h3 {
 .content {
   min-width: 0;
   width: 100%;
-  padding: 26px;
+  padding: 22px;
   overflow-x: hidden;
 }
 
 .topbar {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 18px;
-  padding: 10px 2px 6px;
+  margin-bottom: 14px;
+  padding: 8px 2px 4px;
 }
 
 .topMeta,
@@ -370,7 +367,7 @@ h3 {
 
 .stack {
   display: grid;
-  gap: 16px;
+  gap: 14px;
 }
 
 .missionHero {
@@ -442,20 +439,20 @@ h3 {
 .railPanel {
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 14px 42px rgba(20, 32, 46, 0.06);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 10px 30px rgba(20, 32, 46, 0.048);
 }
 
 .panel {
-  padding: 20px;
-}
-
-.railPanel {
   padding: 16px;
 }
 
+.railPanel {
+  padding: 14px;
+}
+
 .sectionHeader {
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .sectionHeader h2,
@@ -600,11 +597,11 @@ h3 {
 .moduleHeader {
   display: flex;
   justify-content: space-between;
-  gap: 18px;
+  gap: 16px;
   align-items: flex-start;
-  padding-bottom: 16px;
+  padding-bottom: 14px;
   border-bottom: 1px solid var(--line);
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .moduleHeader .muted {
@@ -639,7 +636,7 @@ h3 {
 }
 
 .surfaceHead {
-  padding: 0 0 12px;
+  padding: 0 0 10px;
 }
 
 .surfaceHead p {
@@ -710,12 +707,12 @@ h3 {
 .segmentedTabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 14px;
-  padding: 8px;
+  gap: 7px;
+  margin-bottom: 12px;
+  padding: 7px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: #fbfcf8;
+  background: var(--panel-soft);
 }
 
 .segmentedTabs button {
@@ -738,21 +735,21 @@ h3 {
 
 .toolbar {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .workflowStrip {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 10px;
-  margin: 0 0 16px;
-  padding: 12px;
+  gap: 8px;
+  margin: 0 0 14px;
+  padding: 10px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: #fbfcf8;
+  background: var(--panel-soft);
 }
 
 .workflowStep {
@@ -1836,7 +1833,7 @@ textarea {
 
 .tableWrap {
   overflow: auto;
-  max-height: 560px;
+  max-height: 520px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #fff;
@@ -1850,14 +1847,14 @@ table {
 
 th,
 td {
-  min-width: 128px;
+  min-width: 120px;
   max-width: 360px;
-  padding: 10px 11px;
+  padding: 8px 10px;
   border-bottom: 1px solid #edf2f7;
   text-align: left;
   vertical-align: top;
-  line-height: 1.48;
-  overflow-wrap: anywhere;
+  line-height: 1.42;
+  overflow-wrap: break-word;
 }
 
 .indexCell {
@@ -3390,7 +3387,7 @@ tbody tr:hover td {
 .canvasShell {
   display: grid;
   min-width: 0;
-  min-height: 620px;
+  min-height: 0;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #fff;
@@ -3406,9 +3403,9 @@ tbody tr:hover td {
 }
 
 .canvasToolbar {
-  padding: 12px 14px;
+  padding: 10px 12px;
   border-bottom: 1px solid var(--line);
-  background: #fbfcf8;
+  background: var(--panel-soft);
 }
 
 .canvasToolbar strong,
@@ -3430,7 +3427,9 @@ tbody tr:hover td {
 }
 
 .canvasViewport {
-  min-height: 560px;
+  height: clamp(500px, 62dvh, 620px);
+  min-height: 500px;
+  max-height: 620px;
   overflow: auto;
   background:
     radial-gradient(circle at 20px 20px, rgba(0, 94, 184, 0.06) 1px, transparent 1px),
@@ -3440,6 +3439,7 @@ tbody tr:hover td {
 
 .fullScreenCanvas .canvasViewport {
   height: calc(100dvh - 104px);
+  max-height: none;
 }
 
 .canvasScene {
@@ -3541,22 +3541,22 @@ tbody tr:hover td {
 
 .kpiCanvasLayout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 340px;
-  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 320px);
+  gap: 10px;
   align-items: stretch;
 }
 
 .kpiInspector {
   display: grid;
   align-content: start;
-  gap: 12px;
+  gap: 10px;
   min-width: 0;
-  min-height: 620px;
-  padding: 14px;
+  min-height: 0;
+  padding: 12px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background:
-    linear-gradient(135deg, rgba(0, 94, 184, 0.06), transparent 50%),
+    linear-gradient(135deg, rgba(0, 94, 184, 0.045), transparent 50%),
     #fff;
 }
 
@@ -3578,7 +3578,7 @@ tbody tr:hover td {
 .kpiInspectorStats,
 .kpiInspectorFacts {
   display: grid;
-  gap: 8px;
+  gap: 7px;
 }
 
 .kpiInspectorStats {
@@ -3590,7 +3590,7 @@ tbody tr:hover td {
 .kpiInspectorChecklist,
 .kpiInspectorEmpty {
   min-width: 0;
-  padding: 10px;
+  padding: 9px;
   border: 1px solid #edf2f7;
   border-radius: 8px;
   background: #fbfcfe;
@@ -3619,7 +3619,7 @@ tbody tr:hover td {
 
 .kpiInspectorStats strong {
   color: var(--ink);
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .kpiInspectorChecklist {
@@ -3677,7 +3677,7 @@ tbody tr:hover td {
 .riskWorkbench,
 .roleWorkbench {
   display: grid;
-  gap: 16px;
+  gap: 14px;
 }
 
 .strategyHero,
@@ -3685,13 +3685,13 @@ tbody tr:hover td {
 .roleHero {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
-  gap: 16px;
+  gap: 14px;
   align-items: stretch;
-  padding: 20px;
+  padding: 18px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background:
-    linear-gradient(135deg, rgba(0, 94, 184, 0.07), transparent 52%),
+    linear-gradient(135deg, rgba(0, 94, 184, 0.045), transparent 52%),
     #fff;
 }
 
@@ -3713,8 +3713,8 @@ tbody tr:hover td {
 .roleHeroStats div {
   display: grid;
   align-content: center;
-  min-height: 86px;
-  padding: 14px;
+  min-height: 78px;
+  padding: 12px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--panel-soft);
@@ -3739,7 +3739,7 @@ tbody tr:hover td {
 .strategyHeroStats strong,
 .roleHeroStats strong {
   margin-top: 6px;
-  font-size: 26px;
+  font-size: 24px;
   line-height: 1;
 }
 
@@ -3757,7 +3757,7 @@ tbody tr:hover td {
 .strategyGrid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 16px;
+  gap: 14px;
 }
 
 .roleTabs {
@@ -3805,7 +3805,7 @@ tbody tr:hover td {
 .roleReviewGrid {
   display: grid;
   grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
-  gap: 16px;
+  gap: 14px;
 }
 
 .roleMission,
@@ -3897,7 +3897,7 @@ tbody tr:hover td {
 .riskSignalCard,
 .defenseCard,
 .rootCauseCard {
-  padding: 15px;
+  padding: 13px;
 }
 
 .northStarCard,
@@ -3906,7 +3906,7 @@ tbody tr:hover td {
 .defenseCard,
 .rootCauseCard {
   display: grid;
-  gap: 11px;
+  gap: 10px;
   align-content: start;
 }
 
@@ -3944,7 +3944,7 @@ tbody tr:hover td {
 .rootCauseCard p {
   margin: 0;
   color: var(--muted);
-  line-height: 1.58;
+  line-height: 1.5;
 }
 
 .linkedMetricStrip,
@@ -3986,16 +3986,16 @@ tbody tr:hover td {
 
 .operatingModelCard {
   display: grid;
-  gap: 9px;
-  padding: 14px;
+  gap: 8px;
+  padding: 12px;
   background: var(--panel-soft);
 }
 
 .roadmapItem {
   display: grid;
   grid-template-columns: 98px minmax(0, 1fr);
-  gap: 14px;
-  padding: 14px;
+  gap: 12px;
+  padding: 12px;
 }
 
 .roadmapItem > span {
@@ -4118,10 +4118,10 @@ tbody tr:hover td {
 .riskNarrativeSurface {
   display: grid;
   grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.85fr);
-  gap: 14px;
-  padding: 16px;
+  gap: 12px;
+  padding: 14px;
   background:
-    linear-gradient(135deg, rgba(20, 184, 166, 0.08), transparent 48%),
+    linear-gradient(135deg, rgba(20, 184, 166, 0.055), transparent 48%),
     #fff;
 }
 
@@ -4132,19 +4132,19 @@ tbody tr:hover td {
 
 .riskNarrativeMain {
   display: grid;
-  gap: 12px;
+  gap: 10px;
 }
 
 .riskNarrativeFlow {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
+  gap: 8px;
 }
 
 .riskNarrativeFlow > div,
 .riskEvidenceSection {
   min-width: 0;
-  padding: 11px;
+  padding: 10px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #fff;
@@ -4186,9 +4186,9 @@ tbody tr:hover td {
 
 .riskEvidenceDrawer {
   display: grid;
-  gap: 10px;
+  gap: 9px;
   align-content: start;
-  padding: 13px;
+  padding: 12px;
   border: 1px solid #cde6f7;
   border-radius: 8px;
   background: #fbfdff;
@@ -5169,6 +5169,11 @@ tbody tr:hover td {
   }
 
   .canvasShell {
-    min-height: 520px;
+    min-height: 0;
+  }
+
+  .canvasViewport {
+    height: clamp(460px, 60dvh, 560px);
+    min-height: 460px;
   }
 }
