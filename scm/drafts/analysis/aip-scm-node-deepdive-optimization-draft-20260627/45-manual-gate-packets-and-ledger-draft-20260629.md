@@ -184,3 +184,30 @@ where id='decision_b43_manual_gate_handoff_pr1_20260629';
 推断：结构化交接包可以减少人工 review 前的信息整理成本，但不构成 owner 批准。
 
 不确定项：真实 owner 签署、真实源字段证据、SCEI 五维权重数值仍需人工提供。
+
+## 9. B44 Owner Intake Kit
+
+B44 在 B43 交接包上继续拆分为可填写模板。它仍然不解除 gate，不填 owner、不填源字段、不填权重。
+
+| artifact | path | data rows | required reviewer action |
+|---|---|---:|---|
+| Owner sign-off intake | `drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-owner-signoff-intake-20260629.csv` | 30 | owner 填写签署人、签署日期、口径版本、分母、粒度、例外规则、证据链接和 decision_result。 |
+| Field mapping intake | `drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-field-mapping-intake-20260629.csv` | 18 | owner 填写 source system、table/view、field、aggregation/filter、join key、grain、更新频率、证据链接和 mapping_decision。 |
+| SCEI weight intake | `drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-scei-weight-intake-20260629.csv` | 5 | owner 填写 proposed_weight、basis_type、依据说明、签署人与证据链接；五项权重必须合计 1。 |
+| SQLite annotation | `annotation_b44_owner_intake_kit_20260629` | 1 | 记录 intake kit ready，且未推断任何未确认事实。 |
+| SQLite decision log | `decision_b44_owner_intake_kit_pr1_20260629` | 1 | 记录下一步只能进入人工 owner review，不开放 provider/writeback。 |
+
+验收查询：
+
+```sql
+select task_type, status, count(*)
+from governance_tasks
+where priority='P0'
+  and task_type in ('owner_signoff','field_mapping','owner_decision')
+group by task_type, status;
+
+select count(*) as scei_edges,
+       sum(case when weight is null then 1 else 0 end) as blank_weights
+from kpi_tree
+where parent_metric_id='SCM-MECE-L0-001';
+```

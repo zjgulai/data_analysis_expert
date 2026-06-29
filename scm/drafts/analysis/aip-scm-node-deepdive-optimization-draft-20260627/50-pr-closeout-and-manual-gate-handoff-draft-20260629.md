@@ -112,3 +112,16 @@ Backup artifacts:
 | after B43 before smoke SQLite | `/Users/pray/.Codex/file-history/ecom_ana_overview_scm/20260629T183000-pr-closeout-manual-gates/governance_workbench.after-b43-before-smoke.sqlite` |
 | final restored SQLite | `/Users/pray/.Codex/file-history/ecom_ana_overview_scm/20260629T183000-pr-closeout-manual-gates/governance_workbench.final-restored.sqlite` |
 | UI smoke artifacts | `/Users/pray/.Codex/file-history/ecom_ana_overview_scm/20260629T183000-pr-closeout-manual-gates/ui-smoke-artifacts/` |
+
+## 8. B44 Follow-up Pointer
+
+B44 continues this handoff by generating fillable owner intake templates:
+
+| artifact | path |
+|---|---|
+| Owner sign-off intake | `drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-owner-signoff-intake-20260629.csv` |
+| Field mapping intake | `drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-field-mapping-intake-20260629.csv` |
+| SCEI weight intake | `drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-scei-weight-intake-20260629.csv` |
+| Execution summary | `51-owner-intake-kit-execution-summary-draft-20260629.md` |
+
+B44 preserves the same boundary: no owner value, source field, or weight is inferred.
