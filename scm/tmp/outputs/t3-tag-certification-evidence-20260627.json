@@ -1,0 +1,134 @@
+{
+  "artifact": "t3-tag-certification-evidence-20260627",
+  "generatedAt": "2026-06-27T02:03:00+08:00",
+  "scope": "local SQLite content work only",
+  "database": "drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite",
+  "taskCard": "T3 tag certification (02-P0)",
+  "acceptanceSource": "drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/02-tag-engineering-deepdive-draft-20260627.md#9",
+  "boundary": {
+    "productionWrites": false,
+    "providerCalls": false,
+    "erpWriteback": false,
+    "actionBoundary": "suggestion_review_replay",
+    "writeTarget": "local SQLite only"
+  },
+  "summary": {
+    "activeTags": 8,
+    "thresholdVersionCoverage": "8/8",
+    "basisCoverage": "8/8",
+    "dependencyCoverage": "8/8",
+    "classificationCoverage": "8/8",
+    "boundaryFalseCoverage": "8/8"
+  },
+  "tagRules": [
+    {
+      "id": "tag_cost_outlier",
+      "name": "成本异常",
+      "generation": "stat",
+      "semanticDomain": "cost",
+      "targetObject": "cost_event",
+      "sensitivity": "risk",
+      "thresholdVersion": "COST-DEV-20260627-001",
+      "basis": "02_Momcozy_KPI体系设计.md:442-443 cost metric monthly deviation beyond target +/-10%",
+      "dependsOn": ["SCM-MECE-L3-084"],
+      "evidenceLevel": "method_doc_threshold",
+      "certificationCaveat": "dependent metric SCM-MECE-L3-084 is not certified; tag is active as local governance rule with documented threshold basis"
+    },
+    {
+      "id": "tag_hot_sku",
+      "name": "爆款 SKU",
+      "generation": "rule",
+      "semanticDomain": "sku",
+      "targetObject": "sku",
+      "sensitivity": "opportunity",
+      "thresholdVersion": "HOT-SKU-20260627-001",
+      "basis": "02_Momcozy_KPI体系设计.md:456 single-day orders > 7-day average x300%; contribution_rank <=20% carried from existing rule",
+      "dependsOn": ["sales_velocity", "contribution_rank"],
+      "evidenceLevel": "method_doc_threshold_plus_existing_rule",
+      "certificationCaveat": "sales_velocity and contribution_rank are rule inputs in the current tag contract, not certified metric ids"
+    },
+    {
+      "id": "tag_mapping_risk",
+      "name": "SKU 映射风险",
+      "generation": "rule",
+      "semanticDomain": "data_governance",
+      "targetObject": "sku",
+      "sensitivity": "risk",
+      "thresholdVersion": "SKU-MAP-20260627-001",
+      "basis": "identity mapping integrity zero tolerance: one-to-many mapping or unmatched planned inventory breaks SKU grain",
+      "dependsOn": ["SCM-MECE-L3-106", "SCM-MECE-L3-137"],
+      "evidenceLevel": "logical_integrity_threshold",
+      "certificationCaveat": "dependent metrics are not certified; threshold is a data-governance invariant"
+    },
+    {
+      "id": "tag_negative_available",
+      "name": "负可用库存异常",
+      "generation": "rule",
+      "semanticDomain": "inventory",
+      "targetObject": "inventory_batch",
+      "sensitivity": "risk",
+      "thresholdVersion": "NEG-AVAIL-20260627-001",
+      "basis": "SCM-MECE-L3-044 certified metric with zero-tolerance inventory invariant",
+      "dependsOn": ["SCM-MECE-L3-044"],
+      "evidenceLevel": "certified_metric_threshold",
+      "certificationCaveat": "no caveat for metric dependency; no production action implied"
+    },
+    {
+      "id": "tag_oos_high_risk",
+      "name": "断货高危",
+      "generation": "rule",
+      "semanticDomain": "inventory",
+      "targetObject": "sku",
+      "sensitivity": "risk",
+      "thresholdVersion": "OOS-COVER-20260627-001",
+      "basis": "stock_cover_days_qty certified in T2; target_stock_days formula from SCM-MECE-L3-005 planning policy components",
+      "dependsOn": ["SCM-MECE-L3-035", "SCM-MECE-L3-005"],
+      "evidenceLevel": "certified_metric_plus_policy_formula",
+      "certificationCaveat": "SCM-MECE-L3-005 remains not certified; active rule depends on policy formula threshold"
+    },
+    {
+      "id": "tag_route_congestion",
+      "name": "物流拥堵风险",
+      "generation": "stat",
+      "semanticDomain": "logistics",
+      "targetObject": "shipment",
+      "sensitivity": "risk",
+      "thresholdVersion": "ETA-DEV-20260627-001",
+      "basis": "02_Momcozy_KPI体系设计.md:201-223 fulfillment time targets and segment SLA",
+      "dependsOn": ["SCM-MECE-L3-064"],
+      "evidenceLevel": "method_doc_sla_threshold",
+      "certificationCaveat": "dependent metric SCM-MECE-L3-064 is not certified"
+    },
+    {
+      "id": "tag_slow_moving",
+      "name": "滞销库存",
+      "generation": "rule",
+      "semanticDomain": "inventory",
+      "targetObject": "inventory_batch",
+      "sensitivity": "risk",
+      "thresholdVersion": "SMI-20260627-001",
+      "basis": "02_Momcozy_KPI体系设计.md:510 slow-moving trigger age>90d inventory share>20% or SKU sell-through<50%",
+      "dependsOn": ["SCM-MECE-L3-041"],
+      "evidenceLevel": "certified_metric_plus_method_doc_threshold",
+      "certificationCaveat": "no caveat for SMI metric dependency; no production action implied"
+    },
+    {
+      "id": "tag_supplier_delay_risk",
+      "name": "供应商延期风险",
+      "generation": "stat",
+      "semanticDomain": "supplier",
+      "targetObject": "supplier",
+      "sensitivity": "risk",
+      "thresholdVersion": "SUP-OTIF-20260627-001",
+      "basis": "02_Momcozy_KPI体系设计.md:190-204 time achievement target >=95%",
+      "dependsOn": ["SCM-MECE-L3-019", "SCM-MECE-L3-020"],
+      "evidenceLevel": "certified_metric_plus_method_doc_threshold",
+      "certificationCaveat": "SCM-MECE-L3-019 is certified; SCM-MECE-L3-020 remains not certified"
+    }
+  ],
+  "notCompletedInCurrentSchema": [
+    "No tag_assignment table exists, so instance-level materialization was not created.",
+    "No tag_threshold_version table exists, so threshold versions are embedded in rule_expression for this content-only pass.",
+    "Tag chains and ontology property projection are P1/P2 items and were not schema-added in T3."
+  ]
+}

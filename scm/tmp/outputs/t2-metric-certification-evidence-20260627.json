@@ -1,0 +1,142 @@
+{
+  "task": "T2/D-P0-02+D-P0-03 metric lineage and certification",
+  "created": "2026-06-27",
+  "scope": "local SQLite content only",
+  "boundary": {
+    "productionWrites": false,
+    "providerCalls": false,
+    "erpWriteback": false,
+    "writeTarget": "drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite"
+  },
+  "summary": {
+    "certified_metrics_before": 8,
+    "certified_metrics_after": 20,
+    "top_metric_count": 12,
+    "minimum_lineage_confidence": 0.86,
+    "dimension_compatibility": "all selected metric_dimensions set to confirmed"
+  },
+  "selected_metrics": [
+    {
+      "id": "SCM-MECE-L3-028",
+      "name": "业务预占库存",
+      "source_fields": [
+        "仓库库存列表_20260602190444851.xlsx:预占数量",
+        "计划库存导出:预占库存",
+        "FBT库存列表_2026-06-04_20260604121616063.xlsx:预占量",
+        "三方系统库存对账导出2026-06-02_20260602191334628.xlsx:ERP/积加.预占库存"
+      ]
+    },
+    {
+      "id": "SCM-MECE-L3-029",
+      "name": "业务冻结库存",
+      "source_fields": [
+        "仓库库存列表_20260602190444851.xlsx:锁库数量",
+        "计划库存导出:冻结库存",
+        "库存指标说明.md:FBA冻结库存规则与部分渠道默认0规则"
+      ]
+    },
+    {
+      "id": "SCM-MECE-L3-030",
+      "name": "业务在库库存",
+      "source_fields": [
+        "仓库库存列表_20260602190444851.xlsx:实物库存",
+        "计划库存导出:在库库存",
+        "三方系统库存对账导出2026-06-02_20260602191334628.xlsx:富勒/ERP/积加.实物库存"
+      ]
+    },
+    {
+      "id": "SCM-MECE-L3-031",
+      "name": "业务在库良品库存",
+      "source_fields": [
+        "仓库库存列表_20260602190444851.xlsx:良品库存",
+        "计划库存导出:在库良品库存",
+        "三方系统库存对账导出2026-06-02_20260602191334628.xlsx:富勒/ERP/积加.良品库存"
+      ]
+    },
+    {
+      "id": "SCM-MECE-L3-032",
+      "name": "备货计划库存",
+      "source_fields": [
+        "fba计划库存_20260602190118540.xlsx:计划库存",
+        "中仓计划库存_20260602190050497.xlsx:计划库存",
+        "Shopify计划库存_20260602190146714.xlsx:计划库存",
+        "TikTok计划库存_20260602190147986.xlsx:计划库存",
+        "沃尔玛计划库存_20260602190140263.xlsx:计划库存",
+        "零售与渠道计划库存_20260602190214370.xlsx:计划库存"
+      ]
+    },
+    {
+      "id": "SCM-MECE-L3-033",
+      "name": "采购未交库存",
+      "source_fields": [
+        "中仓计划库存_20260602190050497.xlsx:采购未交库存",
+        "库存指标说明.md:采购未交库存计算规则"
+      ]
+    },
+    {
+      "id": "SCM-MECE-L3-034",
+      "name": "来源去重后在途库存",
+      "source_fields": [
+        "计划库存导出:在途库存",
+        "FBT库存列表_2026-06-04_20260604121616063.xlsx:在途量",
+        "全链路库存看板快照20260602.xlsx:在途库存"
+      ]
+    },
+    {
+      "id": "SCM-MECE-L3-035",
+      "name": "可售覆盖天数",
+      "source_fields": [
+        "库存周转-库龄20260601.xlsx:7天日均销量/15天日均销量/30天日均销量",
+        "库存周转-库龄20260601.xlsx:平台仓库存/海外仓库存",
+        "计划库存导出:可用库存/在途库存/计划库存"
+      ]
+    },
+    {
+      "id": "SCM-MECE-L3-037",
+      "name": "在途库存占比",
+      "source_fields": [
+        "全链路库存看板快照20260602.xlsx:在库库存/在途库存",
+        "库存周转-库龄20260601.xlsx:平台仓在途/海外仓在途/总库存"
+      ]
+    },
+    {
+      "id": "SCM-MECE-L3-041",
+      "name": "滞销库存占比（SMI Ratio）",
+      "source_fields": [
+        "库存周转-库龄20260601.xlsx:滞销分类",
+        "库存周转-库龄20260601.xlsx:周转分类",
+        "库存周转-库龄20260601.xlsx:平台仓可售/总库存"
+      ]
+    },
+    {
+      "id": "SCM-MECE-L3-044",
+      "name": "负可用库存经营主键数",
+      "source_fields": [
+        "仓库库存列表_20260602190444851.xlsx:可用数量",
+        "计划库存导出:可用库存",
+        "FBT库存列表_2026-06-04_20260604121616063.xlsx:可用量",
+        "三方系统库存对账导出2026-06-02_20260602191334628.xlsx:可用库存"
+      ]
+    },
+    {
+      "id": "SCM-MECE-L3-058",
+      "name": "库存对账差异率",
+      "source_fields": [
+        "三方系统库存对账导出2026-06-02_20260602191334628.xlsx:富勒/ERP/积加 良品库存",
+        "三方系统库存对账导出2026-06-02_20260602191334628.xlsx:富勒/ERP/积加 预占库存",
+        "三方系统库存对账导出2026-06-02_20260602191334628.xlsx:富勒/ERP/积加 可用库存",
+        "三方系统库存对账导出2026-06-02_20260602191334628.xlsx:富勒/ERP/积加 不良库存",
+        "三方系统库存对账导出2026-06-02_20260602191334628.xlsx:富勒/ERP/积加 实物库存"
+      ]
+    }
+  ],
+  "commands": [
+    "sqlite3 ... select certification_status,count(*) from metrics group by certification_status",
+    "sqlite3 ... selected metrics min(lineage_edges.confidence)",
+    "sqlite3 ... selected metric_dimensions compatibility_status"
+  ],
+  "notes": [
+    "This certification is local prototype content certification, not production approval.",
+    "No provider call, production write, ERP writeback, or production DB connection was used."
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "artifact": "t5-t6-storyline-closure-evidence-20260627",
+  "generatedAt": "2026-06-27T02:24:00+08:00",
+  "scope": "local SQLite content work only",
+  "database": "drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite",
+  "taskCards": [
+    "T5 fulfillment page storyline skeleton (05-P0)",
+    "T6 closed-loop content injection (06-P0)"
+  ],
+  "acceptanceSources": [
+    "drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/05-insight-storyline-deepdive-draft-20260627.md#9",
+    "drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/06-palantir-core-aip-deepdive-draft-20260627.md#9"
+  ],
+  "boundary": {
+    "productionWrites": false,
+    "providerCalls": false,
+    "erpWriteback": false,
+    "actionBoundary": "suggestion_review_replay",
+    "writeTarget": "local SQLite only",
+    "uiCodeChanged": false,
+    "serverCodeChanged": false
+  },
+  "t4ResidualDecision": {
+    "decisionLogId": "decision_t5_t6_20260627_t4_residual_accept_for_storyline",
+    "scope": "accepted_for_storyline_draft_only",
+    "notFormalApproval": "SCEI five-dimensional weights remain blocked by missing explicit source basis."
+  },
+  "t5StorylineAcceptance": {
+    "storyPages": 3,
+    "conclusionFirstCoverage": "3/3",
+    "traceableInsightUnitCoverage": "3/3",
+    "boundaryFalseCoverage": "3/3",
+    "storylineAnnotations": [
+      {
+        "id": "annotation_t5_t6_20260627_unshipped_warning_story",
+        "page": "未发货预警",
+        "conclusionFirst": "当前最该管的不是直接催发，而是先把预占、在途与同步差异拆开，避免把口径问题误判为仓内执行问题。",
+        "primaryMetrics": ["SCM-MECE-L3-044", "SCM-MECE-L3-028", "SCM-MECE-L3-058"],
+        "status": "storyline_contract_active"
+      },
+      {
+        "id": "annotation_t5_t6_20260627_stockout_three_way_story",
+        "page": "缺货三分法",
+        "conclusionFirst": "缺货治理应先分成可售覆盖不足、采购未交/在途承接不足、活动节奏未校准三类，再决定补货、调拨或节奏调整。",
+        "primaryMetrics": ["SCM-MECE-L3-035", "SCM-MECE-L3-033", "SCM-MECE-L3-034"],
+        "status": "storyline_contract_active",
+        "caveat": "SCEI five-dimensional weights remain blocked; this page only uses the certified sellable-coverage chain."
+      },
+      {
+        "id": "annotation_t5_t6_20260627_review_efficiency_story",
+        "page": "审核效能双口径",
+        "conclusionFirst": "审核效能页先保留双口径骨架：流程及时性看 ETA/供应商履约，口径可信度看数据认证与对账；专属审核时效指标未认证前不进入硬结论。",
+        "primaryMetrics": ["SCM-MECE-L3-019", "SCM-MECE-L3-064", "SCM-MECE-L3-058"],
+        "status": "storyline_contract_active_with_caveat",
+        "caveat": "SCM-MECE-L3-064 remains not certified and no dedicated review-time metric is certified."
+      }
+    ]
+  },
+  "t6ClosureAcceptance": {
+    "demonstrableLoops": 3,
+    "agentTraces": 3,
+    "recommendationCards": 3,
+    "decisionLogs": 3,
+    "actionTasks": 3,
+    "traceReviews": 3,
+    "nonSeedObjectInstances": [
+      {
+        "id": "batch_system_data_inventory_contract_20260627",
+        "objectType": "inventory_batch",
+        "sourceSystem": "local_system_data_inventory_exports",
+        "evidenceLevel": "system_data_contract_20260627",
+        "boundary": "representative local contract instance, not production row"
+      }
+    ],
+    "loops": [
+      {
+        "scenarioId": "scenario_t5_t6_20260627_unshipped_warning",
+        "traceId": "trace_t5_t6_20260627_unshipped_warning",
+        "recommendationId": "rec_t5_t6_20260627_unshipped_warning",
+        "decisionId": "decision_t5_t6_20260627_unshipped_warning",
+        "actionTaskId": "action_t5_t6_20260627_unshipped_warning",
+        "status": "review_ready",
+        "executionStatus": "suggestion_review_replay"
+      },
+      {
+        "scenarioId": "scenario_t5_t6_20260627_stockout_three_way",
+        "traceId": "trace_t5_t6_20260627_stockout_three_way",
+        "recommendationId": "rec_t5_t6_20260627_stockout_three_way",
+        "decisionId": "decision_t5_t6_20260627_stockout_three_way",
+        "actionTaskId": "action_t5_t6_20260627_stockout_three_way",
+        "status": "review_ready",
+        "executionStatus": "suggestion_review_replay",
+        "caveat": "SCEI weight residual remains explicit."
+      },
+      {
+        "scenarioId": "scenario_t5_t6_20260627_review_efficiency_dual_metric",
+        "traceId": "trace_t5_t6_20260627_review_efficiency_dual_metric",
+        "recommendationId": "rec_t5_t6_20260627_review_efficiency_dual_metric",
+        "decisionId": "decision_t5_t6_20260627_review_efficiency_dual_metric",
+        "actionTaskId": "action_t5_t6_20260627_review_efficiency_dual_metric",
+        "status": "review_ready_with_metric_gap",
+        "executionStatus": "suggestion_review_replay",
+        "caveat": "Dedicated review-time metric and ETA deviation certification remain open."
+      }
+    ]
+  },
+  "knownCaveats": [
+    "No schema-level storylines table exists; T5 story contracts are stored in annotations and linked through scenarios/traces.",
+    "Review-efficiency storyline is intentionally caveated because the relevant metric certification is incomplete.",
+    "T4 SCEI five-dimensional weighting remains unresolved and is not used as formal quantitative attribution."
+  ]
+}

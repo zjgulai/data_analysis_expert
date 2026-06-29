@@ -1,0 +1,310 @@
+{
+  "generatedAt": "2026-06-29T08:32:44.293Z",
+  "root": "/Users/pray/project/ecom_ana_overview/scm/drafts/prototypes/scm-data-governance-workbench-v0",
+  "scanRoot": "/Users/pray/project/ecom_ana_overview/scm",
+  "releaseBoundary": {
+    "readOnlyPrototypeProduction": true,
+    "providerCalls": false,
+    "productionWrites": false,
+    "erpWriteback": false,
+    "controlledWritebackProduction": false
+  },
+  "counts": {
+    "certifiedMetrics": 20,
+    "certifiedLineageTargets": 12,
+    "activeTags": 8,
+    "recommendationCards": 15,
+    "suggestionReplayCards": 3,
+    "agentTraces": 61,
+    "nonSeedObjects": 1,
+    "p0OwnerSignoffs": 30,
+    "p0FieldMappings": 18,
+    "dirtyCount": 53
+  },
+  "hardBlockers": [],
+  "manualGates": [
+    {
+      "name": "manual-p0-owner-signoffs",
+      "detail": {
+        "p0OwnerSignoffs": 30
+      }
+    },
+    {
+      "name": "manual-p0-field-mappings",
+      "detail": {
+        "p0FieldMappings": 18
+      }
+    },
+    {
+      "name": "manual-scei-weight-source",
+      "detail": {
+        "ownerDecisionPacketsReady": 1
+      }
+    }
+  ],
+  "warnings": [
+    {
+      "name": "worktree-clean-for-release-tag",
+      "detail": {
+        "dirtyCount": 53
+      }
+    }
+  ],
+  "checks": [
+    {
+      "name": "required-file:package-lock.json",
+      "ok": true,
+      "detail": "package-lock.json",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:Dockerfile",
+      "ok": true,
+      "detail": "Dockerfile",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:docker-compose.yml",
+      "ok": true,
+      "detail": "docker-compose.yml",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:docker-compose.production.yml",
+      "ok": true,
+      "detail": "docker-compose.production.yml",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:server/index.mjs",
+      "ok": true,
+      "detail": "server/index.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:data/governance_workbench.sqlite",
+      "ok": true,
+      "detail": "data/governance_workbench.sqlite",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:dist/index.html",
+      "ok": true,
+      "detail": "dist/index.html",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:dist/fulfillment-dashboard/index.html",
+      "ok": true,
+      "detail": "dist/fulfillment-dashboard/index.html",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:dist/fulfillment-dashboard/data/fulfillment_chart_data_binding_20260626.csv",
+      "ok": true,
+      "detail": "dist/fulfillment-dashboard/data/fulfillment_chart_data_binding_20260626.csv",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:scripts/smoke-api.mjs",
+      "ok": true,
+      "detail": "scripts/smoke-api.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:scripts/smoke-readonly.mjs",
+      "ok": true,
+      "detail": "scripts/smoke-readonly.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:scripts/smoke-ui.mjs",
+      "ok": true,
+      "detail": "scripts/smoke-ui.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:check",
+      "ok": true,
+      "detail": "tsc --noEmit",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:build",
+      "ok": true,
+      "detail": "tsc && vite build",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:smoke:api",
+      "ok": true,
+      "detail": "node scripts/smoke-api.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:smoke:readonly",
+      "ok": true,
+      "detail": "node scripts/smoke-readonly.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:smoke:ui",
+      "ok": true,
+      "detail": "node scripts/smoke-ui.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:preprod:check",
+      "ok": true,
+      "detail": "node scripts/preprod-check.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "dockerfile-public-before-build",
+      "ok": true,
+      "detail": "Dockerfile copies public assets before Vite build",
+      "severity": "hard"
+    },
+    {
+      "name": "dockerfile-healthcheck",
+      "ok": true,
+      "detail": "Docker image has healthcheck",
+      "severity": "hard"
+    },
+    {
+      "name": "dockerfile-runtime-data-copy",
+      "ok": true,
+      "detail": "Docker image includes embedded data for standalone prototype",
+      "severity": "hard"
+    },
+    {
+      "name": "production-compose-external-volume",
+      "ok": true,
+      "detail": "production override keeps SQLite on external Docker volume",
+      "severity": "hard"
+    },
+    {
+      "name": "production-compose-edge-network",
+      "ok": true,
+      "detail": "production override attaches to existing edge network",
+      "severity": "hard"
+    },
+    {
+      "name": "secret-file-scan:pem",
+      "ok": true,
+      "detail": [],
+      "severity": "hard"
+    },
+    {
+      "name": "db-certified-metrics-minimum",
+      "ok": true,
+      "detail": {
+        "certifiedMetrics": 20,
+        "minimum": 20
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "db-certified-lineage-targets-minimum",
+      "ok": true,
+      "detail": {
+        "certifiedLineageTargets": 12,
+        "minimum": 12
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "db-active-tags-minimum",
+      "ok": true,
+      "detail": {
+        "activeTags": 8,
+        "minimum": 8
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "db-recommendation-cards-minimum",
+      "ok": true,
+      "detail": {
+        "recommendationCards": 15,
+        "minimum": 15
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "db-agent-traces-minimum",
+      "ok": true,
+      "detail": {
+        "agentTraces": 61,
+        "minimum": 61
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "db-non-seed-object-present",
+      "ok": true,
+      "detail": {
+        "nonSeedObjects": 1,
+        "minimum": 1
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "db-no-open-provider-or-writeback-flags",
+      "ok": true,
+      "detail": {
+        "badBoundaryRows": 0
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "db-suggestion-review-replay-present",
+      "ok": true,
+      "detail": {
+        "suggestionReplayCards": 3,
+        "minimum": 3
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "db-secret-pattern-scan",
+      "ok": true,
+      "detail": {
+        "dbSecretHits": 0
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "manual-p0-owner-signoffs",
+      "ok": false,
+      "detail": {
+        "p0OwnerSignoffs": 30
+      },
+      "severity": "manual"
+    },
+    {
+      "name": "manual-p0-field-mappings",
+      "ok": false,
+      "detail": {
+        "p0FieldMappings": 18
+      },
+      "severity": "manual"
+    },
+    {
+      "name": "manual-scei-weight-source",
+      "ok": false,
+      "detail": {
+        "ownerDecisionPacketsReady": 1
+      },
+      "severity": "manual"
+    },
+    {
+      "name": "worktree-clean-for-release-tag",
+      "ok": false,
+      "detail": {
+        "dirtyCount": 53
+      },
+      "severity": "warn"
+    }
+  ]
+}

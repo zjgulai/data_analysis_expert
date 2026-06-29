@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>供应链履约时效看板 V0</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231d2129'/%3E%3Cpath d='M8 10h16v3H8zm0 5h16v3H8zm0 5h10v3H8z' fill='%2300b42a'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-block">
+          <div class="brand-mark">SCM</div>
+          <div>
+            <h1>供应链履约时效看板</h1>
+            <p>指标体系先行，口径对齐后进入履约洞察故事线</p>
+          </div>
+        </div>
+        <div class="view-actions">
+          <button class="ghost-button" id="clearFilters" type="button">清空</button>
+          <button class="primary-button" id="saveView" type="button">保存视图</button>
+        </div>
+      </header>
+
+      <section class="filter-strip" aria-label="筛选项">
+        <div class="filter-pill wide">
+          <span>付款时间</span>
+          <strong>2026-06-01 ~ 2026-06-25</strong>
+        </div>
+        <div class="filter-pill">
+          <span>北京时间</span>
+          <strong>按天刷新</strong>
+        </div>
+        <div class="filter-pill">
+          <span>SKU</span>
+          <strong>S12 / M5 / All</strong>
+        </div>
+        <div class="filter-pill">
+          <span>店铺</span>
+          <strong>Shopify / Amazon</strong>
+        </div>
+        <div class="filter-pill">
+          <span>国家/区域</span>
+          <strong>US / EU / CN</strong>
+        </div>
+        <div class="filter-pill">
+          <span>仓库</span>
+          <strong>小包仓 / 海外仓</strong>
+        </div>
+        <div class="filter-pill">
+          <span>物流方式</span>
+          <strong>标准 / 专线</strong>
+        </div>
+        <div class="filter-pill">
+          <span>订单状态</span>
+          <strong>待审 / 已发 / 异常</strong>
+        </div>
+        <div class="filter-pill">
+          <span>虚拟商品自动发货</span>
+          <strong>是 / 否</strong>
+        </div>
+      </section>
+
+      <nav class="tabbar" aria-label="看板模块">
+        <button class="active" data-tab="metric-system" type="button">指标体系</button>
+        <button data-tab="overview" type="button">总览</button>
+        <button data-tab="detail" type="button">履约明细</button>
+        <button data-tab="distribution" type="button">订单分布</button>
+        <button data-tab="delivery" type="button">妥投分析</button>
+        <button data-tab="product" type="button">商品履约</button>
+        <button data-tab="shipping" type="button">发货效能</button>
+        <button data-tab="audit" type="button">审核效能</button>
+        <button data-tab="exceptions" type="button">异常问题件</button>
+        <button data-tab="unshipped-warning" type="button">未发货预警</button>
+        <button data-tab="stockout" type="button">缺货分析</button>
+        <button data-tab="cross-region" type="button">跨区发货</button>
+        <button data-tab="prd" type="button">故事线与PRD</button>
+      </nav>
+
+      <main>
+        <section class="page active" id="metric-system" data-page>
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Metric system first</p>
+              <h2>指标体系与指标字典</h2>
+              <p>先统一指标、分母、粒度、来源表和缺口，再进入主题故事线。Excel sheet 1 提供 114 条候选字段/指标，sheet 2 固定当前看板业务需求。</p>
+            </div>
+            <div class="source-card">
+              <span>来源证据</span>
+              <strong>Excel + 知识库 + Readdy 原型</strong>
+              <small>Readdy 数值仅作为原型参照数据；本地原型不连接生产库。</small>
+            </div>
+          </div>
+
+          <div class="metric-summary-grid">
+            <article>
+              <span>Excel 指标行</span>
+              <strong>114</strong>
+              <small>P0 44 / P1 23 / P2 19 / P3 28</small>
+            </article>
+            <article>
+              <span>知识库 MECE 指标</span>
+              <strong>178</strong>
+              <small>覆盖成本、库存、仓储、物流、治理等 8 个 L1 域</small>
+            </article>
+            <article>
+              <span>sheet 2 业务主题</span>
+              <strong>10+1</strong>
+              <small>十大主题之外，未发货预警按最新决策保留独立模块</small>
+            </article>
+            <article>
+              <span>关键口径决策</span>
+              <strong>5</strong>
+              <small>缺货三分法、TMS签收、成本占位、独立预警、审核双口径</small>
+            </article>
+          </div>
+
+          <div class="two-column">
+            <section class="panel">
+              <div class="panel-head">
+                <h3>L0-L3 指标分层</h3>
+                <span class="badge blue">先定体系</span>
+              </div>
+              <div class="metric-tree">
+                <div class="tree-row level-0">
+                  <span>L0</span>
+                  <strong>履约体验达成率</strong>
+                  <small>sla_achieved_orders / expected_fulfillment_orders</small>
+                </div>
+                <div class="tree-row">
+                  <span>L1</span>
+                  <strong>物流运输与履约体验</strong>
+                  <small>头程、尾程、妥投、承运商 SLA</small>
+                </div>
+                <div class="tree-row">
+                  <span>L1</span>
+                  <strong>仓储执行与库存准确</strong>
+                  <small>审单、出库、仓内作业、库存准确</small>
+                </div>
+                <div class="tree-row">
+                  <span>L2</span>
+                  <strong>订单履约时效</strong>
+                  <small>付款、审核、发货、签收四段链路</small>
+                </div>
+                <div class="tree-row">
+                  <span>L3</span>
+                  <strong>24h/48h 审单及时率、审核发货及时率、妥投率</strong>
+                  <small>所有比率同步展示分子分母</small>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-head">
+                <h3>吻合点、差异与缺口</h3>
+                <span class="badge green">已更新</span>
+              </div>
+              <div class="alignment-list" id="alignmentList"></div>
+            </section>
+          </div>
+
+          <section class="panel">
+            <div class="panel-head">
+              <div>
+                <h3>指标字典工作台</h3>
+                <p>包含业务口径、图表用途、分子分母、来源状态和缺口状态。完整 114 行已输出为 CSV。</p>
+              </div>
+              <label class="search-box">
+                <span>搜索指标</span>
+                <input id="metricSearch" type="search" placeholder="输入 审单、妥投、跨区、缺货..." />
+              </label>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>层级</th>
+                    <th>指标/字段</th>
+                    <th>业务口径</th>
+                    <th>分母与粒度</th>
+                    <th>来源状态</th>
+                    <th>图表用途</th>
+                  </tr>
+                </thead>
+                <tbody id="metricTable"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+
+        <section class="page" id="overview" data-page>
+          <div class="section-head compact">
+            <div>
+              <p class="eyebrow">Overview</p>
+              <h2>履约总览</h2>
+              <p>按 Readdy 原型数值作为样例数据参照，所有比率同步展示分子分母。</p>
+            </div>
+            <div class="segmented" id="kpiMode">
+              <button class="active" data-kpi-group="all" type="button">全部</button>
+              <button data-kpi-group="volume" type="button">订单类别</button>
+              <button data-kpi-group="rate" type="button">及时率</button>
+              <button data-kpi-group="time" type="button">时效</button>
+            </div>
+          </div>
+          <div class="kpi-rail" id="kpiRail"></div>
+          <div class="insight-strip" id="overviewInsights"></div>
+          <div class="dashboard-grid">
+            <section class="panel wide-panel">
+              <div class="panel-head">
+                <h3>核心指标趋势</h3>
+                <span class="legend"><i class="line-solid"></i>单量 <i class="line-dash"></i>及时率</span>
+              </div>
+              <div class="chart combo-chart" id="trendChart"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>今日诊断</h3>
+                <span class="badge red">P0</span>
+              </div>
+              <div class="diagnosis-list">
+                <p><strong>异常订单率 1.8%</strong><span>需要优先下钻异常标识与发货仓库。</span></p>
+                <p><strong>24h 商品发货及时率 82.5%</strong><span>商品维度低于订单维度，提示拆单或部分商品未发。</span></p>
+                <p><strong>超期未发货率 3.7%</strong><span>进入未发货预警独立模块，按超期天数、仓库和责任域治理。</span></p>
+              </div>
+            </section>
+          </div>
+          <div class="analysis-grid">
+            <section class="panel">
+              <div class="panel-head">
+                <h3>履约链路瓶颈</h3>
+                <span class="badge amber">主线</span>
+              </div>
+              <div class="funnel-chart" id="overviewFunnel"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>风险贡献归因</h3>
+                <span class="badge red">P0</span>
+              </div>
+              <div class="bar-list" id="overviewCauseBars"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>今日行动清单</h3>
+                <span class="badge blue">闭环</span>
+              </div>
+              <div class="action-list" id="overviewActions"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="page" id="detail" data-page>
+          <div class="section-head compact">
+            <div>
+              <p class="eyebrow">Order detail</p>
+              <h2>订单履约明细表</h2>
+              <p>覆盖平台单号、系统自发货单号、国家、SKU、付款、审核、跟踪号、发货、签收、仓库与物流渠道。</p>
+            </div>
+            <button class="secondary-button" data-drilldown="detail" type="button">查看口径</button>
+          </div>
+          <div class="insight-strip" id="detailInsights"></div>
+          <div class="analysis-grid">
+            <section class="panel">
+              <div class="panel-head">
+                <h3>单票链路定位</h3>
+                <span class="badge amber">路径</span>
+              </div>
+              <div class="funnel-chart" id="detailFlow"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>明细下钻优先级</h3>
+                <span class="badge red">P0</span>
+              </div>
+              <div class="bar-list" id="detailCauseBars"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>明细处理动作</h3>
+                <span class="badge blue">闭环</span>
+              </div>
+              <div class="action-list" id="detailActions"></div>
+            </section>
+          </div>
+          <section class="panel">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>平台单号</th>
+                    <th>系统自发货单号</th>
+                    <th>国家</th>
+                    <th>订单状态</th>
+                    <th>SKU</th>
+                    <th>数量</th>
+                    <th>付款时间</th>
+                    <th>审核时间</th>
+                    <th>发货时间</th>
+                    <th>签收时间</th>
+                    <th>仓库/渠道</th>
+                  </tr>
+                </thead>
+                <tbody id="orderRows"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+
+        <section class="page" id="distribution" data-page>
+          <div class="section-head compact">
+            <div>
+              <p class="eyebrow">Distribution</p>
+              <h2>订单履约分布</h2>
+              <p>从付款日期、区域/国家、订单状态、SKU 视角解释发货率与商品维度发货率差异。</p>
+            </div>
+          </div>
+          <div class="insight-strip" id="distributionInsights"></div>
+          <div class="dashboard-grid">
+            <section class="panel map-panel">
+              <div class="panel-head">
+                <h3>区域订单热力</h3>
+                <span class="badge green">133,000 单</span>
+              </div>
+              <div class="heat-grid" id="heatGrid"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>区域排名</h3>
+                <span class="badge blue">Top 14</span>
+              </div>
+              <div class="rank-list" id="regionRank"></div>
+            </section>
+          </div>
+          <div class="analysis-grid">
+            <section class="panel">
+              <div class="panel-head">
+                <h3>订单状态结构</h3>
+                <span class="badge green">结构</span>
+              </div>
+              <div class="split-chart" id="distributionStatusChart"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>区域风险归因</h3>
+                <span class="badge amber">归因</span>
+              </div>
+              <div class="bar-list" id="distributionCauseBars"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>区域动作清单</h3>
+                <span class="badge blue">Owner</span>
+              </div>
+              <div class="action-list" id="distributionActions"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="page" id="delivery" data-page>
+          <div class="section-head compact">
+            <div>
+              <p class="eyebrow">Delivery</p>
+              <h2>区域渠道妥投分析</h2>
+              <p>以发货包裹为粒度，展示累计签收率、3/5/7/10/12 天签收率和超期未妥投率。</p>
+            </div>
+          </div>
+          <div class="insight-strip" id="deliveryInsights"></div>
+          <section class="panel">
+            <div class="panel-head">
+              <h3>妥投时效阶梯</h3>
+              <span class="badge green">签收时间以 TMS 为准</span>
+            </div>
+            <div class="delivery-grid" id="deliveryGrid"></div>
+          </section>
+          <div class="analysis-grid two-panels">
+            <section class="panel">
+              <div class="panel-head">
+                <h3>国家/渠道慢妥投归因</h3>
+                <span class="badge amber">TMS</span>
+              </div>
+              <div class="bar-list" id="deliveryCauseBars"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>物流动作清单</h3>
+                <span class="badge blue">Owner</span>
+              </div>
+              <div class="action-list" id="deliveryActions"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="page" id="product" data-page>
+          <div class="section-head compact">
+            <div>
+              <p class="eyebrow">Product fulfillment</p>
+              <h2>商品履约分布</h2>
+              <p>识别长期发货较慢商品，反馈给备货节奏、仓库覆盖和 SKU 映射治理。</p>
+            </div>
+          </div>
+          <div class="insight-strip" id="productInsights"></div>
+          <div class="analysis-grid">
+            <section class="panel">
+              <div class="panel-head">
+                <h3>SKU 慢发归因</h3>
+                <span class="badge amber">商品</span>
+              </div>
+              <div class="bar-list" id="productCauseBars"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>商品风险池</h3>
+                <span class="badge red">Top</span>
+              </div>
+              <div class="risk-board" id="productRiskBoard"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>商品处理动作</h3>
+                <span class="badge blue">计划</span>
+              </div>
+              <div class="action-list" id="productActions"></div>
+            </section>
+          </div>
+          <section class="panel">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>SKU</th>
+                    <th>SPU</th>
+                    <th>三级品类</th>
+                    <th>GTM组</th>
+                    <th>商品总数量</th>
+                    <th>已发货数量</th>
+                    <th>累计发货率</th>
+                    <th>3天发货率</th>
+                    <th>风险提示</th>
+                  </tr>
+                </thead>
+                <tbody id="productRows"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+
+        <section class="page" id="shipping" data-page>
+          <div class="section-head compact">
+            <div>
+              <p class="eyebrow">Shipping efficiency</p>
+              <h2>发货效能</h2>
+              <p>拆小包仓与海外仓处理量，衡量发货单量、商品数量和仓型承压。</p>
+            </div>
+          </div>
+          <div class="insight-strip" id="shippingInsights"></div>
+          <div class="efficiency-grid" id="shippingBars"></div>
+          <div class="analysis-grid">
+            <section class="panel">
+              <div class="panel-head">
+                <h3>仓型负载压力</h3>
+                <span class="badge amber">负载</span>
+              </div>
+              <div class="bar-list" id="shippingLoadBars"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>发货能力结构</h3>
+                <span class="badge green">仓型</span>
+              </div>
+              <div class="split-chart" id="shippingCapacityChart"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>仓库动作清单</h3>
+                <span class="badge blue">排班</span>
+              </div>
+              <div class="action-list" id="shippingActions"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="page" id="audit" data-page>
+          <div class="section-head compact">
+            <div>
+              <p class="eyebrow">Audit efficiency</p>
+              <h2>审核效能</h2>
+              <p>审核效能必须区分系统自动审核与人工审核；人工审核再按末次审单人统计累计审核单量和平均审核间隔。</p>
+            </div>
+          </div>
+          <div class="insight-strip" id="auditInsights"></div>
+          <div class="analysis-grid two-panels">
+            <section class="panel">
+              <div class="panel-head">
+                <h3>系统/人工审核结构</h3>
+                <span class="badge green">双口径</span>
+              </div>
+              <div class="split-chart" id="auditSplitChart"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>人工审核时效分布</h3>
+                <span class="badge amber">瓶颈</span>
+              </div>
+              <div class="bar-list" id="auditLagBars"></div>
+            </section>
+          </div>
+          <section class="panel">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>审核人</th>
+                    <th>累计审核单量</th>
+                    <th>平均审核间隔h</th>
+                    <th>24h 审单达成</th>
+                    <th>数据缺口</th>
+                  </tr>
+                </thead>
+                <tbody id="auditRows"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+
+        <section class="page" id="exceptions" data-page>
+          <div class="section-head compact">
+            <div>
+              <p class="eyebrow">Exception orders</p>
+              <h2>异常订单与问题件</h2>
+              <p>按 ERP 当前最新问题件类型展示数量、比例和明细，支撑库存、地址、仓库、物流等根因闭环。</p>
+            </div>
+          </div>
+          <div class="insight-strip" id="exceptionInsights"></div>
+          <div class="dashboard-grid">
+            <section class="panel">
+              <div class="panel-head">
+                <h3>问题件类型汇总</h3>
+                <span class="badge red">2,312 单</span>
+              </div>
+              <div class="issue-list" id="issueList"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>问题件明细入口</h3>
+                <span class="badge blue">可下钻</span>
+              </div>
+              <div class="drill-card">
+                <strong>从异常标识进入订单明细</strong>
+                <p>保留平台单号、系统自发货单号、异常标识、异常信息、责任域、下一步动作和处理 Owner。</p>
+                <button class="secondary-button" data-drilldown="exception" type="button">查看字段契约</button>
+              </div>
+            </section>
+          </div>
+          <div class="analysis-grid two-panels">
+            <section class="panel">
+              <div class="panel-head">
+                <h3>责任域归因</h3>
+                <span class="badge amber">根因</span>
+              </div>
+              <div class="bar-list" id="exceptionCauseBars"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>异常闭环动作</h3>
+                <span class="badge blue">处理</span>
+              </div>
+              <div class="action-list" id="exceptionActions"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="page" id="unshipped-warning" data-page>
+          <div class="section-head compact">
+            <div>
+              <p class="eyebrow">Unshipped warning</p>
+              <h2>未发货预警</h2>
+              <p>保留独立模块，聚焦付款后超过 SLA 仍未发货的订单，按超期天数、仓库、SKU、异常类型和责任域拆解。</p>
+            </div>
+            <span class="badge red">独立预警</span>
+          </div>
+          <div class="insight-strip" id="unshippedInsights"></div>
+          <div class="dashboard-grid">
+            <section class="panel wide-panel">
+              <div class="panel-head">
+                <h3>超期未发货分层</h3>
+                <span class="badge amber">5,028 单</span>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>预警层级</th>
+                      <th>订单数</th>
+                      <th>占比</th>
+                      <th>优先动作</th>
+                      <th>等级</th>
+                    </tr>
+                  </thead>
+                  <tbody id="unshippedRows"></tbody>
+                </table>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>治理闭环</h3>
+                <span class="badge blue">可下钻</span>
+              </div>
+              <div class="drill-card">
+                <strong>从预警进入订单明细</strong>
+                <p>预警订单必须保留平台单号、系统自发货单号、付款时间、审核时间、仓库、SKU、异常标识、当前 Owner 和下一步动作。</p>
+                <button class="secondary-button" data-drilldown="unshipped" type="button">查看预警口径</button>
+              </div>
+            </section>
+          </div>
+          <div class="analysis-grid">
+            <section class="panel">
+              <div class="panel-head">
+                <h3>责任域贡献</h3>
+                <span class="badge red">归因</span>
+              </div>
+              <div class="bar-list" id="unshippedCauseBars"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>SKU/仓库风险</h3>
+                <span class="badge amber">Top</span>
+              </div>
+              <div class="risk-board" id="unshippedRiskBoard"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>预警处理动作</h3>
+                <span class="badge blue">闭环</span>
+              </div>
+              <div class="action-list" id="unshippedActions"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="page" id="stockout" data-page>
+          <div class="section-head compact">
+            <div>
+              <p class="eyebrow">Stockout analysis</p>
+              <h2>缺货分析</h2>
+              <p>缺货分析拆成订单缺货、库存缺货、预测缺货三类，分别对应履约异常、可售不足和未来覆盖风险。</p>
+            </div>
+            <span class="badge green">三类口径</span>
+          </div>
+          <div class="insight-strip" id="stockoutInsights"></div>
+          <div class="decision-grid" id="stockoutDecisions"></div>
+          <div class="analysis-grid">
+            <section class="panel">
+              <div class="panel-head">
+                <h3>三类缺货贡献</h3>
+                <span class="badge green">分类</span>
+              </div>
+              <div class="split-chart" id="stockoutTypeChart"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>SKU 缺货风险</h3>
+                <span class="badge amber">Top</span>
+              </div>
+              <div class="risk-board" id="stockoutRiskBoard"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>缺货处理路径</h3>
+                <span class="badge blue">Owner</span>
+              </div>
+              <div class="action-list" id="stockoutActions"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="page" id="cross-region" data-page>
+          <div class="section-head compact">
+            <div>
+              <p class="eyebrow">Cross-region fulfillment</p>
+              <h2>跨区发货</h2>
+              <p>目的国家/地区与实际发货仓所在国家/地区不一致时标记跨区，解释成本、时效和库存布点问题。</p>
+            </div>
+          </div>
+          <div class="insight-strip" id="crossRegionInsights"></div>
+          <section class="panel">
+            <div class="matrix" id="crossRegionMatrix"></div>
+          </section>
+          <div class="analysis-grid">
+            <section class="panel">
+              <div class="panel-head">
+                <h3>跨区原因归因</h3>
+                <span class="badge amber">仓网</span>
+              </div>
+              <div class="bar-list" id="crossRegionCauseBars"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>跨区风险池</h3>
+                <span class="badge red">Top</span>
+              </div>
+              <div class="risk-board" id="crossRegionRiskBoard"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h3>仓网调整动作</h3>
+                <span class="badge blue">行动</span>
+              </div>
+              <div class="action-list" id="crossRegionActions"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="page" id="prd" data-page>
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Storyline after metric dictionary</p>
+              <h2>业务主题故事线、图表设计、PRD 与数据表</h2>
+              <p>每个主题按“先看什么、要解决的问题、指标、图表、动作、数据表”组织。未发货预警按最新决策作为独立模块保留。</p>
+            </div>
+          </div>
+          <section class="panel">
+            <div class="panel-head">
+              <h3>V1 执行 TODO</h3>
+              <span class="badge green">执行中</span>
+            </div>
+            <div class="todo-board" id="executionTodoBoard"></div>
+          </section>
+          <div class="story-grid" id="storyGrid"></div>
+          <section class="panel">
+            <div class="panel-head">
+              <h3>所需数据表</h3>
+              <span class="badge blue">MVP 数据模型</span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>表名</th>
+                    <th>粒度</th>
+                    <th>核心字段</th>
+                    <th>用途</th>
+                  </tr>
+                </thead>
+                <tbody id="dataTableRows"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal hidden" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-card">
+        <div class="modal-head">
+          <h3 id="modalTitle">口径说明</h3>
+          <button class="icon-button" id="closeModal" type="button" aria-label="关闭">×</button>
+        </div>
+        <div id="modalBody"></div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status">视图已保存为本地原型状态</div>
+    <script src="./app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+{
+  "artifact": "t5-t6-storyline-closure-evidence-r2-20260627",
+  "generatedAt": "2026-06-27T02:33:00+08:00",
+  "supersedes": "tmp/outputs/t5-t6-storyline-closure-evidence-20260627.json",
+  "scope": "local SQLite content work only; preserve existing 3-scenario UI contract",
+  "database": "drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite",
+  "boundary": {
+    "productionWrites": false,
+    "providerCalls": false,
+    "erpWriteback": false,
+    "actionBoundary": "suggestion_review_replay",
+    "writeTarget": "local SQLite only",
+    "uiCodeChanged": false,
+    "serverCodeChanged": false
+  },
+  "whyR2": "The first T5/T6 pass inserted 3 new aip_scenarios and changed the scenario matrix from 3 to 6. R2 preserves the existing UI smoke contract by deleting those new scenario rows and attaching T5/T6 content to existing scenarios or page overlays.",
+  "t5StorylineAcceptance": {
+    "storyPages": 3,
+    "conclusionFirstCoverage": "3/3",
+    "traceableInsightUnitCoverage": "3/3",
+    "storylineAnnotations": [
+      "annotation_t5_t6_20260627_unshipped_warning_story",
+      "annotation_t5_t6_20260627_stockout_three_way_story",
+      "annotation_t5_t6_20260627_review_efficiency_story"
+    ]
+  },
+  "t6ClosureAcceptance": {
+    "existingScenarioCountPreserved": 3,
+    "scenarioRowsAdded": 0,
+    "recommendationCardsAdded": [
+      {
+        "id": "rec_t5_t6_20260627_unshipped_warning",
+        "attachedTo": "scenario_fba_negative_available",
+        "executionStatus": "suggestion_review_replay"
+      },
+      {
+        "id": "rec_t5_t6_20260627_stockout_three_way",
+        "attachedTo": "scenario_stockout_risk",
+        "executionStatus": "suggestion_review_replay",
+        "caveat": "SCEI five-dimensional weights remain blocked."
+      },
+      {
+        "id": "rec_t5_t6_20260627_review_efficiency_dual_metric",
+        "attachedTo": "review_efficiency_storyline_overlay",
+        "executionStatus": "suggestion_review_replay",
+        "caveat": "Page overlay only; dedicated review-time metric is still not certified."
+      }
+    ],
+    "agentTracesAdded": [
+      "trace_t5_t6_20260627_unshipped_warning",
+      "trace_t5_t6_20260627_stockout_three_way",
+      "trace_t5_t6_20260627_review_efficiency_dual_metric"
+    ],
+    "actionTasksAdded": [
+      "action_t5_t6_20260627_unshipped_warning",
+      "action_t5_t6_20260627_stockout_three_way",
+      "action_t5_t6_20260627_review_efficiency_dual_metric"
+    ],
+    "decisionLogsAdded": [
+      "decision_t5_t6_20260627_t4_residual_accept_for_storyline",
+      "decision_t5_t6_20260627_unshipped_warning",
+      "decision_t5_t6_20260627_stockout_three_way",
+      "decision_t5_t6_20260627_review_efficiency_dual_metric"
+    ],
+    "nonSeedObjectInstance": {
+      "id": "batch_system_data_inventory_contract_20260627",
+      "objectType": "inventory_batch",
+      "sourceSystem": "local_system_data_inventory_exports",
+      "evidenceLevel": "system_data_contract_20260627"
+    }
+  },
+  "knownCaveats": [
+    "Review-efficiency storyline remains a page overlay because no certified dedicated review-time metric exists.",
+    "T4 SCEI five-dimensional weights remain unresolved and are not used as formal quantitative attribution.",
+    "No new production or provider-side action was introduced."
+  ]
+}
