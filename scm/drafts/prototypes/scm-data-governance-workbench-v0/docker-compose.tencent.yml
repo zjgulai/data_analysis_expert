@@ -1,0 +1,11 @@
+services:
+  scm-governance-workbench:
+    networks:
+      lighthouse-ai-video-net:
+        aliases:
+          - scm-governance-workbench
+
+networks:
+  lighthouse-ai-video-net:
+    external: true
+    name: lighthouse_ai_video_net

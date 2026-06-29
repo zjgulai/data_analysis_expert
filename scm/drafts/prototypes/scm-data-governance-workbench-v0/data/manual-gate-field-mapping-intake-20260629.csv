@@ -1,0 +1,19 @@
+gate_id,metric_id,metric_code,metric_name,metric_level,metric_owner,requested_owner,current_gate_status,mapping_question,source_system,table_or_view,field_name,aggregation_rule,filter_rule,join_key,grain,update_frequency,evidence_ref,mapping_decision,boundary_note
+mapping_34,SCM-MECE-L3-122,storage_capacity_utilization_rate,"库容利用率",L3,"库存运营 Owner","仓储运营 Owner","待确认","待确认源字段（表/字段）","","","","","","","","","","",field_mapping_evidence_required_no_guessing
+mapping_32,SCM-MECE-L3-123,pallet_fill_rate,"托盘填充率",L3,"库存运营 Owner","仓储运营 Owner","待确认","待确认源字段（表/字段）","","","","","","","","","","",field_mapping_evidence_required_no_guessing
+mapping_33,SCM-MECE-L3-124,picking_uph,"拣货效率 UPH",L3,"库存运营 Owner","仓储运营 Owner","待确认","待确认源字段（表/字段）","","","","","","","","","","",field_mapping_evidence_required_no_guessing
+mapping_46,SCM-MECE-L3-113,sku_oos_rate,"SKU 缺货率",L3,"库存运营 Owner","库存运营 Owner","待确认","待确认源字段（表/字段）","","","","","","","","","","",field_mapping_evidence_required_no_guessing
+mapping_48,SCM-MECE-L3-114,unit_oos_rate,"件数缺货率",L3,"库存运营 Owner","库存运营 Owner","待确认","待确认源字段（表/字段）","","","","","","","","","","",field_mapping_evidence_required_no_guessing
+mapping_43,SCM-MECE-L3-115,gmv_oos_rate,"金额缺货率",L3,"库存运营 Owner","库存运营 Owner","待确认","待确认源字段（表/字段）","","","","","","","","","","",field_mapping_evidence_required_no_guessing
+mapping_47,SCM-MECE-L3-116,stockout_loss_amount,"断货损失金额",L3,"库存运营 Owner","库存运营 Owner","待确认","待确认源字段（表/字段）","","","","","","","","","","",field_mapping_evidence_required_no_guessing
+mapping_45,SCM-MECE-L3-117,safety_stock_coverage_rate,"安全库存覆盖率",L3,"库存运营 Owner","库存运营 Owner","待确认","待确认源字段（表/字段）","","","","","","","","","","",field_mapping_evidence_required_no_guessing
+mapping_52,SCM-MECE-L3-118,inventory_sales_match_score,"库存-销售匹配度",L3,"库存运营 Owner","库存运营 Owner","待确认","待确认源字段（表/字段）","","","","","","","","","","",field_mapping_evidence_required_no_guessing
+mapping_4,SCM-MECE-L3-137,unmatched_planned_inventory_qty,"未匹配计划库存数量",L3,"数据治理 Owner","数据治理 Owner","待确认","待确认源字段（表/字段）","","","","","","","","","","",field_mapping_evidence_required_no_guessing
+mapping_12,SCM-MECE-L3-138,inventory_sync_delay_minutes,"库存同步延迟分钟数",L3,"数据治理 Owner","数据治理 Owner","待确认","待确认源字段（表/字段）","","","","","","","","","","",field_mapping_evidence_required_no_guessing
+mapping_10,SCM-MECE-L3-139,business_default_zero_rate,"业务默认 0 字段占比",L3,"数据治理 Owner","数据治理 Owner","待确认","待确认源字段（表/字段）","","","","","","","","","","",field_mapping_evidence_required_no_guessing
+mapping_61,SCM-MECE-L3-036,full_chain_turnover_days_amount,"全链条库存资金周转天数",L3,"财务/成本 Owner","财务/成本 Owner","待确认","待确认源字段（表/字段）","","","","","","","","","","",field_mapping_evidence_required_no_guessing
+mapping_72,SCM-MECE-L3-077,supply_chain_total_cost_rate,"供应链总成本率",L3,"财务/成本 Owner","财务/成本 Owner","待确认","待确认源字段（表/字段）","","","","","","","","","","",field_mapping_evidence_required_no_guessing
+mapping_63,SCM-MECE-L3-087,inventory_impairment_rate,"库存减值率",L3,"财务/成本 Owner","财务/成本 Owner","待确认","待确认源字段（表/字段）","","","","","","","","","","",field_mapping_evidence_required_no_guessing
+mapping_74,SCM-MECE-L3-088,cost_allocation_coverage_rate,"成本分摊覆盖率",L3,"财务/成本 Owner","财务/成本 Owner","待确认","待确认源字段（表/字段）","","","","","","","","","","",field_mapping_evidence_required_no_guessing
+mapping_68,SCM-MECE-L3-131,logistics_cost_rate,"物流成本率",L3,"财务/成本 Owner","财务/成本 Owner","待确认","待确认源字段（表/字段）","","","","","","","","","","",field_mapping_evidence_required_no_guessing
+mapping_62,SCM-MECE-L3-133,inventory_amount_to_sales_ratio,"库存金额销售占比",L3,"财务/成本 Owner","财务/成本 Owner","待确认","待确认源字段（表/字段）","","","","","","","","","","",field_mapping_evidence_required_no_guessing

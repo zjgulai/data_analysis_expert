@@ -1,0 +1,26 @@
+services:
+  scm-governance-workbench:
+    environment:
+      SCM_DATA_MOUNT_TYPE: docker_external_volume
+      SCM_DATA_VOLUME_NAME: scm_governance_workbench_scm-governance-data
+      SCM_DATA_MOUNT_PATH: /app/data
+    volumes:
+      - scm-governance-data:/app/data
+    networks:
+      scm-governance-net: {}
+      lighthouse-ai-video-net:
+        aliases:
+          - scm-governance-workbench
+
+volumes:
+  scm-governance-data:
+    external: true
+    name: scm_governance_workbench_scm-governance-data
+
+networks:
+  scm-governance-net:
+    name: scm_governance_net
+    driver: bridge
+  lighthouse-ai-video-net:
+    external: true
+    name: lighthouse_ai_video_net

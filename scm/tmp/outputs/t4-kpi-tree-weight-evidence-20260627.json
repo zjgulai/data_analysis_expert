@@ -1,0 +1,132 @@
+{
+  "artifact": "t4-kpi-tree-weight-evidence-20260627",
+  "generatedAt": "2026-06-27T02:09:00+08:00",
+  "scope": "local SQLite content work only",
+  "database": "drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite",
+  "taskCard": "T4 metric system weighting and MECE check (04-P0)",
+  "acceptanceSource": "drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/04-metric-system-deepdive-draft-20260627.md#9",
+  "boundary": {
+    "productionWrites": false,
+    "providerCalls": false,
+    "erpWriteback": false,
+    "actionBoundary": "suggestion_review_replay",
+    "writeTarget": "local SQLite only"
+  },
+  "status": "partial_not_fabricated",
+  "reason": "Source documents provide SCEI five dimensions but do not provide explicit five-dimensional weights. The pass records structural edges and only fills weights with direct basis.",
+  "sourceBasis": [
+    {
+      "source": "03_指标树图可视化/README.md:10,34-46",
+      "fact": "cost satisfaction 50% + fulfillment satisfaction 50% = integrated supply-chain satisfaction"
+    },
+    {
+      "source": "02_Momcozy_KPI体系设计.md:188,297",
+      "fact": "fulfillment satisfaction formula uses time 40% + quality 40% + cost 20%"
+    },
+    {
+      "source": "02_Momcozy_KPI体系设计.md:141-160",
+      "fact": "cost tree lists inbound 25-30%, inventory 15-20%, outbound 20-25%; these ranges do not map one-to-one to current L0-002 children"
+    },
+    {
+      "source": "metrics.SCM-MECE-L0-001.formula",
+      "fact": "SCEI formula references cost efficiency, sellable availability, inventory capital efficiency, fulfillment experience, and metric data trust"
+    }
+  ],
+  "dbChanges": {
+    "insertedStructuralEdges": [
+      "SCM-MECE-L0-001 -> SCM-MECE-L0-002",
+      "SCM-MECE-L0-001 -> SCM-MECE-L0-003",
+      "SCM-MECE-L0-001 -> SCM-MECE-L0-004",
+      "SCM-MECE-L0-001 -> SCM-MECE-L0-005",
+      "SCM-MECE-L0-001 -> SCM-MECE-L0-006"
+    ],
+    "weightedEdges": [
+      {
+        "edge": "SCM-MECE-L0-005 -> SCM-MECE-L1-04",
+        "weight": 0.4,
+        "basis": "fulfillment quality branch inferred from 02_Momcozy 40% quality component",
+        "caveat": "cost 20% child is not represented under this parent"
+      },
+      {
+        "edge": "SCM-MECE-L0-005 -> SCM-MECE-L1-05",
+        "weight": 0.4,
+        "basis": "fulfillment time/logistics branch inferred from 02_Momcozy 40% time component",
+        "caveat": "cost 20% child is not represented under this parent"
+      },
+      {
+        "edge": "SCM-MECE-L0-006 -> SCM-MECE-L1-08",
+        "weight": 1.0,
+        "basis": "single-child structural identity",
+        "caveat": "to be replaced if data-trust branch gains more children"
+      }
+    ],
+    "blockedWeights": [
+      {
+        "parent": "SCM-MECE-L0-001",
+        "children": 5,
+        "blockedReason": "No explicit five-dimensional SCEI weights in source documents."
+      },
+      {
+        "parent": "SCM-MECE-L0-002",
+        "children": 3,
+        "blockedReason": "02_Momcozy cost modules do not map one-to-one to current procurement/cost-finance/reverse-after-sales children."
+      },
+      {
+        "parent": "SCM-MECE-L0-003",
+        "children": 2,
+        "blockedReason": "No explicit split between demand planning/replenishment and inventory availability."
+      }
+    ]
+  },
+  "meceCheck": [
+    {
+      "parentMetricId": "SCM-MECE-L0-001",
+      "children": 5,
+      "nullWeights": 5,
+      "weightSum": 0.0,
+      "residual": "blocked_by_missing_weight_basis"
+    },
+    {
+      "parentMetricId": "SCM-MECE-L0-002",
+      "children": 3,
+      "nullWeights": 3,
+      "weightSum": 0.0,
+      "residual": "blocked_by_missing_weight_basis"
+    },
+    {
+      "parentMetricId": "SCM-MECE-L0-003",
+      "children": 2,
+      "nullWeights": 2,
+      "weightSum": 0.0,
+      "residual": "blocked_by_missing_weight_basis"
+    },
+    {
+      "parentMetricId": "SCM-MECE-L0-005",
+      "children": 2,
+      "nullWeights": 0,
+      "weightSum": 0.8,
+      "residual": 0.2
+    },
+    {
+      "parentMetricId": "SCM-MECE-L0-006",
+      "children": 1,
+      "nullWeights": 0,
+      "weightSum": 1.0,
+      "residual": 0.0
+    }
+  ],
+  "acceptanceResult": {
+    "l0L1WeightCoverage": "3/13 weighted edges",
+    "mainTrunkClosed": false,
+    "endToEndAttributionSample": {
+      "sample": "fulfillment_experience_rate_delta = 0.40 * warehouse_execution_inventory_accuracy_delta + 0.40 * logistics_transport_fulfillment_delta + 0.20 * missing_cost_component_delta",
+      "status": "partial",
+      "reason": "0.20 cost component is documented in 02_Momcozy but not represented as a child edge under SCM-MECE-L0-005"
+    }
+  },
+  "nextRequiredOwnerDecision": [
+    "Approve explicit five-dimensional SCEI weights for cost efficiency, sellable availability, inventory capital efficiency, fulfillment experience, and data trust.",
+    "Decide whether cost modules should be remodelled to inbound/inventory/outbound before weights are filled.",
+    "Add or map the fulfillment cost component under SCM-MECE-L0-005 if 40/40/20 should be algebraically closed."
+  ]
+}

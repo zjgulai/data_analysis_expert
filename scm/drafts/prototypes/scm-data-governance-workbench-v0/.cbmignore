@@ -1,0 +1,17 @@
+node_modules/
+dist/
+build/
+tmp/
+output/
+.playwright-cli/
+.playwright-mcp/
+.codebase-memory/
+.codegraph/
+*.xlsx
+*.xls
+*.pem
+*.key
+*.sqlite
+*.db
+*.log
+.DS_Store
