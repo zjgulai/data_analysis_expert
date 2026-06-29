@@ -1,7 +1,7 @@
 ---
 title: "Release Candidate Governance Plan Draft"
 date: "2026-06-29"
-status: "planned_not_executed"
+status: "executed_via_43_50_local_only"
 scope: "Next-batch first-principles plan after pre-production readiness hard gate reached zero"
 debt_ids:
   - "release-readiness"
@@ -19,6 +19,8 @@ boundary:
 ---
 
 # B42 下一批计划：Release Candidate Governance Pack
+
+> 2026-06-29 状态同步：本文件保留 B42 原计划。执行结果已落到 `43`–`50`，其中 `49` 记录 release branch commit/push/PR 状态，`50` 记录 PR closeout 与 manual gate CSV/SQLite handoff。Manual gates 仍未解除，生产部署、provider call、ERP/OMS/WMS writeback 均未执行。
 
 ## 1. 第一性原理
 

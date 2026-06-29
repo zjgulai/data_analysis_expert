@@ -1,7 +1,7 @@
 ---
 title: "Release Branch Staging Execution Summary Draft"
 date: "2026-06-29"
-status: "branch_created_and_staged_verified_local_only"
+status: "branch_committed_pushed_pr_open_local_only"
 batch: "B42-branch-staging"
 scope: "Execution summary for creating the SCM read-only RC branch and staging only approved release candidate paths"
 depends_on:
@@ -27,9 +27,10 @@ This document records the local git branch and index preparation step after B42 
 | source branch | `main` |
 | staging rule | Chunk A/B/C allowlist from `47-release-pr-staging-checklist-draft-20260629.md` |
 | hold-out rule | Chunk D stays unstaged |
-| commit status | not committed |
-| push / PR status | not pushed, PR not opened |
+| commit status | committed: `5a1a21b chore(scm): prepare read-only RC governance pack` |
+| push / PR status | pushed to `origin/codex/scm-readonly-rc-governance-20260629`; PR #1 open |
 | staged path count | 112 |
+| PR URL | `https://github.com/zjgulai/data_analysis_expert/pull/1` |
 
 ## 2. Staged Scope
 
@@ -107,6 +108,20 @@ SCM_PREPROD_SCAN_ROOT=/Users/pray/project/ecom_ana_overview/scm npm run preprod:
 | provider call | not executed |
 | ERP/OMS/WMS writeback | not executed |
 
-## 8. Boundary Statement
+## 8. Current Remote Status
 
-This step only prepares a local release branch and index. It does not commit, push, create a PR, deploy to production, call providers, write production data, or enable ERP/OMS/WMS writeback.
+| item | value |
+|---|---|
+| PR | `https://github.com/zjgulai/data_analysis_expert/pull/1` |
+| base | `main` |
+| head | `codex/scm-readonly-rc-governance-20260629` |
+| draft | `false` |
+| state | `OPEN` |
+| mergeable | `MERGEABLE` |
+| status checks | none reported by GitHub at verification time |
+
+Push note: GitHub accepted the branch and returned large-file warnings for existing repository history. The release branch still pushed successfully.
+
+## 9. Boundary Statement
+
+This step prepared, committed, pushed, and opened a PR for the local read-only release branch. It did not deploy to production, call providers, write production data, or enable ERP/OMS/WMS writeback.

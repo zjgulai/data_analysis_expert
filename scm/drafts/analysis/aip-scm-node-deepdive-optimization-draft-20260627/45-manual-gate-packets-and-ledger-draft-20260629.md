@@ -1,7 +1,7 @@
 ---
 title: "Manual Gate Packets and Ledger Draft"
 date: "2026-06-29"
-status: "review_packet_ready_local_only"
+status: "machine_readable_review_packet_ready_local_only"
 batch: "B42-5/B42-6/B42-7/B42-8"
 scope: "Owner sign-off, field mapping, and SCEI weight source manual gate packets"
 depends_on:
@@ -150,3 +150,37 @@ Sign-off 接受标准：
 | SCEI weight packet 已复用并升级为 release gate | done |
 | Manual gate ledger 已生成 | done |
 | SQLite pending 状态未改成完成 | done |
+
+## 8. B43 结构化交接包
+
+B43 没有解除任何 manual gate，只把本页的审批请求固化为 CSV 与 SQLite 审计记录，便于后续 owner review。
+
+| artifact | path | row count | purpose |
+|---|---|---:|---|
+| Manual gate handoff detail | `drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-handoff-20260629.csv` | 49 | 逐项列出 `owner_signoff`、`field_mapping`、`owner_decision` 的 target、当前状态、所需证据字段和边界说明。 |
+| Owner/status rollup | `drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-owner-rollup-20260629.csv` | 6 | 按 `task_type + owner + status` 汇总 gate 数量和 target_refs，作为人工分派入口。 |
+| SQLite annotation | `annotation_b43_manual_gate_handoff_20260629` | 1 | 记录 CSV 交接包已生成，且 pending gate 未被标记为完成。 |
+| SQLite decision log | `decision_b43_manual_gate_handoff_pr1_20260629` | 1 | 记录下一步只能进入人工 review queue，不能开放 provider/production write/writeback。 |
+
+验收查询：
+
+```sql
+select task_type, priority, status, count(*)
+from governance_tasks
+where priority='P0'
+group by task_type, priority, status;
+
+select id, target_type, target_id, status
+from annotations
+where id='annotation_b43_manual_gate_handoff_20260629';
+
+select id, linked_metric_id, status
+from decision_logs
+where id='decision_b43_manual_gate_handoff_pr1_20260629';
+```
+
+事实：B43 后 P0 manual gates 仍为 owner signoff `30`、field mapping `18`、SCEI owner decision `1`。
+
+推断：结构化交接包可以减少人工 review 前的信息整理成本，但不构成 owner 批准。
+
+不确定项：真实 owner 签署、真实源字段证据、SCEI 五维权重数值仍需人工提供。
