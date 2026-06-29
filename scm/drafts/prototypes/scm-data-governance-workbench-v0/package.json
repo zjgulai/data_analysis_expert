@@ -22,6 +22,7 @@
     "smoke:deepseek-live": "node scripts/smoke-deepseek-live.mjs",
     "smoke:ui": "node scripts/smoke-ui.mjs",
     "smoke:readonly": "node scripts/smoke-readonly.mjs",
+    "audit:ui-baseline": "node scripts/audit-ui-baseline.mjs",
     "preprod:check": "node scripts/preprod-check.mjs"
   },
   "dependencies": {
