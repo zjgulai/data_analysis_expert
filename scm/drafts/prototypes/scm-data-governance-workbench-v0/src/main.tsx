@@ -1937,7 +1937,7 @@ function ModuleGrid({ modules, onSelect }: { modules: WorkbenchModule[]; onSelec
 
 function OverviewPanel({ overview, modules, onSelect }: { overview: Overview; modules: WorkbenchModule[]; onSelect: (id: string) => void }) {
   return (
-    <div className="stack">
+    <div className="stack overviewWorkbench">
       <MissionHero overview={overview} modules={modules} />
       <OverviewAiSearch onOpenKnowledge={() => onSelect("ai-knowledge")} />
       <CommandCenterQueues overview={overview} onSelect={onSelect} />
