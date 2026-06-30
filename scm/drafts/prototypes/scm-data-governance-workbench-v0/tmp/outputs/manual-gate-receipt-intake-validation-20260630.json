@@ -42,7 +42,13 @@
     "blockedReceiptRows": 53,
     "statusPlanEligibleRows": 0,
     "templateRowsAwaitingReceipt": 53,
-    "blankHumanFieldCells": 265
+    "blankHumanFieldCells": 265,
+    "reviewRouteCounts": {
+      "manual_owner_signoff_review_queue": 30,
+      "manual_field_mapping_review_queue": 18,
+      "manual_scei_weight_review_queue": 5
+    },
+    "eligibleReviewRouteCounts": {}
   },
   "schemaValid": true,
   "readyForStatusMutation": false,
@@ -80,6 +86,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -107,6 +114,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -134,6 +142,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -161,6 +170,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -188,6 +198,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -215,6 +226,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -242,6 +254,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -269,6 +282,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -296,6 +310,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -323,6 +338,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -350,6 +366,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -377,6 +394,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -404,6 +422,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -431,6 +450,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -458,6 +478,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -485,6 +506,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -512,6 +534,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -539,6 +562,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_scei_weight_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -566,6 +590,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_scei_weight_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -593,6 +618,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_scei_weight_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -620,6 +646,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_scei_weight_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -647,6 +674,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_scei_weight_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -674,6 +702,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -701,6 +730,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -728,6 +758,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -755,6 +786,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -782,6 +814,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -809,6 +842,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -836,6 +870,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -863,6 +898,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -890,6 +926,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -917,6 +954,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -944,6 +982,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -971,6 +1010,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -998,6 +1038,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -1025,6 +1066,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -1052,6 +1094,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -1079,6 +1122,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -1106,6 +1150,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -1133,6 +1178,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -1160,6 +1206,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -1187,6 +1234,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -1214,6 +1262,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -1241,6 +1290,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -1268,6 +1318,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -1295,6 +1346,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -1322,6 +1374,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -1349,6 +1402,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -1376,6 +1430,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -1403,6 +1458,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -1430,6 +1486,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -1457,6 +1514,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     },
@@ -1484,6 +1542,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "statusMutation": false,
       "plannedMutation": "none"
     }

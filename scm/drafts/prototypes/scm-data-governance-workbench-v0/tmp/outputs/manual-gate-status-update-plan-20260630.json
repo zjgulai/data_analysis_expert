@@ -17,7 +17,13 @@
     "totalRows": 53,
     "eligibleRows": 0,
     "blockedRows": 53,
-    "proposedStatusMutations": 0
+    "proposedStatusMutations": 0,
+    "reviewRouteCounts": {
+      "manual_owner_signoff_review_queue": 30,
+      "manual_field_mapping_review_queue": 18,
+      "manual_scei_weight_review_queue": 5
+    },
+    "eligibleReviewRouteCounts": {}
   },
   "readyForStatusMutation": false,
   "rows": [
@@ -35,6 +41,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -53,6 +60,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -71,6 +79,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -89,6 +98,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -107,6 +117,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -125,6 +136,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -143,6 +155,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -161,6 +174,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -179,6 +193,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -197,6 +212,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -215,6 +231,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -233,6 +250,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -251,6 +269,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -269,6 +288,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -287,6 +307,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -305,6 +326,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -323,6 +345,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -341,6 +364,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_scei_weight_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -359,6 +383,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_scei_weight_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -377,6 +402,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_scei_weight_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -395,6 +421,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_scei_weight_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -413,6 +440,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_scei_weight_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -431,6 +459,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -449,6 +478,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -467,6 +497,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -485,6 +516,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -503,6 +535,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -521,6 +554,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -539,6 +573,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -557,6 +592,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -575,6 +611,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -593,6 +630,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -611,6 +649,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -629,6 +668,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -647,6 +687,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -665,6 +706,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -683,6 +725,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -701,6 +744,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -719,6 +763,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -737,6 +782,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -755,6 +801,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -773,6 +820,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -791,6 +839,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -809,6 +858,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -827,6 +877,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -845,6 +896,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -863,6 +915,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -881,6 +934,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -899,6 +953,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -917,6 +972,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -935,6 +991,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -953,6 +1010,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
@@ -971,6 +1029,7 @@
         "missing_scope",
         "missing_rollback_rule"
       ],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
       "dryRunOnly": true
