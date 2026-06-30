@@ -2346,6 +2346,42 @@ tbody tr:hover td {
   gap: 10px;
 }
 
+.lineageQualityWorkbench .sourceLineageGrid {
+  max-height: clamp(280px, 34dvh, 300px);
+  overflow: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+
+.lineageQualityWorkbench .runtimeBusinessGrid {
+  max-height: clamp(400px, 46dvh, 420px);
+  overflow: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+
+.lineageQualityWorkbench .runtimeBusinessTables,
+.lineageQualityWorkbench > .split {
+  align-items: start;
+}
+
+.lineageQualityWorkbench .runtimeBusinessTables .tableWrap,
+.lineageQualityWorkbench > .assetSurface .tableWrap,
+.lineageQualityWorkbench > .split .tableWrap {
+  max-height: clamp(280px, 34dvh, 300px);
+}
+
+.lineageQualityWorkbench .sourceLineageCard,
+.lineageQualityWorkbench .runtimeBusinessCard {
+  gap: 7px;
+  padding: 10px;
+}
+
+.lineageQualityWorkbench .runtimeBusinessStats > div,
+.lineageQualityWorkbench .sourceLineageStats > div {
+  padding: 10px;
+}
+
 .object360Row {
   display: grid;
   gap: 6px;

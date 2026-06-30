@@ -2492,7 +2492,7 @@ function LineagePanel({ module }: { module: WorkbenchModule }) {
   }
 
   return (
-    <section className="panel">
+    <section className="panel lineageQualityWorkbench">
       <ModuleHeader module={module} />
       <WorkflowStrip steps={["查看血缘", "定位影响", "注解问题", "生成修订建议", "导出证据"]} />
       {error ? <div className="error">{error}</div> : null}
