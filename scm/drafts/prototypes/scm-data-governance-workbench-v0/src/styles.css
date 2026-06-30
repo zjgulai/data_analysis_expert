@@ -4204,6 +4204,56 @@ tbody tr:hover td {
   margin-top: 2px;
 }
 
+.riskWorkbench .strategyGrid,
+.riskWorkbench .riskNarrativeSurface {
+  align-items: start;
+}
+
+.riskWorkbench .riskEvidenceDrawer {
+  max-height: clamp(500px, 58dvh, 620px);
+  overflow: auto;
+  scrollbar-width: thin;
+}
+
+.riskWorkbench .riskSignalGroupedList {
+  max-height: clamp(560px, 60dvh, 720px);
+  overflow: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+
+.riskWorkbench .recommendationGrid {
+  max-height: clamp(620px, 68dvh, 820px);
+  overflow: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+
+.riskWorkbench .recommendationCard {
+  gap: 9px;
+  padding: 12px;
+  box-shadow: none;
+}
+
+.riskWorkbench .recommendationHead strong {
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.riskWorkbench .recommendationCard > p {
+  display: -webkit-box;
+  font-size: 12px;
+  line-height: 1.45;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.riskWorkbench .recommendationActions,
+.riskWorkbench .actionOptionList {
+  gap: 6px;
+}
+
 .riskAdvancedDetails {
   min-width: 0;
   border: 1px solid var(--line);
