@@ -1,0 +1,5 @@
+owner,packet_type,gate_id,target_ref,metric_code,metric_name,decision_result,evidence_ref,signoff_date,scope,rollback_rule,status_mutation,boundary_note
+采购与供应商 Owner,owner_signoff,signoff_4,SCM-MECE-L3-016,purchase_delivery_rate,采购交付率,,,,,,false,manual_receipt_template_only_status_mutation_false
+采购与供应商 Owner,owner_signoff,signoff_5,SCM-MECE-L3-019,supplier_otif_rate,供应商 OTIF,,,,,,false,manual_receipt_template_only_status_mutation_false
+采购与供应商 Owner,owner_signoff,signoff_6,SCM-MECE-L3-119,supplier_top3_purchase_concentration,TOP3 供应商采购集中度,,,,,,false,manual_receipt_template_only_status_mutation_false
+采购与供应商 Owner,owner_signoff,signoff_7,SCM-MECE-L3-121,purchase_order_cycle_days,采购订单周期天数,,,,,,false,manual_receipt_template_only_status_mutation_false

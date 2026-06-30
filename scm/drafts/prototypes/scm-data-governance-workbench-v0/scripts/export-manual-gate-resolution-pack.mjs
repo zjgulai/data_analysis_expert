@@ -10,7 +10,8 @@ const outputPaths = {
   fieldMapping: process.env.SCM_MANUAL_GATE_MAPPING_CSV || join(root, "data", "manual-gate-field-mapping-intake-20260630.csv"),
   sceiWeight: process.env.SCM_MANUAL_GATE_SCEI_CSV || join(root, "data", "manual-gate-scei-weight-intake-20260630.csv"),
   summary: process.env.SCM_MANUAL_GATE_SUMMARY_JSON || join(root, "tmp", "outputs", "manual-gate-resolution-summary-20260630.json"),
-  ownerPacketDir: process.env.SCM_MANUAL_GATE_PACKET_DIR || join(root, "tmp", "outputs", "manual-gate-owner-packets-20260630")
+  ownerPacketDir: process.env.SCM_MANUAL_GATE_PACKET_DIR || join(root, "tmp", "outputs", "manual-gate-owner-packets-20260630"),
+  receiptTemplateDir: process.env.SCM_MANUAL_GATE_RECEIPT_DIR || join(root, "tmp", "outputs", "manual-gate-receipt-templates-20260630")
 };
 
 function ensureParent(path) {
@@ -83,6 +84,24 @@ function packetRow(packetOwner, packetType, row) {
     required_evidence_fields: row.required_evidence_fields || "proposed_weight; basis_type; basis_description; owner; signoff_date; evidence_ref; decision_result",
     resolution_rule: row.resolution_rule || "weights_remain_blank_until_owner_receipt_exists",
     boundary_note: row.boundary_note || boundaryNote
+  };
+}
+
+function receiptTemplateRow(packetOwner, row) {
+  return {
+    owner: packetOwner,
+    packet_type: row.packet_type,
+    gate_id: row.gate_id,
+    target_ref: row.target_ref,
+    metric_code: row.metric_code,
+    metric_name: row.metric_name,
+    decision_result: "",
+    evidence_ref: "",
+    signoff_date: "",
+    scope: "",
+    rollback_rule: "",
+    status_mutation: "false",
+    boundary_note: "manual_receipt_template_only_status_mutation_false"
   };
 }
 
@@ -254,7 +273,9 @@ const summary = {
     fieldMappingOpen: fieldMappingRows.length,
     sceiWeightSourceOwnerDecisionPacketsReady: sceiTaskRows.length,
     sceiWeightChildrenAwaitingOwnerWeights: sceiWeightRows.length,
-    ownerPacketCount: ownerPackets.size
+    ownerPacketCount: ownerPackets.size,
+    receiptTemplateCount: 0,
+    receiptTemplateRows: 0
   },
   ownerBuckets,
   closureRules: {
@@ -272,9 +293,11 @@ const summary = {
     fieldMappingCsv: outputPaths.fieldMapping,
     sceiWeightCsv: outputPaths.sceiWeight,
     summaryJson: outputPaths.summary,
-    ownerPacketDir: outputPaths.ownerPacketDir
+    ownerPacketDir: outputPaths.ownerPacketDir,
+    receiptTemplateDir: outputPaths.receiptTemplateDir
   },
-  ownerPackets: []
+  ownerPackets: [],
+  receiptTemplates: []
 };
 
 writeCsv(outputPaths.ownerSignoff, ownerSignoffRows, [
@@ -350,15 +373,34 @@ const packetColumns = [
   "boundary_note"
 ];
 
+const receiptTemplateColumns = [
+  "owner",
+  "packet_type",
+  "gate_id",
+  "target_ref",
+  "metric_code",
+  "metric_name",
+  "decision_result",
+  "evidence_ref",
+  "signoff_date",
+  "scope",
+  "rollback_rule",
+  "status_mutation",
+  "boundary_note"
+];
+
 for (const [packetOwner, rows] of [...ownerPackets.entries()].sort(([a], [b]) => a.localeCompare(b, "zh-Hans-CN"))) {
   const slug = ownerSlug(packetOwner);
   const csvPath = join(outputPaths.ownerPacketDir, `${slug}.csv`);
   const markdownPath = join(outputPaths.ownerPacketDir, `${slug}.md`);
+  const receiptCsvPath = join(outputPaths.receiptTemplateDir, `${slug}.csv`);
+  const receiptRows = rows.map((row) => receiptTemplateRow(packetOwner, row));
   const counts = rows.reduce((acc, row) => {
     acc[row.packet_type] = (acc[row.packet_type] || 0) + 1;
     return acc;
   }, {});
   writeCsv(csvPath, rows, packetColumns);
+  writeCsv(receiptCsvPath, receiptRows, receiptTemplateColumns);
   writeMarkdown(
     markdownPath,
     `---\n` +
@@ -402,6 +444,14 @@ for (const [packetOwner, rows] of [...ownerPackets.entries()].sort(([a], [b]) =>
     csvPath,
     markdownPath
   });
+  summary.receiptTemplates.push({
+    owner: packetOwner,
+    slug,
+    rowCount: receiptRows.length,
+    csvPath: receiptCsvPath
+  });
+  summary.counts.receiptTemplateCount += 1;
+  summary.counts.receiptTemplateRows += receiptRows.length;
 }
 
 ensureParent(outputPaths.summary);
