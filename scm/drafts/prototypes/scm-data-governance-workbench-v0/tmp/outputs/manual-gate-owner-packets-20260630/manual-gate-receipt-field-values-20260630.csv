@@ -1,0 +1,14 @@
+field,owner_editable,required_when_template_mode_false,allowed_values,validation_rule,owner_instruction,boundary
+owner,false,true,existing_packet_owner,must_not_be_blank,Do not edit generated owner name,status_mutation_false
+packet_type,false,true,owner_signoff|field_mapping|scei_weight_source,must_match_review_route,Do not edit generated packet type,status_mutation_false
+gate_id,false,true,generated_gate_id,must_not_be_blank,Do not edit generated gate id,status_mutation_false
+target_ref,false,true,generated_target_ref,must_not_be_blank,Do not edit generated target reference,status_mutation_false
+metric_code,false,true,generated_metric_code,must_not_be_blank,Do not edit generated metric code,status_mutation_false
+metric_name,false,true,generated_metric_name,must_not_be_blank,Do not edit generated metric name,status_mutation_false
+decision_result,true,true,approved_for_manual_review|approved_with_conditions|rejected_needs_rework,must_match_allowed_enum,Use one allowed value only,status_mutation_false
+evidence_ref,true,true,real_approval_or_source_reference,must_not_be_blank,Point to real owner evidence; do not use fixture references,status_mutation_false
+signoff_date,true,true,YYYY-MM-DD,must_not_be_blank,Use ISO date format,status_mutation_false
+scope,true,true,plain_text_scope_and_conditions,must_not_be_blank,State coverage period conditions and exclusions,status_mutation_false
+rollback_rule,true,true,plain_text_rework_or_reopen_rule,must_not_be_blank,State how the receipt can be reopened or reversed,status_mutation_false
+status_mutation,false,true,false,must_equal_false,Do not edit,status_mutation_false
+boundary_note,false,true,must_include_status_mutation_false,must_include_status_mutation_false,Do not remove boundary note,status_mutation_false

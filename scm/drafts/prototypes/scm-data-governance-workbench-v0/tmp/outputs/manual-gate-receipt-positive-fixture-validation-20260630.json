@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-30T05:45:00.000Z",
+  "generatedAt": "2026-06-30T06:20:00.000Z",
   "templateMode": false,
   "sourceMode": "receipt_intake",
   "receiptDir": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630",
@@ -31,6 +31,11 @@
       "rollback_rule",
       "status_mutation",
       "boundary_note"
+    ],
+    "decisionResultAllowedValues": [
+      "approved_for_manual_review",
+      "approved_with_conditions",
+      "rejected_needs_rework"
     ]
   },
   "counts": {
@@ -50,6 +55,17 @@
     "eligibleReviewRouteCounts": {
       "manual_owner_signoff_review_queue": 1,
       "manual_field_mapping_review_queue": 1
+    },
+    "decisionResultCounts": {
+      "approved_for_manual_review": 2
+    },
+    "invalidDecisionResultRows": 0
+  },
+  "contract": {
+    "decisionResultAllowedValues": {
+      "approved_for_manual_review": "Owner approves this receipt for downstream manual review.",
+      "approved_with_conditions": "Owner approves with explicit conditions captured in scope/evidence_ref.",
+      "rejected_needs_rework": "Owner rejects this gate and requests rework before another receipt."
     }
   },
   "schemaValid": true,
@@ -73,6 +89,7 @@
       "targetRef": "SCM-MECE-L3-036",
       "metricCode": "full_chain_turnover_days_amount",
       "metricName": "全链条库存资金周转天数",
+      "decisionResult": "approved_for_manual_review",
       "receiptStatus": "complete_pending_manual_review",
       "missingHumanFields": [],
       "blockers": [],
@@ -89,6 +106,7 @@
       "targetRef": "SCM-MECE-L3-036",
       "metricCode": "full_chain_turnover_days_amount",
       "metricName": "全链条库存资金周转天数",
+      "decisionResult": "approved_for_manual_review",
       "receiptStatus": "complete_pending_manual_review",
       "missingHumanFields": [],
       "blockers": [],
