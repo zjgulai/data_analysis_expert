@@ -1,0 +1,104 @@
+{
+  "generatedAt": "2026-06-30T04:35:00.000Z",
+  "templateMode": true,
+  "receiptDir": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630",
+  "summaryPath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-resolution-summary-20260630.json",
+  "validationPath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-validation-20260630.json",
+  "boundary": {
+    "statusMutation": false,
+    "providerCalls": false,
+    "productionWrites": false,
+    "erpWriteback": false,
+    "sourceReadMode": "csv_read_only"
+  },
+  "expected": {
+    "receiptFiles": 8,
+    "totalRows": 53,
+    "columns": [
+      "owner",
+      "packet_type",
+      "gate_id",
+      "target_ref",
+      "metric_code",
+      "metric_name",
+      "decision_result",
+      "evidence_ref",
+      "signoff_date",
+      "scope",
+      "rollback_rule",
+      "status_mutation",
+      "boundary_note"
+    ]
+  },
+  "counts": {
+    "receiptFiles": 8,
+    "totalRows": 53,
+    "rowsWithStatusMutationFalse": 53,
+    "filledReceiptRows": 0,
+    "partialReceiptRows": 0,
+    "templateRowsAwaitingReceipt": 53,
+    "blankHumanFieldCells": 265
+  },
+  "schemaValid": true,
+  "readyForStatusMutation": false,
+  "files": [
+    {
+      "fileName": "data-governance-owner.csv",
+      "path": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630/data-governance-owner.csv",
+      "rowCount": 6,
+      "schemaValid": true,
+      "templateRowsAwaitingReceipt": 6
+    },
+    {
+      "fileName": "finance-cost-owner.csv",
+      "path": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630/finance-cost-owner.csv",
+      "rowCount": 10,
+      "schemaValid": true,
+      "templateRowsAwaitingReceipt": 10
+    },
+    {
+      "fileName": "inventory-ops-owner.csv",
+      "path": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630/inventory-ops-owner.csv",
+      "rowCount": 18,
+      "schemaValid": true,
+      "templateRowsAwaitingReceipt": 18
+    },
+    {
+      "fileName": "logistics-ops-owner.csv",
+      "path": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630/logistics-ops-owner.csv",
+      "rowCount": 4,
+      "schemaValid": true,
+      "templateRowsAwaitingReceipt": 4
+    },
+    {
+      "fileName": "planning-owner.csv",
+      "path": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630/planning-owner.csv",
+      "rowCount": 3,
+      "schemaValid": true,
+      "templateRowsAwaitingReceipt": 3
+    },
+    {
+      "fileName": "procurement-supplier-owner.csv",
+      "path": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630/procurement-supplier-owner.csv",
+      "rowCount": 4,
+      "schemaValid": true,
+      "templateRowsAwaitingReceipt": 4
+    },
+    {
+      "fileName": "scm-data-governance-owner.csv",
+      "path": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630/scm-data-governance-owner.csv",
+      "rowCount": 5,
+      "schemaValid": true,
+      "templateRowsAwaitingReceipt": 5
+    },
+    {
+      "fileName": "warehouse-ops-owner.csv",
+      "path": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630/warehouse-ops-owner.csv",
+      "rowCount": 3,
+      "schemaValid": true,
+      "templateRowsAwaitingReceipt": 3
+    }
+  ],
+  "warnings": [],
+  "errors": []
+}

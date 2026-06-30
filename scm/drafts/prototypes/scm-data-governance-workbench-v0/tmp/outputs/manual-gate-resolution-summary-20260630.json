@@ -6,7 +6,8 @@
     "fieldMapping": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-field-mapping-intake-20260630.csv",
     "sceiWeight": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-scei-weight-intake-20260630.csv",
     "summary": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-resolution-summary-20260630.json",
-    "ownerPacketDir": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-owner-packets-20260630"
+    "ownerPacketDir": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-owner-packets-20260630",
+    "receiptTemplateDir": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630"
   },
   "boundary": {
     "productionWrites": false,
@@ -21,7 +22,9 @@
     "fieldMappingOpen": 18,
     "sceiWeightSourceOwnerDecisionPacketsReady": 1,
     "sceiWeightChildrenAwaitingOwnerWeights": 5,
-    "ownerPacketCount": 8
+    "ownerPacketCount": 8,
+    "receiptTemplateCount": 8,
+    "receiptTemplateRows": 53
   },
   "ownerBuckets": [
     {
@@ -76,7 +79,8 @@
     "fieldMappingCsv": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-field-mapping-intake-20260630.csv",
     "sceiWeightCsv": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-scei-weight-intake-20260630.csv",
     "summaryJson": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-resolution-summary-20260630.json",
-    "ownerPacketDir": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-owner-packets-20260630"
+    "ownerPacketDir": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-owner-packets-20260630",
+    "receiptTemplateDir": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630"
   },
   "ownerPackets": [
     {
@@ -161,6 +165,56 @@
       },
       "csvPath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-owner-packets-20260630/logistics-ops-owner.csv",
       "markdownPath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-owner-packets-20260630/logistics-ops-owner.md"
+    }
+  ],
+  "receiptTemplates": [
+    {
+      "owner": "财务/成本 Owner",
+      "slug": "finance-cost-owner",
+      "rowCount": 10,
+      "csvPath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630/finance-cost-owner.csv"
+    },
+    {
+      "owner": "采购与供应商 Owner",
+      "slug": "procurement-supplier-owner",
+      "rowCount": 4,
+      "csvPath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630/procurement-supplier-owner.csv"
+    },
+    {
+      "owner": "仓储运营 Owner",
+      "slug": "warehouse-ops-owner",
+      "rowCount": 3,
+      "csvPath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630/warehouse-ops-owner.csv"
+    },
+    {
+      "owner": "供应链数据治理 Owner",
+      "slug": "scm-data-governance-owner",
+      "rowCount": 5,
+      "csvPath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630/scm-data-governance-owner.csv"
+    },
+    {
+      "owner": "计划 Owner",
+      "slug": "planning-owner",
+      "rowCount": 3,
+      "csvPath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630/planning-owner.csv"
+    },
+    {
+      "owner": "库存运营 Owner",
+      "slug": "inventory-ops-owner",
+      "rowCount": 18,
+      "csvPath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630/inventory-ops-owner.csv"
+    },
+    {
+      "owner": "数据治理 Owner",
+      "slug": "data-governance-owner",
+      "rowCount": 6,
+      "csvPath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630/data-governance-owner.csv"
+    },
+    {
+      "owner": "物流运营 Owner",
+      "slug": "logistics-ops-owner",
+      "rowCount": 4,
+      "csvPath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630/logistics-ops-owner.csv"
     }
   ]
 }

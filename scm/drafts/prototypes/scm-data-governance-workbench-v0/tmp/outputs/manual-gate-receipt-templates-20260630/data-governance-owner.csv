@@ -1,0 +1,7 @@
+owner,packet_type,gate_id,target_ref,metric_code,metric_name,decision_result,evidence_ref,signoff_date,scope,rollback_rule,status_mutation,boundary_note
+数据治理 Owner,owner_signoff,signoff_28,SCM-MECE-L3-137,unmatched_planned_inventory_qty,未匹配计划库存数量,,,,,,false,manual_receipt_template_only_status_mutation_false
+数据治理 Owner,owner_signoff,signoff_29,SCM-MECE-L3-138,inventory_sync_delay_minutes,库存同步延迟分钟数,,,,,,false,manual_receipt_template_only_status_mutation_false
+数据治理 Owner,owner_signoff,signoff_30,SCM-MECE-L3-139,business_default_zero_rate,业务默认 0 字段占比,,,,,,false,manual_receipt_template_only_status_mutation_false
+数据治理 Owner,field_mapping,mapping_4,SCM-MECE-L3-137,unmatched_planned_inventory_qty,未匹配计划库存数量,,,,,,false,manual_receipt_template_only_status_mutation_false
+数据治理 Owner,field_mapping,mapping_12,SCM-MECE-L3-138,inventory_sync_delay_minutes,库存同步延迟分钟数,,,,,,false,manual_receipt_template_only_status_mutation_false
+数据治理 Owner,field_mapping,mapping_10,SCM-MECE-L3-139,business_default_zero_rate,业务默认 0 字段占比,,,,,,false,manual_receipt_template_only_status_mutation_false

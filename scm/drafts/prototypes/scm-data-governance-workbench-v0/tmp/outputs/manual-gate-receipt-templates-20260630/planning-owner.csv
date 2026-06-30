@@ -1,0 +1,4 @@
+owner,packet_type,gate_id,target_ref,metric_code,metric_name,decision_result,evidence_ref,signoff_date,scope,rollback_rule,status_mutation,boundary_note
+计划 Owner,owner_signoff,signoff_1,SCM-MECE-L3-001,forecast_accuracy_daily,日常预测准确率,,,,,,false,manual_receipt_template_only_status_mutation_false
+计划 Owner,owner_signoff,signoff_2,SCM-MECE-L3-007,recommended_purchase_qty,推荐采购量,,,,,,false,manual_receipt_template_only_status_mutation_false
+计划 Owner,owner_signoff,signoff_3,SCM-MECE-L3-112,plan_attainment_rate,计划达成率,,,,,,false,manual_receipt_template_only_status_mutation_false

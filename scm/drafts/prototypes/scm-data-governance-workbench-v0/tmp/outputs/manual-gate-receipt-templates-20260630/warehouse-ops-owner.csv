@@ -1,0 +1,4 @@
+owner,packet_type,gate_id,target_ref,metric_code,metric_name,decision_result,evidence_ref,signoff_date,scope,rollback_rule,status_mutation,boundary_note
+仓储运营 Owner,field_mapping,mapping_34,SCM-MECE-L3-122,storage_capacity_utilization_rate,库容利用率,,,,,,false,manual_receipt_template_only_status_mutation_false
+仓储运营 Owner,field_mapping,mapping_32,SCM-MECE-L3-123,pallet_fill_rate,托盘填充率,,,,,,false,manual_receipt_template_only_status_mutation_false
+仓储运营 Owner,field_mapping,mapping_33,SCM-MECE-L3-124,picking_uph,拣货效率 UPH,,,,,,false,manual_receipt_template_only_status_mutation_false
