@@ -9,6 +9,7 @@ const validationPath = process.env.SCM_MANUAL_GATE_RECEIPT_VALIDATION_JSON || jo
 const statusPlanPath = process.env.SCM_MANUAL_GATE_STATUS_PLAN_JSON || join(root, "tmp", "outputs", "manual-gate-status-update-plan-20260630.json");
 const templateMode = process.env.SCM_MANUAL_GATE_RECEIPT_TEMPLATE_MODE !== "false";
 const generatedAt = process.env.SCM_MANUAL_GATE_RECEIPT_VALIDATED_AT || new Date().toISOString();
+const expectedBlockersMode = process.env.SCM_MANUAL_GATE_EXPECTED_BLOCKERS === "true";
 
 const expectedColumns = [
   "owner",
@@ -38,6 +39,13 @@ const decisionResultAllowedValues = {
   rejected_needs_rework: "Owner rejects this gate and requests rework before another receipt."
 };
 const decisionResultValues = Object.keys(decisionResultAllowedValues);
+const expectedBlockerNames = new Set(
+  (process.env.SCM_MANUAL_GATE_EXPECTED_BLOCKER_NAMES ||
+    "invalid_decision_result,unsupported_packet_type,status_mutation_must_remain_false")
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean)
+);
 
 function ensureParent(path) {
   mkdirSync(dirname(path), { recursive: true });
@@ -246,6 +254,7 @@ for (const inputFile of inputFiles) {
         receiptStatus: receiptComplete ? "complete_pending_manual_review" : "blocked_missing_receipt_fields",
         missingHumanFields,
         blockers: rowBlockers,
+        inputStatusMutation: record.status_mutation,
         proposedReviewRoute,
         statusMutation: false,
         plannedMutation: "none"
@@ -260,6 +269,7 @@ for (const inputFile of inputFiles) {
         decisionResult: outcome.decisionResult,
         receiptStatus: outcome.receiptStatus,
         blockers: outcome.blockers,
+        inputStatusMutation: outcome.inputStatusMutation,
         proposedReviewRoute: outcome.proposedReviewRoute,
         proposedStatusChange: null,
         statusMutation: false,
@@ -290,6 +300,45 @@ if (totalRows !== expectedTotalRows) {
 if (templateMode && filledReceiptRows + partialReceiptRows > 0) {
   errors.push(`template_human_fields_present:${filledReceiptRows + partialReceiptRows}`);
 }
+
+const blockerCounts = {};
+rowOutcomes.forEach((outcome) => {
+  outcome.blockers.forEach((blocker) => increment(blockerCounts, blocker));
+});
+const requiredExpectedBlockers = [...expectedBlockerNames];
+const missingExpectedBlockers = requiredExpectedBlockers.filter((blocker) => !blockerCounts[blocker]);
+const unexpectedBlockers = Object.keys(blockerCounts).filter((blocker) => !expectedBlockerNames.has(blocker));
+const disallowedValidationIssues = expectedBlockersMode
+  ? errors.filter((issue) => !issue.includes(":decision_result:") && !issue.includes(":status_mutation:"))
+  : [];
+const expectedBlockersSatisfied =
+  expectedBlockersMode &&
+  !templateMode &&
+  totalRows > 0 &&
+  blockedReceiptRows === totalRows &&
+  statusPlanEligibleRows === 0 &&
+  missingExpectedBlockers.length === 0 &&
+  unexpectedBlockers.length === 0 &&
+  disallowedValidationIssues.length === 0;
+const expectedBlockerValidation = expectedBlockersMode
+  ? {
+      enabled: true,
+      requiredBlockers: requiredExpectedBlockers,
+      blockerCounts,
+      missingExpectedBlockers,
+      unexpectedBlockers,
+      disallowedValidationIssues,
+      satisfied: expectedBlockersSatisfied
+    }
+  : {
+      enabled: false,
+      requiredBlockers: [],
+      blockerCounts,
+      missingExpectedBlockers: [],
+      unexpectedBlockers: [],
+      disallowedValidationIssues: [],
+      satisfied: false
+    };
 
 const report = {
   generatedAt,
@@ -326,11 +375,13 @@ const report = {
     reviewRouteCounts,
     eligibleReviewRouteCounts,
     decisionResultCounts,
-    invalidDecisionResultRows
+    invalidDecisionResultRows,
+    blockerCounts
   },
   contract: {
     decisionResultAllowedValues
   },
+  expectedBlockerValidation,
   schemaValid,
   readyForStatusMutation: false,
   files,
@@ -362,11 +413,13 @@ const statusPlan = {
     reviewRouteCounts,
     eligibleReviewRouteCounts,
     decisionResultCounts,
-    invalidDecisionResultRows
+    invalidDecisionResultRows,
+    blockerCounts
   },
   contract: {
     decisionResultAllowedValues
   },
+  expectedBlockerValidation,
   readyForStatusMutation: false,
   rows: statusPlanRows
 };
@@ -379,4 +432,4 @@ if (!templateMode) {
 }
 console.log(JSON.stringify(report, null, 2));
 
-if (errors.length) process.exit(1);
+if (errors.length && !expectedBlockersSatisfied) process.exit(1);
