@@ -1,9 +1,12 @@
 {
   "generatedAt": "2026-06-30T04:35:00.000Z",
   "templateMode": true,
+  "sourceMode": "receipt_templates",
   "receiptDir": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630",
+  "receiptIntakePath": null,
   "summaryPath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-resolution-summary-20260630.json",
   "validationPath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-validation-20260630.json",
+  "statusPlanPath": null,
   "boundary": {
     "statusMutation": false,
     "providerCalls": false,
@@ -36,6 +39,8 @@
     "rowsWithStatusMutationFalse": 53,
     "filledReceiptRows": 0,
     "partialReceiptRows": 0,
+    "blockedReceiptRows": 0,
+    "statusPlanEligibleRows": 0,
     "templateRowsAwaitingReceipt": 53,
     "blankHumanFieldCells": 265
   },
@@ -99,6 +104,7 @@
       "templateRowsAwaitingReceipt": 3
     }
   ],
+  "rowOutcomes": [],
   "warnings": [],
   "errors": []
 }
