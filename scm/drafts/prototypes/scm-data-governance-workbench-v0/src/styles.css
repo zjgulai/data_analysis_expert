@@ -594,6 +594,72 @@ h3 {
   line-height: 1.55;
 }
 
+.overviewWorkbench {
+  gap: 14px;
+}
+
+.overviewWorkbench .commandCenterPanel,
+.overviewWorkbench > .panel {
+  padding: 14px;
+}
+
+.overviewWorkbench .commandCenterGrid {
+  align-items: start;
+}
+
+.overviewWorkbench .queueCard {
+  gap: 10px;
+  padding: 12px;
+}
+
+.overviewWorkbench .queueList,
+.overviewWorkbench .miniBarList {
+  max-height: clamp(220px, 28dvh, 250px);
+  overflow: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+
+.overviewWorkbench .queueList.compact {
+  max-height: clamp(200px, 25dvh, 230px);
+}
+
+.overviewWorkbench .riskInstanceStrip {
+  max-height: clamp(72px, 12dvh, 86px);
+  overflow: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+
+.overviewWorkbench .moduleGrid {
+  max-height: clamp(500px, 58dvh, 540px);
+  overflow: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+
+.overviewWorkbench .moduleCard {
+  gap: 8px;
+  min-height: 164px;
+  padding: 12px;
+}
+
+.overviewWorkbench .moduleCard p {
+  min-height: 40px;
+  line-height: 1.5;
+}
+
+.overviewWorkbench .readinessGrid {
+  max-height: clamp(340px, 40dvh, 380px);
+  overflow: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+
+.overviewWorkbench .readinessItem {
+  padding: 12px;
+}
+
 .moduleHeader {
   display: flex;
   justify-content: space-between;
