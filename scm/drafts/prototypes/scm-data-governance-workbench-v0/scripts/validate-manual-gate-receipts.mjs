@@ -27,6 +27,11 @@ const expectedColumns = [
 ];
 const humanReceiptFields = ["decision_result", "evidence_ref", "signoff_date", "scope", "rollback_rule"];
 const identityFields = ["owner", "packet_type", "gate_id", "target_ref", "metric_code", "metric_name"];
+const reviewRoutes = {
+  owner_signoff: "manual_owner_signoff_review_queue",
+  field_mapping: "manual_field_mapping_review_queue",
+  scei_weight_source: "manual_scei_weight_review_queue"
+};
 
 function ensureParent(path) {
   mkdirSync(dirname(path), { recursive: true });
@@ -80,11 +85,21 @@ function toObjects(rows) {
   };
 }
 
+function reviewRouteFor(packetType) {
+  return reviewRoutes[packetType] || "manual_gate_exception_review_queue";
+}
+
+function increment(map, key) {
+  map[key] = (map[key] || 0) + 1;
+}
+
 const errors = [];
 const warnings = [];
 const files = [];
 const rowOutcomes = [];
 const statusPlanRows = [];
+const reviewRouteCounts = {};
+const eligibleReviewRouteCounts = {};
 const summary = existsSync(summaryPath) ? JSON.parse(readFileSync(summaryPath, "utf8")) : null;
 
 if (!summary) errors.push(`missing_summary:${summaryPath}`);
@@ -186,9 +201,16 @@ for (const inputFile of inputFiles) {
     }
 
     if (!templateMode) {
+      const proposedReviewRoute = reviewRouteFor(record.packet_type);
+      increment(reviewRouteCounts, proposedReviewRoute);
+      if (proposedReviewRoute === "manual_gate_exception_review_queue") {
+        rowBlockers.push("unsupported_packet_type");
+      }
+
       const receiptComplete = rowBlockers.length === 0 && missingHumanFields.length === 0;
       if (receiptComplete) {
         statusPlanEligibleRows += 1;
+        increment(eligibleReviewRouteCounts, proposedReviewRoute);
       } else {
         blockedReceiptRows += 1;
       }
@@ -205,6 +227,7 @@ for (const inputFile of inputFiles) {
         receiptStatus: receiptComplete ? "complete_pending_manual_review" : "blocked_missing_receipt_fields",
         missingHumanFields,
         blockers: rowBlockers,
+        proposedReviewRoute,
         statusMutation: false,
         plannedMutation: "none"
       };
@@ -217,6 +240,7 @@ for (const inputFile of inputFiles) {
         metricCode: outcome.metricCode,
         receiptStatus: outcome.receiptStatus,
         blockers: outcome.blockers,
+        proposedReviewRoute: outcome.proposedReviewRoute,
         proposedStatusChange: null,
         statusMutation: false,
         dryRunOnly: true
@@ -277,7 +301,9 @@ const report = {
     blockedReceiptRows,
     statusPlanEligibleRows,
     templateRowsAwaitingReceipt,
-    blankHumanFieldCells
+    blankHumanFieldCells,
+    reviewRouteCounts,
+    eligibleReviewRouteCounts
   },
   schemaValid,
   readyForStatusMutation: false,
@@ -306,7 +332,9 @@ const statusPlan = {
     totalRows,
     eligibleRows: statusPlanEligibleRows,
     blockedRows: blockedReceiptRows,
-    proposedStatusMutations: 0
+    proposedStatusMutations: 0,
+    reviewRouteCounts,
+    eligibleReviewRouteCounts
   },
   readyForStatusMutation: false,
   rows: statusPlanRows

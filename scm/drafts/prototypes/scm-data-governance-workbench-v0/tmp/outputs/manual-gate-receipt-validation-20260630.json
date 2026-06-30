@@ -42,7 +42,9 @@
     "blockedReceiptRows": 0,
     "statusPlanEligibleRows": 0,
     "templateRowsAwaitingReceipt": 53,
-    "blankHumanFieldCells": 265
+    "blankHumanFieldCells": 265,
+    "reviewRouteCounts": {},
+    "eligibleReviewRouteCounts": {}
   },
   "schemaValid": true,
   "readyForStatusMutation": false,

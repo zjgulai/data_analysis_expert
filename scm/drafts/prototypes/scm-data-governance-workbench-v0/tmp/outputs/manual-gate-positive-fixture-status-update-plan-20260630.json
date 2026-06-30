@@ -1,0 +1,59 @@
+{
+  "generatedAt": "2026-06-30T05:45:00.000Z",
+  "sourceMode": "receipt_intake",
+  "receiptIntakePath": "tmp/fixtures/manual-gate-receipt-positive-fixture-20260630.csv",
+  "summaryPath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-resolution-summary-20260630.json",
+  "validationPath": "tmp/outputs/manual-gate-receipt-positive-fixture-validation-20260630.json",
+  "statusPlanPath": "tmp/outputs/manual-gate-positive-fixture-status-update-plan-20260630.json",
+  "boundary": {
+    "statusMutation": false,
+    "providerCalls": false,
+    "productionWrites": false,
+    "erpWriteback": false,
+    "sourceReadMode": "csv_read_only",
+    "dryRunOnly": true
+  },
+  "counts": {
+    "totalRows": 2,
+    "eligibleRows": 2,
+    "blockedRows": 0,
+    "proposedStatusMutations": 0,
+    "reviewRouteCounts": {
+      "manual_owner_signoff_review_queue": 1,
+      "manual_field_mapping_review_queue": 1
+    },
+    "eligibleReviewRouteCounts": {
+      "manual_owner_signoff_review_queue": 1,
+      "manual_field_mapping_review_queue": 1
+    }
+  },
+  "readyForStatusMutation": false,
+  "rows": [
+    {
+      "owner": "财务/成本 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_26",
+      "targetRef": "SCM-MECE-L3-036",
+      "metricCode": "full_chain_turnover_days_amount",
+      "receiptStatus": "complete_pending_manual_review",
+      "blockers": [],
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "proposedStatusChange": null,
+      "statusMutation": false,
+      "dryRunOnly": true
+    },
+    {
+      "owner": "财务/成本 Owner",
+      "packetType": "field_mapping",
+      "gateId": "mapping_61",
+      "targetRef": "SCM-MECE-L3-036",
+      "metricCode": "full_chain_turnover_days_amount",
+      "receiptStatus": "complete_pending_manual_review",
+      "blockers": [],
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
+      "proposedStatusChange": null,
+      "statusMutation": false,
+      "dryRunOnly": true
+    }
+  ]
+}
