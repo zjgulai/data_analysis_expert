@@ -1441,6 +1441,77 @@ textarea {
   margin-top: 2px;
 }
 
+.aiKnowledgeWorkbench .knowledgeLayout {
+  align-items: start;
+}
+
+.aiKnowledgeWorkbench .knowledgeSearchSurface,
+.aiKnowledgeWorkbench .aiQualityReviewPanel {
+  gap: 10px;
+  padding: 10px;
+}
+
+.aiKnowledgeWorkbench .knowledgeFilters {
+  gap: 8px;
+}
+
+.aiKnowledgeWorkbench .knowledgeFilters textarea {
+  min-height: 84px;
+}
+
+.aiKnowledgeWorkbench .domainGrid {
+  max-height: clamp(320px, 38dvh, 360px);
+  overflow: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+
+.aiKnowledgeWorkbench .domainCard {
+  gap: 7px;
+  padding: 10px;
+}
+
+.aiKnowledgeWorkbench .domainStats {
+  gap: 6px;
+}
+
+.aiKnowledgeWorkbench .domainStats span {
+  padding: 6px;
+}
+
+.aiKnowledgeWorkbench .aiQualityReviewGrid {
+  max-height: clamp(520px, 60dvh, 620px);
+  overflow: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+
+.aiKnowledgeWorkbench .aiQualityReviewCard {
+  gap: 8px;
+  padding: 10px;
+}
+
+.aiKnowledgeWorkbench .aiQualityStats div,
+.aiKnowledgeWorkbench .aiQualityFacts div,
+.aiKnowledgeWorkbench .aiQualityBoundary section {
+  padding: 8px;
+}
+
+.aiKnowledgeWorkbench .aiQualityChoices button {
+  min-height: 38px;
+}
+
+.aiKnowledgeWorkbench .aiQualityBoundary {
+  max-height: clamp(150px, 20dvh, 170px);
+  overflow: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+
+.aiKnowledgeWorkbench > .assetSurface .tableWrap {
+  max-height: clamp(280px, 34dvh, 300px);
+}
+
 .evidenceList {
   display: grid;
   gap: 10px;
