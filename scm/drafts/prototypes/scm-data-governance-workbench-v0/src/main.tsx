@@ -2641,7 +2641,7 @@ function AiKnowledgePanel({ module }: { module: WorkbenchModule }) {
   }
 
   return (
-    <section className="panel">
+    <section className="panel aiKnowledgeWorkbench">
       <ModuleHeader module={module} />
       <WorkflowStrip steps={["选择知识域", "本地证据检索", "打开知识卡", "注解/修订建议", "JSON/Excel 导出"]} />
 
