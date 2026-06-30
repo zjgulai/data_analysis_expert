@@ -1,0 +1,78 @@
+{
+  "generatedAt": "2026-06-30T04:00:00.000Z",
+  "dbPath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite",
+  "outputPaths": {
+    "ownerSignoff": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-owner-signoff-intake-20260630.csv",
+    "fieldMapping": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-field-mapping-intake-20260630.csv",
+    "sceiWeight": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-scei-weight-intake-20260630.csv",
+    "summary": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-resolution-summary-20260630.json"
+  },
+  "boundary": {
+    "productionWrites": false,
+    "providerCalls": false,
+    "erpWriteback": false,
+    "localSqliteWrites": false,
+    "sourceReadMode": "sqlite_read_only",
+    "statusMutation": false
+  },
+  "counts": {
+    "ownerSignoffOpen": 30,
+    "fieldMappingOpen": 18,
+    "sceiWeightSourceOwnerDecisionPacketsReady": 1,
+    "sceiWeightChildrenAwaitingOwnerWeights": 5
+  },
+  "ownerBuckets": [
+    {
+      "owner": "仓储运营 Owner",
+      "task_type": "field_mapping",
+      "status": "待确认",
+      "count": 3
+    },
+    {
+      "owner": "供应链数据治理 Owner",
+      "task_type": "owner_decision",
+      "status": "owner_decision_packet_ready",
+      "count": 1
+    },
+    {
+      "owner": "库存运营 Owner",
+      "task_type": "field_mapping",
+      "status": "待确认",
+      "count": 6
+    },
+    {
+      "owner": "待确认",
+      "task_type": "owner_signoff",
+      "status": "未发起",
+      "count": 30
+    },
+    {
+      "owner": "数据治理 Owner",
+      "task_type": "field_mapping",
+      "status": "待确认",
+      "count": 3
+    },
+    {
+      "owner": "财务/成本 Owner",
+      "task_type": "field_mapping",
+      "status": "待确认",
+      "count": 6
+    }
+  ],
+  "closureRules": {
+    "ownerSignoff": "requires named owner, signoff date, scope, metric definition version, and evidence reference",
+    "fieldMapping": "requires concrete source system/table/field, join key, grain, refresh cadence, field owner, and sample extract reference",
+    "sceiWeightSource": "requires five child weights with sum exactly 1.0, basis type, basis description, owner signoff, and evidence reference"
+  },
+  "nonClosureReasons": [
+    "No owner signoff receipt is present in the local source pack.",
+    "No concrete source field mapping is present for the 18 field-mapping gates.",
+    "SCEI five-dimensional weights are intentionally blank because only a historical two-axis cost/fulfillment split is evidenced."
+  ],
+  "files": {
+    "ownerSignoffCsv": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-owner-signoff-intake-20260630.csv",
+    "fieldMappingCsv": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-field-mapping-intake-20260630.csv",
+    "sceiWeightCsv": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-scei-weight-intake-20260630.csv",
+    "summaryJson": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-resolution-summary-20260630.json"
+  }
+}
