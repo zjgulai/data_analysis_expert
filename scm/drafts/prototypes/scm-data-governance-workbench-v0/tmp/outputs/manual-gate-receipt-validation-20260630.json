@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-30T04:35:00.000Z",
+  "generatedAt": "2026-06-30T06:10:00.000Z",
   "templateMode": true,
   "sourceMode": "receipt_templates",
   "receiptDir": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630",
@@ -31,6 +31,11 @@
       "rollback_rule",
       "status_mutation",
       "boundary_note"
+    ],
+    "decisionResultAllowedValues": [
+      "approved_for_manual_review",
+      "approved_with_conditions",
+      "rejected_needs_rework"
     ]
   },
   "counts": {
@@ -44,7 +49,16 @@
     "templateRowsAwaitingReceipt": 53,
     "blankHumanFieldCells": 265,
     "reviewRouteCounts": {},
-    "eligibleReviewRouteCounts": {}
+    "eligibleReviewRouteCounts": {},
+    "decisionResultCounts": {},
+    "invalidDecisionResultRows": 0
+  },
+  "contract": {
+    "decisionResultAllowedValues": {
+      "approved_for_manual_review": "Owner approves this receipt for downstream manual review.",
+      "approved_with_conditions": "Owner approves with explicit conditions captured in scope/evidence_ref.",
+      "rejected_needs_rework": "Owner rejects this gate and requests rework before another receipt."
+    }
   },
   "schemaValid": true,
   "readyForStatusMutation": false,

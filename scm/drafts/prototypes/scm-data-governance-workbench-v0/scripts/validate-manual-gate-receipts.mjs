@@ -32,6 +32,12 @@ const reviewRoutes = {
   field_mapping: "manual_field_mapping_review_queue",
   scei_weight_source: "manual_scei_weight_review_queue"
 };
+const decisionResultAllowedValues = {
+  approved_for_manual_review: "Owner approves this receipt for downstream manual review.",
+  approved_with_conditions: "Owner approves with explicit conditions captured in scope/evidence_ref.",
+  rejected_needs_rework: "Owner rejects this gate and requests rework before another receipt."
+};
+const decisionResultValues = Object.keys(decisionResultAllowedValues);
 
 function ensureParent(path) {
   mkdirSync(dirname(path), { recursive: true });
@@ -100,6 +106,8 @@ const rowOutcomes = [];
 const statusPlanRows = [];
 const reviewRouteCounts = {};
 const eligibleReviewRouteCounts = {};
+const decisionResultCounts = {};
+let invalidDecisionResultRows = 0;
 const summary = existsSync(summaryPath) ? JSON.parse(readFileSync(summaryPath, "utf8")) : null;
 
 if (!summary) errors.push(`missing_summary:${summaryPath}`);
@@ -201,6 +209,16 @@ for (const inputFile of inputFiles) {
     }
 
     if (!templateMode) {
+      const decisionResult = String(record.decision_result || "").trim();
+      if (decisionResult) {
+        increment(decisionResultCounts, decisionResult);
+        if (!decisionResultAllowedValues[decisionResult]) {
+          fileErrors.push(`${rowLabel}:decision_result:${decisionResult}`);
+          rowBlockers.push("invalid_decision_result");
+          invalidDecisionResultRows += 1;
+        }
+      }
+
       const proposedReviewRoute = reviewRouteFor(record.packet_type);
       increment(reviewRouteCounts, proposedReviewRoute);
       if (proposedReviewRoute === "manual_gate_exception_review_queue") {
@@ -224,6 +242,7 @@ for (const inputFile of inputFiles) {
         targetRef: record.target_ref,
         metricCode: record.metric_code,
         metricName: record.metric_name,
+        decisionResult,
         receiptStatus: receiptComplete ? "complete_pending_manual_review" : "blocked_missing_receipt_fields",
         missingHumanFields,
         blockers: rowBlockers,
@@ -238,6 +257,7 @@ for (const inputFile of inputFiles) {
         gateId: outcome.gateId,
         targetRef: outcome.targetRef,
         metricCode: outcome.metricCode,
+        decisionResult: outcome.decisionResult,
         receiptStatus: outcome.receiptStatus,
         blockers: outcome.blockers,
         proposedReviewRoute: outcome.proposedReviewRoute,
@@ -290,7 +310,8 @@ const report = {
   expected: {
     receiptFiles: expectedFileCount,
     totalRows: expectedTotalRows,
-    columns: expectedColumns
+    columns: expectedColumns,
+    decisionResultAllowedValues: decisionResultValues
   },
   counts: {
     receiptFiles: inputFiles.length,
@@ -303,7 +324,12 @@ const report = {
     templateRowsAwaitingReceipt,
     blankHumanFieldCells,
     reviewRouteCounts,
-    eligibleReviewRouteCounts
+    eligibleReviewRouteCounts,
+    decisionResultCounts,
+    invalidDecisionResultRows
+  },
+  contract: {
+    decisionResultAllowedValues
   },
   schemaValid,
   readyForStatusMutation: false,
@@ -334,7 +360,12 @@ const statusPlan = {
     blockedRows: blockedReceiptRows,
     proposedStatusMutations: 0,
     reviewRouteCounts,
-    eligibleReviewRouteCounts
+    eligibleReviewRouteCounts,
+    decisionResultCounts,
+    invalidDecisionResultRows
+  },
+  contract: {
+    decisionResultAllowedValues
   },
   readyForStatusMutation: false,
   rows: statusPlanRows
