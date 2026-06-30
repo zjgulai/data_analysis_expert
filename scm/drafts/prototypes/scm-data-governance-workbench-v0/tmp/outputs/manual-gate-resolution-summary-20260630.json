@@ -5,6 +5,7 @@
     "ownerSignoff": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-owner-signoff-intake-20260630.csv",
     "fieldMapping": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-field-mapping-intake-20260630.csv",
     "sceiWeight": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-scei-weight-intake-20260630.csv",
+    "receiptIntake": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-receipts-intake-20260630.csv",
     "summary": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-resolution-summary-20260630.json",
     "ownerPacketDir": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-owner-packets-20260630",
     "receiptTemplateDir": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630"
@@ -24,7 +25,8 @@
     "sceiWeightChildrenAwaitingOwnerWeights": 5,
     "ownerPacketCount": 8,
     "receiptTemplateCount": 8,
-    "receiptTemplateRows": 53
+    "receiptTemplateRows": 53,
+    "receiptIntakeRows": 53
   },
   "ownerBuckets": [
     {
@@ -78,6 +80,7 @@
     "ownerSignoffCsv": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-owner-signoff-intake-20260630.csv",
     "fieldMappingCsv": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-field-mapping-intake-20260630.csv",
     "sceiWeightCsv": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-scei-weight-intake-20260630.csv",
+    "receiptIntakeCsv": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-receipts-intake-20260630.csv",
     "summaryJson": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-resolution-summary-20260630.json",
     "ownerPacketDir": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-owner-packets-20260630",
     "receiptTemplateDir": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630"

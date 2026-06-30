@@ -9,6 +9,7 @@ const outputPaths = {
   ownerSignoff: process.env.SCM_MANUAL_GATE_OWNER_CSV || join(root, "data", "manual-gate-owner-signoff-intake-20260630.csv"),
   fieldMapping: process.env.SCM_MANUAL_GATE_MAPPING_CSV || join(root, "data", "manual-gate-field-mapping-intake-20260630.csv"),
   sceiWeight: process.env.SCM_MANUAL_GATE_SCEI_CSV || join(root, "data", "manual-gate-scei-weight-intake-20260630.csv"),
+  receiptIntake: process.env.SCM_MANUAL_GATE_RECEIPT_INTAKE_CSV || join(root, "data", "manual-gate-receipts-intake-20260630.csv"),
   summary: process.env.SCM_MANUAL_GATE_SUMMARY_JSON || join(root, "tmp", "outputs", "manual-gate-resolution-summary-20260630.json"),
   ownerPacketDir: process.env.SCM_MANUAL_GATE_PACKET_DIR || join(root, "tmp", "outputs", "manual-gate-owner-packets-20260630"),
   receiptTemplateDir: process.env.SCM_MANUAL_GATE_RECEIPT_DIR || join(root, "tmp", "outputs", "manual-gate-receipt-templates-20260630")
@@ -275,7 +276,8 @@ const summary = {
     sceiWeightChildrenAwaitingOwnerWeights: sceiWeightRows.length,
     ownerPacketCount: ownerPackets.size,
     receiptTemplateCount: 0,
-    receiptTemplateRows: 0
+    receiptTemplateRows: 0,
+    receiptIntakeRows: 0
   },
   ownerBuckets,
   closureRules: {
@@ -292,6 +294,7 @@ const summary = {
     ownerSignoffCsv: outputPaths.ownerSignoff,
     fieldMappingCsv: outputPaths.fieldMapping,
     sceiWeightCsv: outputPaths.sceiWeight,
+    receiptIntakeCsv: outputPaths.receiptIntake,
     summaryJson: outputPaths.summary,
     ownerPacketDir: outputPaths.ownerPacketDir,
     receiptTemplateDir: outputPaths.receiptTemplateDir
@@ -389,12 +392,15 @@ const receiptTemplateColumns = [
   "boundary_note"
 ];
 
+const receiptIntakeRows = [];
+
 for (const [packetOwner, rows] of [...ownerPackets.entries()].sort(([a], [b]) => a.localeCompare(b, "zh-Hans-CN"))) {
   const slug = ownerSlug(packetOwner);
   const csvPath = join(outputPaths.ownerPacketDir, `${slug}.csv`);
   const markdownPath = join(outputPaths.ownerPacketDir, `${slug}.md`);
   const receiptCsvPath = join(outputPaths.receiptTemplateDir, `${slug}.csv`);
   const receiptRows = rows.map((row) => receiptTemplateRow(packetOwner, row));
+  receiptIntakeRows.push(...receiptRows);
   const counts = rows.reduce((acc, row) => {
     acc[row.packet_type] = (acc[row.packet_type] || 0) + 1;
     return acc;
@@ -453,6 +459,9 @@ for (const [packetOwner, rows] of [...ownerPackets.entries()].sort(([a], [b]) =>
   summary.counts.receiptTemplateCount += 1;
   summary.counts.receiptTemplateRows += receiptRows.length;
 }
+
+summary.counts.receiptIntakeRows = receiptIntakeRows.length;
+writeCsv(outputPaths.receiptIntake, receiptIntakeRows, receiptTemplateColumns);
 
 ensureParent(outputPaths.summary);
 writeFileSync(outputPaths.summary, `${JSON.stringify(summary, null, 2)}\n`, "utf8");
