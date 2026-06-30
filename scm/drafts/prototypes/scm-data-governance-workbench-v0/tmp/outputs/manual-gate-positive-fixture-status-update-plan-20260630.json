@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-30T06:20:00.000Z",
+  "generatedAt": "2026-06-30T07:20:00.000Z",
   "sourceMode": "receipt_intake",
   "receiptIntakePath": "tmp/fixtures/manual-gate-receipt-positive-fixture-20260630.csv",
   "summaryPath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-resolution-summary-20260630.json",
@@ -29,7 +29,8 @@
     "decisionResultCounts": {
       "approved_for_manual_review": 2
     },
-    "invalidDecisionResultRows": 0
+    "invalidDecisionResultRows": 0,
+    "blockerCounts": {}
   },
   "contract": {
     "decisionResultAllowedValues": {
@@ -37,6 +38,15 @@
       "approved_with_conditions": "Owner approves with explicit conditions captured in scope/evidence_ref.",
       "rejected_needs_rework": "Owner rejects this gate and requests rework before another receipt."
     }
+  },
+  "expectedBlockerValidation": {
+    "enabled": false,
+    "requiredBlockers": [],
+    "blockerCounts": {},
+    "missingExpectedBlockers": [],
+    "unexpectedBlockers": [],
+    "disallowedValidationIssues": [],
+    "satisfied": false
   },
   "readyForStatusMutation": false,
   "rows": [
@@ -49,6 +59,7 @@
       "decisionResult": "approved_for_manual_review",
       "receiptStatus": "complete_pending_manual_review",
       "blockers": [],
+      "inputStatusMutation": "false",
       "proposedReviewRoute": "manual_owner_signoff_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
@@ -63,6 +74,7 @@
       "decisionResult": "approved_for_manual_review",
       "receiptStatus": "complete_pending_manual_review",
       "blockers": [],
+      "inputStatusMutation": "false",
       "proposedReviewRoute": "manual_field_mapping_review_queue",
       "proposedStatusChange": null,
       "statusMutation": false,
