@@ -4419,21 +4419,62 @@ tbody tr:hover td {
   align-items: start;
 }
 
+.riskWorkbench {
+  gap: 12px;
+  padding: 12px;
+}
+
+.riskWorkbench .moduleHeader {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.riskWorkbench .workflowStrip {
+  margin-bottom: 10px;
+  padding: 8px;
+}
+
+.riskWorkbench .workflowStep {
+  gap: 8px;
+  padding: 8px;
+}
+
+.riskWorkbench .riskHero,
+.riskWorkbench .riskNarrativeSurface,
+.riskWorkbench > .strategyGrid > .surface {
+  padding: 12px;
+}
+
+.riskWorkbench .riskHero {
+  gap: 12px;
+}
+
+.riskWorkbench .riskNarrativeSurface {
+  gap: 10px;
+}
+
 .riskWorkbench .riskEvidenceDrawer {
-  max-height: clamp(500px, 58dvh, 620px);
+  max-height: clamp(320px, 40dvh, 360px);
   overflow: auto;
   scrollbar-width: thin;
 }
 
 .riskWorkbench .riskSignalGroupedList {
-  max-height: clamp(560px, 60dvh, 720px);
+  max-height: clamp(360px, 44dvh, 400px);
   overflow: auto;
   padding-right: 4px;
   scrollbar-width: thin;
 }
 
 .riskWorkbench .recommendationGrid {
-  max-height: clamp(620px, 68dvh, 820px);
+  max-height: clamp(360px, 44dvh, 420px);
+  overflow: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+
+.riskWorkbench .rootCauseGrid {
+  max-height: clamp(300px, 36dvh, 340px);
   overflow: auto;
   padding-right: 4px;
   scrollbar-width: thin;
