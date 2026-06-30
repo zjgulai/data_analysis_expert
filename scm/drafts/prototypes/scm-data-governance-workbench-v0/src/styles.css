@@ -2483,15 +2483,52 @@ tbody tr:hover td {
   gap: 10px;
 }
 
+.lineageQualityWorkbench {
+  padding: 12px;
+}
+
+.lineageQualityWorkbench .moduleHeader {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.lineageQualityWorkbench .workflowStrip {
+  margin-bottom: 10px;
+  padding: 8px;
+}
+
+.lineageQualityWorkbench .workflowStep {
+  gap: 8px;
+  padding: 8px;
+}
+
+.lineageQualityWorkbench .sourceLineageSurface,
+.lineageQualityWorkbench .runtimeBusinessGatePanel,
+.lineageQualityWorkbench > .assetSurface {
+  padding: 12px;
+}
+
+.lineageQualityWorkbench .sourceLineageSurface {
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
 .lineageQualityWorkbench .sourceLineageGrid {
-  max-height: clamp(280px, 34dvh, 300px);
+  max-height: clamp(200px, 24dvh, 220px);
   overflow: auto;
   padding-right: 4px;
   scrollbar-width: thin;
 }
 
 .lineageQualityWorkbench .runtimeBusinessGrid {
-  max-height: clamp(400px, 46dvh, 420px);
+  max-height: clamp(280px, 32dvh, 300px);
+  overflow: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+}
+
+.lineageQualityWorkbench .runtimeBusinessBoundary {
+  max-height: clamp(64px, 8dvh, 74px);
   overflow: auto;
   padding-right: 4px;
   scrollbar-width: thin;
@@ -2505,7 +2542,7 @@ tbody tr:hover td {
 .lineageQualityWorkbench .runtimeBusinessTables .tableWrap,
 .lineageQualityWorkbench > .assetSurface .tableWrap,
 .lineageQualityWorkbench > .split .tableWrap {
-  max-height: clamp(280px, 34dvh, 300px);
+  max-height: clamp(200px, 24dvh, 220px);
 }
 
 .lineageQualityWorkbench .sourceLineageCard,
