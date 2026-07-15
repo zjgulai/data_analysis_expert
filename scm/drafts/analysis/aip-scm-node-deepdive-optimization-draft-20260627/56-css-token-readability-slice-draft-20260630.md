@@ -23,7 +23,7 @@ B56 已在 B55 截图/token 基线之上完成一批**窄 scope CSS token/readab
 
 - 修改文件：`drafts/prototypes/scm-data-governance-workbench-v0/src/styles.css`
 - 新增 after 证据 JSON：`drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/scm-ui-token-readability-after-20260630.json`
-- 截图文件保存在本机 file-history：`/Users/pray/.Codex/file-history/ecom_ana_overview_scm/20260630T-b56-css-token-readability/ui-baseline-after/screenshots/`
+- 截图文件保存在仓库外的本机 file-history：`${SCM_FILE_HISTORY_DIR}/20260630T-b56-css-token-readability/ui-baseline-after/screenshots/`
 - 模块数量：`15`
 - 截图数量：`15`
 - 视口：`desktop-1440`（1440 x 900）
@@ -135,7 +135,7 @@ after-baseline 全量模块：
 ```bash
 PORT=5196 \
 SCM_WORKBENCH_BASE_URL="http://127.0.0.1:5196" \
-SCM_UI_BASELINE_OUTPUT_DIR="/Users/pray/.Codex/file-history/ecom_ana_overview_scm/20260630T-b56-css-token-readability/ui-baseline-after" \
+SCM_UI_BASELINE_OUTPUT_DIR="${SCM_FILE_HISTORY_DIR:?set SCM_FILE_HISTORY_DIR}/20260630T-b56-css-token-readability/ui-baseline-after" \
 SCM_UI_BASELINE_SUMMARY_PATH="tmp/outputs/scm-ui-token-readability-after-20260630.json" \
 npm run audit:ui-baseline
 ```
@@ -148,7 +148,7 @@ node --check scripts/audit-ui-baseline.mjs
 git diff --check
 npm run check
 npm run build
-SCM_PREPROD_SCAN_ROOT="/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629" npm run preprod:check
+SCM_PREPROD_SCAN_ROOT="${SCM_REPO_ROOT:?set SCM_REPO_ROOT}/scm" npm run preprod:check
 npm run smoke:api
 npm run smoke:ui
 npm run smoke:readonly

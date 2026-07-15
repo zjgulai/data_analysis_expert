@@ -24,7 +24,7 @@ B59 在 B58 `07 lineage-quality` 页面 proof 之后，完成 `08 AI 知识库�
 - 修改文件：`drafts/prototypes/scm-data-governance-workbench-v0/src/main.tsx`
 - 修改文件：`drafts/prototypes/scm-data-governance-workbench-v0/src/styles.css`
 - 新增 after 证据 JSON：`drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/scm-ai-knowledge-page-proof-after-20260630.json`
-- 截图文件保存在本机 file-history：`/Users/pray/.Codex/file-history/ecom_ana_overview_scm/20260630T-b59-ai-knowledge-page-proof/ui-baseline-after/screenshots/`
+- 截图文件保存在仓库外的本机 file-history：`${SCM_FILE_HISTORY_DIR}/20260630T-b59-ai-knowledge-page-proof/ui-baseline-after/screenshots/`
 - 模块数量：`15`
 - 截图数量：`15`
 - 视口：`desktop-1440`（1440 x 900）
@@ -135,7 +135,7 @@ B59 后，DOM 高度测量：
 ```bash
 PORT=5199 \
 SCM_WORKBENCH_BASE_URL="http://127.0.0.1:5199" \
-SCM_UI_BASELINE_OUTPUT_DIR="/Users/pray/.Codex/file-history/ecom_ana_overview_scm/20260630T-b59-ai-knowledge-page-proof/ui-baseline-after" \
+SCM_UI_BASELINE_OUTPUT_DIR="${SCM_FILE_HISTORY_DIR:?set SCM_FILE_HISTORY_DIR}/20260630T-b59-ai-knowledge-page-proof/ui-baseline-after" \
 SCM_UI_BASELINE_SUMMARY_PATH="tmp/outputs/scm-ai-knowledge-page-proof-after-20260630.json" \
 npm run audit:ui-baseline
 ```
@@ -148,7 +148,7 @@ node --check scripts/audit-ui-baseline.mjs
 git diff --check
 npm run check
 npm run build
-SCM_PREPROD_SCAN_ROOT="/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629" npm run preprod:check
+SCM_PREPROD_SCAN_ROOT="${SCM_REPO_ROOT:?set SCM_REPO_ROOT}/scm" npm run preprod:check
 npm run smoke:api
 npm run smoke:ui
 npm run smoke:readonly

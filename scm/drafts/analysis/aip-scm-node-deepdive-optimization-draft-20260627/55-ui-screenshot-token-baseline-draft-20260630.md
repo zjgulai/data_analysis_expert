@@ -24,7 +24,7 @@ B55 已把当前最小 RC UI 的**截图基线、横向溢出基线、console/pa
 - 新增脚本：`drafts/prototypes/scm-data-governance-workbench-v0/scripts/audit-ui-baseline.mjs`
 - 新增 npm script：`npm run audit:ui-baseline`
 - 新增证据 JSON：`drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/scm-ui-token-baseline-20260630.json`
-- 截图文件保存在本机 file-history：`/Users/pray/.Codex/file-history/ecom_ana_overview_scm/20260630T-b55-ui-token-baseline/ui-baseline/screenshots/`
+- 截图文件保存在仓库外的本机 file-history：`${SCM_FILE_HISTORY_DIR}/20260630T-b55-ui-token-baseline/ui-baseline/screenshots/`
 - 截图数量：`15`
 - 模块数量：`15`
 - 视口：`desktop-1440`（1440 x 900）
@@ -125,7 +125,7 @@ B55 已把当前最小 RC UI 的**截图基线、横向溢出基线、console/pa
 本批新增可重复脚本：
 
 ```bash
-SCM_UI_BASELINE_OUTPUT_DIR="/Users/pray/.Codex/file-history/ecom_ana_overview_scm/20260630T-b55-ui-token-baseline/ui-baseline" \
+SCM_UI_BASELINE_OUTPUT_DIR="${SCM_FILE_HISTORY_DIR:?set SCM_FILE_HISTORY_DIR}/20260630T-b55-ui-token-baseline/ui-baseline" \
 SCM_UI_BASELINE_SUMMARY_PATH="tmp/outputs/scm-ui-token-baseline-20260630.json" \
 npm run audit:ui-baseline
 ```
@@ -137,7 +137,7 @@ find . -name '*.pem' -print
 node --check scripts/audit-ui-baseline.mjs
 npm run check
 npm run build
-SCM_PREPROD_SCAN_ROOT="/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629" npm run preprod:check
+SCM_PREPROD_SCAN_ROOT="${SCM_REPO_ROOT:?set SCM_REPO_ROOT}/scm" npm run preprod:check
 npm run audit:ui-baseline
 npm run smoke:readonly
 ```
