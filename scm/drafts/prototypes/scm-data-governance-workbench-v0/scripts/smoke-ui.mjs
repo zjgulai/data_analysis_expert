@@ -273,7 +273,17 @@ const interactiveChecks = [
       await page.getByRole("tab", { name: /场景诊断/ }).click();
       await page.getByRole("button", { name: "运行全部场景诊断" }).click();
       await page.getByText("场景矩阵诊断回执").waitFor({ timeout: 15000 });
-      await page.getByText(/3 \/ 3 个场景/).waitFor({ timeout: 10000 });
+      const matrixReceiptText = await page
+        .locator(".scenarioMatrixReceipt")
+        .getByText(/\d+ \/ \d+ 个场景已进入本地运行记录复盘/)
+        .textContent({ timeout: 10000 });
+      const matrixReceiptMatch = matrixReceiptText?.match(/(\d+)\s*\/\s*(\d+)\s*个场景/);
+      assert(
+        matrixReceiptMatch
+          && Number(matrixReceiptMatch[1]) === Number(matrixReceiptMatch[2])
+          && Number(matrixReceiptMatch[2]) >= 3,
+        `Scenario matrix receipt should complete all visible scenarios, got: ${matrixReceiptText || "empty"}`
+      );
     },
     expect: ["Scenario Matrix Receipt", "场景矩阵诊断回执"]
   },
