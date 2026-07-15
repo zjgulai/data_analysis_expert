@@ -180,6 +180,7 @@ Loop 0  基线确认与方案固化
 | 事实 | `business-supply-chain-knowledge-base-draft-20260616/metric-system-blueprint` 的三类源文件未在当前仓库和 git 历史中找到；现有 `data/import-summary.json` 只是保留了旧 sourceRoot 字段。 | local filesystem + git metadata |
 | 事实 | `import-assets.mjs` 已改为 sourceRoot 多候选解析：`SCM_WORKBENCH_IMPORT_SOURCE_ROOT` -> `SCM_IMPORT_SOURCE_ROOT` -> 默认相对路径。 | local code change |
 | 事实 | `SCM_IMPORT_PREFLIGHT_ONLY=1` 可只做源文件检查；缺少 metric blueprint 时输出 `blocked_source_required`，并在打开 SQLite 前停止。 | local command evidence |
+| 事实 | 2026-07-16 post-stack review 后，授权 rebuild 已统一为 base import → 固定 allowlist migrations → integrity/count 验证；disposable fixture 证明六场景与 Loop3 九行增量不会因 rebuild 丢失。 | disposable local rebuild smoke；不等于真实源资产 import |
 | 推断 | 当前问题不是单纯路径漂移，而是源资产未随原型一起进入当前工作树。 | 基于当前仓库、git 历史与项目目录检索 |
 | 未完成 | 未执行 DB-writing `npm run import`，因此未声称新导入成功，也未改变当前 SQLite 基线。 | boundary: localSqliteWrites=false |
 

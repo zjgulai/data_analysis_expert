@@ -56,8 +56,14 @@ async function request(pathname, init = {}) {
 
 async function writeEvidence(status, detail = {}) {
   const boundary = {
-    providerCalls: status === "passed",
+    providerCalls: providerCallAttempted,
     providerCallAttempted,
+    providerCallCompleted: status === "passed",
+    providerCallOutcome: !providerCallAttempted
+      ? "not_attempted"
+      : status === "passed"
+        ? "succeeded"
+        : "attempted_outcome_unconfirmed",
     providerCallScope: providerCallAttempted
       ? "authorized_single_knowledge_prompt_attempt"
       : "none",

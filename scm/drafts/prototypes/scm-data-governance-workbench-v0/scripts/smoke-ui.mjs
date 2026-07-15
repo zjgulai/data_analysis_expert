@@ -6,8 +6,11 @@ const port = process.env.PORT || "5174";
 const baseUrl = process.env.SCM_WORKBENCH_BASE_URL || `http://127.0.0.1:${port}`;
 const chromeExecutablePath = process.env.CHROME_EXECUTABLE_PATH || "";
 const requestTimeoutMs = Number(process.env.SCM_SMOKE_REQUEST_TIMEOUT_MS || 10000);
+const expectedScenarioCount = Number(process.env.SCM_UI_SMOKE_EXPECTED_SCENARIOS || 6);
 const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 const outputDir = process.env.SCM_UI_SMOKE_OUTPUT_DIR || path.join("tmp", `ui-smoke-${timestamp}`);
+
+assert(Number.isInteger(expectedScenarioCount) && expectedScenarioCount > 0, "SCM_UI_SMOKE_EXPECTED_SCENARIOS must be a positive integer");
 
 function envFlag(name) {
   return ["1", "true", "yes", "on"].includes(String(process.env[name] || "").toLowerCase());
@@ -281,8 +284,8 @@ const interactiveChecks = [
       assert(
         matrixReceiptMatch
           && Number(matrixReceiptMatch[1]) === Number(matrixReceiptMatch[2])
-          && Number(matrixReceiptMatch[2]) >= 3,
-        `Scenario matrix receipt should complete all visible scenarios, got: ${matrixReceiptText || "empty"}`
+          && Number(matrixReceiptMatch[2]) === expectedScenarioCount,
+        `Scenario matrix receipt should complete exactly ${expectedScenarioCount} scenarios, got: ${matrixReceiptText || "empty"}`
       );
     },
     expect: ["Scenario Matrix Receipt", "场景矩阵诊断回执"]
@@ -474,6 +477,10 @@ const healthResponse = await fetch(`${baseUrl}/api/deploy/health`, {
 const health = await healthResponse.json();
 assert(healthResponse.ok && health.ok === true, "UI smoke target must be healthy");
 assert(health.boundary?.databaseWriteAuthorized === true, "UI smoke requires SCM_DATABASE_WRITES_AUTHORIZED=1 on a disposable target");
+assert(
+  health.database?.aipScenarios === expectedScenarioCount,
+  `UI smoke requires exactly ${expectedScenarioCount} scenarios, got ${health.database?.aipScenarios ?? "unknown"}`
+);
 
 const launchOptions = {
   headless: true,

@@ -420,13 +420,13 @@ Expected：无重复编号；全库旧文件引用为 0；00 index 指向新编�
 
 Files：`import-assets.mjs` + 专用 fixture/test。
 
-Expected：source 缺失时在 SQLite open/write 前 exit 2；env precedence 有测试；不执行真实 DB import。
+Expected：source 缺失时在 SQLite open/write 前 exit 2；env precedence 有测试；授权的 disposable rebuild 必须按固定 allowlist 重放 migrations；不执行真实源资产 import。
 
 - [x] **Step 5.3：Batch D2 UI smoke + CSS**
 
 Files：`smoke-ui.mjs`、窄范围 `styles.css`。
 
-Expected：场景数动态断言；desktop viewports + interaction smoke；不改 server/API/DB。
+Expected：health 与矩阵回执均锁定当前六场景基线；desktop viewports + interaction smoke；不改 server/API/DB。
 
 - [x] **Step 5.4：Batch D3 Loop 1–6 docs/evidence**
 
@@ -434,11 +434,11 @@ Expected：证据文件通过 schema/hash/secret scan；manual gates 保持 pend
 
 - [x] **Step 5.5：Batch D4 SQLite delta**
 
-Expected：先落 migration/seed/ledger delta，再生成 DB；`PRAGMA integrity_check=ok`；核心 count 对比有解释；binary DB 可回滚。
+Expected：先落 migration/seed/ledger delta，再生成 DB；授权 rebuild 走 base import → allowlisted migrations → integrity/count 验证；`PRAGMA integrity_check=ok`；核心 count 对比有解释；binary DB 可回滚。
 
 - [x] **Step 5.6：Batch D5 Provider Loop 7–20**
 
-Expected：server gate 已在 Task 2 完成；文档和 JSON 不含 secret；`provider_call=false` 保持到另行授权；production config scaffold 与 provider acceptance 分开。
+Expected：server gate 已在 Task 2 完成；文档和 JSON 不含 secret；POST 一旦发出，失败证据必须保守记录 provider attempt/call，而不能误报 false；本次真实 `provider_call=false` 保持到另行授权；production config scaffold 与 provider acceptance 分开。
 
 - [x] **Step 5.7：Batch D6 其他业务稿**
 

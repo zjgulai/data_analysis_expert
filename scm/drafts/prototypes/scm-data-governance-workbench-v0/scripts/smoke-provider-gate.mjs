@@ -1,5 +1,5 @@
 import { spawn } from "node:child_process";
-import { cpSync, mkdtempSync, rmSync } from "node:fs";
+import { cpSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
@@ -45,6 +45,18 @@ async function waitForHealth(baseUrl, child, logs) {
     await delay(100);
   }
   throw new Error(`SCM server did not become healthy.\n${logs.join("").slice(-2000)}`);
+}
+
+function runProcess(command, args, options) {
+  return new Promise((resolveRun, rejectRun) => {
+    const childProcess = spawn(command, args, { ...options, stdio: ["ignore", "pipe", "pipe"] });
+    let stdout = "";
+    let stderr = "";
+    childProcess.stdout.on("data", (chunk) => { stdout += String(chunk); });
+    childProcess.stderr.on("data", (chunk) => { stderr += String(chunk); });
+    childProcess.once("error", rejectRun);
+    childProcess.once("close", (status) => resolveRun({ status, stdout, stderr }));
+  });
 }
 
 let providerRequestCount = 0;
@@ -106,6 +118,68 @@ try {
   if (status.available !== false) failures.push("status must expose available=false");
   if (health.boundary?.providerCalls !== false) failures.push("health boundary must keep providerCalls=false");
 
+  let liveClientPostCount = 0;
+  const fakeWorkbench = createServer((request, response) => {
+    if (request.method === "GET" && request.url === "/api/ai-chat/deepseek/status") {
+      response.writeHead(200, { "Content-Type": "application/json" });
+      response.end(JSON.stringify({
+        provider: "deepseek",
+        configured: true,
+        providerCallAuthorized: true,
+        available: true,
+        model: "fixture-model",
+        webModel: "fixture-web-model",
+        webSearchEnabled: false,
+        secretPolicy: "server_side_env_only_key_never_returned_to_browser"
+      }));
+      return;
+    }
+    if (request.method === "POST" && request.url === "/api/ai-chat/deepseek") {
+      liveClientPostCount += 1;
+      request.resume();
+      response.writeHead(502, { "Content-Type": "application/json" });
+      response.end(JSON.stringify({ error: "fixture provider failure after request dispatch" }));
+      return;
+    }
+    response.writeHead(404, { "Content-Type": "application/json" });
+    response.end(JSON.stringify({ error: "not found" }));
+  });
+
+  const liveEvidencePath = join(sandboxRoot, "deepseek-live-failed-attempt.json");
+  let liveFailureEvidence;
+  try {
+    const fakeWorkbenchPort = await listen(fakeWorkbench);
+    const liveResult = await runProcess(
+      process.execPath,
+      [join(appRoot, "scripts", "smoke-deepseek-live.mjs")],
+      {
+        cwd: sandboxRoot,
+        env: {
+          ...process.env,
+          SCM_WORKBENCH_BASE_URL: `http://127.0.0.1:${fakeWorkbenchPort}`,
+          SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED: "1",
+          SCM_DEEPSEEK_LIVE_TIMEOUT_MS: "2000",
+          SCM_DEEPSEEK_LIVE_EVIDENCE_PATH: liveEvidencePath
+        }
+      }
+    );
+    if (liveResult.status !== 1) failures.push(`failed live provider fixture must exit 1, got ${liveResult.status}`);
+    liveFailureEvidence = JSON.parse(readFileSync(liveEvidencePath, "utf8"));
+    if (liveClientPostCount !== 1) failures.push(`failed live provider fixture must dispatch one POST, got ${liveClientPostCount}`);
+    if (liveFailureEvidence.status !== "failed") failures.push(`failed live provider evidence status must be failed, got ${liveFailureEvidence.status}`);
+    if (liveFailureEvidence.boundary?.providerCallAttempted !== true) {
+      failures.push("failed live provider evidence must record providerCallAttempted=true");
+    }
+    if (liveFailureEvidence.boundary?.providerCalls !== true) {
+      failures.push("failed live provider evidence must conservatively record providerCalls=true after dispatch");
+    }
+    if (liveFailureEvidence.boundary?.productionWrites !== false) {
+      failures.push("failed live provider evidence must preserve productionWrites=false");
+    }
+  } finally {
+    if (fakeWorkbench.listening) await close(fakeWorkbench);
+  }
+
   if (failures.length) {
     throw new Error(`Provider authorization gate failed:\n- ${failures.join("\n- ")}`);
   }
@@ -116,6 +190,9 @@ try {
     providerAvailable: status.available,
     providerRequestCount,
     responseStatus: chatResponse.status,
+    failedLiveClientPostCount: liveClientPostCount,
+    failedLiveEvidenceProviderCalls: liveFailureEvidence.boundary.providerCalls,
+    failedLiveEvidenceProviderCallAttempted: liveFailureEvidence.boundary.providerCallAttempted,
     databaseWrite: false
   }, null, 2));
 } finally {

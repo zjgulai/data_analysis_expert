@@ -61,7 +61,7 @@ boundary:
 | Chunk | Include | Reason |
 |---|---|---|
 | A governance docs | `72`-`76` Loop docs, plus optional `71` business value doc | 形成从能力价值到 Loop execution 的审批链。 |
-| B prototype validation | `scripts/import-assets.mjs`, `scripts/smoke-ui.mjs`, `scripts/smoke-deepseek-live.mjs` | 修复 sourceRoot preflight；让 UI smoke 跟随当前场景数；补齐 gated provider smoke 文件但默认不执行。 |
+| B prototype validation | `scripts/import-assets.mjs`, `scripts/smoke-ui.mjs`, `scripts/smoke-deepseek-live.mjs` | 修复 sourceRoot preflight；授权 rebuild 按固定 allowlist 重放 migrations；UI smoke 锁定当前六场景基线；补齐 gated provider smoke 文件但默认不执行。 |
 | C local data and evidence | `governance_workbench.sqlite`, Loop 2/3/4/5 output packets | 本地 SQLite ledger 与机器可读 evidence。 |
 | D hold-out | 旧删除项、`system_data/`、`skills-lock.json`、父目录分析稿 | 与本轮 read-only RC 没有 ownership proof，避免污染发布边界。 |
 
@@ -105,7 +105,7 @@ Smoke script note:
 
 | Type | Detail |
 |---|---|
-| 事实 | `scripts/smoke-ui.mjs` 的场景矩阵断言已从固定 `3 / 3` 调整为“已运行数等于当前场景数且不少于 3”。 |
+| 事实 | 2026-07-16 review 发现“当前场景数且不少于 3”无法阻止六场景退化；现已同时断言 health 与矩阵回执均为预期 `6`，未来扩展必须显式更新预期。 |
 | 推断 | 这能覆盖 Loop 3 扩展到 6 个 AIP 场景后的合法数据增长，避免发布验证与本地 ledger 增长脱节。 |
 | 边界 | 只改验证脚本，不改业务 UI、API 或 SQLite 内容。 |
 

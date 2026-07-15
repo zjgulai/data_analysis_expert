@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-15T23:06:58.049Z",
+  "generatedAt": "2026-07-15T23:30:59.076Z",
   "repository": "zjgulai/data_analysis_expert",
   "branch": "codex/scm-post-stack-loop-assets-20260716",
   "baseCommit": "71017000f25b38b539abd2ba3e002ebc89ae5c71",
@@ -9,6 +9,13 @@
     "path": "scm/tmp/outputs/loop5-release-boundary-20260701/loop5-post-stack-reconciliation-20260716.json",
     "includedInFiles": false,
     "reason": "A manifest cannot provide a stable hash for itself."
+  },
+  "aggregateHashPolicy": {
+    "algorithm": "sha256",
+    "fileOrder": "path_ascending_utf8",
+    "recordEncoding": "path + NUL + decimal_sizeBytes + NUL + lowercase_file_sha256",
+    "recordSeparator": "LF",
+    "finalInputEncoding": "UTF-8"
   },
   "historicalManifest": {
     "path": "scm/tmp/outputs/loop5-release-boundary-20260701/loop5-release-file-set-manifest-20260701.csv",
@@ -35,8 +42,8 @@
     "Amazon refund, reship, and SOP drafts",
     "secrets and unlisted files"
   ],
-  "fileCount": 71,
-  "aggregateSha256": "7ec46307ce3b697ca55f7989992f500cd3caba1b05b322c12114ee2eed79afa4",
+  "fileCount": 72,
+  "aggregateSha256": "8448c186298deacc5c141335fd28b74d2007213640ad7b5014255dd7e9cd236e",
   "files": [
     {
       "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/00-index-draft-20260627.md",
@@ -50,8 +57,8 @@
     },
     {
       "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/72-loop-engineering-execution-plan-draft-20260701.md",
-      "sizeBytes": 52331,
-      "sha256": "78636909ab81c5f6094ed958e542299e03eed8dfda1628510e89cc0c1673a9fd"
+      "sizeBytes": 52631,
+      "sha256": "90610837710397aab25ad1ff6dfbaedd313cd61ac4dc6868f3292a3ae3dd81cb"
     },
     {
       "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/73-loop2-manual-gates-owner-packet-execution-draft-20260701.md",
@@ -70,8 +77,8 @@
     },
     {
       "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/76-loop5-release-boundary-execution-draft-20260701.md",
-      "sizeBytes": 6597,
-      "sha256": "249cf7769ddf1c9734abbb1829b104b0a319690e118018672ef419524e9265ea"
+      "sizeBytes": 6712,
+      "sha256": "26613050465e4558d6b6b231e81eb5afe9b72f43623450bb57d8777a7f72c225"
     },
     {
       "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/77-loop6-production-readonly-smoke-execution-draft-20260701.md",
@@ -150,8 +157,8 @@
     },
     {
       "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/92-current-branch-consolidation-and-merge-execution-plan-draft-20260716.md",
-      "sizeBytes": 26401,
-      "sha256": "4ef44cf9398bad6717fcf3ef1b0cfec859ac965d51328053d05da5105d1092d8"
+      "sizeBytes": 26712,
+      "sha256": "8f12e34b84543f7c09c2c27905505c6d9306bb0121fac433e91c127bb9f37cb8"
     },
     {
       "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite",
@@ -170,18 +177,18 @@
     },
     {
       "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/import-assets.mjs",
-      "sizeBytes": 58513,
-      "sha256": "bbbe8c025344f6af5562430038ad0c0f23fc49f2cecd67f3163e090aaf8dd392"
+      "sizeBytes": 59750,
+      "sha256": "560e83422c336641f3dbbb05a0981ec2a15202f2b437868117753098d71d2958"
     },
     {
       "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/smoke-deepseek-live.mjs",
-      "sizeBytes": 9403,
-      "sha256": "a3f8d32665103cd43d3de300cd00d6bc55690d168dd87ea3e32b5a94dab479f5"
+      "sizeBytes": 9618,
+      "sha256": "f854c35be142a071f95518cd38ff7a022db35e861d95e50acdbbc0ba823684ce"
     },
     {
       "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/smoke-import-gate.mjs",
-      "sizeBytes": 6162,
-      "sha256": "30f8faff127190155d0c961f9c69b8dcecb27ab32e67ad1d2cea702ddafe9997"
+      "sizeBytes": 9371,
+      "sha256": "b43e0e753406b688e3d31a4bc3e6bff748ace8976dcf8e837511df87d07fa76c"
     },
     {
       "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/smoke-migration-gate.mjs",
@@ -189,9 +196,14 @@
       "sha256": "09f8ec67006b29040d09421c266d4a12c7073f0ecf5198dfbc938a8479caba0e"
     },
     {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/smoke-provider-gate.mjs",
+      "sizeBytes": 8492,
+      "sha256": "fa0dd71bfda76b1693d691c29c184d5bfb5266d3b952fffee7b7b4e2ae27fccc"
+    },
+    {
       "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/smoke-ui.mjs",
-      "sizeBytes": 23831,
-      "sha256": "3e9821907fcd0466240008cb61b7f4dbabe9bb7dc3340e52abdeb3db3d54b335"
+      "sizeBytes": 24288,
+      "sha256": "cf774ac3df00aee4e99e204b283741147feb5ef492ade9e0577f54970d018edf"
     },
     {
       "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/src/styles.css",

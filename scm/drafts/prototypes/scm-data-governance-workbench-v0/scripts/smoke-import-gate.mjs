@@ -4,6 +4,7 @@ import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, 
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { DatabaseSync } from "node:sqlite";
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const sourceAppRoot = resolve(scriptDir, "..");
@@ -12,6 +13,19 @@ const sandboxRoot = mkdtempSync(join(tmpdir(), "scm-import-gate-"));
 const sandboxScriptDir = join(sandboxRoot, "scripts");
 const sandboxDatabasePath = join(sandboxRoot, "data", "governance_workbench.sqlite");
 const metricBlueprintFile = "supply-chain-metric-system-l0-l3-blueprint-mece-v2-20260618.json";
+const loop3Rows = {
+  action_tasks: ["action_loop3_20260701_finance_cost_tail_warehouse_return"],
+  agent_traces: ["trace_loop3_20260701_finance_cost_tail_warehouse_return"],
+  aip_scenarios: [
+    "scenario_loop3_inventory_stockout_three_way_20260701",
+    "scenario_loop3_finance_cost_tail_warehouse_return_20260701",
+    "scenario_loop3_fulfillment_eta_delivery_exception_20260701"
+  ],
+  decision_logs: ["decision_loop3_20260701_finance_cost_tail_warehouse_return"],
+  ontology_object_instances: ["cost_event_loop3_tail_warehouse_return_20260701"],
+  recommendation_cards: ["rec_loop3_20260701_finance_cost_tail_warehouse_return"],
+  trace_reviews: ["trace_review_loop3_20260701_finance_cost_tail_warehouse_return"]
+};
 
 function hashFile(path) {
   return createHash("sha256").update(readFileSync(path)).digest("hex");
@@ -23,6 +37,7 @@ let gateSummary;
 try {
   cpSync(join(sourceAppRoot, "scripts"), sandboxScriptDir, { recursive: true });
   cpSync(join(sourceAppRoot, "data"), join(sandboxRoot, "data"), { recursive: true });
+  cpSync(join(sourceAppRoot, "migrations"), join(sandboxRoot, "migrations"), { recursive: true });
 
   const sandboxHashBefore = hashFile(sandboxDatabasePath);
   const result = spawnSync(process.execPath, [join(sandboxScriptDir, "import-assets.mjs")], {
@@ -86,17 +101,63 @@ try {
   if (sandboxHashBefore !== hashFile(sandboxDatabasePath)) failures.push("source-only preflight must preserve the sandbox SQLite hash");
   if (!existsSync(join(primarySource, metricBlueprintFile))) failures.push("source-only preflight must not mutate source fixtures");
 
+  const rebuildSource = join(sandboxRoot, "authorized-rebuild-source");
+  mkdirSync(rebuildSource, { recursive: true });
+  writeFileSync(join(rebuildSource, metricBlueprintFile), `${JSON.stringify({ metrics: [] }, null, 2)}\n`);
+  const rebuildResult = spawnSync(process.execPath, [join(sandboxScriptDir, "import-assets.mjs")], {
+    cwd: sandboxRoot,
+    env: {
+      ...process.env,
+      SCM_DATABASE_REBUILD_AUTHORIZED: "1",
+      SCM_IMPORT_PREFLIGHT_ONLY: "",
+      SCM_WORKBENCH_IMPORT_SOURCE_ROOT: rebuildSource,
+      SCM_IMPORT_SOURCE_ROOT: ""
+    },
+    encoding: "utf8"
+  });
+  const rebuildOutput = `${rebuildResult.stdout || ""}\n${rebuildResult.stderr || ""}`;
+  if (rebuildResult.status !== 0) {
+    failures.push(`authorized rebuild fixture must pass, got ${rebuildResult.status}: ${rebuildOutput.slice(-800)}`);
+  } else {
+    const rebuiltDb = new DatabaseSync(sandboxDatabasePath, { readOnly: true });
+    try {
+      const scenarioCount = Number(rebuiltDb.prepare("SELECT COUNT(*) AS count FROM aip_scenarios").get().count);
+      if (scenarioCount !== 6) failures.push(`authorized rebuild must retain six scenarios, got ${scenarioCount}`);
+      for (const [tableName, ids] of Object.entries(loop3Rows)) {
+        for (const id of ids) {
+          const rowCount = Number(rebuiltDb.prepare(`SELECT COUNT(*) AS count FROM ${tableName} WHERE id = ?`).get(id).count);
+          if (rowCount !== 1) failures.push(`authorized rebuild missing Loop 3 row ${tableName}/${id}`);
+        }
+      }
+      const migrationCount = Number(rebuiltDb.prepare(`
+        SELECT COUNT(*) AS count
+        FROM schema_migrations
+        WHERE id IN ('20260627_b3_t7_additive_schema', '20260627_b6_rbac_action_tiering')
+      `).get().count);
+      if (migrationCount !== 2) failures.push(`authorized rebuild must replay additive schema migrations, got ${migrationCount}`);
+      if (rebuiltDb.prepare("PRAGMA integrity_check").get().integrity_check !== "ok") {
+        failures.push("authorized rebuild SQLite integrity_check must be ok");
+      }
+    } finally {
+      rebuiltDb.close();
+    }
+  }
+
   if (failures.length) throw new Error(`Import authorization gate failed:\n- ${failures.join("\n- ")}`);
   gateSummary = {
     ok: true,
     unauthorizedImportStatus: result.status,
     sandboxedImportTarget: true,
-    sandboxDatabaseHashPreserved: true,
+    unauthorizedSandboxDatabaseHashPreserved: true,
     missingSourceStatus: missingSourceResult.status,
     sourcePreflightStatus: precedenceResult.status,
     sourcePrecedenceVerified: true,
+    authorizedRebuildStatus: rebuildResult.status,
+    migrationsReplayed: true,
+    loop3RowsRetained: Object.values(loop3Rows).reduce((total, ids) => total + ids.length, 0),
     sourceDatabaseHashPreserved: sourceHashBefore === hashFile(sourceDatabasePath),
-    databaseRebuild: false,
+    databaseRebuild: "disposable_fixture_only",
+    sourceDatabaseRebuild: false,
     productionWrites: false
   };
 } catch (error) {

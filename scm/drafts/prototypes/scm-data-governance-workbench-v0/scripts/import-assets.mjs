@@ -12,6 +12,11 @@ const metricBlueprintFile = "supply-chain-metric-system-l0-l3-blueprint-mece-v2-
 const fieldMappingFile = "supply-chain-metric-stage2-field-mapping-template-20260618.csv";
 const p0SignoffFile = "supply-chain-metric-mece-v2-p0-owner-signoff-task-list-20260618.csv";
 const defaultSourceRoot = resolve(root, "../../analysis/business-supply-chain-knowledge-base-draft-20260616/metric-system-blueprint");
+const importMigrationFiles = [
+  "20260627_b3_t7_additive_schema.apply.sql",
+  "20260627_b6_rbac_action_tiering.apply.sql",
+  "20260701_loop3_business_closed_loops.apply.sql"
+];
 const databaseRebuildAuthorized = ["1", "true", "yes", "on"].includes(
   String(process.env.SCM_DATABASE_REBUILD_AUTHORIZED || "").toLowerCase()
 );
@@ -74,16 +79,36 @@ const sourceRoot = sourceResolution.selected.sourceRoot;
 const metricJsonPath = resolve(sourceRoot, metricBlueprintFile);
 const fieldMappingPath = resolve(sourceRoot, fieldMappingFile);
 const p0SignoffPath = resolve(sourceRoot, p0SignoffFile);
+const migrationStatuses = importMigrationFiles.map((file) => ({
+  file,
+  path: resolve(root, "migrations", file),
+  exists: existsSync(resolve(root, "migrations", file))
+}));
+
+if (migrationStatuses.some((migration) => !migration.exists)) {
+  console.error(JSON.stringify({
+    status: "blocked_migration_required",
+    message: "All allowlisted migrations are required before opening or rebuilding local SQLite.",
+    migrations: migrationStatuses
+  }, null, 2));
+  process.exit(2);
+}
 
 if (process.env.SCM_IMPORT_PREFLIGHT_ONLY === "1") {
   console.log(JSON.stringify({
     status: "preflight_ok",
     sourceRoot,
     configuredBy: sourceResolution.selected.configuredBy,
-    files: sourceResolution.selected
+    files: sourceResolution.selected,
+    migrations: migrationStatuses
   }, null, 2));
   process.exit(0);
 }
+
+const importMigrations = migrationStatuses.map((migration) => ({
+  file: migration.file,
+  sql: readFileSync(migration.path, "utf8")
+}));
 
 mkdirSync(resolve(root, "data"), { recursive: true });
 rmSync(temporaryDbPath, { force: true });
@@ -1354,6 +1379,14 @@ knowledgeDomains.forEach((domain) => {
     .run(domainCardCount, domainChunkCount, domainCrosswalkCount, domain.id);
 });
 
+for (const migration of importMigrations) {
+  db.exec(migration.sql);
+}
+
+function tableRowCount(tableName) {
+  return Number(db.prepare(`SELECT COUNT(*) AS count FROM ${tableName}`).get().count);
+}
+
 const summary = {
   imported_at: new Date().toISOString(),
   sourceRoot: sourceResolution.selected.configuredBy === "repository_default"
@@ -1366,22 +1399,24 @@ const summary = {
   },
   databaseRebuildAuthorized,
   replacementMode: "same-directory-temporary-database_then_atomic_rename",
+  appliedMigrations: importMigrations.map((migration) => migration.file),
   counts: {
     metrics: metrics.length,
     l3Metrics: l3Metrics.length,
     fieldMappings: fieldMappings.length,
     p0SignoffTasks: signoffRows.length,
     ontologyObjects: objects.length,
-    ontologyObjectInstances: objectInstances.length,
+    ontologyObjectInstances: tableRowCount("ontology_object_instances"),
     ontologyInstanceLinks: 9,
     lifecycleStates: lifecycle,
     knowledgeCards: knowledgeCardCount,
     knowledgeChunks: knowledgeChunkCount,
     knowledgeCrosswalks: knowledgeCrosswalkCount,
-    agentTraces: 0,
-    recommendationCards: seededRecommendations.length,
+    agentTraces: tableRowCount("agent_traces"),
+    recommendationCards: tableRowCount("recommendation_cards"),
     agentRuns: seededAgentRuns.length,
-    aipScenarios: aipScenarios.length
+    aipScenarios: tableRowCount("aip_scenarios"),
+    schemaMigrations: tableRowCount("schema_migrations")
   }
 };
 
