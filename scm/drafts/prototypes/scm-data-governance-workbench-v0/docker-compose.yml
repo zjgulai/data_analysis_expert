@@ -17,6 +17,9 @@ services:
       SCM_DATA_MOUNT_TYPE: ${SCM_DATA_MOUNT_TYPE:-image_embedded_data}
       SCM_DATA_VOLUME_NAME: ${SCM_DATA_VOLUME_NAME:-}
       SCM_DATA_MOUNT_PATH: ${SCM_DATA_MOUNT_PATH:-/app/data}
+      SCM_PROJECT_ROOT: /app
+      SCM_AI_KNOWLEDGE_EVIDENCE_PATH: runtime/evidence/ai-knowledge-evidence-quality-review-20260622.json
+      SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED: ${SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED:-0}
     ports:
       - "127.0.0.1:5174:5174"
     networks:

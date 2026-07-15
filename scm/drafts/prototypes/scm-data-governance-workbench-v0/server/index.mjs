@@ -1,7 +1,7 @@
 import { DatabaseSync } from "node:sqlite";
 import { createReadStream, existsSync, readFileSync, statSync } from "node:fs";
 import { createServer } from "node:http";
-import { extname, join, resolve } from "node:path";
+import { extname, isAbsolute, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { dirname } from "node:path";
 
@@ -12,7 +12,9 @@ loadLocalEnvFile(resolve(root, ".env.local"));
 const dbPath = resolve(root, "data/governance_workbench.sqlite");
 const distPath = resolve(root, "dist");
 const runtimeMetadataProjectionPath = resolve(root, "data/runtime-metadata-projection.json");
-const aiKnowledgeEvidenceQualityReviewPath = resolve(root, "../../../tmp/outputs/ai-knowledge-evidence-quality-review-20260622.json");
+const aiKnowledgeEvidenceQualityReviewFile = "ai-knowledge-evidence-quality-review-20260622.json";
+const projectRoot = resolveProjectRoot();
+const aiKnowledgeEvidenceQualityReviewPath = resolveAiKnowledgeEvidenceQualityReviewPath();
 const port = Number(process.env.PORT || 5174);
 const host = process.env.HOST || "127.0.0.1";
 const launchedAt = new Date().toISOString();
@@ -24,6 +26,34 @@ const deploymentMetadata = {
   dataVolumeName: process.env.SCM_DATA_VOLUME_NAME || "",
   dataMountPath: process.env.SCM_DATA_MOUNT_PATH || dbPath
 };
+
+function resolveProjectRoot() {
+  const configuredRoot = String(process.env.SCM_PROJECT_ROOT || "").trim();
+  if (configuredRoot) return resolve(configuredRoot);
+  const standaloneEvidencePath = resolve(root, "tmp", "outputs", aiKnowledgeEvidenceQualityReviewFile);
+  if (existsSync(standaloneEvidencePath)) return root;
+  const monorepoRoot = resolve(root, "../../..");
+  const monorepoEvidencePath = resolve(monorepoRoot, "tmp", "outputs", aiKnowledgeEvidenceQualityReviewFile);
+  if (existsSync(monorepoEvidencePath)) return monorepoRoot;
+  return root;
+}
+
+function resolveProjectPath(value) {
+  const path = String(value || "").trim();
+  return isAbsolute(path) ? resolve(path) : resolve(projectRoot, path);
+}
+
+function resolveAiKnowledgeEvidenceQualityReviewPath() {
+  const configuredPath = String(process.env.SCM_AI_KNOWLEDGE_EVIDENCE_PATH || "").trim();
+  if (configuredPath) return resolveProjectPath(configuredPath);
+  const candidates = [
+    resolve(root, "runtime", "evidence", aiKnowledgeEvidenceQualityReviewFile),
+    resolve(root, "data", aiKnowledgeEvidenceQualityReviewFile),
+    resolve(root, "tmp", "outputs", aiKnowledgeEvidenceQualityReviewFile),
+    resolve(root, "../../../tmp/outputs", aiKnowledgeEvidenceQualityReviewFile)
+  ];
+  return candidates.find((candidate) => existsSync(candidate)) || candidates[0];
+}
 
 if (!existsSync(dbPath)) {
   console.error(`SQLite database not found: ${dbPath}`);
@@ -2667,6 +2697,8 @@ function getFinanceCostGovernance() {
 }
 
 function getDeployHealth() {
+  const deepSeekConfig = getDeepSeekConfig();
+  const providerAvailable = Boolean(deepSeekConfig.apiKey) && deepSeekConfig.providerCallAuthorized;
   return {
     ok: true,
     service: "scm-data-governance-workbench",
@@ -2691,7 +2723,9 @@ function getDeployHealth() {
     },
     boundary: {
       productionWrites: false,
-      providerCalls: false,
+      providerCalls: providerAvailable,
+      providerCallAuthorized: deepSeekConfig.providerCallAuthorized,
+      providerConfigured: Boolean(deepSeekConfig.apiKey),
       erpWriteback: false,
       chatbiPolicy: "certified_metric_only"
     }
@@ -3172,38 +3206,23 @@ function getKnowledgeSupport(url) {
 }
 
 function loadAiKnowledgeEvidenceQualityReview() {
-  const fallback = {
-    generated_at: launchedAt,
-    review_date: launchedAt.slice(0, 10),
-    source: {
-      db_path: dbPath,
-      query_policy: "local_sqlite_readonly"
-    },
-    boundary: {
-      provider_call_status: "not_called",
-      production_write_status: "not_written",
-      erp_wms_oms_writeback_status: "not_written",
-      local_sqlite_write_status: "not_written",
-      manual_review_status: "pending_human_review"
-    },
-    totals: {
-      knowledge_domains: 0,
-      knowledge_cards: 0,
-      knowledge_chunks: 0,
-      knowledge_crosswalks: 0,
-      probes: 0,
-      answerable_with_local_evidence: 0,
-      candidate_only_draft_evidence: 0,
-      evidence_thin: 0,
-      not_answerable: 0
-    },
-    domain_reviews: []
-  };
-  if (!existsSync(aiKnowledgeEvidenceQualityReviewPath)) return fallback;
+  if (!existsSync(aiKnowledgeEvidenceQualityReviewPath)) {
+    const error = new Error(
+      `AI knowledge evidence review is missing at ${aiKnowledgeEvidenceQualityReviewPath}. Configure SCM_PROJECT_ROOT or SCM_AI_KNOWLEDGE_EVIDENCE_PATH.`
+    );
+    error.statusCode = 503;
+    throw error;
+  }
   try {
-    return JSON.parse(readFileSync(aiKnowledgeEvidenceQualityReviewPath, "utf8"));
+    const packet = JSON.parse(readFileSync(aiKnowledgeEvidenceQualityReviewPath, "utf8"));
+    if (!Array.isArray(packet.domain_reviews) || !packet.domain_reviews.length) {
+      throw new Error("domain_reviews must be a non-empty array");
+    }
+    return packet;
   } catch (error) {
-    return { ...fallback, load_error: error.message };
+    const loadError = new Error(`AI knowledge evidence review is invalid at ${aiKnowledgeEvidenceQualityReviewPath}: ${error.message}`);
+    loadError.statusCode = 503;
+    throw loadError;
   }
 }
 
@@ -3686,7 +3705,8 @@ function getDeepSeekConfig() {
     webModel: String(process.env.DEEPSEEK_WEB_MODEL || process.env.DEEPSEEK_MODEL || "deepseek-v4-pro"),
     maxTokens: boundedNumber(process.env.DEEPSEEK_MAX_TOKENS, 1200, 128, 8000),
     timeoutMs: boundedNumber(process.env.DEEPSEEK_TIMEOUT_MS, 45000, 5000, 120000),
-    webSearchEnabled: envFlag("DEEPSEEK_ENABLE_WEB_SEARCH", true)
+    webSearchEnabled: envFlag("DEEPSEEK_ENABLE_WEB_SEARCH", true),
+    providerCallAuthorized: envFlag("SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED", false)
   };
 }
 
@@ -3702,6 +3722,8 @@ function getDeepSeekStatus() {
   const config = getDeepSeekConfig();
   return {
     configured: Boolean(config.apiKey),
+    providerCallAuthorized: config.providerCallAuthorized,
+    available: Boolean(config.apiKey) && config.providerCallAuthorized,
     provider: "deepseek",
     baseUrlHost: safeUrlHost(config.baseUrl),
     anthropicBaseUrlHost: safeUrlHost(config.anthropicBaseUrl),
@@ -3912,6 +3934,11 @@ async function deepSeekAiChat(body) {
   if (!config.apiKey) {
     const error = new Error("DeepSeek API key is not configured. Set DEEPSEEK_API_KEY in the server environment or ignored .env.local.");
     error.statusCode = 503;
+    throw error;
+  }
+  if (!config.providerCallAuthorized) {
+    const error = new Error("DeepSeek provider calls are not authorized. Set SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED=1 in the server environment after explicit approval.");
+    error.statusCode = 403;
     throw error;
   }
   const mode = normalizeDeepSeekMode(body.mode);

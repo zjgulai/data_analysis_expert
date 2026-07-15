@@ -21,7 +21,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 COPY server ./server
 COPY data ./data
-COPY tmp/outputs/ai-knowledge-evidence-quality-review-20260622.json /tmp/outputs/ai-knowledge-evidence-quality-review-20260622.json
+COPY runtime ./runtime
 
 EXPOSE 5174
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \

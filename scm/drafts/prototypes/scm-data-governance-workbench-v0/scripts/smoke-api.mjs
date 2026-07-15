@@ -92,13 +92,19 @@ checked("deploy-health", {
 const deepSeekStatus = (await request("/api/ai-chat/deepseek/status")).payload;
 assert(deepSeekStatus.provider === "deepseek", "DeepSeek status endpoint must identify provider");
 assert(typeof deepSeekStatus.configured === "boolean", "DeepSeek status must expose configured flag");
+assert(typeof deepSeekStatus.providerCallAuthorized === "boolean", "DeepSeek status must expose provider authorization flag");
+assert(typeof deepSeekStatus.available === "boolean", "DeepSeek status must expose provider availability");
+assert(deepSeekStatus.available === (deepSeekStatus.configured && deepSeekStatus.providerCallAuthorized), "DeepSeek availability must require both key and authorization");
+assert(health.boundary?.providerCalls === deepSeekStatus.available, "Deploy health provider boundary must match DeepSeek availability");
 assert(deepSeekStatus.model && deepSeekStatus.webModel, "DeepSeek status must expose knowledge and web models");
 assert(deepSeekStatus.secretPolicy === "server_side_env_only_key_never_returned_to_browser", "DeepSeek status must preserve server-side key policy");
 checked("deepseek-chat-status", {
   configured: deepSeekStatus.configured,
   model: deepSeekStatus.model,
   webModel: deepSeekStatus.webModel,
-  webSearchEnabled: deepSeekStatus.webSearchEnabled
+  webSearchEnabled: deepSeekStatus.webSearchEnabled,
+  providerCallAuthorized: deepSeekStatus.providerCallAuthorized,
+  available: deepSeekStatus.available
 });
 if (!deepSeekStatus.configured) {
   const missingKeyProbe = await requestRaw("/api/ai-chat/deepseek", {
@@ -112,6 +118,20 @@ if (!deepSeekStatus.configured) {
   assert(String(missingKeyProbe.payload?.error || "").includes("DEEPSEEK_API_KEY"), "DeepSeek missing-key response must explain env configuration");
   checked("deepseek-chat-missing-key-gate", {
     status: missingKeyProbe.response.status,
+    providerCallAttempted: false
+  });
+} else if (!deepSeekStatus.providerCallAuthorized) {
+  const unauthorizedProbe = await requestRaw("/api/ai-chat/deepseek", {
+    method: "POST",
+    body: JSON.stringify({
+      mode: "knowledge",
+      messages: [{ role: "user", content: "smoke probe without provider authorization" }]
+    })
+  });
+  assert(unauthorizedProbe.response.status === 403, "DeepSeek chat must be gated when provider authorization is absent");
+  assert(String(unauthorizedProbe.payload?.error || "").includes("SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED"), "DeepSeek authorization response must name the server-side flag");
+  checked("deepseek-chat-authorization-gate", {
+    status: unauthorizedProbe.response.status,
     providerCallAttempted: false
   });
 } else {

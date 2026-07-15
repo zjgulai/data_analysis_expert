@@ -68,7 +68,7 @@ npm run dev:web
 ```bash
 npm run import
 npm run build
-SCM_PREPROD_SCAN_ROOT=/Users/pray/project/ecom_ana_overview/scm npm run preprod:check
+SCM_PREPROD_SCAN_ROOT="$(git rev-parse --show-toplevel)/scm" npm run preprod:check
 PORT=5174 npm run start
 ```
 
@@ -77,6 +77,8 @@ PORT=5174 npm run start
 ```bash
 PORT=5174 npm run health
 SCM_WORKBENCH_BASE_URL=http://127.0.0.1:5174 npm run smoke:api
+npm run smoke:provider-gate
+npm run smoke:path-contract
 SCM_WORKBENCH_READONLY_BASE_URL=http://127.0.0.1:5174 npm run smoke:readonly
 SCM_WORKBENCH_BASE_URL=http://127.0.0.1:5174 npm run smoke:ui
 ```
@@ -84,6 +86,13 @@ SCM_WORKBENCH_BASE_URL=http://127.0.0.1:5174 npm run smoke:ui
 `smoke:api` 和 `smoke:ui` 只写本地 SQLite ledger 与 `tmp/` 证据目录，不写生产系统、不调用 provider、不回写 ERP。`smoke:readonly` 只执行 GET/HEAD 读取，可通过 `SCM_WORKBENCH_READONLY_BASE_URL` 指向后续生产只读目标。
 
 `preprod:check` 是上线前只读 gate：检查构建产物、Docker/Compose 生产边界、本地 SQLite 可信最低线、密钥文件扫描和 provider/ERP/writeback 关闭状态。它会把 owner sign-off、字段映射和 SCEI 权重来源列为 manual gates；这些不阻塞只读原型发布，但阻塞任何 provider、生产写入或 ERP/OMS/WMS 回写能力开放。
+
+### Runtime 路径与 provider 授权
+
+- `SCM_PROJECT_ROOT`：运行时项目根目录；容器和 standalone 布局使用 `/app`，monorepo 本地运行可自动探测。
+- `SCM_AI_KNOWLEDGE_EVIDENCE_PATH`：AI 知识证据 JSON 路径；相对路径以 `SCM_PROJECT_ROOT` 为基准，默认优先使用 `runtime/evidence/`，避免被 `/app/data` SQLite 外部卷遮蔽。
+- `SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED`：服务端 provider 调用授权，默认 `0`。即使配置了 `DEEPSEEK_API_KEY`，没有显式设为 `1` 时 endpoint 仍返回 403 且不会发起网络请求。
+- `smoke:provider-gate` 只连接本地 fake provider；`smoke:path-contract` 只使用临时目录和临时 SQLite 副本。
 
 ## 页面
 
@@ -114,6 +123,6 @@ curl http://127.0.0.1:5174/api/deploy/health
 腾讯云服务器接入现有边缘 Nginx 网络时使用：
 
 ```bash
-SCM_PREPROD_SCAN_ROOT=/Users/pray/project/ecom_ana_overview/scm npm run preprod:check
+SCM_PREPROD_SCAN_ROOT="$(git rev-parse --show-toplevel)/scm" npm run preprod:check
 docker compose -p scm_governance_workbench -f docker-compose.yml -f docker-compose.production.yml up -d --build
 ```

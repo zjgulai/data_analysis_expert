@@ -1,11 +1,21 @@
 import { readdirSync, readFileSync, statSync, existsSync } from "node:fs";
-import { join, relative } from "node:path";
+import { isAbsolute, join, relative, resolve } from "node:path";
 import { execFileSync } from "node:child_process";
 import { DatabaseSync } from "node:sqlite";
 
 const root = process.cwd();
 const scanRoot = process.env.SCM_PREPROD_SCAN_ROOT || root;
 const dbPath = join(root, "data", "governance_workbench.sqlite");
+const evidenceFileName = "ai-knowledge-evidence-quality-review-20260622.json";
+const configuredProjectRoot = String(process.env.SCM_PROJECT_ROOT || "").trim();
+const projectRoot = configuredProjectRoot ? resolve(configuredProjectRoot) : resolve(scanRoot);
+const configuredEvidencePath = String(process.env.SCM_AI_KNOWLEDGE_EVIDENCE_PATH || "").trim();
+const evidencePath = configuredEvidencePath
+  ? (isAbsolute(configuredEvidencePath) ? resolve(configuredEvidencePath) : resolve(projectRoot, configuredEvidencePath))
+  : join(root, "runtime", "evidence", evidenceFileName);
+const providerCallAuthorized = ["1", "true", "yes", "on"].includes(
+  String(process.env.SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED || "").toLowerCase()
+);
 const checks = [];
 const hardBlockers = [];
 const manualGates = [];
@@ -68,6 +78,7 @@ function getGitDirtyCount() {
 
 const packageJson = JSON.parse(read("package.json"));
 const dockerfile = read("Dockerfile");
+const serverSource = read("server/index.mjs");
 const productionCompose = hasFile("docker-compose.production.yml") ? read("docker-compose.production.yml") : "";
 const requiredFiles = [
   "package-lock.json",
@@ -76,10 +87,13 @@ const requiredFiles = [
   "docker-compose.production.yml",
   "server/index.mjs",
   "data/governance_workbench.sqlite",
+  `runtime/evidence/${evidenceFileName}`,
   "dist/index.html",
   "dist/fulfillment-dashboard/index.html",
   "dist/fulfillment-dashboard/data/fulfillment_chart_data_binding_20260626.csv",
   "scripts/smoke-api.mjs",
+  "scripts/smoke-path-contract.mjs",
+  "scripts/smoke-provider-gate.mjs",
   "scripts/smoke-readonly.mjs",
   "scripts/smoke-ui.mjs"
 ];
@@ -88,7 +102,7 @@ for (const file of requiredFiles) {
   record(`required-file:${file}`, hasFile(file), file);
 }
 
-for (const scriptName of ["check", "build", "smoke:api", "smoke:readonly", "smoke:ui", "preprod:check"]) {
+for (const scriptName of ["check", "build", "smoke:api", "smoke:path-contract", "smoke:provider-gate", "smoke:readonly", "smoke:ui", "preprod:check"]) {
   record(`package-script:${scriptName}`, Boolean(packageJson.scripts?.[scriptName]), packageJson.scripts?.[scriptName] || "missing");
 }
 
@@ -97,6 +111,36 @@ const buildIndex = dockerfile.indexOf("RUN npm run build");
 record("dockerfile-public-before-build", publicCopyIndex >= 0 && buildIndex >= 0 && publicCopyIndex < buildIndex, "Dockerfile copies public assets before Vite build");
 record("dockerfile-healthcheck", dockerfile.includes("HEALTHCHECK"), "Docker image has healthcheck");
 record("dockerfile-runtime-data-copy", dockerfile.includes("COPY data ./data"), "Docker image includes embedded data for standalone prototype");
+record("dockerfile-runtime-evidence-copy", dockerfile.includes("COPY runtime ./runtime"), "Docker image keeps immutable evidence outside the mutable SQLite volume");
+record(
+  "server-provider-authorization-gate",
+  serverSource.includes("SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED") && serverSource.includes("error.statusCode = 403"),
+  "DeepSeek route has an explicit server-side authorization gate"
+);
+record(
+  "server-evidence-path-contract",
+  serverSource.includes("SCM_PROJECT_ROOT") && serverSource.includes("SCM_AI_KNOWLEDGE_EVIDENCE_PATH"),
+  "Evidence path supports project-root and explicit path overrides"
+);
+record(
+  "provider-call-authorization-default-closed",
+  !providerCallAuthorized,
+  { envVar: "SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED", authorized: providerCallAuthorized }
+);
+
+let evidenceReviewPackets = 0;
+let evidenceLoadError = "";
+try {
+  const evidence = JSON.parse(readFileSync(evidencePath, "utf8"));
+  evidenceReviewPackets = Array.isArray(evidence.domain_reviews) ? evidence.domain_reviews.length : 0;
+} catch (error) {
+  evidenceLoadError = error.message;
+}
+record(
+  "runtime-evidence-review-packet",
+  evidenceReviewPackets >= 4,
+  evidenceLoadError ? { path: evidencePath, error: evidenceLoadError } : { path: evidencePath, evidenceReviewPackets, minimum: 4 }
+);
 
 record(
   "production-compose-external-volume",
@@ -112,8 +156,8 @@ record(
   "production override attaches to existing edge network"
 );
 
-const pemFiles = listFiles(scanRoot).filter((file) => file.endsWith(".pem"));
-record("secret-file-scan:pem", pemFiles.length === 0, pemFiles.map((file) => relative(scanRoot, file)).slice(0, 10));
+const secretKeyFiles = listFiles(scanRoot).filter((file) => file.endsWith(".pem") || file.endsWith(".key"));
+record("secret-file-scan:pem-key", secretKeyFiles.length === 0, secretKeyFiles.map((file) => relative(scanRoot, file)).slice(0, 10));
 
 const db = new DatabaseSync(dbPath, { readOnly: true });
 const certifiedMetrics = count(db, "select count(*) as count from metrics where certification_status='certified'");
@@ -175,7 +219,7 @@ const result = {
   scanRoot,
   releaseBoundary: {
     readOnlyPrototypeProduction: hardBlockers.length === 0,
-    providerCalls: false,
+    providerCalls: providerCallAuthorized && Boolean(process.env.DEEPSEEK_API_KEY),
     productionWrites: false,
     erpWriteback: false,
     controlledWritebackProduction: false
@@ -188,6 +232,7 @@ const result = {
     suggestionReplayCards,
     agentTraces,
     nonSeedObjects,
+    evidenceReviewPackets,
     p0OwnerSignoffs,
     p0FieldMappings,
     dirtyCount
