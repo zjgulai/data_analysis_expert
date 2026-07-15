@@ -124,7 +124,8 @@ const requiredFiles = [
   "tmp/outputs/manual-gate-receipt-validation-20260630.json",
   "tmp/outputs/manual-gate-receipt-intake-validation-20260630.json",
   "tmp/outputs/manual-gate-receipt-positive-fixture-validation-20260630.json",
-  "tmp/outputs/manual-gate-receipt-negative-fixture-validation-20260630.json"
+  "tmp/outputs/manual-gate-receipt-negative-fixture-validation-20260630.json",
+  "tmp/outputs/manual-gate-negative-fixture-status-update-plan-20260630.json"
 ];
 
 for (const file of requiredFiles) {
@@ -208,7 +209,7 @@ const manualGateEvidenceFiles = [...new Set(manualGateEvidenceRoots.flatMap((dir
       || /^(?:6[3-9]|70)-manual-gate/.test(basename(path))
     )
   );
-const workstationPathPattern = /(?:\/Users\/|\/home\/|[A-Za-z]:\\Users\\)/;
+const workstationPathPattern = /(?:[\\/]{1,2}Users[\\/]{1,2}|[\\/]{1,2}home[\\/]{1,2})/i;
 const manualGatePathFailures = manualGateEvidenceFiles
   .filter((path) => workstationPathPattern.test(readFileSync(path, "utf8")))
   .map((path) => portablePath(path));

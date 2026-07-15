@@ -10,6 +10,7 @@ const blockerNames = "invalid_decision_result,unsupported_packet_type,status_mut
 const generatedSummaryPath = join(tempRoot, "generated", "manual-gate-resolution-summary.json");
 const generatedPacketDir = join(tempRoot, "generated", "owner-packets");
 const generatedReceiptDir = join(tempRoot, "generated", "receipt-templates");
+const workstationPathPattern = /(?:[\\/]{1,2}Users[\\/]{1,2}|[\\/]{1,2}home[\\/]{1,2})/i;
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -62,7 +63,10 @@ try {
   const exportSummary = JSON.parse(readFileSync(generatedSummaryPath, "utf8"));
   assert(exportSummary.counts.receiptTemplateRows === 53, "export:template-rows-not-53");
   assert(exportSummary.counts.ownerPacketCount === 8, "export:owner-packets-not-8");
-  assert(!/(?:\/Users\/|\/home\/|[A-Za-z]:\\Users\\)/.test(JSON.stringify(exportSummary)), "export:workstation-path-leak");
+  for (const workstationPath of ["/Users/example/project", "/home/example/project", "C:\\Users\\example\\project", JSON.stringify({ path: "C:\\Users\\example\\project" })]) {
+    assert(workstationPathPattern.test(workstationPath), `portability-pattern-miss:${workstationPath}`);
+  }
+  assert(!workstationPathPattern.test(JSON.stringify(exportSummary)), "export:workstation-path-leak");
   const sceiOwnerPacket = readFileSync(join(generatedPacketDir, "scm-data-governance-owner.md"), "utf8");
   assert((sceiOwnerPacket.match(/owner_decision_packet_ready/g) || []).length === 5, "export:scei-status-not-populated");
 
