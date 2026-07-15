@@ -1,0 +1,103 @@
+name: SCM integration gates
+
+on:
+  pull_request:
+    paths:
+      - "scm/**"
+      - ".github/workflows/scm-integration-gates.yml"
+  push:
+    branches:
+      - "codex/scm-integration-**"
+      - "codex/scm-post-stack-**"
+    paths:
+      - "scm/**"
+      - ".github/workflows/scm-integration-gates.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: scm-integration-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  scm-gates:
+    name: SCM gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: scm/drafts/prototypes/scm-data-governance-workbench-v0
+    env:
+      DEEPSEEK_API_KEY: ""
+      SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED: "0"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: scm/drafts/prototypes/scm-data-governance-workbench-v0/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run check
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify provider authorization gate
+        run: npm run smoke:provider-gate
+
+      - name: Verify monorepo and standalone path contract
+        run: npm run smoke:path-contract
+
+      - name: Run preproduction gate
+        env:
+          SCM_PREPROD_SCAN_ROOT: ${{ github.workspace }}/scm
+        run: npm run preprod:check
+
+      - name: Verify readonly smoke and SQLite hash
+        shell: bash
+        run: |
+          set -euo pipefail
+          db_path="data/governance_workbench.sqlite"
+          before_hash="$(sha256sum "$db_path" | awk '{print $1}')"
+          HOST=127.0.0.1 PORT=5194 npm run start >/tmp/scm-server.log 2>&1 &
+          server_pid=$!
+          cleanup() {
+            kill "$server_pid" 2>/dev/null || true
+            wait "$server_pid" 2>/dev/null || true
+          }
+          trap cleanup EXIT
+          for _ in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:5194/api/deploy/health >/dev/null; then
+              break
+            fi
+            if ! kill -0 "$server_pid" 2>/dev/null; then
+              cat /tmp/scm-server.log
+              exit 1
+            fi
+            sleep 1
+          done
+          curl --fail --silent http://127.0.0.1:5194/api/deploy/health >/dev/null
+          SCM_WORKBENCH_READONLY_BASE_URL=http://127.0.0.1:5194 npm run smoke:readonly
+          after_hash="$(sha256sum "$db_path" | awk '{print $1}')"
+          test "$before_hash" = "$after_hash"
+          cleanup
+          trap - EXIT
+
+      - name: Verify clean diff
+        working-directory: ${{ github.workspace }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          test -z "$(git status --porcelain)"
