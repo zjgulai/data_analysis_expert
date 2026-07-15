@@ -24,6 +24,8 @@ concurrency:
 jobs:
   scm-gates:
     name: SCM gates
+    # The first workflow-only PR has no SCM app yet; every integration branch must run the full job.
+    if: github.event_name != 'pull_request' || github.head_ref != 'codex/scm-ci-bootstrap-20260716'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     defaults:
