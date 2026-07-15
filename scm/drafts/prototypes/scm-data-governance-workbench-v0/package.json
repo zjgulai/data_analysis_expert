@@ -16,6 +16,7 @@
     "smoke:api": "node scripts/smoke-api.mjs",
     "smoke:database-gate": "node scripts/smoke-database-gate.mjs",
     "smoke:import-gate": "node scripts/smoke-import-gate.mjs",
+    "smoke:manual-gate-receipts": "node scripts/smoke-manual-gate-receipts.mjs",
     "smoke:migration-gate": "node scripts/smoke-migration-gate.mjs",
     "smoke:path-contract": "node scripts/smoke-path-contract.mjs",
     "smoke:provider-gate": "node scripts/smoke-provider-gate.mjs",

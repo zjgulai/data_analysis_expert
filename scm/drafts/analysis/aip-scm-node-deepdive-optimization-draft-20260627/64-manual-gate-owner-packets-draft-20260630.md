@@ -51,7 +51,7 @@ B64 在 B63 manual-gate resolution pack 之后，把待审项从通用 intake �
 | B64-2 | 扩展 manual-gate 导出脚本，生成 owner packet Markdown/CSV 和 packet index | done | 脚本输出 `ownerPacketCount=8` |
 | B64-3 | 生成并抽检 owner packets | done | 抽检 `inventory-ops-owner.md` 与 `scm-data-governance-owner.md` |
 | B64-4 | 更新总纲索引和 B64 执行证据 | done | 本文件 + `00-index` |
-| B64-5 | 跑 node check/export/check/build/preprod/smoke | pending | 回归命令全部完成后更新 |
+| B64-5 | 跑 node check/export/check/build/preprod/smoke | done | 回归命令全部通过，SQLite hash 保持不变 |
 | B64-6 | 提交、推送并创建 stacked draft PR | pending | PR base 指向 B63/#12 分支 |
 
 ## 3. 路由规则
@@ -109,7 +109,7 @@ SCM_MANUAL_GATE_GENERATED_AT="2026-06-30T04:30:00.000Z" node scripts/export-manu
 git diff --check
 npm run check
 npm run build
-SCM_PREPROD_SCAN_ROOT="/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629" npm run preprod:check
+SCM_PREPROD_SCAN_ROOT="$(git rev-parse --show-toplevel)/scm" npm run preprod:check
 npm run smoke:api
 npm run smoke:readonly
 ```

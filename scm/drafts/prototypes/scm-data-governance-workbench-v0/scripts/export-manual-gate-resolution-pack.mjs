@@ -1,5 +1,5 @@
 import { mkdirSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { DatabaseSync } from "node:sqlite";
 
 const root = process.cwd();
@@ -14,6 +14,15 @@ const outputPaths = {
   ownerPacketDir: process.env.SCM_MANUAL_GATE_PACKET_DIR || join(root, "tmp", "outputs", "manual-gate-owner-packets-20260630"),
   receiptTemplateDir: process.env.SCM_MANUAL_GATE_RECEIPT_DIR || join(root, "tmp", "outputs", "manual-gate-receipt-templates-20260630")
 };
+
+function portablePath(path) {
+  const fromRoot = relative(root, resolve(path));
+  if (fromRoot === "") return ".";
+  if (fromRoot !== ".." && !fromRoot.startsWith(`..${sep}`) && !isAbsolute(fromRoot)) {
+    return fromRoot.split(sep).join("/");
+  }
+  return "external-path";
+}
 
 function ensureParent(path) {
   mkdirSync(dirname(path), { recursive: true });
@@ -58,12 +67,12 @@ const ownerSlugs = new Map([
 ]);
 
 function ownerSlug(owner) {
-  if (ownerSlugs.has(owner)) return ownerSlugs.get(owner);
-  return String(owner || "unknown-owner")
-    .normalize("NFKD")
-    .replace(/[^\w]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .toLowerCase() || "unknown-owner";
+  if (!ownerSlugs.has(owner)) throw new Error(`unmapped_owner_slug:${owner || "blank"}`);
+  return ownerSlugs.get(owner);
+}
+
+if (new Set(ownerSlugs.values()).size !== ownerSlugs.size) {
+  throw new Error("duplicate_configured_owner_slug");
 }
 
 function routeOwner(row) {
@@ -203,6 +212,7 @@ const sceiWeightRows = all(
   ORDER BY k.child_metric_id`
 ).map((row) => ({
   ...row,
+  current_status: sceiTaskRows[0]?.status || "",
   proposed_weight: "",
   basis_type: "",
   basis_description: "",
@@ -233,6 +243,7 @@ for (const [packetOwner, rows] of signoffByOwner.entries()) {
 
 const fieldMappingByOwner = new Map();
 fieldMappingRows.forEach((row) => {
+  // Field-mapping tasks carry an explicit assignee; owner-signoff tasks use the metric owner because their assignee is still "待确认".
   const packetOwner = row.requested_owner || routeOwner(row);
   if (!fieldMappingByOwner.has(packetOwner)) fieldMappingByOwner.set(packetOwner, []);
   fieldMappingByOwner.get(packetOwner).push(row);
@@ -259,8 +270,10 @@ const ownerBuckets = all(
 
 const summary = {
   generatedAt,
-  dbPath,
-  outputPaths,
+  dbPath: portablePath(dbPath),
+  outputPaths: Object.fromEntries(
+    Object.entries(outputPaths).map(([name, path]) => [name, portablePath(path)])
+  ),
   boundary: {
     productionWrites: false,
     providerCalls: false,
@@ -291,13 +304,13 @@ const summary = {
     "SCEI five-dimensional weights are intentionally blank because only a historical two-axis cost/fulfillment split is evidenced."
   ],
   files: {
-    ownerSignoffCsv: outputPaths.ownerSignoff,
-    fieldMappingCsv: outputPaths.fieldMapping,
-    sceiWeightCsv: outputPaths.sceiWeight,
-    receiptIntakeCsv: outputPaths.receiptIntake,
-    summaryJson: outputPaths.summary,
-    ownerPacketDir: outputPaths.ownerPacketDir,
-    receiptTemplateDir: outputPaths.receiptTemplateDir
+    ownerSignoffCsv: portablePath(outputPaths.ownerSignoff),
+    fieldMappingCsv: portablePath(outputPaths.fieldMapping),
+    sceiWeightCsv: portablePath(outputPaths.sceiWeight),
+    receiptIntakeCsv: portablePath(outputPaths.receiptIntake),
+    summaryJson: portablePath(outputPaths.summary),
+    ownerPacketDir: portablePath(outputPaths.ownerPacketDir),
+    receiptTemplateDir: portablePath(outputPaths.receiptTemplateDir)
   },
   ownerPackets: [],
   receiptTemplates: []
@@ -447,14 +460,14 @@ for (const [packetOwner, rows] of [...ownerPackets.entries()].sort(([a], [b]) =>
     slug,
     itemCount: rows.length,
     counts,
-    csvPath,
-    markdownPath
+    csvPath: portablePath(csvPath),
+    markdownPath: portablePath(markdownPath)
   });
   summary.receiptTemplates.push({
     owner: packetOwner,
     slug,
     rowCount: receiptRows.length,
-    csvPath: receiptCsvPath
+    csvPath: portablePath(receiptCsvPath)
   });
   summary.counts.receiptTemplateCount += 1;
   summary.counts.receiptTemplateRows += receiptRows.length;

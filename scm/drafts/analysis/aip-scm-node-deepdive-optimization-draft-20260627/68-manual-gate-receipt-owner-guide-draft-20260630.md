@@ -111,7 +111,7 @@ SCM_MANUAL_GATE_RECEIPT_TEMPLATE_MODE=false SCM_MANUAL_GATE_RECEIPT_INTAKE_CSV="
 git diff --check
 npm run check
 npm run build
-SCM_PREPROD_SCAN_ROOT="/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629" npm run preprod:check
+SCM_PREPROD_SCAN_ROOT="$(git rev-parse --show-toplevel)/scm" npm run preprod:check
 npm run smoke:api
 npm run smoke:readonly
 ```
@@ -127,7 +127,7 @@ npm run smoke:readonly
 - `git diff --check` 通过。
 - `npm run check` 通过。
 - `npm run build` 通过。
-- `SCM_PREPROD_SCAN_ROOT="/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629" npm run preprod:check` 通过，输出 `hardBlockers=[]`，manual gates 仍为 `ownerSignoff=30`、`fieldMapping=18`、`sceiWeight=1`。
+- `SCM_PREPROD_SCAN_ROOT="$(git rev-parse --show-toplevel)/scm" npm run preprod:check` 通过，输出 `hardBlockers=[]`，manual gates 仍为 `ownerSignoff=30`、`fieldMapping=18`、`sceiWeight=1`。
 - `npm run smoke:api` 通过；DeepSeek missing-key gate 返回 `status=503`、`providerCallAttempted=false`，本地 ledger 写入后已用 pre-smoke SQLite 快照恢复。
 - `npm run smoke:readonly` 通过；输出 `productionWrites=false`、`providerCalls=false`、`erpWriteback=false`、`localSqliteWrites=false`，方法仅为 `GET/HEAD`。
 - SQLite pre-smoke 与最终 hash 一致：`8d767c623b8f8476fb55aaa4990a3dca885d84cccb82fa428e74d2ee8dad8c92`。

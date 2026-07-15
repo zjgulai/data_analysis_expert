@@ -2,9 +2,10 @@
   "generatedAt": "2026-06-30T07:25:00.000Z",
   "templateMode": false,
   "sourceMode": "receipt_intake",
-  "receiptDir": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630",
+  "receiptProfile": "negative_fixture",
+  "receiptDir": "tmp/outputs/manual-gate-receipt-templates-20260630",
   "receiptIntakePath": "tmp/fixtures/manual-gate-receipt-negative-fixture-20260630.csv",
-  "summaryPath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-resolution-summary-20260630.json",
+  "summaryPath": "tmp/outputs/manual-gate-resolution-summary-20260630.json",
   "validationPath": "tmp/outputs/manual-gate-receipt-negative-fixture-validation-20260630.json",
   "statusPlanPath": "tmp/outputs/manual-gate-negative-fixture-status-update-plan-20260630.json",
   "boundary": {
@@ -60,6 +61,9 @@
       "rejected_needs_rework": 1
     },
     "invalidDecisionResultRows": 1,
+    "unknownIdentityRows": 0,
+    "duplicateIdentityRows": 0,
+    "templateIdentityRows": 53,
     "blockerCounts": {
       "invalid_decision_result": 1,
       "unsupported_packet_type": 1,
@@ -88,6 +92,12 @@
     "missingExpectedBlockers": [],
     "unexpectedBlockers": [],
     "disallowedValidationIssues": [],
+    "controlledNegativeFixture": true,
+    "satisfied": true
+  },
+  "acceptanceProfileValidation": {
+    "profile": "negative_fixture",
+    "failures": [],
     "satisfied": true
   },
   "schemaValid": true,
@@ -112,7 +122,7 @@
       "metricCode": "full_chain_turnover_days_amount",
       "metricName": "全链条库存资金周转天数",
       "decisionResult": "approved_for_fixture_dry_run",
-      "receiptStatus": "blocked_missing_receipt_fields",
+      "receiptStatus": "blocked_validation_errors",
       "missingHumanFields": [],
       "blockers": [
         "invalid_decision_result"
@@ -132,7 +142,7 @@
       "metricCode": "full_chain_turnover_days_amount",
       "metricName": "全链条库存资金周转天数",
       "decisionResult": "approved_for_manual_review",
-      "receiptStatus": "blocked_missing_receipt_fields",
+      "receiptStatus": "blocked_validation_errors",
       "missingHumanFields": [],
       "blockers": [
         "unsupported_packet_type"
@@ -152,7 +162,7 @@
       "metricCode": "full_chain_turnover_days_amount",
       "metricName": "全链条库存资金周转天数",
       "decisionResult": "rejected_needs_rework",
-      "receiptStatus": "blocked_missing_receipt_fields",
+      "receiptStatus": "blocked_validation_errors",
       "missingHumanFields": [],
       "blockers": [
         "status_mutation_must_remain_false"

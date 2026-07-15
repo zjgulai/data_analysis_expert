@@ -1,5 +1,6 @@
+import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { basename, dirname, join } from "node:path";
+import { basename, dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 
 const root = process.cwd();
 const receiptDir = process.env.SCM_MANUAL_GATE_RECEIPT_DIR || join(root, "tmp", "outputs", "manual-gate-receipt-templates-20260630");
@@ -10,6 +11,34 @@ const statusPlanPath = process.env.SCM_MANUAL_GATE_STATUS_PLAN_JSON || join(root
 const templateMode = process.env.SCM_MANUAL_GATE_RECEIPT_TEMPLATE_MODE !== "false";
 const generatedAt = process.env.SCM_MANUAL_GATE_RECEIPT_VALIDATED_AT || new Date().toISOString();
 const expectedBlockersMode = process.env.SCM_MANUAL_GATE_EXPECTED_BLOCKERS === "true";
+const formalIntakePath = join(root, "data", "manual-gate-receipts-intake-20260630.csv");
+const positiveFixturePath = join(root, "tmp", "fixtures", "manual-gate-receipt-positive-fixture-20260630.csv");
+const negativeFixturePath = join(root, "tmp", "fixtures", "manual-gate-receipt-negative-fixture-20260630.csv");
+const positiveFixtureSha256 = "1d70137f60e31b2216637aa85041938316f6ef414f6d5a5b8bc69cedd7f0a02f";
+const negativeFixtureSha256 = "289731d8c03c332f6f686d577c7b7de88fdb0789c4fc92889fa2d61644571430";
+const resolvedReceiptIntakePath = resolve(receiptIntakePath);
+const receiptProfile = templateMode
+  ? "template"
+  : resolvedReceiptIntakePath === resolve(formalIntakePath)
+    ? "formal_intake"
+    : resolvedReceiptIntakePath === resolve(positiveFixturePath)
+      ? "positive_fixture"
+      : resolvedReceiptIntakePath === resolve(negativeFixturePath)
+        ? "negative_fixture"
+        : "real_intake";
+
+function portablePath(path) {
+  const fromRoot = relative(root, resolve(path));
+  if (fromRoot === "") return ".";
+  if (fromRoot !== ".." && !fromRoot.startsWith(`..${sep}`) && !isAbsolute(fromRoot)) {
+    return fromRoot.split(sep).join("/");
+  }
+  return "external-path";
+}
+
+function sha256File(path) {
+  return existsSync(path) ? createHash("sha256").update(readFileSync(path)).digest("hex") : null;
+}
 
 const expectedColumns = [
   "owner",
@@ -107,6 +136,20 @@ function increment(map, key) {
   map[key] = (map[key] || 0) + 1;
 }
 
+function identityKey(record) {
+  return JSON.stringify(identityFields.map((field) => String(record[field] || "").trim()));
+}
+
+function isStrictCalendarDate(value) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return false;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day;
+}
+
 const errors = [];
 const warnings = [];
 const files = [];
@@ -120,15 +163,37 @@ const summary = existsSync(summaryPath) ? JSON.parse(readFileSync(summaryPath, "
 
 if (!summary) errors.push(`missing_summary:${summaryPath}`);
 
-let inputFiles = [];
-if (templateMode) {
-  if (!existsSync(receiptDir)) errors.push(`missing_receipt_dir:${receiptDir}`);
-  if (existsSync(receiptDir)) {
-    inputFiles = readdirSync(receiptDir)
+if (!existsSync(receiptDir)) errors.push(`missing_receipt_dir:${receiptDir}`);
+const templateFiles = existsSync(receiptDir)
+  ? readdirSync(receiptDir)
       .filter((name) => name.endsWith(".csv"))
       .sort()
-      .map((fileName) => ({ fileName, path: join(receiptDir, fileName) }));
+      .map((fileName) => ({ fileName, path: join(receiptDir, fileName) }))
+  : [];
+const templateIdentityKeys = new Set();
+for (const templateFile of templateFiles) {
+  const { columns, records } = toObjects(parseCsv(readFileSync(templateFile.path, "utf8")));
+  if (columns.join(",") !== expectedColumns.join(",")) {
+    errors.push(`template_columns:${templateFile.fileName}:${columns.join(",")}`);
   }
+  for (const record of records) {
+    const key = identityKey(record);
+    if (templateIdentityKeys.has(key)) errors.push(`template_duplicate_identity:${templateFile.fileName}:${key}`);
+    templateIdentityKeys.add(key);
+  }
+}
+if (summary && templateIdentityKeys.size !== Number(summary.counts?.receiptTemplateRows || 0)) {
+  errors.push(`template_identity_count:${templateIdentityKeys.size}:expected:${summary.counts?.receiptTemplateRows || 0}`);
+}
+
+const positiveFixtureDigestMatches = receiptProfile === "positive_fixture"
+  && sha256File(receiptIntakePath) === positiveFixtureSha256;
+const negativeFixtureDigestMatches = receiptProfile === "negative_fixture"
+  && sha256File(receiptIntakePath) === negativeFixtureSha256;
+
+let inputFiles = [];
+if (templateMode) {
+  inputFiles = templateFiles;
 } else {
   if (!existsSync(receiptIntakePath)) errors.push(`missing_receipt_intake:${receiptIntakePath}`);
   if (existsSync(receiptIntakePath)) {
@@ -154,6 +219,10 @@ let blockedReceiptRows = 0;
 let statusPlanEligibleRows = 0;
 let blankHumanFieldCells = 0;
 let schemaValid = true;
+let unknownIdentityRows = 0;
+let duplicateIdentityRows = 0;
+let invalidNegativeFixtureNamespaceRows = 0;
+const seenInputIdentityKeys = new Set();
 
 if (inputFiles.length !== expectedFileCount) {
   errors.push(`receipt_file_count:${inputFiles.length}:expected:${expectedFileCount}`);
@@ -185,6 +254,21 @@ for (const inputFile of inputFiles) {
       }
     });
 
+    const recordIdentityKey = identityKey(record);
+    if (seenInputIdentityKeys.has(recordIdentityKey)) {
+      fileErrors.push(`${rowLabel}:duplicate_identity_tuple`);
+      rowBlockers.push("duplicate_identity_tuple");
+      duplicateIdentityRows += 1;
+    } else {
+      seenInputIdentityKeys.add(recordIdentityKey);
+    }
+    const controlledNegativeSource = receiptProfile === "negative_fixture" && negativeFixtureDigestMatches;
+    if (!controlledNegativeSource && !templateIdentityKeys.has(recordIdentityKey)) {
+      fileErrors.push(`${rowLabel}:unknown_identity_tuple`);
+      rowBlockers.push("unknown_identity_tuple");
+      unknownIdentityRows += 1;
+    }
+
     if (record.status_mutation === "false") {
       rowsWithStatusMutationFalse += 1;
     } else {
@@ -195,10 +279,16 @@ for (const inputFile of inputFiles) {
     const humanValues = humanReceiptFields.map((field) => String(record[field] || "").trim());
     const blankCount = humanValues.filter((value) => value === "").length;
     const missingHumanFields = humanReceiptFields.filter((field) => !String(record[field] || "").trim());
+    const signoffDate = String(record.signoff_date || "").trim();
+    const signoffDateValid = signoffDate === "" || isStrictCalendarDate(signoffDate);
+    if (signoffDate && !signoffDateValid) {
+      fileErrors.push(`${rowLabel}:invalid_signoff_date:${signoffDate}`);
+      rowBlockers.push("invalid_signoff_date");
+    }
     blankHumanFieldCells += blankCount;
     if (blankCount === humanReceiptFields.length) {
       templateRowsAwaitingReceipt += 1;
-    } else if (blankCount === 0) {
+    } else if (blankCount === 0 && signoffDateValid) {
       filledReceiptRows += 1;
     } else {
       partialReceiptRows += 1;
@@ -214,6 +304,20 @@ for (const inputFile of inputFiles) {
     if (!String(record.boundary_note || "").includes("status_mutation_false")) {
       fileErrors.push(`${rowLabel}:boundary_note`);
       rowBlockers.push("boundary_note_must_include_status_mutation_false");
+    }
+
+    if (receiptProfile === "negative_fixture") {
+      const fixtureNamespaceValid =
+        String(record.gate_id || "").startsWith("negative_")
+        && String(record.evidence_ref || "").startsWith("fixture://manual-gate-negative/")
+        && record.scope === "fixture_only_negative_no_runtime_effect"
+        && record.rollback_rule === "revert_fixture_only_row"
+        && String(record.boundary_note || "").startsWith("fixture_only_negative_");
+      if (!fixtureNamespaceValid) {
+        fileErrors.push(`${rowLabel}:invalid_negative_fixture_namespace`);
+        rowBlockers.push("invalid_negative_fixture_namespace");
+        invalidNegativeFixtureNamespaceRows += 1;
+      }
     }
 
     if (!templateMode) {
@@ -251,7 +355,11 @@ for (const inputFile of inputFiles) {
         metricCode: record.metric_code,
         metricName: record.metric_name,
         decisionResult,
-        receiptStatus: receiptComplete ? "complete_pending_manual_review" : "blocked_missing_receipt_fields",
+        receiptStatus: receiptComplete
+          ? "complete_pending_manual_review"
+          : missingHumanFields.length > 0
+            ? "blocked_missing_receipt_fields"
+            : "blocked_validation_errors",
         missingHumanFields,
         blockers: rowBlockers,
         inputStatusMutation: record.status_mutation,
@@ -284,7 +392,7 @@ for (const inputFile of inputFiles) {
 
   files.push({
     fileName,
-    path,
+    path: portablePath(path),
     rowCount: records.length,
     schemaValid: fileErrors.every((error) => !error.startsWith("columns:")),
     templateRowsAwaitingReceipt: records.filter((record) =>
@@ -301,6 +409,45 @@ if (templateMode && filledReceiptRows + partialReceiptRows > 0) {
   errors.push(`template_human_fields_present:${filledReceiptRows + partialReceiptRows}`);
 }
 
+const controlledNegativeFixture =
+  receiptProfile === "negative_fixture"
+  && negativeFixtureDigestMatches
+  && invalidNegativeFixtureNamespaceRows === 0
+  && totalRows === 3;
+const effectiveReceiptProfile = receiptProfile === "formal_intake"
+  ? (templateRowsAwaitingReceipt === totalRows ? "formal_intake_blank" : "real_intake")
+  : receiptProfile;
+const acceptanceProfileFailures = [];
+if (effectiveReceiptProfile === "template") {
+  if (totalRows === 0) acceptanceProfileFailures.push("template_empty");
+  if (templateRowsAwaitingReceipt !== totalRows) acceptanceProfileFailures.push("template_rows_not_all_awaiting");
+  if (filledReceiptRows !== 0 || partialReceiptRows !== 0) acceptanceProfileFailures.push("template_human_fields_present");
+} else if (effectiveReceiptProfile === "formal_intake_blank") {
+  if (totalRows === 0) acceptanceProfileFailures.push("formal_intake_empty");
+  if (templateRowsAwaitingReceipt !== totalRows) acceptanceProfileFailures.push("formal_intake_not_all_blank");
+  if (blockedReceiptRows !== totalRows || statusPlanEligibleRows !== 0) {
+    acceptanceProfileFailures.push("formal_intake_counts_invalid");
+  }
+} else if (effectiveReceiptProfile === "positive_fixture") {
+  if (!positiveFixtureDigestMatches) acceptanceProfileFailures.push("positive_fixture_digest_mismatch");
+  if (totalRows === 0 || blockedReceiptRows !== 0 || statusPlanEligibleRows !== totalRows) {
+    acceptanceProfileFailures.push("positive_fixture_counts_invalid");
+  }
+} else if (effectiveReceiptProfile === "negative_fixture") {
+  if (!controlledNegativeFixture) acceptanceProfileFailures.push("negative_fixture_contract_invalid");
+  if (blockedReceiptRows !== totalRows || statusPlanEligibleRows !== 0) {
+    acceptanceProfileFailures.push("negative_fixture_counts_invalid");
+  }
+} else if (totalRows === 0 || blockedReceiptRows !== 0 || statusPlanEligibleRows !== totalRows) {
+  acceptanceProfileFailures.push("real_intake_requires_all_rows_eligible");
+}
+errors.push(...acceptanceProfileFailures.map((failure) => `acceptance_profile:${effectiveReceiptProfile}:${failure}`));
+const acceptanceProfileValidation = {
+  profile: effectiveReceiptProfile,
+  failures: acceptanceProfileFailures,
+  satisfied: acceptanceProfileFailures.length === 0
+};
+
 const blockerCounts = {};
 rowOutcomes.forEach((outcome) => {
   outcome.blockers.forEach((blocker) => increment(blockerCounts, blocker));
@@ -313,7 +460,7 @@ const disallowedValidationIssues = expectedBlockersMode
   : [];
 const expectedBlockersSatisfied =
   expectedBlockersMode &&
-  !templateMode &&
+  controlledNegativeFixture &&
   totalRows > 0 &&
   blockedReceiptRows === totalRows &&
   statusPlanEligibleRows === 0 &&
@@ -328,6 +475,7 @@ const expectedBlockerValidation = expectedBlockersMode
       missingExpectedBlockers,
       unexpectedBlockers,
       disallowedValidationIssues,
+      controlledNegativeFixture,
       satisfied: expectedBlockersSatisfied
     }
   : {
@@ -337,6 +485,7 @@ const expectedBlockerValidation = expectedBlockersMode
       missingExpectedBlockers: [],
       unexpectedBlockers: [],
       disallowedValidationIssues: [],
+      controlledNegativeFixture: false,
       satisfied: false
     };
 
@@ -344,11 +493,12 @@ const report = {
   generatedAt,
   templateMode,
   sourceMode: templateMode ? "receipt_templates" : "receipt_intake",
-  receiptDir,
-  receiptIntakePath: templateMode ? null : receiptIntakePath,
-  summaryPath,
-  validationPath,
-  statusPlanPath: templateMode ? null : statusPlanPath,
+  receiptProfile: effectiveReceiptProfile,
+  receiptDir: portablePath(receiptDir),
+  receiptIntakePath: templateMode ? null : portablePath(receiptIntakePath),
+  summaryPath: portablePath(summaryPath),
+  validationPath: portablePath(validationPath),
+  statusPlanPath: templateMode ? null : portablePath(statusPlanPath),
   boundary: {
     statusMutation: false,
     providerCalls: false,
@@ -376,12 +526,16 @@ const report = {
     eligibleReviewRouteCounts,
     decisionResultCounts,
     invalidDecisionResultRows,
+    unknownIdentityRows,
+    duplicateIdentityRows,
+    templateIdentityRows: templateIdentityKeys.size,
     blockerCounts
   },
   contract: {
     decisionResultAllowedValues
   },
   expectedBlockerValidation,
+  acceptanceProfileValidation,
   schemaValid,
   readyForStatusMutation: false,
   files,
@@ -393,10 +547,11 @@ const report = {
 const statusPlan = {
   generatedAt,
   sourceMode: "receipt_intake",
-  receiptIntakePath,
-  summaryPath,
-  validationPath,
-  statusPlanPath,
+  receiptProfile: effectiveReceiptProfile,
+  receiptIntakePath: portablePath(receiptIntakePath),
+  summaryPath: portablePath(summaryPath),
+  validationPath: portablePath(validationPath),
+  statusPlanPath: portablePath(statusPlanPath),
   boundary: {
     statusMutation: false,
     providerCalls: false,
@@ -414,12 +569,16 @@ const statusPlan = {
     eligibleReviewRouteCounts,
     decisionResultCounts,
     invalidDecisionResultRows,
+    unknownIdentityRows,
+    duplicateIdentityRows,
+    templateIdentityRows: templateIdentityKeys.size,
     blockerCounts
   },
   contract: {
     decisionResultAllowedValues
   },
   expectedBlockerValidation,
+  acceptanceProfileValidation,
   readyForStatusMutation: false,
   rows: statusPlanRows
 };
@@ -432,4 +591,4 @@ if (!templateMode) {
 }
 console.log(JSON.stringify(report, null, 2));
 
-if (errors.length && !expectedBlockersSatisfied) process.exit(1);
+if (expectedBlockersMode ? !expectedBlockersSatisfied : errors.length > 0) process.exit(1);

@@ -1,8 +1,9 @@
 {
   "generatedAt": "2026-06-30T07:25:00.000Z",
   "sourceMode": "receipt_intake",
+  "receiptProfile": "negative_fixture",
   "receiptIntakePath": "tmp/fixtures/manual-gate-receipt-negative-fixture-20260630.csv",
-  "summaryPath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-resolution-summary-20260630.json",
+  "summaryPath": "tmp/outputs/manual-gate-resolution-summary-20260630.json",
   "validationPath": "tmp/outputs/manual-gate-receipt-negative-fixture-validation-20260630.json",
   "statusPlanPath": "tmp/outputs/manual-gate-negative-fixture-status-update-plan-20260630.json",
   "boundary": {
@@ -30,6 +31,9 @@
       "rejected_needs_rework": 1
     },
     "invalidDecisionResultRows": 1,
+    "unknownIdentityRows": 0,
+    "duplicateIdentityRows": 0,
+    "templateIdentityRows": 53,
     "blockerCounts": {
       "invalid_decision_result": 1,
       "unsupported_packet_type": 1,
@@ -58,6 +62,12 @@
     "missingExpectedBlockers": [],
     "unexpectedBlockers": [],
     "disallowedValidationIssues": [],
+    "controlledNegativeFixture": true,
+    "satisfied": true
+  },
+  "acceptanceProfileValidation": {
+    "profile": "negative_fixture",
+    "failures": [],
     "satisfied": true
   },
   "readyForStatusMutation": false,
@@ -69,7 +79,7 @@
       "targetRef": "SCM-MECE-L3-036",
       "metricCode": "full_chain_turnover_days_amount",
       "decisionResult": "approved_for_fixture_dry_run",
-      "receiptStatus": "blocked_missing_receipt_fields",
+      "receiptStatus": "blocked_validation_errors",
       "blockers": [
         "invalid_decision_result"
       ],
@@ -86,7 +96,7 @@
       "targetRef": "SCM-MECE-L3-036",
       "metricCode": "full_chain_turnover_days_amount",
       "decisionResult": "approved_for_manual_review",
-      "receiptStatus": "blocked_missing_receipt_fields",
+      "receiptStatus": "blocked_validation_errors",
       "blockers": [
         "unsupported_packet_type"
       ],
@@ -103,7 +113,7 @@
       "targetRef": "SCM-MECE-L3-036",
       "metricCode": "full_chain_turnover_days_amount",
       "decisionResult": "rejected_needs_rework",
-      "receiptStatus": "blocked_missing_receipt_fields",
+      "receiptStatus": "blocked_validation_errors",
       "blockers": [
         "status_mutation_must_remain_false"
       ],

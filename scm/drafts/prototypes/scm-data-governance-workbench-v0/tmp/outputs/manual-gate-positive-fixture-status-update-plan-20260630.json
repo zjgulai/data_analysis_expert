@@ -1,8 +1,9 @@
 {
   "generatedAt": "2026-06-30T07:20:00.000Z",
   "sourceMode": "receipt_intake",
+  "receiptProfile": "positive_fixture",
   "receiptIntakePath": "tmp/fixtures/manual-gate-receipt-positive-fixture-20260630.csv",
-  "summaryPath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-resolution-summary-20260630.json",
+  "summaryPath": "tmp/outputs/manual-gate-resolution-summary-20260630.json",
   "validationPath": "tmp/outputs/manual-gate-receipt-positive-fixture-validation-20260630.json",
   "statusPlanPath": "tmp/outputs/manual-gate-positive-fixture-status-update-plan-20260630.json",
   "boundary": {
@@ -30,6 +31,9 @@
       "approved_for_manual_review": 2
     },
     "invalidDecisionResultRows": 0,
+    "unknownIdentityRows": 0,
+    "duplicateIdentityRows": 0,
+    "templateIdentityRows": 53,
     "blockerCounts": {}
   },
   "contract": {
@@ -46,7 +50,13 @@
     "missingExpectedBlockers": [],
     "unexpectedBlockers": [],
     "disallowedValidationIssues": [],
+    "controlledNegativeFixture": false,
     "satisfied": false
+  },
+  "acceptanceProfileValidation": {
+    "profile": "positive_fixture",
+    "failures": [],
+    "satisfied": true
   },
   "readyForStatusMutation": false,
   "rows": [

@@ -53,7 +53,7 @@ B63 从 UI proof 切回上线前可信债收口，目标是把 `preprod:check` �
 | B63-2 | 只读盘点 manual gates 来源 | done | SQLite 查询得到 `30 + 18 + 1` |
 | B63-3 | 生成 manual-gate resolution pack | done | 3 份 CSV + 1 份 JSON；SQLite hash 不变 |
 | B63-4 | 更新总纲索引和 B63 执行证据 | done | 本文件 + `00-index` |
-| B63-5 | 跑 check/build/preprod/smoke/audit | pending | 回归命令全部完成后更新 |
+| B63-5 | 跑 check/build/preprod/smoke/audit | done | 回归命令全部通过，SQLite hash 保持不变 |
 | B63-6 | 提交、推送并创建 stacked draft PR | pending | PR base 指向 B62/#11 分支 |
 
 ## 3. 代码图谱依据
@@ -129,7 +129,7 @@ SCM_MANUAL_GATE_GENERATED_AT="2026-06-30T04:00:00.000Z" node scripts/export-manu
 git diff --check
 npm run check
 npm run build
-SCM_PREPROD_SCAN_ROOT="/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629" npm run preprod:check
+SCM_PREPROD_SCAN_ROOT="$(git rev-parse --show-toplevel)/scm" npm run preprod:check
 npm run smoke:api
 npm run smoke:readonly
 ```

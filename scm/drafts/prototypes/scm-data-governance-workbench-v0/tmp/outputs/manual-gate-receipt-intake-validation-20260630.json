@@ -2,9 +2,10 @@
   "generatedAt": "2026-06-30T07:15:00.000Z",
   "templateMode": false,
   "sourceMode": "receipt_intake",
-  "receiptDir": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-receipt-templates-20260630",
-  "receiptIntakePath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-receipts-intake-20260630.csv",
-  "summaryPath": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/manual-gate-resolution-summary-20260630.json",
+  "receiptProfile": "formal_intake_blank",
+  "receiptDir": "tmp/outputs/manual-gate-receipt-templates-20260630",
+  "receiptIntakePath": "data/manual-gate-receipts-intake-20260630.csv",
+  "summaryPath": "tmp/outputs/manual-gate-resolution-summary-20260630.json",
   "validationPath": "tmp/outputs/manual-gate-receipt-intake-validation-20260630.json",
   "statusPlanPath": "tmp/outputs/manual-gate-status-update-plan-20260630.json",
   "boundary": {
@@ -56,6 +57,9 @@
     "eligibleReviewRouteCounts": {},
     "decisionResultCounts": {},
     "invalidDecisionResultRows": 0,
+    "unknownIdentityRows": 0,
+    "duplicateIdentityRows": 0,
+    "templateIdentityRows": 53,
     "blockerCounts": {
       "missing_decision_result": 53,
       "missing_evidence_ref": 53,
@@ -84,14 +88,20 @@
     "missingExpectedBlockers": [],
     "unexpectedBlockers": [],
     "disallowedValidationIssues": [],
+    "controlledNegativeFixture": false,
     "satisfied": false
+  },
+  "acceptanceProfileValidation": {
+    "profile": "formal_intake_blank",
+    "failures": [],
+    "satisfied": true
   },
   "schemaValid": true,
   "readyForStatusMutation": false,
   "files": [
     {
       "fileName": "manual-gate-receipts-intake-20260630.csv",
-      "path": "/Users/pray/.config/superpowers/worktrees/ecom_ana_overview/scm-readonly-rc-minimal-20260629/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-receipts-intake-20260630.csv",
+      "path": "data/manual-gate-receipts-intake-20260630.csv",
       "rowCount": 53,
       "schemaValid": true,
       "templateRowsAwaitingReceipt": 53
