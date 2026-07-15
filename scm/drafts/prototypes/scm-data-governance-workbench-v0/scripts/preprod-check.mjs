@@ -135,8 +135,15 @@ try {
   const uiProof = JSON.parse(read(`${uiProofArtifactDir}/summary.json`));
   const artifactRoot = resolve(root, uiProofArtifactDir);
   const digestEntries = Object.entries(uiProof.screenshotSha256 || {});
+  const digestPaths = new Set(digestEntries.map(([screenshotPath]) => screenshotPath));
+  const modules = Array.isArray(uiProof.modules) ? uiProof.modules : [];
+  const moduleScreenshots = modules.map((module) => String(module?.screenshot || ""));
   uiProofScreenshotCount = digestEntries.length;
   for (const [screenshotPath, expectedHash] of digestEntries) {
+    if (!screenshotPath.startsWith("screenshots/")) {
+      uiProofFailures.push(`${screenshotPath}:outside-screenshot-root`);
+      continue;
+    }
     const resolvedScreenshot = resolve(artifactRoot, screenshotPath);
     const relativeScreenshot = relative(artifactRoot, resolvedScreenshot);
     if (relativeScreenshot.startsWith("..") || isAbsolute(relativeScreenshot)) {
@@ -150,6 +157,20 @@ try {
     const actualHash = createHash("sha256").update(readFileSync(resolvedScreenshot)).digest("hex");
     if (actualHash !== expectedHash) uiProofFailures.push(`${screenshotPath}:sha256-mismatch`);
     else uiProofShaVerified += 1;
+  }
+  if (uiProof.moduleCount !== 15 || modules.length !== 15) {
+    uiProofFailures.push("summary:module-count-not-15");
+  }
+  if (moduleScreenshots.some((screenshotPath) => !screenshotPath.startsWith("screenshots/"))) {
+    uiProofFailures.push("summary:module-screenshot-outside-root");
+  }
+  if (new Set(moduleScreenshots).size !== modules.length) {
+    uiProofFailures.push("summary:duplicate-module-screenshot");
+  }
+  for (const screenshotPath of moduleScreenshots) {
+    if (!digestPaths.has(screenshotPath)) {
+      uiProofFailures.push(`${screenshotPath || "missing"}:module-screenshot-not-hashed`);
+    }
   }
   if (uiProof.screenshotRoot !== "screenshots") uiProofFailures.push("summary:screenshot-root-not-portable");
   if (uiProof.screenshotCount !== 15) uiProofFailures.push("summary:screenshot-count-not-15");
