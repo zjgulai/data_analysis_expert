@@ -1,10 +1,11 @@
 {
-  "generatedAt": "2026-06-29T08:32:44.293Z",
-  "root": "/Users/pray/project/ecom_ana_overview/scm/drafts/prototypes/scm-data-governance-workbench-v0",
-  "scanRoot": "/Users/pray/project/ecom_ana_overview/scm",
+  "generatedAt": "2026-07-15T20:04:27.717Z",
+  "root": "drafts/prototypes/scm-data-governance-workbench-v0",
+  "scanRoot": ".",
   "releaseBoundary": {
     "readOnlyPrototypeProduction": true,
     "providerCalls": false,
+    "databaseWrites": false,
     "productionWrites": false,
     "erpWriteback": false,
     "controlledWritebackProduction": false
@@ -17,9 +18,10 @@
     "suggestionReplayCards": 3,
     "agentTraces": 61,
     "nonSeedObjects": 1,
+    "evidenceReviewPackets": 4,
     "p0OwnerSignoffs": 30,
     "p0FieldMappings": 18,
-    "dirtyCount": 53
+    "dirtyCount": 0
   },
   "hardBlockers": [],
   "manualGates": [
@@ -42,14 +44,7 @@
       }
     }
   ],
-  "warnings": [
-    {
-      "name": "worktree-clean-for-release-tag",
-      "detail": {
-        "dirtyCount": 53
-      }
-    }
-  ],
+  "warnings": [],
   "checks": [
     {
       "name": "required-file:package-lock.json",
@@ -88,6 +83,12 @@
       "severity": "hard"
     },
     {
+      "name": "required-file:runtime/evidence/ai-knowledge-evidence-quality-review-20260622.json",
+      "ok": true,
+      "detail": "runtime/evidence/ai-knowledge-evidence-quality-review-20260622.json",
+      "severity": "hard"
+    },
+    {
       "name": "required-file:dist/index.html",
       "ok": true,
       "detail": "dist/index.html",
@@ -109,6 +110,30 @@
       "name": "required-file:scripts/smoke-api.mjs",
       "ok": true,
       "detail": "scripts/smoke-api.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:scripts/smoke-database-gate.mjs",
+      "ok": true,
+      "detail": "scripts/smoke-database-gate.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:scripts/smoke-import-gate.mjs",
+      "ok": true,
+      "detail": "scripts/smoke-import-gate.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:scripts/smoke-path-contract.mjs",
+      "ok": true,
+      "detail": "scripts/smoke-path-contract.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:scripts/smoke-provider-gate.mjs",
+      "ok": true,
+      "detail": "scripts/smoke-provider-gate.mjs",
       "severity": "hard"
     },
     {
@@ -139,6 +164,30 @@
       "name": "package-script:smoke:api",
       "ok": true,
       "detail": "node scripts/smoke-api.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:smoke:database-gate",
+      "ok": true,
+      "detail": "node scripts/smoke-database-gate.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:smoke:import-gate",
+      "ok": true,
+      "detail": "node scripts/smoke-import-gate.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:smoke:path-contract",
+      "ok": true,
+      "detail": "node scripts/smoke-path-contract.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:smoke:provider-gate",
+      "ok": true,
+      "detail": "node scripts/smoke-provider-gate.mjs",
       "severity": "hard"
     },
     {
@@ -178,6 +227,70 @@
       "severity": "hard"
     },
     {
+      "name": "dockerfile-runtime-evidence-copy",
+      "ok": true,
+      "detail": "Docker image keeps immutable evidence outside the mutable SQLite volume",
+      "severity": "hard"
+    },
+    {
+      "name": "dockerfile-non-root-runtime",
+      "ok": true,
+      "detail": "Docker runtime uses the non-root node user",
+      "severity": "hard"
+    },
+    {
+      "name": "server-provider-authorization-gate",
+      "ok": true,
+      "detail": "DeepSeek route has an explicit server-side authorization gate",
+      "severity": "hard"
+    },
+    {
+      "name": "server-evidence-path-contract",
+      "ok": true,
+      "detail": "Evidence path supports project-root and explicit path overrides",
+      "severity": "hard"
+    },
+    {
+      "name": "server-database-authorization-gate",
+      "ok": true,
+      "detail": "SQLite opens readonly by default, validates schema without repair, and gates mutation routes",
+      "severity": "hard"
+    },
+    {
+      "name": "import-database-rebuild-authorization-and-atomic-replace",
+      "ok": true,
+      "detail": "Destructive import requires explicit authorization and replaces SQLite only after a successful temporary build",
+      "severity": "hard"
+    },
+    {
+      "name": "provider-call-authorization-default-closed",
+      "ok": true,
+      "detail": {
+        "envVar": "SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED",
+        "authorized": false
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "database-write-authorization-default-closed",
+      "ok": true,
+      "detail": {
+        "envVar": "SCM_DATABASE_WRITES_AUTHORIZED",
+        "authorized": false
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "runtime-evidence-review-packet",
+      "ok": true,
+      "detail": {
+        "path": "drafts/prototypes/scm-data-governance-workbench-v0/runtime/evidence/ai-knowledge-evidence-quality-review-20260622.json",
+        "evidenceReviewPackets": 4,
+        "minimum": 4
+      },
+      "severity": "hard"
+    },
+    {
       "name": "production-compose-external-volume",
       "ok": true,
       "detail": "production override keeps SQLite on external Docker volume",
@@ -190,7 +303,7 @@
       "severity": "hard"
     },
     {
-      "name": "secret-file-scan:pem",
+      "name": "secret-file-scan:pem-key",
       "ok": true,
       "detail": [],
       "severity": "hard"
@@ -300,9 +413,9 @@
     },
     {
       "name": "worktree-clean-for-release-tag",
-      "ok": false,
+      "ok": true,
       "detail": {
-        "dirtyCount": 53
+        "dirtyCount": 0
       },
       "severity": "warn"
     }
