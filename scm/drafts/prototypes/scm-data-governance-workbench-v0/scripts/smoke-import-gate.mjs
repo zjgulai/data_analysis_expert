@@ -1,37 +1,77 @@
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
+import { cpSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
-const appRoot = resolve(scriptDir, "..");
-const databasePath = join(appRoot, "data", "governance_workbench.sqlite");
+const sourceAppRoot = resolve(scriptDir, "..");
+const sourceDatabasePath = join(sourceAppRoot, "data", "governance_workbench.sqlite");
+const sandboxRoot = mkdtempSync(join(tmpdir(), "scm-import-gate-"));
+const sandboxScriptDir = join(sandboxRoot, "scripts");
+const sandboxDatabasePath = join(sandboxRoot, "data", "governance_workbench.sqlite");
 
-function hashDatabase() {
-  return createHash("sha256").update(readFileSync(databasePath)).digest("hex");
+function hashFile(path) {
+  return createHash("sha256").update(readFileSync(path)).digest("hex");
 }
 
-const beforeHash = hashDatabase();
-const result = spawnSync(process.execPath, [join(scriptDir, "import-assets.mjs")], {
-  cwd: appRoot,
-  env: { ...process.env, SCM_DATABASE_REBUILD_AUTHORIZED: "" },
-  encoding: "utf8"
-});
-const output = `${result.stdout || ""}\n${result.stderr || ""}`;
-const failures = [];
+const sourceHashBefore = hashFile(sourceDatabasePath);
+let gateError;
+let gateSummary;
+try {
+  cpSync(join(sourceAppRoot, "scripts"), sandboxScriptDir, { recursive: true });
+  cpSync(join(sourceAppRoot, "data"), join(sandboxRoot, "data"), { recursive: true });
 
-if (result.status === 0) failures.push("import must be rejected when database rebuild authorization is absent");
-if (!output.includes("SCM_DATABASE_REBUILD_AUTHORIZED")) {
-  failures.push("rejected import must name SCM_DATABASE_REBUILD_AUTHORIZED");
+  const sandboxHashBefore = hashFile(sandboxDatabasePath);
+  const result = spawnSync(process.execPath, [join(sandboxScriptDir, "import-assets.mjs")], {
+    cwd: sandboxRoot,
+    env: { ...process.env, SCM_DATABASE_REBUILD_AUTHORIZED: "" },
+    encoding: "utf8"
+  });
+  const output = `${result.stdout || ""}\n${result.stderr || ""}`;
+  const failures = [];
+
+  if (result.status === 0) failures.push("import must be rejected when database rebuild authorization is absent");
+  if (!output.includes("SCM_DATABASE_REBUILD_AUTHORIZED")) {
+    failures.push("rejected import must name SCM_DATABASE_REBUILD_AUTHORIZED");
+  }
+  if (sandboxHashBefore !== hashFile(sandboxDatabasePath)) failures.push("rejected import must preserve the sandbox SQLite hash");
+
+  if (failures.length) throw new Error(`Import authorization gate failed:\n- ${failures.join("\n- ")}`);
+  gateSummary = {
+    ok: true,
+    unauthorizedImportStatus: result.status,
+    sandboxedImportTarget: true,
+    sandboxDatabaseHashPreserved: true,
+    sourceDatabaseHashPreserved: sourceHashBefore === hashFile(sourceDatabasePath),
+    databaseRebuild: false,
+    productionWrites: false
+  };
+} catch (error) {
+  gateError = error instanceof Error ? error : new Error(String(error));
 }
-if (beforeHash !== hashDatabase()) failures.push("rejected import must preserve the SQLite hash");
 
-if (failures.length) throw new Error(`Import authorization gate failed:\n- ${failures.join("\n- ")}`);
-console.log(JSON.stringify({
-  ok: true,
-  unauthorizedImportStatus: result.status,
-  sourceDatabaseHashPreserved: true,
-  databaseRebuild: false,
-  productionWrites: false
-}, null, 2));
+let cleanupError;
+try {
+  rmSync(sandboxRoot, { recursive: true, force: true });
+} catch (error) {
+  cleanupError = error instanceof Error ? error : new Error(String(error));
+}
+
+let sourceIntegrityError;
+try {
+  if (sourceHashBefore !== hashFile(sourceDatabasePath)) {
+    sourceIntegrityError = new Error("Source SQLite database changed during import authorization gate smoke");
+  }
+} catch (error) {
+  sourceIntegrityError = error instanceof Error ? error : new Error(String(error));
+}
+
+const gateErrors = [gateError, cleanupError, sourceIntegrityError].filter(Boolean);
+if (gateErrors.length === 1) throw gateErrors[0];
+if (gateErrors.length > 1) {
+  throw new AggregateError(gateErrors, "Import authorization gate failed and a cleanup or source-integrity check also failed");
+}
+
+console.log(JSON.stringify(gateSummary, null, 2));

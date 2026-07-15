@@ -68,6 +68,9 @@ jobs:
       - name: Verify import authorization gate
         run: npm run smoke:import-gate
 
+      - name: Verify migration rollback guard
+        run: npm run smoke:migration-gate
+
       - name: Verify monorepo and standalone path contract
         run: npm run smoke:path-contract
 

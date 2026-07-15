@@ -120,6 +120,8 @@ async function verifyIncompleteSchemaFailsClosed(appRoot) {
 }
 
 const sourceHashBefore = hashFile(sourceDatabasePath);
+let gateError;
+let gateSummary;
 try {
   const readonlyRoot = copyApp("readonly");
   const readonlyDatabasePath = join(readonlyRoot, "data", "governance_workbench.sqlite");
@@ -178,7 +180,7 @@ try {
   await stopApp(writableApp);
 
   if (failures.length) throw new Error(`Database authorization gate failed:\n- ${failures.join("\n- ")}`);
-  console.log(JSON.stringify({
+  gateSummary = {
     ok: true,
     defaultMode: "readonly",
     defaultMutationStatus: mutation.response.status,
@@ -188,11 +190,38 @@ try {
     sourceDatabaseHashPreserved: sourceHashBefore === hashFile(sourceDatabasePath),
     providerCalls: false,
     productionWrites: false
-  }, null, 2));
-} finally {
-  for (const app of runningApps.reverse()) await stopApp(app);
-  rmSync(sandboxRoot, { recursive: true, force: true });
-  if (sourceHashBefore !== hashFile(sourceDatabasePath)) {
-    throw new Error("Source SQLite database changed during database gate smoke");
+  };
+} catch (error) {
+  gateError = error instanceof Error ? error : new Error(String(error));
+}
+
+const cleanupErrors = [];
+for (const app of runningApps.reverse()) {
+  try {
+    await stopApp(app);
+  } catch (error) {
+    cleanupErrors.push(error instanceof Error ? error : new Error(String(error)));
   }
 }
+try {
+  rmSync(sandboxRoot, { recursive: true, force: true });
+} catch (error) {
+  cleanupErrors.push(error instanceof Error ? error : new Error(String(error)));
+}
+
+let sourceIntegrityError;
+try {
+  if (sourceHashBefore !== hashFile(sourceDatabasePath)) {
+    sourceIntegrityError = new Error("Source SQLite database changed during database gate smoke");
+  }
+} catch (error) {
+  sourceIntegrityError = error instanceof Error ? error : new Error(String(error));
+}
+
+const gateErrors = [gateError, ...cleanupErrors, sourceIntegrityError].filter(Boolean);
+if (gateErrors.length === 1) throw gateErrors[0];
+if (gateErrors.length > 1) {
+  throw new AggregateError(gateErrors, "Database gate failed and one or more cleanup or source-integrity checks also failed");
+}
+
+console.log(JSON.stringify(gateSummary, null, 2));

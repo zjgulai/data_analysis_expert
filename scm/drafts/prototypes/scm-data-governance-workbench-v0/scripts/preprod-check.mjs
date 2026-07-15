@@ -109,6 +109,7 @@ const requiredFiles = [
   "scripts/smoke-api.mjs",
   "scripts/smoke-database-gate.mjs",
   "scripts/smoke-import-gate.mjs",
+  "scripts/smoke-migration-gate.mjs",
   "scripts/smoke-path-contract.mjs",
   "scripts/smoke-provider-gate.mjs",
   "scripts/smoke-readonly.mjs",
@@ -119,7 +120,7 @@ for (const file of requiredFiles) {
   record(`required-file:${file}`, hasFile(file), file);
 }
 
-for (const scriptName of ["check", "build", "smoke:api", "smoke:database-gate", "smoke:import-gate", "smoke:path-contract", "smoke:provider-gate", "smoke:readonly", "smoke:ui", "preprod:check"]) {
+for (const scriptName of ["check", "build", "smoke:api", "smoke:database-gate", "smoke:import-gate", "smoke:migration-gate", "smoke:path-contract", "smoke:provider-gate", "smoke:readonly", "smoke:ui", "preprod:check"]) {
   record(`package-script:${scriptName}`, Boolean(packageJson.scripts?.[scriptName]), packageJson.scripts?.[scriptName] || "missing");
 }
 
