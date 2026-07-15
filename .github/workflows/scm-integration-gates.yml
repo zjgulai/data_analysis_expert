@@ -22,31 +22,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  bootstrap-scope:
-    name: SCM bootstrap scope
-    if: github.event_name == 'pull_request' && github.event.number == 23
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout complete history
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-
-      - name: Verify workflow-only bootstrap diff
-        shell: bash
-        env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-        run: |
-          set -euo pipefail
-          changed_files="$(git diff --name-only "$BASE_SHA" "$HEAD_SHA")"
-          test "$changed_files" = ".github/workflows/scm-integration-gates.yml"
-
-  scm-gates:
-    name: SCM gates
-    # PR 23 is the immutable workflow-only bootstrap; every other PR/branch runs the full job.
-    if: github.event_name != 'pull_request' || github.event.number != 23
+  integration-gate:
+    name: SCM integration gate
     runs-on: ubuntu-latest
     timeout-minutes: 20
     defaults:
@@ -126,28 +103,3 @@ jobs:
           set -euo pipefail
           git diff --check
           test -z "$(git status --porcelain)"
-
-  integration-gate:
-    name: SCM integration gate
-    if: always()
-    needs:
-      - bootstrap-scope
-      - scm-gates
-    runs-on: ubuntu-latest
-    steps:
-      - name: Enforce the event-specific gate result
-        shell: bash
-        env:
-          EVENT_NAME: ${{ github.event_name }}
-          PR_NUMBER: ${{ github.event.number }}
-          BOOTSTRAP_RESULT: ${{ needs.bootstrap-scope.result }}
-          SCM_GATES_RESULT: ${{ needs.scm-gates.result }}
-        run: |
-          set -euo pipefail
-          if [[ "$EVENT_NAME" == "pull_request" && "$PR_NUMBER" == "23" ]]; then
-            test "$BOOTSTRAP_RESULT" = "success"
-            test "$SCM_GATES_RESULT" = "skipped"
-          else
-            test "$BOOTSTRAP_RESULT" = "skipped"
-            test "$SCM_GATES_RESULT" = "success"
-          fi
