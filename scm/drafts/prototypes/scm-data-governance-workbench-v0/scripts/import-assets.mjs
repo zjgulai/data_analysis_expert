@@ -5,10 +5,13 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
-const sourceRoot = resolve(root, "../../analysis/business-supply-chain-knowledge-base-draft-20260616/metric-system-blueprint");
 const dbPath = resolve(root, "data/governance_workbench.sqlite");
 const temporaryDbPath = resolve(root, "data", `governance_workbench.sqlite.build-${process.pid}`);
 const summaryPath = resolve(root, "data/import-summary.json");
+const metricBlueprintFile = "supply-chain-metric-system-l0-l3-blueprint-mece-v2-20260618.json";
+const fieldMappingFile = "supply-chain-metric-stage2-field-mapping-template-20260618.csv";
+const p0SignoffFile = "supply-chain-metric-mece-v2-p0-owner-signoff-task-list-20260618.csv";
+const defaultSourceRoot = resolve(root, "../../analysis/business-supply-chain-knowledge-base-draft-20260616/metric-system-blueprint");
 const databaseRebuildAuthorized = ["1", "true", "yes", "on"].includes(
   String(process.env.SCM_DATABASE_REBUILD_AUTHORIZED || "").toLowerCase()
 );
@@ -19,12 +22,67 @@ if (!databaseRebuildAuthorized) {
   );
 }
 
-const metricJsonPath = resolve(sourceRoot, "supply-chain-metric-system-l0-l3-blueprint-mece-v2-20260618.json");
-const fieldMappingPath = resolve(sourceRoot, "supply-chain-metric-stage2-field-mapping-template-20260618.csv");
-const p0SignoffPath = resolve(sourceRoot, "supply-chain-metric-mece-v2-p0-owner-signoff-task-list-20260618.csv");
+function sourceCandidateStatus(sourceRoot, configuredBy) {
+  const requiredFiles = [
+    { role: "metric_blueprint", path: resolve(sourceRoot, metricBlueprintFile) }
+  ].map((file) => ({ ...file, exists: existsSync(file.path) }));
+  const optionalFiles = [
+    { role: "field_mapping", path: resolve(sourceRoot, fieldMappingFile) },
+    { role: "p0_owner_signoff", path: resolve(sourceRoot, p0SignoffFile) }
+  ].map((file) => ({ ...file, exists: existsSync(file.path) }));
 
-if (!existsSync(metricJsonPath)) {
-  throw new Error(`Missing source metric blueprint: ${metricJsonPath}`);
+  return {
+    sourceRoot,
+    configuredBy,
+    sourceRootExists: existsSync(sourceRoot),
+    ready: requiredFiles.every((file) => file.exists),
+    requiredFiles,
+    optionalFiles
+  };
+}
+
+function resolveImportSource() {
+  const candidates = [
+    ["SCM_WORKBENCH_IMPORT_SOURCE_ROOT", process.env.SCM_WORKBENCH_IMPORT_SOURCE_ROOT],
+    ["SCM_IMPORT_SOURCE_ROOT", process.env.SCM_IMPORT_SOURCE_ROOT],
+    ["repository_default", defaultSourceRoot]
+  ];
+  const seen = new Set();
+  const statuses = [];
+  for (const [configuredBy, configuredPath] of candidates) {
+    if (!configuredPath) continue;
+    const sourceRoot = resolve(configuredPath);
+    if (seen.has(sourceRoot)) continue;
+    seen.add(sourceRoot);
+    statuses.push(sourceCandidateStatus(sourceRoot, configuredBy));
+  }
+  return { selected: statuses.find((status) => status.ready), statuses };
+}
+
+const sourceResolution = resolveImportSource();
+if (!sourceResolution.selected) {
+  console.error(JSON.stringify({
+    status: "blocked_source_required",
+    message: "Metric blueprint source is required before opening or writing local SQLite.",
+    envOverrideOrder: ["SCM_WORKBENCH_IMPORT_SOURCE_ROOT", "SCM_IMPORT_SOURCE_ROOT"],
+    candidates: sourceResolution.statuses
+  }, null, 2));
+  process.exit(2);
+}
+
+const sourceRoot = sourceResolution.selected.sourceRoot;
+const metricJsonPath = resolve(sourceRoot, metricBlueprintFile);
+const fieldMappingPath = resolve(sourceRoot, fieldMappingFile);
+const p0SignoffPath = resolve(sourceRoot, p0SignoffFile);
+
+if (process.env.SCM_IMPORT_PREFLIGHT_ONLY === "1") {
+  console.log(JSON.stringify({
+    status: "preflight_ok",
+    sourceRoot,
+    configuredBy: sourceResolution.selected.configuredBy,
+    files: sourceResolution.selected
+  }, null, 2));
+  process.exit(0);
 }
 
 mkdirSync(resolve(root, "data"), { recursive: true });
@@ -1298,7 +1356,14 @@ knowledgeDomains.forEach((domain) => {
 
 const summary = {
   imported_at: new Date().toISOString(),
-  sourceRoot: "scm/drafts/analysis/business-supply-chain-knowledge-base-draft-20260616/metric-system-blueprint",
+  sourceRoot: sourceResolution.selected.configuredBy === "repository_default"
+    ? "scm/drafts/analysis/business-supply-chain-knowledge-base-draft-20260616/metric-system-blueprint"
+    : `env:${sourceResolution.selected.configuredBy}`,
+  sourceFiles: {
+    metricBlueprint: metricBlueprintFile,
+    fieldMapping: fieldMappingFile,
+    p0Signoff: p0SignoffFile
+  },
   databaseRebuildAuthorized,
   replacementMode: "same-directory-temporary-database_then_atomic_rename",
   counts: {
