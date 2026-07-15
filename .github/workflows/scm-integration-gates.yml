@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout complete history
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           fetch-depth: 0
 
@@ -57,10 +57,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "22"
           cache: npm
@@ -123,3 +123,28 @@ jobs:
           set -euo pipefail
           git diff --check
           test -z "$(git status --porcelain)"
+
+  integration-gate:
+    name: SCM integration gate
+    if: always()
+    needs:
+      - bootstrap-scope
+      - scm-gates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enforce the event-specific gate result
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_NUMBER: ${{ github.event.number }}
+          BOOTSTRAP_RESULT: ${{ needs.bootstrap-scope.result }}
+          SCM_GATES_RESULT: ${{ needs.scm-gates.result }}
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT_NAME" == "pull_request" && "$PR_NUMBER" == "23" ]]; then
+            test "$BOOTSTRAP_RESULT" = "success"
+            test "$SCM_GATES_RESULT" = "skipped"
+          else
+            test "$BOOTSTRAP_RESULT" = "skipped"
+            test "$SCM_GATES_RESULT" = "success"
+          fi
