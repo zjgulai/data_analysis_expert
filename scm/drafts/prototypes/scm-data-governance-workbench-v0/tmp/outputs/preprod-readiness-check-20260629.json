@@ -1,0 +1,435 @@
+{
+  "generatedAt": "2026-07-15T20:53:45.801Z",
+  "root": "drafts/prototypes/scm-data-governance-workbench-v0",
+  "scanRoot": ".",
+  "releaseBoundary": {
+    "readOnlyPrototypeProduction": true,
+    "providerCalls": false,
+    "databaseWrites": false,
+    "productionWrites": false,
+    "erpWriteback": false,
+    "controlledWritebackProduction": false
+  },
+  "counts": {
+    "certifiedMetrics": 20,
+    "certifiedLineageTargets": 12,
+    "activeTags": 8,
+    "recommendationCards": 15,
+    "suggestionReplayCards": 3,
+    "agentTraces": 61,
+    "nonSeedObjects": 1,
+    "evidenceReviewPackets": 4,
+    "p0OwnerSignoffs": 30,
+    "p0FieldMappings": 18,
+    "dirtyCount": 0
+  },
+  "hardBlockers": [],
+  "manualGates": [
+    {
+      "name": "manual-p0-owner-signoffs",
+      "detail": {
+        "p0OwnerSignoffs": 30
+      }
+    },
+    {
+      "name": "manual-p0-field-mappings",
+      "detail": {
+        "p0FieldMappings": 18
+      }
+    },
+    {
+      "name": "manual-scei-weight-source",
+      "detail": {
+        "ownerDecisionPacketsReady": 1
+      }
+    }
+  ],
+  "warnings": [],
+  "checks": [
+    {
+      "name": "required-file:package-lock.json",
+      "ok": true,
+      "detail": "package-lock.json",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:Dockerfile",
+      "ok": true,
+      "detail": "Dockerfile",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:docker-compose.yml",
+      "ok": true,
+      "detail": "docker-compose.yml",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:docker-compose.production.yml",
+      "ok": true,
+      "detail": "docker-compose.production.yml",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:server/index.mjs",
+      "ok": true,
+      "detail": "server/index.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:data/governance_workbench.sqlite",
+      "ok": true,
+      "detail": "data/governance_workbench.sqlite",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:runtime/evidence/ai-knowledge-evidence-quality-review-20260622.json",
+      "ok": true,
+      "detail": "runtime/evidence/ai-knowledge-evidence-quality-review-20260622.json",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:dist/index.html",
+      "ok": true,
+      "detail": "dist/index.html",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:dist/fulfillment-dashboard/index.html",
+      "ok": true,
+      "detail": "dist/fulfillment-dashboard/index.html",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:dist/fulfillment-dashboard/data/fulfillment_chart_data_binding_20260626.csv",
+      "ok": true,
+      "detail": "dist/fulfillment-dashboard/data/fulfillment_chart_data_binding_20260626.csv",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:scripts/smoke-api.mjs",
+      "ok": true,
+      "detail": "scripts/smoke-api.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:scripts/smoke-database-gate.mjs",
+      "ok": true,
+      "detail": "scripts/smoke-database-gate.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:scripts/smoke-import-gate.mjs",
+      "ok": true,
+      "detail": "scripts/smoke-import-gate.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:scripts/smoke-migration-gate.mjs",
+      "ok": true,
+      "detail": "scripts/smoke-migration-gate.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:scripts/smoke-path-contract.mjs",
+      "ok": true,
+      "detail": "scripts/smoke-path-contract.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:scripts/smoke-provider-gate.mjs",
+      "ok": true,
+      "detail": "scripts/smoke-provider-gate.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:scripts/smoke-readonly.mjs",
+      "ok": true,
+      "detail": "scripts/smoke-readonly.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "required-file:scripts/smoke-ui.mjs",
+      "ok": true,
+      "detail": "scripts/smoke-ui.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:check",
+      "ok": true,
+      "detail": "tsc --noEmit",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:build",
+      "ok": true,
+      "detail": "tsc && vite build",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:smoke:api",
+      "ok": true,
+      "detail": "node scripts/smoke-api.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:smoke:database-gate",
+      "ok": true,
+      "detail": "node scripts/smoke-database-gate.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:smoke:import-gate",
+      "ok": true,
+      "detail": "node scripts/smoke-import-gate.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:smoke:migration-gate",
+      "ok": true,
+      "detail": "node scripts/smoke-migration-gate.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:smoke:path-contract",
+      "ok": true,
+      "detail": "node scripts/smoke-path-contract.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:smoke:provider-gate",
+      "ok": true,
+      "detail": "node scripts/smoke-provider-gate.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:smoke:readonly",
+      "ok": true,
+      "detail": "node scripts/smoke-readonly.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:smoke:ui",
+      "ok": true,
+      "detail": "node scripts/smoke-ui.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:preprod:check",
+      "ok": true,
+      "detail": "node scripts/preprod-check.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "dockerfile-public-before-build",
+      "ok": true,
+      "detail": "Dockerfile copies public assets before Vite build",
+      "severity": "hard"
+    },
+    {
+      "name": "dockerfile-healthcheck",
+      "ok": true,
+      "detail": "Docker image has healthcheck",
+      "severity": "hard"
+    },
+    {
+      "name": "dockerfile-runtime-data-copy",
+      "ok": true,
+      "detail": "Docker image includes embedded data for standalone prototype",
+      "severity": "hard"
+    },
+    {
+      "name": "dockerfile-runtime-evidence-copy",
+      "ok": true,
+      "detail": "Docker image keeps immutable evidence outside the mutable SQLite volume",
+      "severity": "hard"
+    },
+    {
+      "name": "dockerfile-non-root-runtime",
+      "ok": true,
+      "detail": "Docker runtime uses the non-root node user",
+      "severity": "hard"
+    },
+    {
+      "name": "server-provider-authorization-gate",
+      "ok": true,
+      "detail": "DeepSeek route has an explicit server-side authorization gate",
+      "severity": "hard"
+    },
+    {
+      "name": "server-evidence-path-contract",
+      "ok": true,
+      "detail": "Evidence path supports project-root and explicit path overrides",
+      "severity": "hard"
+    },
+    {
+      "name": "server-database-authorization-gate",
+      "ok": true,
+      "detail": "SQLite opens readonly by default, validates schema without repair, and gates mutation routes",
+      "severity": "hard"
+    },
+    {
+      "name": "import-database-rebuild-authorization-and-atomic-replace",
+      "ok": true,
+      "detail": "Destructive import requires explicit authorization and replaces SQLite only after a successful temporary build",
+      "severity": "hard"
+    },
+    {
+      "name": "provider-call-authorization-default-closed",
+      "ok": true,
+      "detail": {
+        "envVar": "SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED",
+        "authorized": false
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "database-write-authorization-default-closed",
+      "ok": true,
+      "detail": {
+        "envVar": "SCM_DATABASE_WRITES_AUTHORIZED",
+        "authorized": false
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "runtime-evidence-review-packet",
+      "ok": true,
+      "detail": {
+        "path": "drafts/prototypes/scm-data-governance-workbench-v0/runtime/evidence/ai-knowledge-evidence-quality-review-20260622.json",
+        "evidenceReviewPackets": 4,
+        "minimum": 4
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "production-compose-external-volume",
+      "ok": true,
+      "detail": "production override keeps SQLite on external Docker volume",
+      "severity": "hard"
+    },
+    {
+      "name": "production-compose-edge-network",
+      "ok": true,
+      "detail": "production override attaches to existing edge network",
+      "severity": "hard"
+    },
+    {
+      "name": "secret-file-scan:pem-key",
+      "ok": true,
+      "detail": [],
+      "severity": "hard"
+    },
+    {
+      "name": "db-certified-metrics-minimum",
+      "ok": true,
+      "detail": {
+        "certifiedMetrics": 20,
+        "minimum": 20
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "db-certified-lineage-targets-minimum",
+      "ok": true,
+      "detail": {
+        "certifiedLineageTargets": 12,
+        "minimum": 12
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "db-active-tags-minimum",
+      "ok": true,
+      "detail": {
+        "activeTags": 8,
+        "minimum": 8
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "db-recommendation-cards-minimum",
+      "ok": true,
+      "detail": {
+        "recommendationCards": 15,
+        "minimum": 15
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "db-agent-traces-minimum",
+      "ok": true,
+      "detail": {
+        "agentTraces": 61,
+        "minimum": 61
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "db-non-seed-object-present",
+      "ok": true,
+      "detail": {
+        "nonSeedObjects": 1,
+        "minimum": 1
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "db-no-open-provider-or-writeback-flags",
+      "ok": true,
+      "detail": {
+        "badBoundaryRows": 0
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "db-suggestion-review-replay-present",
+      "ok": true,
+      "detail": {
+        "suggestionReplayCards": 3,
+        "minimum": 3
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "db-secret-pattern-scan",
+      "ok": true,
+      "detail": {
+        "dbSecretHits": 0
+      },
+      "severity": "hard"
+    },
+    {
+      "name": "manual-p0-owner-signoffs",
+      "ok": false,
+      "detail": {
+        "p0OwnerSignoffs": 30
+      },
+      "severity": "manual"
+    },
+    {
+      "name": "manual-p0-field-mappings",
+      "ok": false,
+      "detail": {
+        "p0FieldMappings": 18
+      },
+      "severity": "manual"
+    },
+    {
+      "name": "manual-scei-weight-source",
+      "ok": false,
+      "detail": {
+        "ownerDecisionPacketsReady": 1
+      },
+      "severity": "manual"
+    },
+    {
+      "name": "worktree-clean-for-release-tag",
+      "ok": true,
+      "detail": {
+        "dirtyCount": 0
+      },
+      "severity": "warn"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+decision_id,scope,metric_or_module,confirmed_decision,implementation_impact,data_dependency,status
+D001,stockout_analysis,缺货分析,"拆成订单缺货、库存缺货、预测缺货三类","指标字典、故事线和数据表均按三类建模","订单异常、可售库存、在途、需求预测、覆盖天数",confirmed
+D002,delivery_analysis,妥投签收时间,"以 TMS 为准","3/5/7/10/12 天妥投率、累计妥投率、超期未妥投率统一使用 TMS sign_time","TMS sign_time、package_status、同步频率",confirmed
+D003,cost_placeholder,平均发货成本,"V0 先占位，不作为核心指标","不进入总览核心 KPI，不参与履约诊断排序","物流成本宽表或物流商后台成本字段",confirmed
+D004,unshipped_warning,未发货预警,"保留独立模块","新增独立 tab、超期分层表、责任域和明细下钻","pay_time、send_time、order_status、warehouse_code、sku_code、owner",confirmed
+D005,audit_efficiency,审核效能,"必须区分系统自动审核与人工审核","审核效能先看 audit_actor_type，再看人工审核人排行","audit_actor_type、audit_user、audit_time、audit_event_id",confirmed

@@ -22,31 +22,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  bootstrap-scope:
-    name: SCM bootstrap scope
-    if: github.event_name == 'pull_request' && github.event.number == 23
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout complete history
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-
-      - name: Verify workflow-only bootstrap diff
-        shell: bash
-        env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-        run: |
-          set -euo pipefail
-          changed_files="$(git diff --name-only "$BASE_SHA" "$HEAD_SHA")"
-          test "$changed_files" = ".github/workflows/scm-integration-gates.yml"
-
-  scm-gates:
-    name: SCM gates
-    # PR 23 is the immutable workflow-only bootstrap; every other PR/branch runs the full job.
-    if: github.event_name != 'pull_request' || github.event.number != 23
+  integration-gate:
+    name: SCM integration gate
     runs-on: ubuntu-latest
     timeout-minutes: 20
     defaults:
@@ -55,6 +32,7 @@ jobs:
     env:
       DEEPSEEK_API_KEY: ""
       SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED: "0"
+      SCM_DATABASE_WRITES_AUTHORIZED: "0"
 
     steps:
       - name: Checkout
@@ -78,8 +56,20 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
       - name: Verify provider authorization gate
         run: npm run smoke:provider-gate
+
+      - name: Verify database authorization gate
+        run: npm run smoke:database-gate
+
+      - name: Verify import authorization gate
+        run: npm run smoke:import-gate
+
+      - name: Verify migration rollback guard
+        run: npm run smoke:migration-gate
 
       - name: Verify monorepo and standalone path contract
         run: npm run smoke:path-contract
@@ -119,6 +109,42 @@ jobs:
           cleanup
           trap - EXIT
 
+      - name: Verify API and UI smoke on a restored SQLite fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          db_path="data/governance_workbench.sqlite"
+          backup_path="$(mktemp)"
+          before_hash="$(sha256sum "$db_path" | awk '{print $1}')"
+          cp "$db_path" "$backup_path"
+          HOST=127.0.0.1 PORT=5196 SCM_DATABASE_WRITES_AUTHORIZED=1 npm run start >/tmp/scm-write-smoke-server.log 2>&1 &
+          server_pid=$!
+          cleanup() {
+            kill "$server_pid" 2>/dev/null || true
+            wait "$server_pid" 2>/dev/null || true
+            rm -f "${db_path}-wal" "${db_path}-shm"
+            cp "$backup_path" "$db_path"
+            rm -f "$backup_path"
+          }
+          trap cleanup EXIT
+          for _ in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:5196/api/deploy/health >/dev/null; then
+              break
+            fi
+            if ! kill -0 "$server_pid" 2>/dev/null; then
+              cat /tmp/scm-write-smoke-server.log
+              exit 1
+            fi
+            sleep 1
+          done
+          curl --fail --silent http://127.0.0.1:5196/api/deploy/health >/dev/null
+          SCM_WORKBENCH_BASE_URL=http://127.0.0.1:5196 npm run smoke:api
+          SCM_WORKBENCH_BASE_URL=http://127.0.0.1:5196 SCM_UI_SMOKE_OUTPUT_DIR="${RUNNER_TEMP}/scm-ui-smoke" npm run smoke:ui
+          cleanup
+          trap - EXIT
+          after_hash="$(sha256sum "$db_path" | awk '{print $1}')"
+          test "$before_hash" = "$after_hash"
+
       - name: Verify clean diff
         working-directory: ${{ github.workspace }}
         shell: bash
@@ -126,28 +152,3 @@ jobs:
           set -euo pipefail
           git diff --check
           test -z "$(git status --porcelain)"
-
-  integration-gate:
-    name: SCM integration gate
-    if: always()
-    needs:
-      - bootstrap-scope
-      - scm-gates
-    runs-on: ubuntu-latest
-    steps:
-      - name: Enforce the event-specific gate result
-        shell: bash
-        env:
-          EVENT_NAME: ${{ github.event_name }}
-          PR_NUMBER: ${{ github.event.number }}
-          BOOTSTRAP_RESULT: ${{ needs.bootstrap-scope.result }}
-          SCM_GATES_RESULT: ${{ needs.scm-gates.result }}
-        run: |
-          set -euo pipefail
-          if [[ "$EVENT_NAME" == "pull_request" && "$PR_NUMBER" == "23" ]]; then
-            test "$BOOTSTRAP_RESULT" = "success"
-            test "$SCM_GATES_RESULT" = "skipped"
-          else
-            test "$BOOTSTRAP_RESULT" = "skipped"
-            test "$SCM_GATES_RESULT" = "success"
-          fi

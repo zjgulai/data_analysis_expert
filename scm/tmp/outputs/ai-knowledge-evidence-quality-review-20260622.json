@@ -1,0 +1,644 @@
+{
+  "generated_at": "2026-06-22T11:54:34.721Z",
+  "review_date": "2026-06-22",
+  "source": {
+    "db_path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite",
+    "query_policy": "local_sqlite_readonly",
+    "search_logic": "mirrors server local knowledge scoring: tokenize query, score title/topic/summary/chunk/keywords, prefer active domain/card"
+  },
+  "boundary": {
+    "provider_call_status": "not_called",
+    "deepseek_key_material": "not_read_not_persisted",
+    "production_write_status": "not_written",
+    "erp_wms_oms_writeback_status": "not_written",
+    "local_sqlite_write_status": "not_written",
+    "manual_review_status": "pending_human_review"
+  },
+  "totals": {
+    "knowledge_domains": 4,
+    "knowledge_cards": 328,
+    "knowledge_chunks": 696,
+    "knowledge_crosswalks": 2191,
+    "probes": 12,
+    "answerable_with_local_evidence": 9,
+    "candidate_only_draft_evidence": 3,
+    "evidence_thin": 0,
+    "not_answerable": 0
+  },
+  "domain_reviews": [
+    {
+      "id": "business-supply-chain",
+      "name": "跨境电商供应链业务知识库",
+      "theme": "business-supply-chain",
+      "status": "active",
+      "evidence_level": "draft-business-extraction",
+      "description": "跨境电商供应链业务方法论、BI 字段、指标体系、书籍萃取和多源 crosswalk。",
+      "card_count": 242,
+      "chunk_count": 484,
+      "crosswalk_count": 1721,
+      "card_status_counts": [
+        {
+          "domain_id": "business-supply-chain",
+          "status": "active",
+          "count": 242
+        }
+      ],
+      "card_evidence_counts": [
+        {
+          "domain_id": "business-supply-chain",
+          "evidence_level": "draft-business-extraction",
+          "count": 242
+        }
+      ],
+      "crosswalk_target_counts": [
+        {
+          "domain_id": "business-supply-chain",
+          "target_type": "metric",
+          "count": 379
+        },
+        {
+          "domain_id": "business-supply-chain",
+          "target_type": "object",
+          "count": 1342
+        }
+      ],
+      "probes": [
+        {
+          "probe_id": "business-supply-chain-p1",
+          "domain_id": "business-supply-chain",
+          "query": "战略供应链 体系 业务现状 风险 指标 KPI",
+          "terms": [
+            "战略供应链",
+            "体系",
+            "业务现状",
+            "风险",
+            "指标",
+            "kpi"
+          ],
+          "result_count": 8,
+          "active_hit_count": 8,
+          "draft_hit_count": 0,
+          "answerability": "answerable_with_local_evidence",
+          "distinct_object_refs": 10,
+          "distinct_metric_refs": 7,
+          "top_cards": [
+            "business-supply-chain-card-0053",
+            "business-supply-chain-card-0025",
+            "business-supply-chain-card-0090",
+            "business-supply-chain-card-0057",
+            "business-supply-chain-card-0037"
+          ],
+          "top_titles": [
+            "旧版指标体系经验萃取卡",
+            "bi_index_system 供应链指标价值萃取",
+            "新版供应链指标体系 L0-L3 蓝图",
+            "旧版指标体系 AI 检索索引",
+            "新版供应链指标体系蓝图修复说明"
+          ],
+          "top_score": 34.5
+        },
+        {
+          "probe_id": "business-supply-chain-p2",
+          "domain_id": "business-supply-chain",
+          "query": "跨境电商 供应链 计划 库存 履约 风险",
+          "terms": [
+            "跨境电商",
+            "供应链",
+            "计划",
+            "库存",
+            "履约",
+            "风险"
+          ],
+          "result_count": 8,
+          "active_hit_count": 8,
+          "draft_hit_count": 0,
+          "answerability": "answerable_with_local_evidence",
+          "distinct_object_refs": 10,
+          "distinct_metric_refs": 6,
+          "top_cards": [
+            "business-supply-chain-card-0003",
+            "business-supply-chain-card-0080",
+            "business-supply-chain-card-0072",
+            "business-supply-chain-card-0132",
+            "business-supply-chain-card-0023"
+          ],
+          "top_titles": [
+            "BI 字段指标候选字典",
+            "新版指标体系 MECE V2 变更日志",
+            "三道防线：预测-库存-执行",
+            "RAW-BOOK-006 库存计划指标卡",
+            "业务知识库到备货库存规则知识库映射"
+          ],
+          "top_score": 68.5
+        },
+        {
+          "probe_id": "business-supply-chain-p3",
+          "domain_id": "business-supply-chain",
+          "query": "数字化供应链 数据治理 本体 对象 指标",
+          "terms": [
+            "数字化供应链",
+            "数据治理",
+            "本体",
+            "对象",
+            "指标"
+          ],
+          "result_count": 8,
+          "active_hit_count": 8,
+          "draft_hit_count": 0,
+          "answerability": "answerable_with_local_evidence",
+          "distinct_object_refs": 10,
+          "distinct_metric_refs": 6,
+          "top_cards": [
+            "business-supply-chain-card-0053",
+            "business-supply-chain-card-0083",
+            "business-supply-chain-card-0027",
+            "business-supply-chain-card-0030",
+            "business-supply-chain-card-0090"
+          ],
+          "top_titles": [
+            "旧版指标体系经验萃取卡",
+            "新版供应链指标体系蓝图 QA 报告",
+            "bi_index_system 到当前证据链 crosswalk",
+            "bi_index_system 核心供应链指标蓝图",
+            "新版供应链指标体系 L0-L3 蓝图"
+          ],
+          "top_score": 27.5
+        }
+      ],
+      "aggregate": {
+        "probeCount": 3,
+        "answerableProbeCount": 3,
+        "candidateOnlyProbeCount": 0,
+        "thinProbeCount": 0,
+        "noEvidenceProbeCount": 0,
+        "distinctObjectRefs": 10,
+        "distinctMetricRefs": 7,
+        "distinctRuleRefs": 2,
+        "topics": [
+          "inventory-and-warehouse",
+          "planning-and-replenishment",
+          "logistics-and-fulfillment",
+          "metrics-and-data",
+          "general-supply-chain",
+          "procurement-and-supply"
+        ]
+      },
+      "review_status": "review_ready",
+      "known_gaps": []
+    },
+    {
+      "id": "jijia-scm-main",
+      "name": "积加 SCM 主知识库",
+      "theme": "scm-system-main",
+      "status": "active",
+      "evidence_level": "draft-source-visible",
+      "description": "积加计划、采购、仓库、物流四模块的业务逻辑、字段、指标、血缘和实施设计。",
+      "card_count": 17,
+      "chunk_count": 62,
+      "crosswalk_count": 166,
+      "card_status_counts": [
+        {
+          "domain_id": "jijia-scm-main",
+          "status": "active",
+          "count": 17
+        }
+      ],
+      "card_evidence_counts": [
+        {
+          "domain_id": "jijia-scm-main",
+          "evidence_level": "draft-source-visible",
+          "count": 17
+        }
+      ],
+      "crosswalk_target_counts": [
+        {
+          "domain_id": "jijia-scm-main",
+          "target_type": "metric",
+          "count": 19
+        },
+        {
+          "domain_id": "jijia-scm-main",
+          "target_type": "object",
+          "count": 147
+        }
+      ],
+      "probes": [
+        {
+          "probe_id": "jijia-scm-main-p1",
+          "domain_id": "jijia-scm-main",
+          "query": "积加 SCM 采购 库存 备货 计划",
+          "terms": [
+            "积加",
+            "scm",
+            "采购",
+            "库存",
+            "备货",
+            "计划"
+          ],
+          "result_count": 8,
+          "active_hit_count": 8,
+          "draft_hit_count": 0,
+          "answerability": "answerable_with_local_evidence",
+          "distinct_object_refs": 10,
+          "distinct_metric_refs": 5,
+          "top_cards": [
+            "jijia-scm-main-card-0001",
+            "jijia-scm-main-card-0010",
+            "jijia-scm-main-card-0008",
+            "jijia-scm-main-card-0003",
+            "jijia-scm-main-card-0014"
+          ],
+          "top_titles": [
+            "备货库存数据规划浏览器渲染原文分段抽取",
+            "积加计划模块业务逻辑与指标血缘",
+            "积加 SCM 指标字典",
+            "积加 SCM 跨模块指标血缘",
+            "积加 ERP 仓库模块实采指标血缘与知识库建设计划"
+          ],
+          "top_score": 98.5
+        },
+        {
+          "probe_id": "jijia-scm-main-p2",
+          "domain_id": "jijia-scm-main",
+          "query": "积加 SCM 业务流程 系统设计 项目实战",
+          "terms": [
+            "积加",
+            "scm",
+            "业务流程",
+            "系统设计",
+            "项目实战"
+          ],
+          "result_count": 8,
+          "active_hit_count": 8,
+          "draft_hit_count": 0,
+          "answerability": "answerable_with_local_evidence",
+          "distinct_object_refs": 9,
+          "distinct_metric_refs": 4,
+          "top_cards": [
+            "jijia-scm-main-card-0001",
+            "jijia-scm-main-card-0008",
+            "jijia-scm-main-card-0002"
+          ],
+          "top_titles": [
+            "备货库存数据规划浏览器渲染原文分段抽取",
+            "积加 SCM 指标字典",
+            "备货库存数据规划与积加 SCM 知识库差异分析"
+          ],
+          "top_score": 25.5
+        },
+        {
+          "probe_id": "jijia-scm-main-p3",
+          "domain_id": "jijia-scm-main",
+          "query": "供应链主系统 指标 规则 对象",
+          "terms": [
+            "供应链主系统",
+            "指标",
+            "规则",
+            "对象"
+          ],
+          "result_count": 8,
+          "active_hit_count": 8,
+          "draft_hit_count": 0,
+          "answerability": "answerable_with_local_evidence",
+          "distinct_object_refs": 9,
+          "distinct_metric_refs": 3,
+          "top_cards": [
+            "jijia-scm-main-card-0008",
+            "jijia-scm-main-card-0006",
+            "jijia-scm-main-card-0007",
+            "jijia-scm-main-card-0003"
+          ],
+          "top_titles": [
+            "积加 SCM 指标字典",
+            "积加 SCM 指标体系建设计划",
+            "积加 SCM 指标知识库总览",
+            "积加 SCM 跨模块指标血缘"
+          ],
+          "top_score": 38.5
+        }
+      ],
+      "aggregate": {
+        "probeCount": 3,
+        "answerableProbeCount": 3,
+        "candidateOnlyProbeCount": 0,
+        "thinProbeCount": 0,
+        "noEvidenceProbeCount": 0,
+        "distinctObjectRefs": 10,
+        "distinctMetricRefs": 5,
+        "distinctRuleRefs": 2,
+        "topics": [
+          "inventory-and-warehouse"
+        ]
+      },
+      "review_status": "review_ready",
+      "known_gaps": []
+    },
+    {
+      "id": "stocking-rules",
+      "name": "备货库存规则知识库",
+      "theme": "stocking-inventory-rules",
+      "status": "active",
+      "evidence_level": "draft-rule-extract",
+      "description": "备货库存规划规则、平台规则、数据来源、指标口径和与积加 SCM 的一致性映射。",
+      "card_count": 10,
+      "chunk_count": 23,
+      "crosswalk_count": 86,
+      "card_status_counts": [
+        {
+          "domain_id": "stocking-rules",
+          "status": "active",
+          "count": 10
+        }
+      ],
+      "card_evidence_counts": [
+        {
+          "domain_id": "stocking-rules",
+          "evidence_level": "draft-rule-extract",
+          "count": 10
+        }
+      ],
+      "crosswalk_target_counts": [
+        {
+          "domain_id": "stocking-rules",
+          "target_type": "metric",
+          "count": 14
+        },
+        {
+          "domain_id": "stocking-rules",
+          "target_type": "object",
+          "count": 72
+        }
+      ],
+      "probes": [
+        {
+          "probe_id": "stocking-rules-p1",
+          "domain_id": "stocking-rules",
+          "query": "备货 库存 周转 安全库存 断货 风险",
+          "terms": [
+            "备货",
+            "库存",
+            "周转",
+            "安全库存",
+            "断货",
+            "风险"
+          ],
+          "result_count": 8,
+          "active_hit_count": 8,
+          "draft_hit_count": 0,
+          "answerability": "answerable_with_local_evidence",
+          "distinct_object_refs": 8,
+          "distinct_metric_refs": 3,
+          "top_cards": [
+            "stocking-rules-card-0001",
+            "stocking-rules-card-0002",
+            "stocking-rules-card-0008",
+            "stocking-rules-card-0007",
+            "stocking-rules-card-0004"
+          ],
+          "top_titles": [
+            "备货库存数据规划浏览器渲染原文分段抽取",
+            "备货库存业务规则总览",
+            "备货库存平台规则字典",
+            "备货库存规则指标字典",
+            "备货库存数据源地图"
+          ],
+          "top_score": 69.5
+        },
+        {
+          "probe_id": "stocking-rules-p2",
+          "domain_id": "stocking-rules",
+          "query": "采购计划 补货策略 滞销 库龄 指标",
+          "terms": [
+            "采购计划",
+            "补货策略",
+            "滞销",
+            "库龄",
+            "指标"
+          ],
+          "result_count": 8,
+          "active_hit_count": 8,
+          "draft_hit_count": 0,
+          "answerability": "answerable_with_local_evidence",
+          "distinct_object_refs": 8,
+          "distinct_metric_refs": 2,
+          "top_cards": [
+            "stocking-rules-card-0007",
+            "stocking-rules-card-0005",
+            "stocking-rules-card-0006",
+            "stocking-rules-card-0010",
+            "stocking-rules-card-0003"
+          ],
+          "top_titles": [
+            "备货库存规则指标字典",
+            "备货库存规则知识库总览",
+            "备货库存与积加 SCM 一致性映射",
+            "备货库存规则核验与实施计划",
+            "备货库存血缘与数据模型"
+          ],
+          "top_score": 19.5
+        },
+        {
+          "probe_id": "stocking-rules-p3",
+          "domain_id": "stocking-rules",
+          "query": "备货规则 供应链 KPI 异常预警",
+          "terms": [
+            "备货规则",
+            "供应链",
+            "kpi",
+            "异常预警"
+          ],
+          "result_count": 8,
+          "active_hit_count": 8,
+          "draft_hit_count": 0,
+          "answerability": "answerable_with_local_evidence",
+          "distinct_object_refs": 8,
+          "distinct_metric_refs": 3,
+          "top_cards": [
+            "stocking-rules-card-0008",
+            "stocking-rules-card-0007",
+            "stocking-rules-card-0001",
+            "stocking-rules-card-0010",
+            "stocking-rules-card-0002"
+          ],
+          "top_titles": [
+            "备货库存平台规则字典",
+            "备货库存规则指标字典",
+            "备货库存数据规划浏览器渲染原文分段抽取",
+            "备货库存规则核验与实施计划",
+            "备货库存业务规则总览"
+          ],
+          "top_score": 17.5
+        }
+      ],
+      "aggregate": {
+        "probeCount": 3,
+        "answerableProbeCount": 3,
+        "candidateOnlyProbeCount": 0,
+        "thinProbeCount": 0,
+        "noEvidenceProbeCount": 0,
+        "distinctObjectRefs": 8,
+        "distinctMetricRefs": 3,
+        "distinctRuleRefs": 2,
+        "topics": [
+          "inventory-and-warehouse"
+        ]
+      },
+      "review_status": "review_ready",
+      "known_gaps": []
+    },
+    {
+      "id": "erp-supplement-draft",
+      "name": "路特 ERP 说明书补充知识库",
+      "theme": "erp-supplement",
+      "status": "draft",
+      "evidence_level": "browser-visible-draft",
+      "description": "ERP/企业服务平台可见文档萃取，当前只作为候选证据，不进入 certified evidence。",
+      "card_count": 59,
+      "chunk_count": 127,
+      "crosswalk_count": 218,
+      "card_status_counts": [
+        {
+          "domain_id": "erp-supplement-draft",
+          "status": "draft",
+          "count": 59
+        }
+      ],
+      "card_evidence_counts": [
+        {
+          "domain_id": "erp-supplement-draft",
+          "evidence_level": "browser-visible-draft",
+          "count": 59
+        }
+      ],
+      "crosswalk_target_counts": [
+        {
+          "domain_id": "erp-supplement-draft",
+          "target_type": "metric",
+          "count": 13
+        },
+        {
+          "domain_id": "erp-supplement-draft",
+          "target_type": "object",
+          "count": 205
+        }
+      ],
+      "probes": [
+        {
+          "probe_id": "erp-supplement-draft-p1",
+          "domain_id": "erp-supplement-draft",
+          "query": "ERP 库存 采购 订单 WMS OMS 字段",
+          "terms": [
+            "erp",
+            "库存",
+            "采购",
+            "订单",
+            "wms",
+            "oms",
+            "字段"
+          ],
+          "result_count": 8,
+          "active_hit_count": 0,
+          "draft_hit_count": 8,
+          "answerability": "candidate_only_draft_evidence",
+          "distinct_object_refs": 9,
+          "distinct_metric_refs": 2,
+          "top_cards": [
+            "erp-supplement-draft-card-0007",
+            "erp-supplement-draft-card-0002",
+            "erp-supplement-draft-card-0005",
+            "erp-supplement-draft-card-0001",
+            "erp-supplement-draft-card-0059"
+          ],
+          "top_titles": [
+            "路特 ERP 与积加 SCM 一致性映射",
+            "路特 ERP 字段候选字典",
+            "路特 ERP 规则候选字典",
+            "路特 ERP 供应链业务流程字典",
+            "路特 ERP 与备货库存规则交叉分析"
+          ],
+          "top_score": 72
+        },
+        {
+          "probe_id": "erp-supplement-draft-p2",
+          "domain_id": "erp-supplement-draft",
+          "query": "路特 ERP 供应链 业务流程 数据字段",
+          "terms": [
+            "路特",
+            "erp",
+            "供应链",
+            "业务流程",
+            "数据字段"
+          ],
+          "result_count": 8,
+          "active_hit_count": 0,
+          "draft_hit_count": 8,
+          "answerability": "candidate_only_draft_evidence",
+          "distinct_object_refs": 9,
+          "distinct_metric_refs": 1,
+          "top_cards": [
+            "erp-supplement-draft-card-0001",
+            "erp-supplement-draft-card-0007",
+            "erp-supplement-draft-card-0006",
+            "erp-supplement-draft-card-0005",
+            "erp-supplement-draft-card-0004"
+          ],
+          "top_titles": [
+            "路特 ERP 供应链业务流程字典",
+            "路特 ERP 与积加 SCM 一致性映射",
+            "路特 ERP 说明书补充知识库索引",
+            "路特 ERP 规则候选字典",
+            "路特 ERP 对象字典候选"
+          ],
+          "top_score": 33
+        },
+        {
+          "probe_id": "erp-supplement-draft-p3",
+          "domain_id": "erp-supplement-draft",
+          "query": "系统说明书 指标 业务对象 数据口径",
+          "terms": [
+            "系统说明书",
+            "指标",
+            "业务对象",
+            "数据口径"
+          ],
+          "result_count": 8,
+          "active_hit_count": 0,
+          "draft_hit_count": 8,
+          "answerability": "candidate_only_draft_evidence",
+          "distinct_object_refs": 9,
+          "distinct_metric_refs": 2,
+          "top_cards": [
+            "erp-supplement-draft-card-0011",
+            "erp-supplement-draft-card-0003",
+            "erp-supplement-draft-card-0013"
+          ],
+          "top_titles": [
+            "物流渠道指标候选",
+            "路特 ERP 指标候选字典",
+            "路特 ERP 补充知识库证据边界与晋升门槛"
+          ],
+          "top_score": 12
+        }
+      ],
+      "aggregate": {
+        "probeCount": 3,
+        "answerableProbeCount": 0,
+        "candidateOnlyProbeCount": 3,
+        "thinProbeCount": 0,
+        "noEvidenceProbeCount": 0,
+        "distinctObjectRefs": 10,
+        "distinctMetricRefs": 3,
+        "distinctRuleRefs": 2,
+        "topics": [
+          "inventory-and-warehouse",
+          "logistics-and-fulfillment",
+          "procurement-and-supply"
+        ]
+      },
+      "review_status": "candidate_only_needs_owner_promotion",
+      "known_gaps": [
+        "domain_status_is_draft_requires_owner_promotion_before_formal_evidence"
+      ]
+    }
+  ]
+}
