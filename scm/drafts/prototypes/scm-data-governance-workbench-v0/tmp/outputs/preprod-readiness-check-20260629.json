@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-15T20:53:45.801Z",
+  "generatedAt": "2026-07-15T21:33:07.168Z",
   "root": "drafts/prototypes/scm-data-governance-workbench-v0",
   "scanRoot": ".",
   "releaseBoundary": {
@@ -113,6 +113,12 @@
       "severity": "hard"
     },
     {
+      "name": "required-file:scripts/audit-ui-baseline.mjs",
+      "ok": true,
+      "detail": "scripts/audit-ui-baseline.mjs",
+      "severity": "hard"
+    },
+    {
       "name": "required-file:scripts/smoke-database-gate.mjs",
       "ok": true,
       "detail": "scripts/smoke-database-gate.mjs",
@@ -155,6 +161,12 @@
       "severity": "hard"
     },
     {
+      "name": "required-file:tmp/outputs/ui-proof-screenshots-20260716/summary.json",
+      "ok": true,
+      "detail": "tmp/outputs/ui-proof-screenshots-20260716/summary.json",
+      "severity": "hard"
+    },
+    {
       "name": "package-script:check",
       "ok": true,
       "detail": "tsc --noEmit",
@@ -164,6 +176,12 @@
       "name": "package-script:build",
       "ok": true,
       "detail": "tsc && vite build",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:audit:ui-baseline",
+      "ok": true,
+      "detail": "node scripts/audit-ui-baseline.mjs",
       "severity": "hard"
     },
     {
@@ -218,6 +236,16 @@
       "name": "package-script:preprod:check",
       "ok": true,
       "detail": "node scripts/preprod-check.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "ui-proof-screenshot-artifacts",
+      "ok": true,
+      "detail": {
+        "screenshotCount": 15,
+        "sha256Verified": 15,
+        "failures": []
+      },
       "severity": "hard"
     },
     {
