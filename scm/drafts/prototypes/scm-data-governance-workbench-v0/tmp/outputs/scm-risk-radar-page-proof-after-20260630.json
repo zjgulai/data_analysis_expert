@@ -20,7 +20,8 @@
   },
   "moduleCount": 15,
   "screenshotCount": 15,
-  "screenshotRoot": "../../../../../../../../../../../.Codex/file-history/ecom_ana_overview_scm/20260630T-b57-risk-radar-page-proof/ui-baseline-after/screenshots",
+  "screenshotRoot": "ui-proof-screenshots-20260716/screenshots",
+  "screenshotEvidenceScope": "canonical_merged_head_replacement_not_historical_pixel_equivalence",
   "rootTokens": {
     "--ink": "#1d1f23",
     "--ink-2": "#2b3440",

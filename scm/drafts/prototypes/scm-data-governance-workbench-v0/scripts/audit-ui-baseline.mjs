@@ -1,4 +1,5 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { chromium } from "playwright";
 
@@ -61,6 +62,10 @@ function sanitize(value) {
     .replace(/[^a-z0-9_-]+/gi, "-")
     .replace(/^-+|-+$/g, "")
     .toLowerCase();
+}
+
+async function sha256(pathname) {
+  return createHash("sha256").update(await readFile(pathname)).digest("hex");
 }
 
 async function request(pathname) {
@@ -144,6 +149,10 @@ async function collectTokens(page) {
 
 await mkdir(outputDir, { recursive: true });
 const screenshotDir = path.join(outputDir, "screenshots");
+assert(
+  path.dirname(path.resolve(summaryPath)) === path.resolve(outputDir),
+  "SCM_UI_BASELINE_SUMMARY_PATH must stay inside SCM_UI_BASELINE_OUTPUT_DIR so screenshot references remain portable"
+);
 await mkdir(screenshotDir, { recursive: true });
 await mkdir(path.dirname(summaryPath), { recursive: true });
 
@@ -154,57 +163,67 @@ assert(modules.length === 15, `expected 15 workbench modules, got ${modules.leng
 const browser = await chromium.launch(
   chromeExecutablePath ? { executablePath: chromeExecutablePath } : {}
 );
-const context = await browser.newContext({
-  viewport: { width: viewport.width, height: viewport.height }
-});
-await context.addInitScript(() => {
-  window.localStorage.clear();
-});
-const page = await context.newPage();
-
 const consoleErrors = [];
 const pageErrors = [];
 const nonReadOnlyRequests = [];
-
-page.on("console", (message) => {
-  if (message.type() === "error") consoleErrors.push(message.text());
-});
-page.on("pageerror", (error) => {
-  pageErrors.push(error.message);
-});
-page.on("request", (request) => {
-  const method = request.method();
-  if (!["GET", "HEAD", "OPTIONS"].includes(method)) {
-    nonReadOnlyRequests.push({ method, url: request.url() });
-  }
-});
-
-await page.goto(baseUrl, { waitUntil: "networkidle" });
-const rootTokens = await collectTokens(page);
 const moduleAudits = [];
+let rootTokens = {};
 
-for (const module of modules) {
-  await navigateToModule(page, module);
-  const metrics = await collectPageMetrics(page);
-  const screenshotName = `${viewport.name}-${module.code}-${sanitize(module.id)}.png`;
-  await page.screenshot({
-    path: path.join(screenshotDir, screenshotName),
-    fullPage: true
+try {
+  const context = await browser.newContext({
+    viewport: { width: viewport.width, height: viewport.height }
   });
-  moduleAudits.push({
-    id: module.id,
-    code: module.code,
-    title: module.title,
-    status: module.status,
-    stage: module.stage,
-    screenshot: `screenshots/${screenshotName}`,
-    viewport: metrics.viewport,
-    h1: metrics.h1,
-    componentStyles: metrics.componentStyles
+  await context.addInitScript(() => {
+    window.localStorage.clear();
   });
+  const page = await context.newPage();
+
+  page.on("console", (message) => {
+    if (message.type() === "error") consoleErrors.push(message.text());
+  });
+  page.on("pageerror", (error) => {
+    pageErrors.push(error.message);
+  });
+  page.on("request", (request) => {
+    const method = request.method();
+    if (!["GET", "HEAD", "OPTIONS"].includes(method)) {
+      nonReadOnlyRequests.push({ method, url: request.url() });
+    }
+  });
+
+  await page.goto(baseUrl, { waitUntil: "networkidle" });
+  rootTokens = await collectTokens(page);
+
+  for (const module of modules) {
+    await navigateToModule(page, module);
+    const metrics = await collectPageMetrics(page);
+    const screenshotName = `${viewport.name}-${module.code}-${sanitize(module.id)}.png`;
+    await page.screenshot({
+      path: path.join(screenshotDir, screenshotName),
+      fullPage: true
+    });
+    moduleAudits.push({
+      id: module.id,
+      code: module.code,
+      title: module.title,
+      status: module.status,
+      stage: module.stage,
+      screenshot: `screenshots/${screenshotName}`,
+      viewport: metrics.viewport,
+      h1: metrics.h1,
+      componentStyles: metrics.componentStyles
+    });
+  }
+} finally {
+  await browser.close();
 }
 
-await browser.close();
+const screenshotSha256 = Object.fromEntries(
+  await Promise.all(moduleAudits.map(async (item) => [
+    item.screenshot,
+    await sha256(path.join(outputDir, item.screenshot))
+  ]))
+);
 
 assert(nonReadOnlyRequests.length === 0, `UI baseline must not issue write requests: ${JSON.stringify(nonReadOnlyRequests)}`);
 assert(consoleErrors.length === 0, `UI baseline must not emit console errors: ${consoleErrors.join(" | ")}`);
@@ -225,7 +244,8 @@ const summary = {
   viewport,
   moduleCount: modules.length,
   screenshotCount: moduleAudits.length,
-  screenshotRoot: path.relative(path.dirname(summaryPath), screenshotDir),
+  screenshotRoot: "screenshots",
+  screenshotSha256,
   rootTokens,
   globalChecks: {
     nonReadOnlyRequests: nonReadOnlyRequests.length,

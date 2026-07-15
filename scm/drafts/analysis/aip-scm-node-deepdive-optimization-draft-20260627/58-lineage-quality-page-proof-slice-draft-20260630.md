@@ -24,7 +24,7 @@ B58 在 B57 风险雷达页面 proof 之后，完成 `07 血缘与质量工作�
 - 修改文件：`drafts/prototypes/scm-data-governance-workbench-v0/src/main.tsx`
 - 修改文件：`drafts/prototypes/scm-data-governance-workbench-v0/src/styles.css`
 - 新增 after 证据 JSON：`drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/scm-lineage-quality-page-proof-after-20260630.json`
-- 截图文件保存在仓库外的本机 file-history：`${SCM_FILE_HISTORY_DIR}/20260630T-b58-lineage-quality-page-proof/ui-baseline-after/screenshots/`
+- 2026-06-30 历史截图位于仓库外，不作为当前合并的可复核证据；当前 head 的 canonical 截图与 SHA-256 摘要位于 `drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/ui-proof-screenshots-20260716/`。
 - 模块数量：`15`
 - 截图数量：`15`
 - 视口：`desktop-1440`（1440 x 900）
@@ -139,8 +139,7 @@ B58 后，DOM 高度测量：
 ```bash
 PORT=5198 \
 SCM_WORKBENCH_BASE_URL="http://127.0.0.1:5198" \
-SCM_UI_BASELINE_OUTPUT_DIR="${SCM_FILE_HISTORY_DIR:?set SCM_FILE_HISTORY_DIR}/20260630T-b58-lineage-quality-page-proof/ui-baseline-after" \
-SCM_UI_BASELINE_SUMMARY_PATH="tmp/outputs/scm-lineage-quality-page-proof-after-20260630.json" \
+SCM_UI_BASELINE_OUTPUT_DIR="tmp/outputs/ui-proof-screenshots-20260716" \
 npm run audit:ui-baseline
 ```
 

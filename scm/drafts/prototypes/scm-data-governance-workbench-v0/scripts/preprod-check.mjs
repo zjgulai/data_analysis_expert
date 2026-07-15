@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { mkdirSync, readdirSync, readFileSync, statSync, existsSync, writeFileSync } from "node:fs";
 import { dirname, isAbsolute, join, relative, resolve } from "node:path";
 import { execFileSync } from "node:child_process";
@@ -107,22 +108,63 @@ const requiredFiles = [
   "dist/fulfillment-dashboard/index.html",
   "dist/fulfillment-dashboard/data/fulfillment_chart_data_binding_20260626.csv",
   "scripts/smoke-api.mjs",
+  "scripts/audit-ui-baseline.mjs",
   "scripts/smoke-database-gate.mjs",
   "scripts/smoke-import-gate.mjs",
   "scripts/smoke-migration-gate.mjs",
   "scripts/smoke-path-contract.mjs",
   "scripts/smoke-provider-gate.mjs",
   "scripts/smoke-readonly.mjs",
-  "scripts/smoke-ui.mjs"
+  "scripts/smoke-ui.mjs",
+  "tmp/outputs/ui-proof-screenshots-20260716/summary.json"
 ];
 
 for (const file of requiredFiles) {
   record(`required-file:${file}`, hasFile(file), file);
 }
 
-for (const scriptName of ["check", "build", "smoke:api", "smoke:database-gate", "smoke:import-gate", "smoke:migration-gate", "smoke:path-contract", "smoke:provider-gate", "smoke:readonly", "smoke:ui", "preprod:check"]) {
+for (const scriptName of ["check", "build", "audit:ui-baseline", "smoke:api", "smoke:database-gate", "smoke:import-gate", "smoke:migration-gate", "smoke:path-contract", "smoke:provider-gate", "smoke:readonly", "smoke:ui", "preprod:check"]) {
   record(`package-script:${scriptName}`, Boolean(packageJson.scripts?.[scriptName]), packageJson.scripts?.[scriptName] || "missing");
 }
+
+const uiProofArtifactDir = "tmp/outputs/ui-proof-screenshots-20260716";
+const uiProofFailures = [];
+let uiProofScreenshotCount = 0;
+let uiProofShaVerified = 0;
+try {
+  const uiProof = JSON.parse(read(`${uiProofArtifactDir}/summary.json`));
+  const artifactRoot = resolve(root, uiProofArtifactDir);
+  const digestEntries = Object.entries(uiProof.screenshotSha256 || {});
+  uiProofScreenshotCount = digestEntries.length;
+  for (const [screenshotPath, expectedHash] of digestEntries) {
+    const resolvedScreenshot = resolve(artifactRoot, screenshotPath);
+    const relativeScreenshot = relative(artifactRoot, resolvedScreenshot);
+    if (relativeScreenshot.startsWith("..") || isAbsolute(relativeScreenshot)) {
+      uiProofFailures.push(`${screenshotPath}:outside-artifact-root`);
+      continue;
+    }
+    if (!existsSync(resolvedScreenshot)) {
+      uiProofFailures.push(`${screenshotPath}:missing`);
+      continue;
+    }
+    const actualHash = createHash("sha256").update(readFileSync(resolvedScreenshot)).digest("hex");
+    if (actualHash !== expectedHash) uiProofFailures.push(`${screenshotPath}:sha256-mismatch`);
+    else uiProofShaVerified += 1;
+  }
+  if (uiProof.screenshotRoot !== "screenshots") uiProofFailures.push("summary:screenshot-root-not-portable");
+  if (uiProof.screenshotCount !== 15) uiProofFailures.push("summary:screenshot-count-not-15");
+  if (uiProof.globalChecks?.nonReadOnlyRequests !== 0) uiProofFailures.push("summary:non-readonly-request");
+  if (uiProof.globalChecks?.consoleErrors !== 0) uiProofFailures.push("summary:console-error");
+  if (uiProof.globalChecks?.pageErrors !== 0) uiProofFailures.push("summary:page-error");
+  if (uiProof.globalChecks?.maxOverflowX !== 0) uiProofFailures.push("summary:horizontal-overflow");
+} catch (error) {
+  uiProofFailures.push(`summary:${error.message}`);
+}
+record(
+  "ui-proof-screenshot-artifacts",
+  uiProofScreenshotCount === 15 && uiProofFailures.length === 0,
+  { screenshotCount: uiProofScreenshotCount, sha256Verified: uiProofShaVerified, failures: uiProofFailures }
+);
 
 const publicCopyIndex = dockerfile.indexOf("COPY public ./public");
 const buildIndex = dockerfile.indexOf("RUN npm run build");

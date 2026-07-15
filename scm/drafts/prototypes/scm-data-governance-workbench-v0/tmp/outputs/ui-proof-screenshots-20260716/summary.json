@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-30T00:37:04.615Z",
-  "baseUrl": "http://127.0.0.1:5198",
+  "generatedAt": "2026-07-15T21:28:39.301Z",
+  "baseUrl": "http://127.0.0.1:5218",
   "artifactType": "scm_ui_screenshot_token_baseline",
   "boundary": {
     "productionWrites": false,
@@ -20,8 +20,24 @@
   },
   "moduleCount": 15,
   "screenshotCount": 15,
-  "screenshotRoot": "ui-proof-screenshots-20260716/screenshots",
-  "screenshotEvidenceScope": "canonical_merged_head_replacement_not_historical_pixel_equivalence",
+  "screenshotRoot": "screenshots",
+  "screenshotSha256": {
+    "screenshots/desktop-1440-00-overview.png": "73ebff405503bc01ba78fa947a9574d50fd41651d0d6292584ba055e5e8cb5c4",
+    "screenshots/desktop-1440-S1-strategy-panorama.png": "793846d260ab9724b41ef59cd31c39aa3c1dfb784092b1bb8bb1358ee13316ad",
+    "screenshots/desktop-1440-R1-current-risk-radar.png": "573e597e2e00a77a2aaa418728446c5d86fdb5b3f10f2ad0bf97350e843608ee",
+    "screenshots/desktop-1440-R2-role-workbenches.png": "39669055986e93926f77cd6f7b3852c8a3bc32fa4e98a63e12ce5dd50c396b04",
+    "screenshots/desktop-1440-F1-fulfillment-dashboard.png": "b8c5e1775f4a8ecbc17f08ac31650df1d76d41101f54b9a2ff8fb80a4bf718b3",
+    "screenshots/desktop-1440-01-ontology.png": "f8627170f6ee8ed9aa88518c16fdd3fdd953fe0a0a66ec17ead0f99b13c4b962",
+    "screenshots/desktop-1440-02-tags.png": "e7cffda6fa4b005f2069cc65a99cb237043e2d9ad321c66a963b5a2d4045cc50",
+    "screenshots/desktop-1440-03-dimensions.png": "8d7a870bda8fd68610ea3c41cf38d73bd7a6d920fd7a9b7a3700d5a9d82142a6",
+    "screenshots/desktop-1440-04-metric-engineering.png": "b064a72bf1421f0e3117cbddc6f0b9515aca31d476c076f1cdab2ccc77d7c85e",
+    "screenshots/desktop-1440-05-metric-dictionary.png": "002cc17b3ee1b197aac2e1b0634dac1702c65821abaa922dc3de9f6535d02e79",
+    "screenshots/desktop-1440-06-kpi-system.png": "421c6b17fd1f0cc4657062a0db96cdd5ce5630288edebfeed0671bf793d7915c",
+    "screenshots/desktop-1440-07-lineage-quality.png": "7a333a9d374fbae93ccaeabafc607b3d3d88b329ecdfe9b1f37e236dc56c2b94",
+    "screenshots/desktop-1440-08-ai-knowledge.png": "29ee44d633cbcbd2898216b7f80138a2fa47dcd33d4b95746b2c08aaa54686f1",
+    "screenshots/desktop-1440-09-chatbi.png": "c3f01f74671715b61d5288e680515becbbe7234d5edf10085ff970eee3a7d8eb",
+    "screenshots/desktop-1440-10-decision-loop.png": "a61c17fced533c0959d162ec28f15221ba0e226e1ee618f23f4af44aed3277de"
+  },
   "rootTokens": {
     "--ink": "#1d1f23",
     "--ink-2": "#2b3440",
@@ -52,7 +68,7 @@
     "consoleErrors": 0,
     "pageErrors": 0,
     "maxOverflowX": 0,
-    "maxHeightRatio": 4.93
+    "maxHeightRatio": 3.78
   },
   "modules": [
     {
@@ -66,9 +82,9 @@
         "innerWidth": 1440,
         "innerHeight": 900,
         "scrollWidth": 1440,
-        "scrollHeight": 3608,
+        "scrollHeight": 2606,
         "overflowX": 0,
-        "heightRatio": 4.01
+        "heightRatio": 2.9
       },
       "h1": "治理链路总览",
       "componentStyles": {
@@ -76,7 +92,7 @@
           "present": true,
           "rect": {
             "width": 1440,
-            "height": 3607.58
+            "height": 2606.27
           },
           "style": {
             "display": "block",
@@ -97,7 +113,7 @@
           "present": true,
           "rect": {
             "width": 1440,
-            "height": 3607.58
+            "height": 2606.27
           },
           "style": {
             "display": "grid",
@@ -160,7 +176,7 @@
           "present": true,
           "rect": {
             "width": 1156,
-            "height": 3607.58
+            "height": 2606.27
           },
           "style": {
             "display": "block",
@@ -205,7 +221,7 @@
           "present": true,
           "rect": {
             "width": 414,
-            "height": 193.19
+            "height": 176
           },
           "style": {
             "display": "grid",
@@ -218,8 +234,8 @@
             "fontSize": "16px",
             "fontWeight": "400",
             "lineHeight": "normal",
-            "padding": "15px",
-            "gap": "10px"
+            "padding": "12px",
+            "gap": "8px"
           }
         },
         ".surface": {
@@ -229,7 +245,7 @@
           "present": true,
           "rect": {
             "width": 1300,
-            "height": 287.59
+            "height": 283.59
           },
           "style": {
             "display": "block",
@@ -242,7 +258,7 @@
             "fontSize": "16px",
             "fontWeight": "400",
             "lineHeight": "normal",
-            "padding": "16px",
+            "padding": "14px",
             "gap": "normal"
           }
         },
@@ -506,9 +522,9 @@
         "innerWidth": 1440,
         "innerHeight": 900,
         "scrollWidth": 1440,
-        "scrollHeight": 3206,
+        "scrollHeight": 2670,
         "overflowX": 0,
-        "heightRatio": 3.56
+        "heightRatio": 2.97
       },
       "h1": "业务现状与风险雷达",
       "componentStyles": {
@@ -516,7 +532,7 @@
           "present": true,
           "rect": {
             "width": 1440,
-            "height": 3206.28
+            "height": 2670.28
           },
           "style": {
             "display": "block",
@@ -537,7 +553,7 @@
           "present": true,
           "rect": {
             "width": 1440,
-            "height": 3206.28
+            "height": 2670.28
           },
           "style": {
             "display": "grid",
@@ -600,7 +616,7 @@
           "present": true,
           "rect": {
             "width": 1156,
-            "height": 3206.28
+            "height": 2670.28
           },
           "style": {
             "display": "block",
@@ -647,8 +663,8 @@
         ".surface": {
           "present": true,
           "rect": {
-            "width": 1078,
-            "height": 550
+            "width": 1086,
+            "height": 384
           },
           "style": {
             "display": "grid",
@@ -661,15 +677,15 @@
             "fontSize": "16px",
             "fontWeight": "400",
             "lineHeight": "normal",
-            "padding": "14px",
-            "gap": "12px"
+            "padding": "12px",
+            "gap": "10px"
           }
         },
         ".panel": {
           "present": true,
           "rect": {
             "width": 1112,
-            "height": 3081.25
+            "height": 2545.25
           },
           "style": {
             "display": "grid",
@@ -682,8 +698,8 @@
             "fontSize": "16px",
             "fontWeight": "400",
             "lineHeight": "normal",
-            "padding": "16px",
-            "gap": "14px"
+            "padding": "12px",
+            "gap": "12px"
           }
         },
         ".canvasShell": {
@@ -2576,9 +2592,9 @@
         "innerWidth": 1440,
         "innerHeight": 900,
         "scrollWidth": 1440,
-        "scrollHeight": 4149,
+        "scrollHeight": 3402,
         "overflowX": 0,
-        "heightRatio": 4.61
+        "heightRatio": 3.78
       },
       "h1": "血缘与质量工作台",
       "componentStyles": {
@@ -2586,7 +2602,7 @@
           "present": true,
           "rect": {
             "width": 1440,
-            "height": 4149.03
+            "height": 3402.25
           },
           "style": {
             "display": "block",
@@ -2607,7 +2623,7 @@
           "present": true,
           "rect": {
             "width": 1440,
-            "height": 4149.03
+            "height": 3402.25
           },
           "style": {
             "display": "grid",
@@ -2670,7 +2686,7 @@
           "present": true,
           "rect": {
             "width": 1156,
-            "height": 4149.03
+            "height": 3402.25
           },
           "style": {
             "display": "block",
@@ -2717,8 +2733,8 @@
         ".surface": {
           "present": true,
           "rect": {
-            "width": 1078,
-            "height": 499.64
+            "width": 1086,
+            "height": 407.64
           },
           "style": {
             "display": "grid",
@@ -2731,15 +2747,15 @@
             "fontSize": "16px",
             "fontWeight": "400",
             "lineHeight": "normal",
-            "padding": "14px",
-            "gap": "12px"
+            "padding": "12px",
+            "gap": "10px"
           }
         },
         ".panel": {
           "present": true,
           "rect": {
             "width": 1112,
-            "height": 4024
+            "height": 3277.22
           },
           "style": {
             "display": "block",
@@ -2752,7 +2768,7 @@
             "fontSize": "16px",
             "fontWeight": "400",
             "lineHeight": "normal",
-            "padding": "16px",
+            "padding": "12px",
             "gap": "normal"
           }
         },
@@ -2762,8 +2778,8 @@
         ".tableWrap": {
           "present": true,
           "rect": {
-            "width": 1048,
-            "height": 300
+            "width": 1060,
+            "height": 216
           },
           "style": {
             "display": "block",
@@ -2814,9 +2830,9 @@
         "innerWidth": 1440,
         "innerHeight": 900,
         "scrollWidth": 1440,
-        "scrollHeight": 4436,
+        "scrollHeight": 2584,
         "overflowX": 0,
-        "heightRatio": 4.93
+        "heightRatio": 2.87
       },
       "h1": "AI 知识库工作台",
       "componentStyles": {
@@ -2824,7 +2840,7 @@
           "present": true,
           "rect": {
             "width": 1440,
-            "height": 4436.14
+            "height": 2583.91
           },
           "style": {
             "display": "block",
@@ -2845,7 +2861,7 @@
           "present": true,
           "rect": {
             "width": 1440,
-            "height": 4436.14
+            "height": 2583.91
           },
           "style": {
             "display": "grid",
@@ -2908,7 +2924,7 @@
           "present": true,
           "rect": {
             "width": 1156,
-            "height": 4436.14
+            "height": 2583.91
           },
           "style": {
             "display": "block",
@@ -2956,7 +2972,7 @@
           "present": true,
           "rect": {
             "width": 424.8,
-            "height": 555.03
+            "height": 478.44
           },
           "style": {
             "display": "block",
@@ -2969,15 +2985,15 @@
             "fontSize": "16px",
             "fontWeight": "400",
             "lineHeight": "normal",
-            "padding": "14px",
-            "gap": "normal"
+            "padding": "10px",
+            "gap": "10px"
           }
         },
         ".panel": {
           "present": true,
           "rect": {
             "width": 1112,
-            "height": 4311.11
+            "height": 2458.88
           },
           "style": {
             "display": "block",
@@ -3001,7 +3017,7 @@
           "present": true,
           "rect": {
             "width": 1048,
-            "height": 520
+            "height": 300
           },
           "style": {
             "display": "block",

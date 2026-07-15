@@ -24,7 +24,7 @@ B55 已把当前最小 RC UI 的**截图基线、横向溢出基线、console/pa
 - 新增脚本：`drafts/prototypes/scm-data-governance-workbench-v0/scripts/audit-ui-baseline.mjs`
 - 新增 npm script：`npm run audit:ui-baseline`
 - 新增证据 JSON：`drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/scm-ui-token-baseline-20260630.json`
-- 截图文件保存在仓库外的本机 file-history：`${SCM_FILE_HISTORY_DIR}/20260630T-b55-ui-token-baseline/ui-baseline/screenshots/`
+- 2026-06-30 历史截图位于仓库外，不作为当前合并的可复核证据；当前 head 的 canonical 截图与 SHA-256 摘要位于 `drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/ui-proof-screenshots-20260716/`。
 - 截图数量：`15`
 - 模块数量：`15`
 - 视口：`desktop-1440`（1440 x 900）
@@ -53,8 +53,8 @@ B55 已把当前最小 RC UI 的**截图基线、横向溢出基线、console/pa
 3. 点击侧边导航切换 15 个模块。
 4. 采样 root CSS variables 和关键组件 computed style。
 5. 记录 viewport、scrollWidth、scrollHeight、heightRatio、overflowX。
-6. 截图到本地 file-history。
-7. 输出 JSON 摘要。
+6. 截图到显式配置的 output directory；当前合并证据提交在仓库内 canonical artifact 目录。
+7. 输出带逐文件 SHA-256 的 JSON 摘要。
 
 脚本明确断言：
 
@@ -125,8 +125,7 @@ B55 已把当前最小 RC UI 的**截图基线、横向溢出基线、console/pa
 本批新增可重复脚本：
 
 ```bash
-SCM_UI_BASELINE_OUTPUT_DIR="${SCM_FILE_HISTORY_DIR:?set SCM_FILE_HISTORY_DIR}/20260630T-b55-ui-token-baseline/ui-baseline" \
-SCM_UI_BASELINE_SUMMARY_PATH="tmp/outputs/scm-ui-token-baseline-20260630.json" \
+SCM_UI_BASELINE_OUTPUT_DIR="tmp/outputs/ui-proof-screenshots-20260716" \
 npm run audit:ui-baseline
 ```
 

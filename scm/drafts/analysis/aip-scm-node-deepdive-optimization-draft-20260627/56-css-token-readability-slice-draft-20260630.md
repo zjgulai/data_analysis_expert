@@ -23,7 +23,7 @@ B56 已在 B55 截图/token 基线之上完成一批**窄 scope CSS token/readab
 
 - 修改文件：`drafts/prototypes/scm-data-governance-workbench-v0/src/styles.css`
 - 新增 after 证据 JSON：`drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/scm-ui-token-readability-after-20260630.json`
-- 截图文件保存在仓库外的本机 file-history：`${SCM_FILE_HISTORY_DIR}/20260630T-b56-css-token-readability/ui-baseline-after/screenshots/`
+- 2026-06-30 历史截图位于仓库外，不作为当前合并的可复核证据；当前 head 的 canonical 截图与 SHA-256 摘要位于 `drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/ui-proof-screenshots-20260716/`。
 - 模块数量：`15`
 - 截图数量：`15`
 - 视口：`desktop-1440`（1440 x 900）
@@ -135,8 +135,7 @@ after-baseline 全量模块：
 ```bash
 PORT=5196 \
 SCM_WORKBENCH_BASE_URL="http://127.0.0.1:5196" \
-SCM_UI_BASELINE_OUTPUT_DIR="${SCM_FILE_HISTORY_DIR:?set SCM_FILE_HISTORY_DIR}/20260630T-b56-css-token-readability/ui-baseline-after" \
-SCM_UI_BASELINE_SUMMARY_PATH="tmp/outputs/scm-ui-token-readability-after-20260630.json" \
+SCM_UI_BASELINE_OUTPUT_DIR="tmp/outputs/ui-proof-screenshots-20260716" \
 npm run audit:ui-baseline
 ```
 
