@@ -10,6 +10,8 @@ const appRoot = resolve(scriptDir, "..");
 const sourceDatabasePath = join(appRoot, "data", "governance_workbench.sqlite");
 const applySql = readFileSync(join(appRoot, "migrations", "20260627_b3_t7_additive_schema.apply.sql"), "utf8");
 const rollbackSql = readFileSync(join(appRoot, "migrations", "20260627_b3_t7_additive_schema.rollback.sql"), "utf8");
+const loop3ApplySql = readFileSync(join(appRoot, "migrations", "20260701_loop3_business_closed_loops.apply.sql"), "utf8");
+const loop3RollbackSql = readFileSync(join(appRoot, "migrations", "20260701_loop3_business_closed_loops.rollback.sql"), "utf8");
 const sandboxRoot = mkdtempSync(join(tmpdir(), "scm-migration-gate-"));
 const targetTables = [
   "storyline_template",
@@ -24,6 +26,19 @@ const targetTables = [
   "tag_property_projection",
   "tag_assignment"
 ];
+const loop3Rows = {
+  action_tasks: ["action_loop3_20260701_finance_cost_tail_warehouse_return"],
+  agent_traces: ["trace_loop3_20260701_finance_cost_tail_warehouse_return"],
+  aip_scenarios: [
+    "scenario_loop3_inventory_stockout_three_way_20260701",
+    "scenario_loop3_finance_cost_tail_warehouse_return_20260701",
+    "scenario_loop3_fulfillment_eta_delivery_exception_20260701"
+  ],
+  decision_logs: ["decision_loop3_20260701_finance_cost_tail_warehouse_return"],
+  ontology_object_instances: ["cost_event_loop3_tail_warehouse_return_20260701"],
+  recommendation_cards: ["rec_loop3_20260701_finance_cost_tail_warehouse_return"],
+  trace_reviews: ["trace_review_loop3_20260701_finance_cost_tail_warehouse_return"]
+};
 
 function hashFile(path) {
   return createHash("sha256").update(readFileSync(path)).digest("hex");
@@ -110,12 +125,96 @@ function verifyEmptyRollbackAndReapply() {
   }
 }
 
+function loop3TableCounts(db) {
+  return Object.fromEntries(
+    Object.keys(loop3Rows).map((tableName) => [
+      tableName,
+      count(db, `SELECT COUNT(*) FROM ${tableName}`)
+    ])
+  );
+}
+
+function verifyLoop3LedgerApplyRollback() {
+  const db = new DatabaseSync(createDatabaseCopy("loop3-ledger"));
+  try {
+    db.exec(loop3RollbackSql);
+    const baseline = loop3TableCounts(db);
+
+    db.exec(loop3ApplySql);
+    const applied = loop3TableCounts(db);
+    for (const [tableName, ids] of Object.entries(loop3Rows)) {
+      if (applied[tableName] !== baseline[tableName] + ids.length) {
+        throw new Error(`Loop 3 apply count mismatch for ${tableName}`);
+      }
+      for (const id of ids) {
+        if (count(db, `SELECT COUNT(*) FROM ${tableName} WHERE id = ?`, id) !== 1) {
+          throw new Error(`Loop 3 apply missing ${tableName}/${id}`);
+        }
+      }
+    }
+    if (count(
+      db,
+      `SELECT COUNT(*) FROM aip_scenarios
+       WHERE id LIKE 'scenario_loop3_%_20260701'
+         AND decision_boundary LIKE '%no_provider%'
+         AND decision_boundary LIKE '%no_production%'
+         AND decision_boundary LIKE '%no_erp_writeback%'`
+    ) !== 3) {
+      throw new Error("Loop 3 scenarios must preserve no-provider/no-production/no-ERP boundaries");
+    }
+    if (count(
+      db,
+      `SELECT COUNT(*) FROM action_tasks
+       WHERE id = 'action_loop3_20260701_finance_cost_tail_warehouse_return'
+         AND replay_note LIKE '%providerCalls=false%'
+         AND replay_note LIKE '%productionWrites=false%'
+         AND replay_note LIKE '%erpWriteback=false%'`
+    ) !== 1) {
+      throw new Error("Loop 3 action task must preserve closed external-write boundaries");
+    }
+
+    db.exec(loop3ApplySql);
+    const reapplied = loop3TableCounts(db);
+    if (JSON.stringify(applied) !== JSON.stringify(reapplied)) {
+      throw new Error("Loop 3 apply must be idempotent");
+    }
+
+    db.exec(loop3RollbackSql);
+    const rolledBack = loop3TableCounts(db);
+    if (JSON.stringify(baseline) !== JSON.stringify(rolledBack)) {
+      throw new Error("Loop 3 rollback must restore baseline counts");
+    }
+    for (const [tableName, ids] of Object.entries(loop3Rows)) {
+      for (const id of ids) {
+        if (count(db, `SELECT COUNT(*) FROM ${tableName} WHERE id = ?`, id) !== 0) {
+          throw new Error(`Loop 3 rollback left ${tableName}/${id}`);
+        }
+      }
+    }
+
+    db.exec(loop3ApplySql);
+    if (db.prepare("PRAGMA integrity_check").get().integrity_check !== "ok") {
+      throw new Error("SQLite integrity_check failed after Loop 3 reapply");
+    }
+    return {
+      rowDelta: Object.values(loop3Rows).reduce((total, ids) => total + ids.length, 0),
+      tableDeltas: Object.fromEntries(
+        Object.entries(loop3Rows).map(([tableName, ids]) => [tableName, ids.length])
+      )
+    };
+  } finally {
+    db.close();
+  }
+}
+
 const sourceHashBefore = hashFile(sourceDatabasePath);
 let gateError;
 let rejectionMessage = "";
+let loop3LedgerSummary = {};
 try {
   rejectionMessage = verifyPopulatedRollbackIsRejected();
   verifyEmptyRollbackAndReapply();
+  loop3LedgerSummary = verifyLoop3LedgerApplyRollback();
 } catch (error) {
   gateError = error instanceof Error ? error : new Error(String(error));
 }
@@ -148,6 +247,9 @@ console.log(JSON.stringify({
   populatedRollbackError: rejectionMessage,
   emptyRollback: "applied",
   emptyReapply: "applied",
+  loop3LedgerApply: "applied_idempotently",
+  loop3LedgerRollback: "restored_baseline",
+  loop3Ledger: loop3LedgerSummary,
   sourceDatabaseHashPreserved: true,
   databaseWrite: "disposable_test_copies_only",
   productionWrites: false
