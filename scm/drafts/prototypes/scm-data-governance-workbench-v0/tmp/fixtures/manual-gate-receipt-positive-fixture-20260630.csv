@@ -1,0 +1,3 @@
+owner,packet_type,gate_id,target_ref,metric_code,metric_name,decision_result,evidence_ref,signoff_date,scope,rollback_rule,status_mutation,boundary_note
+财务/成本 Owner,owner_signoff,signoff_26,SCM-MECE-L3-036,full_chain_turnover_days_amount,全链条库存资金周转天数,approved_for_manual_review,fixture://manual-gate-positive/owner-signoff-001,2026-06-30,fixture_only_no_runtime_effect,revert_fixture_only_row,false,fixture_only_manual_receipt_status_mutation_false
+财务/成本 Owner,field_mapping,mapping_61,SCM-MECE-L3-036,full_chain_turnover_days_amount,全链条库存资金周转天数,approved_for_manual_review,fixture://manual-gate-positive/field-mapping-001,2026-06-30,fixture_only_no_runtime_effect,revert_fixture_only_row,false,fixture_only_manual_receipt_status_mutation_false

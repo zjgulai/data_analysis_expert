@@ -1,0 +1,181 @@
+{
+  "generatedAt": "2026-06-30T07:25:00.000Z",
+  "templateMode": false,
+  "sourceMode": "receipt_intake",
+  "receiptProfile": "negative_fixture",
+  "receiptDir": "tmp/outputs/manual-gate-receipt-templates-20260630",
+  "receiptIntakePath": "tmp/fixtures/manual-gate-receipt-negative-fixture-20260630.csv",
+  "summaryPath": "tmp/outputs/manual-gate-resolution-summary-20260630.json",
+  "validationPath": "tmp/outputs/manual-gate-receipt-negative-fixture-validation-20260630.json",
+  "statusPlanPath": "tmp/outputs/manual-gate-negative-fixture-status-update-plan-20260630.json",
+  "boundary": {
+    "statusMutation": false,
+    "providerCalls": false,
+    "productionWrites": false,
+    "erpWriteback": false,
+    "sourceReadMode": "csv_read_only"
+  },
+  "expected": {
+    "receiptFiles": 1,
+    "totalRows": 3,
+    "columns": [
+      "owner",
+      "packet_type",
+      "gate_id",
+      "target_ref",
+      "metric_code",
+      "metric_name",
+      "decision_result",
+      "evidence_ref",
+      "signoff_date",
+      "scope",
+      "rollback_rule",
+      "status_mutation",
+      "boundary_note"
+    ],
+    "decisionResultAllowedValues": [
+      "approved_for_manual_review",
+      "approved_with_conditions",
+      "rejected_needs_rework"
+    ]
+  },
+  "counts": {
+    "receiptFiles": 1,
+    "totalRows": 3,
+    "rowsWithStatusMutationFalse": 2,
+    "filledReceiptRows": 3,
+    "partialReceiptRows": 0,
+    "blockedReceiptRows": 3,
+    "statusPlanEligibleRows": 0,
+    "templateRowsAwaitingReceipt": 0,
+    "blankHumanFieldCells": 0,
+    "reviewRouteCounts": {
+      "manual_owner_signoff_review_queue": 1,
+      "manual_gate_exception_review_queue": 1,
+      "manual_field_mapping_review_queue": 1
+    },
+    "eligibleReviewRouteCounts": {},
+    "decisionResultCounts": {
+      "approved_for_fixture_dry_run": 1,
+      "approved_for_manual_review": 1,
+      "rejected_needs_rework": 1
+    },
+    "invalidDecisionResultRows": 1,
+    "unknownIdentityRows": 0,
+    "duplicateIdentityRows": 0,
+    "templateIdentityRows": 53,
+    "blockerCounts": {
+      "invalid_decision_result": 1,
+      "unsupported_packet_type": 1,
+      "status_mutation_must_remain_false": 1
+    }
+  },
+  "contract": {
+    "decisionResultAllowedValues": {
+      "approved_for_manual_review": "Owner approves this receipt for downstream manual review.",
+      "approved_with_conditions": "Owner approves with explicit conditions captured in scope/evidence_ref.",
+      "rejected_needs_rework": "Owner rejects this gate and requests rework before another receipt."
+    }
+  },
+  "expectedBlockerValidation": {
+    "enabled": true,
+    "requiredBlockers": [
+      "invalid_decision_result",
+      "unsupported_packet_type",
+      "status_mutation_must_remain_false"
+    ],
+    "blockerCounts": {
+      "invalid_decision_result": 1,
+      "unsupported_packet_type": 1,
+      "status_mutation_must_remain_false": 1
+    },
+    "missingExpectedBlockers": [],
+    "unexpectedBlockers": [],
+    "disallowedValidationIssues": [],
+    "controlledNegativeFixture": true,
+    "satisfied": true
+  },
+  "acceptanceProfileValidation": {
+    "profile": "negative_fixture",
+    "failures": [],
+    "satisfied": true
+  },
+  "schemaValid": true,
+  "readyForStatusMutation": false,
+  "files": [
+    {
+      "fileName": "manual-gate-receipt-negative-fixture-20260630.csv",
+      "path": "tmp/fixtures/manual-gate-receipt-negative-fixture-20260630.csv",
+      "rowCount": 3,
+      "schemaValid": true,
+      "templateRowsAwaitingReceipt": 0
+    }
+  ],
+  "rowOutcomes": [
+    {
+      "sourceFile": "manual-gate-receipt-negative-fixture-20260630.csv",
+      "rowNumber": 2,
+      "owner": "财务/成本 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "negative_decision_result_001",
+      "targetRef": "SCM-MECE-L3-036",
+      "metricCode": "full_chain_turnover_days_amount",
+      "metricName": "全链条库存资金周转天数",
+      "decisionResult": "approved_for_fixture_dry_run",
+      "receiptStatus": "blocked_validation_errors",
+      "missingHumanFields": [],
+      "blockers": [
+        "invalid_decision_result"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipt-negative-fixture-20260630.csv",
+      "rowNumber": 3,
+      "owner": "财务/成本 Owner",
+      "packetType": "ai_auto_approval",
+      "gateId": "negative_packet_type_001",
+      "targetRef": "SCM-MECE-L3-036",
+      "metricCode": "full_chain_turnover_days_amount",
+      "metricName": "全链条库存资金周转天数",
+      "decisionResult": "approved_for_manual_review",
+      "receiptStatus": "blocked_validation_errors",
+      "missingHumanFields": [],
+      "blockers": [
+        "unsupported_packet_type"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_gate_exception_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipt-negative-fixture-20260630.csv",
+      "rowNumber": 4,
+      "owner": "财务/成本 Owner",
+      "packetType": "field_mapping",
+      "gateId": "negative_status_mutation_001",
+      "targetRef": "SCM-MECE-L3-036",
+      "metricCode": "full_chain_turnover_days_amount",
+      "metricName": "全链条库存资金周转天数",
+      "decisionResult": "rejected_needs_rework",
+      "receiptStatus": "blocked_validation_errors",
+      "missingHumanFields": [],
+      "blockers": [
+        "status_mutation_must_remain_false"
+      ],
+      "inputStatusMutation": "true",
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    }
+  ],
+  "warnings": [],
+  "errors": [
+    "manual-gate-receipt-negative-fixture-20260630.csv:2:decision_result:approved_for_fixture_dry_run",
+    "manual-gate-receipt-negative-fixture-20260630.csv:4:status_mutation:true"
+  ]
+}

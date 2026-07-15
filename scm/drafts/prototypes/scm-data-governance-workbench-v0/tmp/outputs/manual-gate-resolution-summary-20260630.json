@@ -1,0 +1,223 @@
+{
+  "generatedAt": "2026-06-30T04:30:00.000Z",
+  "dbPath": "data/governance_workbench.sqlite",
+  "outputPaths": {
+    "ownerSignoff": "data/manual-gate-owner-signoff-intake-20260630.csv",
+    "fieldMapping": "data/manual-gate-field-mapping-intake-20260630.csv",
+    "sceiWeight": "data/manual-gate-scei-weight-intake-20260630.csv",
+    "receiptIntake": "data/manual-gate-receipts-intake-20260630.csv",
+    "summary": "tmp/outputs/manual-gate-resolution-summary-20260630.json",
+    "ownerPacketDir": "tmp/outputs/manual-gate-owner-packets-20260630",
+    "receiptTemplateDir": "tmp/outputs/manual-gate-receipt-templates-20260630"
+  },
+  "boundary": {
+    "productionWrites": false,
+    "providerCalls": false,
+    "erpWriteback": false,
+    "localSqliteWrites": false,
+    "sourceReadMode": "sqlite_read_only",
+    "statusMutation": false
+  },
+  "counts": {
+    "ownerSignoffOpen": 30,
+    "fieldMappingOpen": 18,
+    "sceiWeightSourceOwnerDecisionPacketsReady": 1,
+    "sceiWeightChildrenAwaitingOwnerWeights": 5,
+    "ownerPacketCount": 8,
+    "receiptTemplateCount": 8,
+    "receiptTemplateRows": 53,
+    "receiptIntakeRows": 53
+  },
+  "ownerBuckets": [
+    {
+      "owner": "仓储运营 Owner",
+      "task_type": "field_mapping",
+      "status": "待确认",
+      "count": 3
+    },
+    {
+      "owner": "供应链数据治理 Owner",
+      "task_type": "owner_decision",
+      "status": "owner_decision_packet_ready",
+      "count": 1
+    },
+    {
+      "owner": "库存运营 Owner",
+      "task_type": "field_mapping",
+      "status": "待确认",
+      "count": 6
+    },
+    {
+      "owner": "待确认",
+      "task_type": "owner_signoff",
+      "status": "未发起",
+      "count": 30
+    },
+    {
+      "owner": "数据治理 Owner",
+      "task_type": "field_mapping",
+      "status": "待确认",
+      "count": 3
+    },
+    {
+      "owner": "财务/成本 Owner",
+      "task_type": "field_mapping",
+      "status": "待确认",
+      "count": 6
+    }
+  ],
+  "closureRules": {
+    "ownerSignoff": "requires named owner, signoff date, scope, metric definition version, and evidence reference",
+    "fieldMapping": "requires concrete source system/table/field, join key, grain, refresh cadence, field owner, and sample extract reference",
+    "sceiWeightSource": "requires five child weights with sum exactly 1.0, basis type, basis description, owner signoff, and evidence reference"
+  },
+  "nonClosureReasons": [
+    "No owner signoff receipt is present in the local source pack.",
+    "No concrete source field mapping is present for the 18 field-mapping gates.",
+    "SCEI five-dimensional weights are intentionally blank because only a historical two-axis cost/fulfillment split is evidenced."
+  ],
+  "files": {
+    "ownerSignoffCsv": "data/manual-gate-owner-signoff-intake-20260630.csv",
+    "fieldMappingCsv": "data/manual-gate-field-mapping-intake-20260630.csv",
+    "sceiWeightCsv": "data/manual-gate-scei-weight-intake-20260630.csv",
+    "receiptIntakeCsv": "data/manual-gate-receipts-intake-20260630.csv",
+    "summaryJson": "tmp/outputs/manual-gate-resolution-summary-20260630.json",
+    "ownerPacketDir": "tmp/outputs/manual-gate-owner-packets-20260630",
+    "receiptTemplateDir": "tmp/outputs/manual-gate-receipt-templates-20260630"
+  },
+  "ownerPackets": [
+    {
+      "owner": "财务/成本 Owner",
+      "slug": "finance-cost-owner",
+      "itemCount": 10,
+      "counts": {
+        "owner_signoff": 4,
+        "field_mapping": 6
+      },
+      "csvPath": "tmp/outputs/manual-gate-owner-packets-20260630/finance-cost-owner.csv",
+      "markdownPath": "tmp/outputs/manual-gate-owner-packets-20260630/finance-cost-owner.md"
+    },
+    {
+      "owner": "采购与供应商 Owner",
+      "slug": "procurement-supplier-owner",
+      "itemCount": 4,
+      "counts": {
+        "owner_signoff": 4
+      },
+      "csvPath": "tmp/outputs/manual-gate-owner-packets-20260630/procurement-supplier-owner.csv",
+      "markdownPath": "tmp/outputs/manual-gate-owner-packets-20260630/procurement-supplier-owner.md"
+    },
+    {
+      "owner": "仓储运营 Owner",
+      "slug": "warehouse-ops-owner",
+      "itemCount": 3,
+      "counts": {
+        "field_mapping": 3
+      },
+      "csvPath": "tmp/outputs/manual-gate-owner-packets-20260630/warehouse-ops-owner.csv",
+      "markdownPath": "tmp/outputs/manual-gate-owner-packets-20260630/warehouse-ops-owner.md"
+    },
+    {
+      "owner": "供应链数据治理 Owner",
+      "slug": "scm-data-governance-owner",
+      "itemCount": 5,
+      "counts": {
+        "scei_weight_source": 5
+      },
+      "csvPath": "tmp/outputs/manual-gate-owner-packets-20260630/scm-data-governance-owner.csv",
+      "markdownPath": "tmp/outputs/manual-gate-owner-packets-20260630/scm-data-governance-owner.md"
+    },
+    {
+      "owner": "计划 Owner",
+      "slug": "planning-owner",
+      "itemCount": 3,
+      "counts": {
+        "owner_signoff": 3
+      },
+      "csvPath": "tmp/outputs/manual-gate-owner-packets-20260630/planning-owner.csv",
+      "markdownPath": "tmp/outputs/manual-gate-owner-packets-20260630/planning-owner.md"
+    },
+    {
+      "owner": "库存运营 Owner",
+      "slug": "inventory-ops-owner",
+      "itemCount": 18,
+      "counts": {
+        "owner_signoff": 12,
+        "field_mapping": 6
+      },
+      "csvPath": "tmp/outputs/manual-gate-owner-packets-20260630/inventory-ops-owner.csv",
+      "markdownPath": "tmp/outputs/manual-gate-owner-packets-20260630/inventory-ops-owner.md"
+    },
+    {
+      "owner": "数据治理 Owner",
+      "slug": "data-governance-owner",
+      "itemCount": 6,
+      "counts": {
+        "owner_signoff": 3,
+        "field_mapping": 3
+      },
+      "csvPath": "tmp/outputs/manual-gate-owner-packets-20260630/data-governance-owner.csv",
+      "markdownPath": "tmp/outputs/manual-gate-owner-packets-20260630/data-governance-owner.md"
+    },
+    {
+      "owner": "物流运营 Owner",
+      "slug": "logistics-ops-owner",
+      "itemCount": 4,
+      "counts": {
+        "owner_signoff": 4
+      },
+      "csvPath": "tmp/outputs/manual-gate-owner-packets-20260630/logistics-ops-owner.csv",
+      "markdownPath": "tmp/outputs/manual-gate-owner-packets-20260630/logistics-ops-owner.md"
+    }
+  ],
+  "receiptTemplates": [
+    {
+      "owner": "财务/成本 Owner",
+      "slug": "finance-cost-owner",
+      "rowCount": 10,
+      "csvPath": "tmp/outputs/manual-gate-receipt-templates-20260630/finance-cost-owner.csv"
+    },
+    {
+      "owner": "采购与供应商 Owner",
+      "slug": "procurement-supplier-owner",
+      "rowCount": 4,
+      "csvPath": "tmp/outputs/manual-gate-receipt-templates-20260630/procurement-supplier-owner.csv"
+    },
+    {
+      "owner": "仓储运营 Owner",
+      "slug": "warehouse-ops-owner",
+      "rowCount": 3,
+      "csvPath": "tmp/outputs/manual-gate-receipt-templates-20260630/warehouse-ops-owner.csv"
+    },
+    {
+      "owner": "供应链数据治理 Owner",
+      "slug": "scm-data-governance-owner",
+      "rowCount": 5,
+      "csvPath": "tmp/outputs/manual-gate-receipt-templates-20260630/scm-data-governance-owner.csv"
+    },
+    {
+      "owner": "计划 Owner",
+      "slug": "planning-owner",
+      "rowCount": 3,
+      "csvPath": "tmp/outputs/manual-gate-receipt-templates-20260630/planning-owner.csv"
+    },
+    {
+      "owner": "库存运营 Owner",
+      "slug": "inventory-ops-owner",
+      "rowCount": 18,
+      "csvPath": "tmp/outputs/manual-gate-receipt-templates-20260630/inventory-ops-owner.csv"
+    },
+    {
+      "owner": "数据治理 Owner",
+      "slug": "data-governance-owner",
+      "rowCount": 6,
+      "csvPath": "tmp/outputs/manual-gate-receipt-templates-20260630/data-governance-owner.csv"
+    },
+    {
+      "owner": "物流运营 Owner",
+      "slug": "logistics-ops-owner",
+      "rowCount": 4,
+      "csvPath": "tmp/outputs/manual-gate-receipt-templates-20260630/logistics-ops-owner.csv"
+    }
+  ]
+}

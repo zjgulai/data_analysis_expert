@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { mkdirSync, readdirSync, readFileSync, statSync, existsSync, writeFileSync } from "node:fs";
-import { dirname, isAbsolute, join, relative, resolve } from "node:path";
+import { basename, dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { execFileSync } from "node:child_process";
 import { DatabaseSync } from "node:sqlite";
 
@@ -111,19 +111,28 @@ const requiredFiles = [
   "scripts/audit-ui-baseline.mjs",
   "scripts/smoke-database-gate.mjs",
   "scripts/smoke-import-gate.mjs",
+  "scripts/export-manual-gate-resolution-pack.mjs",
+  "scripts/smoke-manual-gate-receipts.mjs",
+  "scripts/validate-manual-gate-receipts.mjs",
   "scripts/smoke-migration-gate.mjs",
   "scripts/smoke-path-contract.mjs",
   "scripts/smoke-provider-gate.mjs",
   "scripts/smoke-readonly.mjs",
   "scripts/smoke-ui.mjs",
-  "tmp/outputs/ui-proof-screenshots-20260716/summary.json"
+  "tmp/outputs/ui-proof-screenshots-20260716/summary.json",
+  "tmp/outputs/manual-gate-resolution-summary-20260630.json",
+  "tmp/outputs/manual-gate-receipt-validation-20260630.json",
+  "tmp/outputs/manual-gate-receipt-intake-validation-20260630.json",
+  "tmp/outputs/manual-gate-receipt-positive-fixture-validation-20260630.json",
+  "tmp/outputs/manual-gate-receipt-negative-fixture-validation-20260630.json",
+  "tmp/outputs/manual-gate-negative-fixture-status-update-plan-20260630.json"
 ];
 
 for (const file of requiredFiles) {
   record(`required-file:${file}`, hasFile(file), file);
 }
 
-for (const scriptName of ["check", "build", "audit:ui-baseline", "smoke:api", "smoke:database-gate", "smoke:import-gate", "smoke:migration-gate", "smoke:path-contract", "smoke:provider-gate", "smoke:readonly", "smoke:ui", "preprod:check"]) {
+for (const scriptName of ["check", "build", "audit:ui-baseline", "smoke:api", "smoke:database-gate", "smoke:import-gate", "smoke:manual-gate-receipts", "smoke:migration-gate", "smoke:path-contract", "smoke:provider-gate", "smoke:readonly", "smoke:ui", "preprod:check"]) {
   record(`package-script:${scriptName}`, Boolean(packageJson.scripts?.[scriptName]), packageJson.scripts?.[scriptName] || "missing");
 }
 
@@ -185,6 +194,29 @@ record(
   "ui-proof-screenshot-artifacts",
   uiProofScreenshotCount === 15 && uiProofFailures.length === 0,
   { screenshotCount: uiProofScreenshotCount, sha256Verified: uiProofShaVerified, failures: uiProofFailures }
+);
+
+const manualGateEvidenceRoots = [
+  join(root, "tmp", "outputs"),
+  resolve(root, "../../analysis/aip-scm-node-deepdive-optimization-draft-20260627")
+];
+const manualGateOutputRoot = `${resolve(root, "tmp", "outputs")}${sep}`;
+const manualGateEvidenceFiles = [...new Set(manualGateEvidenceRoots.flatMap((dir) => listFiles(dir)))]
+  .filter((path) =>
+    /\.(?:csv|json|md)$/i.test(path)
+    && (
+      (resolve(path).startsWith(manualGateOutputRoot) && path.includes("manual-gate"))
+      || /^(?:6[3-9]|70)-manual-gate/.test(basename(path))
+    )
+  );
+const workstationPathPattern = /(?:[\\/]{1,2}Users[\\/]{1,2}|[\\/]{1,2}home[\\/]{1,2})/i;
+const manualGatePathFailures = manualGateEvidenceFiles
+  .filter((path) => workstationPathPattern.test(readFileSync(path, "utf8")))
+  .map((path) => portablePath(path));
+record(
+  "manual-gate-evidence-portable-paths",
+  manualGateEvidenceFiles.length > 0 && manualGatePathFailures.length === 0,
+  { filesScanned: manualGateEvidenceFiles.length, failures: manualGatePathFailures }
 );
 
 const publicCopyIndex = dockerfile.indexOf("COPY public ./public");

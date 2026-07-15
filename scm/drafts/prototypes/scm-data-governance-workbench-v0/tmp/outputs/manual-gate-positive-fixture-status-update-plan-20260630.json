@@ -1,0 +1,94 @@
+{
+  "generatedAt": "2026-06-30T07:20:00.000Z",
+  "sourceMode": "receipt_intake",
+  "receiptProfile": "positive_fixture",
+  "receiptIntakePath": "tmp/fixtures/manual-gate-receipt-positive-fixture-20260630.csv",
+  "summaryPath": "tmp/outputs/manual-gate-resolution-summary-20260630.json",
+  "validationPath": "tmp/outputs/manual-gate-receipt-positive-fixture-validation-20260630.json",
+  "statusPlanPath": "tmp/outputs/manual-gate-positive-fixture-status-update-plan-20260630.json",
+  "boundary": {
+    "statusMutation": false,
+    "providerCalls": false,
+    "productionWrites": false,
+    "erpWriteback": false,
+    "sourceReadMode": "csv_read_only",
+    "dryRunOnly": true
+  },
+  "counts": {
+    "totalRows": 2,
+    "eligibleRows": 2,
+    "blockedRows": 0,
+    "proposedStatusMutations": 0,
+    "reviewRouteCounts": {
+      "manual_owner_signoff_review_queue": 1,
+      "manual_field_mapping_review_queue": 1
+    },
+    "eligibleReviewRouteCounts": {
+      "manual_owner_signoff_review_queue": 1,
+      "manual_field_mapping_review_queue": 1
+    },
+    "decisionResultCounts": {
+      "approved_for_manual_review": 2
+    },
+    "invalidDecisionResultRows": 0,
+    "unknownIdentityRows": 0,
+    "duplicateIdentityRows": 0,
+    "templateIdentityRows": 53,
+    "blockerCounts": {}
+  },
+  "contract": {
+    "decisionResultAllowedValues": {
+      "approved_for_manual_review": "Owner approves this receipt for downstream manual review.",
+      "approved_with_conditions": "Owner approves with explicit conditions captured in scope/evidence_ref.",
+      "rejected_needs_rework": "Owner rejects this gate and requests rework before another receipt."
+    }
+  },
+  "expectedBlockerValidation": {
+    "enabled": false,
+    "requiredBlockers": [],
+    "blockerCounts": {},
+    "missingExpectedBlockers": [],
+    "unexpectedBlockers": [],
+    "disallowedValidationIssues": [],
+    "controlledNegativeFixture": false,
+    "satisfied": false
+  },
+  "acceptanceProfileValidation": {
+    "profile": "positive_fixture",
+    "failures": [],
+    "satisfied": true
+  },
+  "readyForStatusMutation": false,
+  "rows": [
+    {
+      "owner": "财务/成本 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_26",
+      "targetRef": "SCM-MECE-L3-036",
+      "metricCode": "full_chain_turnover_days_amount",
+      "decisionResult": "approved_for_manual_review",
+      "receiptStatus": "complete_pending_manual_review",
+      "blockers": [],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "proposedStatusChange": null,
+      "statusMutation": false,
+      "dryRunOnly": true
+    },
+    {
+      "owner": "财务/成本 Owner",
+      "packetType": "field_mapping",
+      "gateId": "mapping_61",
+      "targetRef": "SCM-MECE-L3-036",
+      "metricCode": "full_chain_turnover_days_amount",
+      "decisionResult": "approved_for_manual_review",
+      "receiptStatus": "complete_pending_manual_review",
+      "blockers": [],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
+      "proposedStatusChange": null,
+      "statusMutation": false,
+      "dryRunOnly": true
+    }
+  ]
+}

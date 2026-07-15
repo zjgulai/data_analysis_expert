@@ -1,0 +1,5 @@
+owner,packet_type,gate_id,target_ref,metric_code,metric_name,decision_result,evidence_ref,signoff_date,scope,rollback_rule,status_mutation,boundary_note
+物流运营 Owner,owner_signoff,signoff_23,SCM-MECE-L3-066,last_mile_delivery_rate,妥投率,,,,,,false,manual_receipt_template_only_status_mutation_false
+物流运营 Owner,owner_signoff,signoff_20,SCM-MECE-L3-126,transfer_success_rate,调拨成功率,,,,,,false,manual_receipt_template_only_status_mutation_false
+物流运营 Owner,owner_signoff,signoff_21,SCM-MECE-L3-127,transfer_cycle_days,调拨周期天数,,,,,,false,manual_receipt_template_only_status_mutation_false
+物流运营 Owner,owner_signoff,signoff_22,SCM-MECE-L3-128,transfer_quantity_fulfillment_rate,调拨数量达成率,,,,,,false,manual_receipt_template_only_status_mutation_false

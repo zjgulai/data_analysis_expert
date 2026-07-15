@@ -1,0 +1,11 @@
+owner,packet_type,gate_id,target_ref,metric_code,metric_name,decision_result,evidence_ref,signoff_date,scope,rollback_rule,status_mutation,boundary_note
+财务/成本 Owner,owner_signoff,signoff_26,SCM-MECE-L3-036,full_chain_turnover_days_amount,全链条库存资金周转天数,,,,,,false,manual_receipt_template_only_status_mutation_false
+财务/成本 Owner,owner_signoff,signoff_24,SCM-MECE-L3-077,supply_chain_total_cost_rate,供应链总成本率,,,,,,false,manual_receipt_template_only_status_mutation_false
+财务/成本 Owner,owner_signoff,signoff_27,SCM-MECE-L3-087,inventory_impairment_rate,库存减值率,,,,,,false,manual_receipt_template_only_status_mutation_false
+财务/成本 Owner,owner_signoff,signoff_25,SCM-MECE-L3-131,logistics_cost_rate,物流成本率,,,,,,false,manual_receipt_template_only_status_mutation_false
+财务/成本 Owner,field_mapping,mapping_61,SCM-MECE-L3-036,full_chain_turnover_days_amount,全链条库存资金周转天数,,,,,,false,manual_receipt_template_only_status_mutation_false
+财务/成本 Owner,field_mapping,mapping_72,SCM-MECE-L3-077,supply_chain_total_cost_rate,供应链总成本率,,,,,,false,manual_receipt_template_only_status_mutation_false
+财务/成本 Owner,field_mapping,mapping_63,SCM-MECE-L3-087,inventory_impairment_rate,库存减值率,,,,,,false,manual_receipt_template_only_status_mutation_false
+财务/成本 Owner,field_mapping,mapping_74,SCM-MECE-L3-088,cost_allocation_coverage_rate,成本分摊覆盖率,,,,,,false,manual_receipt_template_only_status_mutation_false
+财务/成本 Owner,field_mapping,mapping_68,SCM-MECE-L3-131,logistics_cost_rate,物流成本率,,,,,,false,manual_receipt_template_only_status_mutation_false
+财务/成本 Owner,field_mapping,mapping_62,SCM-MECE-L3-133,inventory_amount_to_sales_ratio,库存金额销售占比,,,,,,false,manual_receipt_template_only_status_mutation_false

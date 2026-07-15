@@ -1,0 +1,54 @@
+owner,packet_type,gate_id,target_ref,metric_code,metric_name,decision_result,evidence_ref,signoff_date,scope,rollback_rule,status_mutation,boundary_note
+财务/成本 Owner,owner_signoff,signoff_26,SCM-MECE-L3-036,full_chain_turnover_days_amount,全链条库存资金周转天数,,,,,,false,manual_receipt_template_only_status_mutation_false
+财务/成本 Owner,owner_signoff,signoff_24,SCM-MECE-L3-077,supply_chain_total_cost_rate,供应链总成本率,,,,,,false,manual_receipt_template_only_status_mutation_false
+财务/成本 Owner,owner_signoff,signoff_27,SCM-MECE-L3-087,inventory_impairment_rate,库存减值率,,,,,,false,manual_receipt_template_only_status_mutation_false
+财务/成本 Owner,owner_signoff,signoff_25,SCM-MECE-L3-131,logistics_cost_rate,物流成本率,,,,,,false,manual_receipt_template_only_status_mutation_false
+财务/成本 Owner,field_mapping,mapping_61,SCM-MECE-L3-036,full_chain_turnover_days_amount,全链条库存资金周转天数,,,,,,false,manual_receipt_template_only_status_mutation_false
+财务/成本 Owner,field_mapping,mapping_72,SCM-MECE-L3-077,supply_chain_total_cost_rate,供应链总成本率,,,,,,false,manual_receipt_template_only_status_mutation_false
+财务/成本 Owner,field_mapping,mapping_63,SCM-MECE-L3-087,inventory_impairment_rate,库存减值率,,,,,,false,manual_receipt_template_only_status_mutation_false
+财务/成本 Owner,field_mapping,mapping_74,SCM-MECE-L3-088,cost_allocation_coverage_rate,成本分摊覆盖率,,,,,,false,manual_receipt_template_only_status_mutation_false
+财务/成本 Owner,field_mapping,mapping_68,SCM-MECE-L3-131,logistics_cost_rate,物流成本率,,,,,,false,manual_receipt_template_only_status_mutation_false
+财务/成本 Owner,field_mapping,mapping_62,SCM-MECE-L3-133,inventory_amount_to_sales_ratio,库存金额销售占比,,,,,,false,manual_receipt_template_only_status_mutation_false
+采购与供应商 Owner,owner_signoff,signoff_4,SCM-MECE-L3-016,purchase_delivery_rate,采购交付率,,,,,,false,manual_receipt_template_only_status_mutation_false
+采购与供应商 Owner,owner_signoff,signoff_5,SCM-MECE-L3-019,supplier_otif_rate,供应商 OTIF,,,,,,false,manual_receipt_template_only_status_mutation_false
+采购与供应商 Owner,owner_signoff,signoff_6,SCM-MECE-L3-119,supplier_top3_purchase_concentration,TOP3 供应商采购集中度,,,,,,false,manual_receipt_template_only_status_mutation_false
+采购与供应商 Owner,owner_signoff,signoff_7,SCM-MECE-L3-121,purchase_order_cycle_days,采购订单周期天数,,,,,,false,manual_receipt_template_only_status_mutation_false
+仓储运营 Owner,field_mapping,mapping_34,SCM-MECE-L3-122,storage_capacity_utilization_rate,库容利用率,,,,,,false,manual_receipt_template_only_status_mutation_false
+仓储运营 Owner,field_mapping,mapping_32,SCM-MECE-L3-123,pallet_fill_rate,托盘填充率,,,,,,false,manual_receipt_template_only_status_mutation_false
+仓储运营 Owner,field_mapping,mapping_33,SCM-MECE-L3-124,picking_uph,拣货效率 UPH,,,,,,false,manual_receipt_template_only_status_mutation_false
+供应链数据治理 Owner,scei_weight_source,tree_SCEI_SCM-MECE-L0-002,SCM-MECE-L0-002,cost_efficiency_index,成本效率指数,,,,,,false,manual_receipt_template_only_status_mutation_false
+供应链数据治理 Owner,scei_weight_source,tree_SCEI_SCM-MECE-L0-003,SCM-MECE-L0-003,sellable_availability_rate,可售性保障率,,,,,,false,manual_receipt_template_only_status_mutation_false
+供应链数据治理 Owner,scei_weight_source,tree_SCEI_SCM-MECE-L0-004,SCM-MECE-L0-004,inventory_capital_efficiency_index,库存资金效率指数,,,,,,false,manual_receipt_template_only_status_mutation_false
+供应链数据治理 Owner,scei_weight_source,tree_SCEI_SCM-MECE-L0-005,SCM-MECE-L0-005,fulfillment_experience_rate,履约体验达成率,,,,,,false,manual_receipt_template_only_status_mutation_false
+供应链数据治理 Owner,scei_weight_source,tree_SCEI_SCM-MECE-L0-006,SCM-MECE-L0-006,metric_data_trust_pass_rate,指标数据可信通过率,,,,,,false,manual_receipt_template_only_status_mutation_false
+计划 Owner,owner_signoff,signoff_1,SCM-MECE-L3-001,forecast_accuracy_daily,日常预测准确率,,,,,,false,manual_receipt_template_only_status_mutation_false
+计划 Owner,owner_signoff,signoff_2,SCM-MECE-L3-007,recommended_purchase_qty,推荐采购量,,,,,,false,manual_receipt_template_only_status_mutation_false
+计划 Owner,owner_signoff,signoff_3,SCM-MECE-L3-112,plan_attainment_rate,计划达成率,,,,,,false,manual_receipt_template_only_status_mutation_false
+库存运营 Owner,owner_signoff,signoff_8,SCM-MECE-L3-027,business_available_qty,业务可用库存,,,,,,false,manual_receipt_template_only_status_mutation_false
+库存运营 Owner,owner_signoff,signoff_9,SCM-MECE-L3-032,stocking_planned_inventory_qty,备货计划库存,,,,,,false,manual_receipt_template_only_status_mutation_false
+库存运营 Owner,owner_signoff,signoff_16,SCM-MECE-L3-044,negative_available_inventory_count,负可用库存经营主键数,,,,,,false,manual_receipt_template_only_status_mutation_false
+库存运营 Owner,owner_signoff,signoff_19,SCM-MECE-L3-056,inventory_count_accuracy_rate,盘点准确率,,,,,,false,manual_receipt_template_only_status_mutation_false
+库存运营 Owner,owner_signoff,signoff_10,SCM-MECE-L3-113,sku_oos_rate,SKU 缺货率,,,,,,false,manual_receipt_template_only_status_mutation_false
+库存运营 Owner,owner_signoff,signoff_11,SCM-MECE-L3-114,unit_oos_rate,件数缺货率,,,,,,false,manual_receipt_template_only_status_mutation_false
+库存运营 Owner,owner_signoff,signoff_12,SCM-MECE-L3-115,gmv_oos_rate,金额缺货率,,,,,,false,manual_receipt_template_only_status_mutation_false
+库存运营 Owner,owner_signoff,signoff_13,SCM-MECE-L3-116,stockout_loss_amount,断货损失金额,,,,,,false,manual_receipt_template_only_status_mutation_false
+库存运营 Owner,owner_signoff,signoff_14,SCM-MECE-L3-117,safety_stock_coverage_rate,安全库存覆盖率,,,,,,false,manual_receipt_template_only_status_mutation_false
+库存运营 Owner,owner_signoff,signoff_15,SCM-MECE-L3-118,inventory_sales_match_score,库存-销售匹配度,,,,,,false,manual_receipt_template_only_status_mutation_false
+库存运营 Owner,owner_signoff,signoff_17,SCM-MECE-L3-122,storage_capacity_utilization_rate,库容利用率,,,,,,false,manual_receipt_template_only_status_mutation_false
+库存运营 Owner,owner_signoff,signoff_18,SCM-MECE-L3-124,picking_uph,拣货效率 UPH,,,,,,false,manual_receipt_template_only_status_mutation_false
+库存运营 Owner,field_mapping,mapping_46,SCM-MECE-L3-113,sku_oos_rate,SKU 缺货率,,,,,,false,manual_receipt_template_only_status_mutation_false
+库存运营 Owner,field_mapping,mapping_48,SCM-MECE-L3-114,unit_oos_rate,件数缺货率,,,,,,false,manual_receipt_template_only_status_mutation_false
+库存运营 Owner,field_mapping,mapping_43,SCM-MECE-L3-115,gmv_oos_rate,金额缺货率,,,,,,false,manual_receipt_template_only_status_mutation_false
+库存运营 Owner,field_mapping,mapping_47,SCM-MECE-L3-116,stockout_loss_amount,断货损失金额,,,,,,false,manual_receipt_template_only_status_mutation_false
+库存运营 Owner,field_mapping,mapping_45,SCM-MECE-L3-117,safety_stock_coverage_rate,安全库存覆盖率,,,,,,false,manual_receipt_template_only_status_mutation_false
+库存运营 Owner,field_mapping,mapping_52,SCM-MECE-L3-118,inventory_sales_match_score,库存-销售匹配度,,,,,,false,manual_receipt_template_only_status_mutation_false
+数据治理 Owner,owner_signoff,signoff_28,SCM-MECE-L3-137,unmatched_planned_inventory_qty,未匹配计划库存数量,,,,,,false,manual_receipt_template_only_status_mutation_false
+数据治理 Owner,owner_signoff,signoff_29,SCM-MECE-L3-138,inventory_sync_delay_minutes,库存同步延迟分钟数,,,,,,false,manual_receipt_template_only_status_mutation_false
+数据治理 Owner,owner_signoff,signoff_30,SCM-MECE-L3-139,business_default_zero_rate,业务默认 0 字段占比,,,,,,false,manual_receipt_template_only_status_mutation_false
+数据治理 Owner,field_mapping,mapping_4,SCM-MECE-L3-137,unmatched_planned_inventory_qty,未匹配计划库存数量,,,,,,false,manual_receipt_template_only_status_mutation_false
+数据治理 Owner,field_mapping,mapping_12,SCM-MECE-L3-138,inventory_sync_delay_minutes,库存同步延迟分钟数,,,,,,false,manual_receipt_template_only_status_mutation_false
+数据治理 Owner,field_mapping,mapping_10,SCM-MECE-L3-139,business_default_zero_rate,业务默认 0 字段占比,,,,,,false,manual_receipt_template_only_status_mutation_false
+物流运营 Owner,owner_signoff,signoff_23,SCM-MECE-L3-066,last_mile_delivery_rate,妥投率,,,,,,false,manual_receipt_template_only_status_mutation_false
+物流运营 Owner,owner_signoff,signoff_20,SCM-MECE-L3-126,transfer_success_rate,调拨成功率,,,,,,false,manual_receipt_template_only_status_mutation_false
+物流运营 Owner,owner_signoff,signoff_21,SCM-MECE-L3-127,transfer_cycle_days,调拨周期天数,,,,,,false,manual_receipt_template_only_status_mutation_false
+物流运营 Owner,owner_signoff,signoff_22,SCM-MECE-L3-128,transfer_quantity_fulfillment_rate,调拨数量达成率,,,,,,false,manual_receipt_template_only_status_mutation_false

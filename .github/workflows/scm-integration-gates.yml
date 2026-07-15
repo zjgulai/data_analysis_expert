@@ -74,6 +74,9 @@ jobs:
       - name: Verify monorepo and standalone path contract
         run: npm run smoke:path-contract
 
+      - name: Verify manual-gate receipt contracts
+        run: npm run smoke:manual-gate-receipts
+
       - name: Run preproduction gate
         env:
           SCM_PREPROD_SCAN_ROOT: ${{ github.workspace }}/scm

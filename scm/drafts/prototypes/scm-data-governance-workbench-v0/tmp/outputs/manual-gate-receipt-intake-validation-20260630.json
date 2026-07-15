@@ -1,0 +1,1704 @@
+{
+  "generatedAt": "2026-06-30T07:15:00.000Z",
+  "templateMode": false,
+  "sourceMode": "receipt_intake",
+  "receiptProfile": "formal_intake_blank",
+  "receiptDir": "tmp/outputs/manual-gate-receipt-templates-20260630",
+  "receiptIntakePath": "data/manual-gate-receipts-intake-20260630.csv",
+  "summaryPath": "tmp/outputs/manual-gate-resolution-summary-20260630.json",
+  "validationPath": "tmp/outputs/manual-gate-receipt-intake-validation-20260630.json",
+  "statusPlanPath": "tmp/outputs/manual-gate-status-update-plan-20260630.json",
+  "boundary": {
+    "statusMutation": false,
+    "providerCalls": false,
+    "productionWrites": false,
+    "erpWriteback": false,
+    "sourceReadMode": "csv_read_only"
+  },
+  "expected": {
+    "receiptFiles": 1,
+    "totalRows": 53,
+    "columns": [
+      "owner",
+      "packet_type",
+      "gate_id",
+      "target_ref",
+      "metric_code",
+      "metric_name",
+      "decision_result",
+      "evidence_ref",
+      "signoff_date",
+      "scope",
+      "rollback_rule",
+      "status_mutation",
+      "boundary_note"
+    ],
+    "decisionResultAllowedValues": [
+      "approved_for_manual_review",
+      "approved_with_conditions",
+      "rejected_needs_rework"
+    ]
+  },
+  "counts": {
+    "receiptFiles": 1,
+    "totalRows": 53,
+    "rowsWithStatusMutationFalse": 53,
+    "filledReceiptRows": 0,
+    "partialReceiptRows": 0,
+    "blockedReceiptRows": 53,
+    "statusPlanEligibleRows": 0,
+    "templateRowsAwaitingReceipt": 53,
+    "blankHumanFieldCells": 265,
+    "reviewRouteCounts": {
+      "manual_owner_signoff_review_queue": 30,
+      "manual_field_mapping_review_queue": 18,
+      "manual_scei_weight_review_queue": 5
+    },
+    "eligibleReviewRouteCounts": {},
+    "decisionResultCounts": {},
+    "invalidDecisionResultRows": 0,
+    "unknownIdentityRows": 0,
+    "duplicateIdentityRows": 0,
+    "templateIdentityRows": 53,
+    "blockerCounts": {
+      "missing_decision_result": 53,
+      "missing_evidence_ref": 53,
+      "missing_signoff_date": 53,
+      "missing_scope": 53,
+      "missing_rollback_rule": 53
+    }
+  },
+  "contract": {
+    "decisionResultAllowedValues": {
+      "approved_for_manual_review": "Owner approves this receipt for downstream manual review.",
+      "approved_with_conditions": "Owner approves with explicit conditions captured in scope/evidence_ref.",
+      "rejected_needs_rework": "Owner rejects this gate and requests rework before another receipt."
+    }
+  },
+  "expectedBlockerValidation": {
+    "enabled": false,
+    "requiredBlockers": [],
+    "blockerCounts": {
+      "missing_decision_result": 53,
+      "missing_evidence_ref": 53,
+      "missing_signoff_date": 53,
+      "missing_scope": 53,
+      "missing_rollback_rule": 53
+    },
+    "missingExpectedBlockers": [],
+    "unexpectedBlockers": [],
+    "disallowedValidationIssues": [],
+    "controlledNegativeFixture": false,
+    "satisfied": false
+  },
+  "acceptanceProfileValidation": {
+    "profile": "formal_intake_blank",
+    "failures": [],
+    "satisfied": true
+  },
+  "schemaValid": true,
+  "readyForStatusMutation": false,
+  "files": [
+    {
+      "fileName": "manual-gate-receipts-intake-20260630.csv",
+      "path": "data/manual-gate-receipts-intake-20260630.csv",
+      "rowCount": 53,
+      "schemaValid": true,
+      "templateRowsAwaitingReceipt": 53
+    }
+  ],
+  "rowOutcomes": [
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 2,
+      "owner": "财务/成本 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_26",
+      "targetRef": "SCM-MECE-L3-036",
+      "metricCode": "full_chain_turnover_days_amount",
+      "metricName": "全链条库存资金周转天数",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 3,
+      "owner": "财务/成本 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_24",
+      "targetRef": "SCM-MECE-L3-077",
+      "metricCode": "supply_chain_total_cost_rate",
+      "metricName": "供应链总成本率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 4,
+      "owner": "财务/成本 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_27",
+      "targetRef": "SCM-MECE-L3-087",
+      "metricCode": "inventory_impairment_rate",
+      "metricName": "库存减值率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 5,
+      "owner": "财务/成本 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_25",
+      "targetRef": "SCM-MECE-L3-131",
+      "metricCode": "logistics_cost_rate",
+      "metricName": "物流成本率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 6,
+      "owner": "财务/成本 Owner",
+      "packetType": "field_mapping",
+      "gateId": "mapping_61",
+      "targetRef": "SCM-MECE-L3-036",
+      "metricCode": "full_chain_turnover_days_amount",
+      "metricName": "全链条库存资金周转天数",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 7,
+      "owner": "财务/成本 Owner",
+      "packetType": "field_mapping",
+      "gateId": "mapping_72",
+      "targetRef": "SCM-MECE-L3-077",
+      "metricCode": "supply_chain_total_cost_rate",
+      "metricName": "供应链总成本率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 8,
+      "owner": "财务/成本 Owner",
+      "packetType": "field_mapping",
+      "gateId": "mapping_63",
+      "targetRef": "SCM-MECE-L3-087",
+      "metricCode": "inventory_impairment_rate",
+      "metricName": "库存减值率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 9,
+      "owner": "财务/成本 Owner",
+      "packetType": "field_mapping",
+      "gateId": "mapping_74",
+      "targetRef": "SCM-MECE-L3-088",
+      "metricCode": "cost_allocation_coverage_rate",
+      "metricName": "成本分摊覆盖率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 10,
+      "owner": "财务/成本 Owner",
+      "packetType": "field_mapping",
+      "gateId": "mapping_68",
+      "targetRef": "SCM-MECE-L3-131",
+      "metricCode": "logistics_cost_rate",
+      "metricName": "物流成本率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 11,
+      "owner": "财务/成本 Owner",
+      "packetType": "field_mapping",
+      "gateId": "mapping_62",
+      "targetRef": "SCM-MECE-L3-133",
+      "metricCode": "inventory_amount_to_sales_ratio",
+      "metricName": "库存金额销售占比",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 12,
+      "owner": "采购与供应商 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_4",
+      "targetRef": "SCM-MECE-L3-016",
+      "metricCode": "purchase_delivery_rate",
+      "metricName": "采购交付率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 13,
+      "owner": "采购与供应商 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_5",
+      "targetRef": "SCM-MECE-L3-019",
+      "metricCode": "supplier_otif_rate",
+      "metricName": "供应商 OTIF",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 14,
+      "owner": "采购与供应商 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_6",
+      "targetRef": "SCM-MECE-L3-119",
+      "metricCode": "supplier_top3_purchase_concentration",
+      "metricName": "TOP3 供应商采购集中度",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 15,
+      "owner": "采购与供应商 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_7",
+      "targetRef": "SCM-MECE-L3-121",
+      "metricCode": "purchase_order_cycle_days",
+      "metricName": "采购订单周期天数",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 16,
+      "owner": "仓储运营 Owner",
+      "packetType": "field_mapping",
+      "gateId": "mapping_34",
+      "targetRef": "SCM-MECE-L3-122",
+      "metricCode": "storage_capacity_utilization_rate",
+      "metricName": "库容利用率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 17,
+      "owner": "仓储运营 Owner",
+      "packetType": "field_mapping",
+      "gateId": "mapping_32",
+      "targetRef": "SCM-MECE-L3-123",
+      "metricCode": "pallet_fill_rate",
+      "metricName": "托盘填充率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 18,
+      "owner": "仓储运营 Owner",
+      "packetType": "field_mapping",
+      "gateId": "mapping_33",
+      "targetRef": "SCM-MECE-L3-124",
+      "metricCode": "picking_uph",
+      "metricName": "拣货效率 UPH",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 19,
+      "owner": "供应链数据治理 Owner",
+      "packetType": "scei_weight_source",
+      "gateId": "tree_SCEI_SCM-MECE-L0-002",
+      "targetRef": "SCM-MECE-L0-002",
+      "metricCode": "cost_efficiency_index",
+      "metricName": "成本效率指数",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_scei_weight_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 20,
+      "owner": "供应链数据治理 Owner",
+      "packetType": "scei_weight_source",
+      "gateId": "tree_SCEI_SCM-MECE-L0-003",
+      "targetRef": "SCM-MECE-L0-003",
+      "metricCode": "sellable_availability_rate",
+      "metricName": "可售性保障率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_scei_weight_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 21,
+      "owner": "供应链数据治理 Owner",
+      "packetType": "scei_weight_source",
+      "gateId": "tree_SCEI_SCM-MECE-L0-004",
+      "targetRef": "SCM-MECE-L0-004",
+      "metricCode": "inventory_capital_efficiency_index",
+      "metricName": "库存资金效率指数",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_scei_weight_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 22,
+      "owner": "供应链数据治理 Owner",
+      "packetType": "scei_weight_source",
+      "gateId": "tree_SCEI_SCM-MECE-L0-005",
+      "targetRef": "SCM-MECE-L0-005",
+      "metricCode": "fulfillment_experience_rate",
+      "metricName": "履约体验达成率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_scei_weight_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 23,
+      "owner": "供应链数据治理 Owner",
+      "packetType": "scei_weight_source",
+      "gateId": "tree_SCEI_SCM-MECE-L0-006",
+      "targetRef": "SCM-MECE-L0-006",
+      "metricCode": "metric_data_trust_pass_rate",
+      "metricName": "指标数据可信通过率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_scei_weight_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 24,
+      "owner": "计划 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_1",
+      "targetRef": "SCM-MECE-L3-001",
+      "metricCode": "forecast_accuracy_daily",
+      "metricName": "日常预测准确率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 25,
+      "owner": "计划 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_2",
+      "targetRef": "SCM-MECE-L3-007",
+      "metricCode": "recommended_purchase_qty",
+      "metricName": "推荐采购量",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 26,
+      "owner": "计划 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_3",
+      "targetRef": "SCM-MECE-L3-112",
+      "metricCode": "plan_attainment_rate",
+      "metricName": "计划达成率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 27,
+      "owner": "库存运营 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_8",
+      "targetRef": "SCM-MECE-L3-027",
+      "metricCode": "business_available_qty",
+      "metricName": "业务可用库存",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 28,
+      "owner": "库存运营 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_9",
+      "targetRef": "SCM-MECE-L3-032",
+      "metricCode": "stocking_planned_inventory_qty",
+      "metricName": "备货计划库存",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 29,
+      "owner": "库存运营 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_16",
+      "targetRef": "SCM-MECE-L3-044",
+      "metricCode": "negative_available_inventory_count",
+      "metricName": "负可用库存经营主键数",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 30,
+      "owner": "库存运营 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_19",
+      "targetRef": "SCM-MECE-L3-056",
+      "metricCode": "inventory_count_accuracy_rate",
+      "metricName": "盘点准确率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 31,
+      "owner": "库存运营 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_10",
+      "targetRef": "SCM-MECE-L3-113",
+      "metricCode": "sku_oos_rate",
+      "metricName": "SKU 缺货率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 32,
+      "owner": "库存运营 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_11",
+      "targetRef": "SCM-MECE-L3-114",
+      "metricCode": "unit_oos_rate",
+      "metricName": "件数缺货率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 33,
+      "owner": "库存运营 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_12",
+      "targetRef": "SCM-MECE-L3-115",
+      "metricCode": "gmv_oos_rate",
+      "metricName": "金额缺货率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 34,
+      "owner": "库存运营 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_13",
+      "targetRef": "SCM-MECE-L3-116",
+      "metricCode": "stockout_loss_amount",
+      "metricName": "断货损失金额",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 35,
+      "owner": "库存运营 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_14",
+      "targetRef": "SCM-MECE-L3-117",
+      "metricCode": "safety_stock_coverage_rate",
+      "metricName": "安全库存覆盖率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 36,
+      "owner": "库存运营 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_15",
+      "targetRef": "SCM-MECE-L3-118",
+      "metricCode": "inventory_sales_match_score",
+      "metricName": "库存-销售匹配度",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 37,
+      "owner": "库存运营 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_17",
+      "targetRef": "SCM-MECE-L3-122",
+      "metricCode": "storage_capacity_utilization_rate",
+      "metricName": "库容利用率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 38,
+      "owner": "库存运营 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_18",
+      "targetRef": "SCM-MECE-L3-124",
+      "metricCode": "picking_uph",
+      "metricName": "拣货效率 UPH",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 39,
+      "owner": "库存运营 Owner",
+      "packetType": "field_mapping",
+      "gateId": "mapping_46",
+      "targetRef": "SCM-MECE-L3-113",
+      "metricCode": "sku_oos_rate",
+      "metricName": "SKU 缺货率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 40,
+      "owner": "库存运营 Owner",
+      "packetType": "field_mapping",
+      "gateId": "mapping_48",
+      "targetRef": "SCM-MECE-L3-114",
+      "metricCode": "unit_oos_rate",
+      "metricName": "件数缺货率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 41,
+      "owner": "库存运营 Owner",
+      "packetType": "field_mapping",
+      "gateId": "mapping_43",
+      "targetRef": "SCM-MECE-L3-115",
+      "metricCode": "gmv_oos_rate",
+      "metricName": "金额缺货率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 42,
+      "owner": "库存运营 Owner",
+      "packetType": "field_mapping",
+      "gateId": "mapping_47",
+      "targetRef": "SCM-MECE-L3-116",
+      "metricCode": "stockout_loss_amount",
+      "metricName": "断货损失金额",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 43,
+      "owner": "库存运营 Owner",
+      "packetType": "field_mapping",
+      "gateId": "mapping_45",
+      "targetRef": "SCM-MECE-L3-117",
+      "metricCode": "safety_stock_coverage_rate",
+      "metricName": "安全库存覆盖率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 44,
+      "owner": "库存运营 Owner",
+      "packetType": "field_mapping",
+      "gateId": "mapping_52",
+      "targetRef": "SCM-MECE-L3-118",
+      "metricCode": "inventory_sales_match_score",
+      "metricName": "库存-销售匹配度",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 45,
+      "owner": "数据治理 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_28",
+      "targetRef": "SCM-MECE-L3-137",
+      "metricCode": "unmatched_planned_inventory_qty",
+      "metricName": "未匹配计划库存数量",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 46,
+      "owner": "数据治理 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_29",
+      "targetRef": "SCM-MECE-L3-138",
+      "metricCode": "inventory_sync_delay_minutes",
+      "metricName": "库存同步延迟分钟数",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 47,
+      "owner": "数据治理 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_30",
+      "targetRef": "SCM-MECE-L3-139",
+      "metricCode": "business_default_zero_rate",
+      "metricName": "业务默认 0 字段占比",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 48,
+      "owner": "数据治理 Owner",
+      "packetType": "field_mapping",
+      "gateId": "mapping_4",
+      "targetRef": "SCM-MECE-L3-137",
+      "metricCode": "unmatched_planned_inventory_qty",
+      "metricName": "未匹配计划库存数量",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 49,
+      "owner": "数据治理 Owner",
+      "packetType": "field_mapping",
+      "gateId": "mapping_12",
+      "targetRef": "SCM-MECE-L3-138",
+      "metricCode": "inventory_sync_delay_minutes",
+      "metricName": "库存同步延迟分钟数",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 50,
+      "owner": "数据治理 Owner",
+      "packetType": "field_mapping",
+      "gateId": "mapping_10",
+      "targetRef": "SCM-MECE-L3-139",
+      "metricCode": "business_default_zero_rate",
+      "metricName": "业务默认 0 字段占比",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_field_mapping_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 51,
+      "owner": "物流运营 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_23",
+      "targetRef": "SCM-MECE-L3-066",
+      "metricCode": "last_mile_delivery_rate",
+      "metricName": "妥投率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 52,
+      "owner": "物流运营 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_20",
+      "targetRef": "SCM-MECE-L3-126",
+      "metricCode": "transfer_success_rate",
+      "metricName": "调拨成功率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 53,
+      "owner": "物流运营 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_21",
+      "targetRef": "SCM-MECE-L3-127",
+      "metricCode": "transfer_cycle_days",
+      "metricName": "调拨周期天数",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    },
+    {
+      "sourceFile": "manual-gate-receipts-intake-20260630.csv",
+      "rowNumber": 54,
+      "owner": "物流运营 Owner",
+      "packetType": "owner_signoff",
+      "gateId": "signoff_22",
+      "targetRef": "SCM-MECE-L3-128",
+      "metricCode": "transfer_quantity_fulfillment_rate",
+      "metricName": "调拨数量达成率",
+      "decisionResult": "",
+      "receiptStatus": "blocked_missing_receipt_fields",
+      "missingHumanFields": [
+        "decision_result",
+        "evidence_ref",
+        "signoff_date",
+        "scope",
+        "rollback_rule"
+      ],
+      "blockers": [
+        "missing_decision_result",
+        "missing_evidence_ref",
+        "missing_signoff_date",
+        "missing_scope",
+        "missing_rollback_rule"
+      ],
+      "inputStatusMutation": "false",
+      "proposedReviewRoute": "manual_owner_signoff_review_queue",
+      "statusMutation": false,
+      "plannedMutation": "none"
+    }
+  ],
+  "warnings": [],
+  "errors": []
+}
