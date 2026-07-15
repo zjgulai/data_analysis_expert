@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-15T20:04:27.717Z",
+  "generatedAt": "2026-07-15T20:53:45.801Z",
   "root": "drafts/prototypes/scm-data-governance-workbench-v0",
   "scanRoot": ".",
   "releaseBoundary": {
@@ -125,6 +125,12 @@
       "severity": "hard"
     },
     {
+      "name": "required-file:scripts/smoke-migration-gate.mjs",
+      "ok": true,
+      "detail": "scripts/smoke-migration-gate.mjs",
+      "severity": "hard"
+    },
+    {
       "name": "required-file:scripts/smoke-path-contract.mjs",
       "ok": true,
       "detail": "scripts/smoke-path-contract.mjs",
@@ -176,6 +182,12 @@
       "name": "package-script:smoke:import-gate",
       "ok": true,
       "detail": "node scripts/smoke-import-gate.mjs",
+      "severity": "hard"
+    },
+    {
+      "name": "package-script:smoke:migration-gate",
+      "ok": true,
+      "detail": "node scripts/smoke-migration-gate.mjs",
       "severity": "hard"
     },
     {
