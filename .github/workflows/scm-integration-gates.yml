@@ -22,10 +22,30 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  bootstrap-scope:
+    name: SCM bootstrap scope
+    if: github.event_name == 'pull_request' && github.event.number == 23
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout complete history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify workflow-only bootstrap diff
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          changed_files="$(git diff --name-only "$BASE_SHA" "$HEAD_SHA")"
+          test "$changed_files" = ".github/workflows/scm-integration-gates.yml"
+
   scm-gates:
     name: SCM gates
-    # The first workflow-only PR has no SCM app yet; every integration branch must run the full job.
-    if: github.event_name != 'pull_request' || github.head_ref != 'codex/scm-ci-bootstrap-20260716'
+    # PR 23 is the immutable workflow-only bootstrap; every other PR/branch runs the full job.
+    if: github.event_name != 'pull_request' || github.event.number != 23
     runs-on: ubuntu-latest
     timeout-minutes: 20
     defaults:
