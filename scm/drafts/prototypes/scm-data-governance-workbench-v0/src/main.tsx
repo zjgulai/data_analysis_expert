@@ -1937,7 +1937,7 @@ function ModuleGrid({ modules, onSelect }: { modules: WorkbenchModule[]; onSelec
 
 function OverviewPanel({ overview, modules, onSelect }: { overview: Overview; modules: WorkbenchModule[]; onSelect: (id: string) => void }) {
   return (
-    <div className="stack">
+    <div className="stack overviewWorkbench">
       <MissionHero overview={overview} modules={modules} />
       <OverviewAiSearch onOpenKnowledge={() => onSelect("ai-knowledge")} />
       <CommandCenterQueues overview={overview} onSelect={onSelect} />
@@ -2495,7 +2495,7 @@ function LineagePanel({ module }: { module: WorkbenchModule }) {
   }
 
   return (
-    <section className="panel">
+    <section className="panel lineageQualityWorkbench">
       <ModuleHeader module={module} />
       <WorkflowStrip steps={["查看血缘", "定位影响", "注解问题", "生成修订建议", "导出证据"]} />
       {error ? <div className="error">{error}</div> : null}
@@ -2647,7 +2647,7 @@ function AiKnowledgePanel({ module }: { module: WorkbenchModule }) {
   }
 
   return (
-    <section className="panel">
+    <section className="panel aiKnowledgeWorkbench">
       <ModuleHeader module={module} />
       <WorkflowStrip steps={["选择知识域", "本地证据检索", "打开知识卡", "注解/修订建议", "JSON/Excel 导出"]} />
 

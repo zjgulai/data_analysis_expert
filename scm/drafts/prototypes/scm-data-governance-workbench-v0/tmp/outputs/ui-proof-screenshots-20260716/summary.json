@@ -1,0 +1,3519 @@
+{
+  "generatedAt": "2026-07-15T21:28:39.301Z",
+  "baseUrl": "http://127.0.0.1:5218",
+  "artifactType": "scm_ui_screenshot_token_baseline",
+  "boundary": {
+    "productionWrites": false,
+    "providerCalls": false,
+    "erpWriteback": false,
+    "localSqliteWrites": false,
+    "methods": [
+      "GET",
+      "HEAD",
+      "OPTIONS"
+    ]
+  },
+  "viewport": {
+    "name": "desktop-1440",
+    "width": 1440,
+    "height": 900
+  },
+  "moduleCount": 15,
+  "screenshotCount": 15,
+  "screenshotRoot": "screenshots",
+  "screenshotSha256": {
+    "screenshots/desktop-1440-00-overview.png": "73ebff405503bc01ba78fa947a9574d50fd41651d0d6292584ba055e5e8cb5c4",
+    "screenshots/desktop-1440-S1-strategy-panorama.png": "793846d260ab9724b41ef59cd31c39aa3c1dfb784092b1bb8bb1358ee13316ad",
+    "screenshots/desktop-1440-R1-current-risk-radar.png": "573e597e2e00a77a2aaa418728446c5d86fdb5b3f10f2ad0bf97350e843608ee",
+    "screenshots/desktop-1440-R2-role-workbenches.png": "39669055986e93926f77cd6f7b3852c8a3bc32fa4e98a63e12ce5dd50c396b04",
+    "screenshots/desktop-1440-F1-fulfillment-dashboard.png": "b8c5e1775f4a8ecbc17f08ac31650df1d76d41101f54b9a2ff8fb80a4bf718b3",
+    "screenshots/desktop-1440-01-ontology.png": "f8627170f6ee8ed9aa88518c16fdd3fdd953fe0a0a66ec17ead0f99b13c4b962",
+    "screenshots/desktop-1440-02-tags.png": "e7cffda6fa4b005f2069cc65a99cb237043e2d9ad321c66a963b5a2d4045cc50",
+    "screenshots/desktop-1440-03-dimensions.png": "8d7a870bda8fd68610ea3c41cf38d73bd7a6d920fd7a9b7a3700d5a9d82142a6",
+    "screenshots/desktop-1440-04-metric-engineering.png": "b064a72bf1421f0e3117cbddc6f0b9515aca31d476c076f1cdab2ccc77d7c85e",
+    "screenshots/desktop-1440-05-metric-dictionary.png": "002cc17b3ee1b197aac2e1b0634dac1702c65821abaa922dc3de9f6535d02e79",
+    "screenshots/desktop-1440-06-kpi-system.png": "421c6b17fd1f0cc4657062a0db96cdd5ce5630288edebfeed0671bf793d7915c",
+    "screenshots/desktop-1440-07-lineage-quality.png": "7a333a9d374fbae93ccaeabafc607b3d3d88b329ecdfe9b1f37e236dc56c2b94",
+    "screenshots/desktop-1440-08-ai-knowledge.png": "29ee44d633cbcbd2898216b7f80138a2fa47dcd33d4b95746b2c08aaa54686f1",
+    "screenshots/desktop-1440-09-chatbi.png": "c3f01f74671715b61d5288e680515becbbe7234d5edf10085ff970eee3a7d8eb",
+    "screenshots/desktop-1440-10-decision-loop.png": "a61c17fced533c0959d162ec28f15221ba0e226e1ee618f23f4af44aed3277de"
+  },
+  "rootTokens": {
+    "--ink": "#1d1f23",
+    "--ink-2": "#2b3440",
+    "--muted": "#66717d",
+    "--line": "#d8e0e7",
+    "--line-strong": "#b9c6d2",
+    "--paper": "#f3f5f7",
+    "--paper-lift": "#fbfcfd",
+    "--panel": "#ffffff",
+    "--panel-soft": "#f8fafb",
+    "--sidebar-surface": "rgba(246, 248, 250, .9)",
+    "--sidebar-surface-strong": "rgba(255, 255, 255, .82)",
+    "--blue": "#2167b8",
+    "--blue-soft": "#e8f1fb",
+    "--teal": "#278b87",
+    "--teal-soft": "#e4f3f1",
+    "--green": "#1d8f5f",
+    "--green-soft": "#e6f6ef",
+    "--amber": "#b56b00",
+    "--amber-soft": "#fff2db",
+    "--rose": "#bc4050",
+    "--rose-soft": "#fde9ed",
+    "--shadow": "0 14px 36px rgba(31, 43, 55, .055)",
+    "--shadow-soft": "0 7px 20px rgba(31, 43, 55, .04)"
+  },
+  "globalChecks": {
+    "nonReadOnlyRequests": 0,
+    "consoleErrors": 0,
+    "pageErrors": 0,
+    "maxOverflowX": 0,
+    "maxHeightRatio": 3.78
+  },
+  "modules": [
+    {
+      "id": "overview",
+      "code": "00",
+      "title": "治理链路总览",
+      "status": "active",
+      "stage": "Operate",
+      "screenshot": "screenshots/desktop-1440-00-overview.png",
+      "viewport": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 2606,
+        "overflowX": 0,
+        "heightRatio": 2.9
+      },
+      "h1": "治理链路总览",
+      "componentStyles": {
+        "body": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 2606.27
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".shell": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 2606.27
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".sidebar": {
+          "present": true,
+          "rect": {
+            "width": 284,
+            "height": 900
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(246, 248, 250, 0.9)",
+            "borderColor": "rgb(29, 31, 35) rgb(216, 224, 231) rgb(29, 31, 35) rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "rgba(31, 43, 55, 0.03) 6px 0px 20px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".brandMark": {
+          "present": true,
+          "rect": {
+            "width": 42,
+            "height": 42
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(255, 255, 255)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(255, 255, 255)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(255, 255, 255, 0.34) 0px 1px 0px 0px inset, rgba(33, 103, 184, 0.16) 0px 8px 18px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "820",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".content": {
+          "present": true,
+          "rect": {
+            "width": 1156,
+            "height": 2606.27
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "22px",
+            "gap": "normal"
+          }
+        },
+        ".topbar": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 67.03
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "8px 2px 4px",
+            "gap": "16px"
+          }
+        },
+        ".pageIntro": {
+          "present": false
+        },
+        ".moduleCard": {
+          "present": true,
+          "rect": {
+            "width": 414,
+            "height": 176
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(255, 255, 255, 0.95) 0px 1px 0px 0px inset",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "12px",
+            "gap": "8px"
+          }
+        },
+        ".surface": {
+          "present": false
+        },
+        ".panel": {
+          "present": true,
+          "rect": {
+            "width": 1300,
+            "height": 283.59
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(255, 255, 255, 0.96)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(20, 32, 46, 0.047) 0px 10px 30px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "14px",
+            "gap": "normal"
+          }
+        },
+        ".canvasShell": {
+          "present": false
+        },
+        ".tableWrap": {
+          "present": false
+        },
+        ".badge": {
+          "present": true,
+          "rect": {
+            "width": 66,
+            "height": 26
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 143, 95)",
+            "backgroundColor": "rgb(230, 246, 239)",
+            "borderColor": "rgb(29, 143, 95)",
+            "borderRadius": "999px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "760",
+            "lineHeight": "12px",
+            "padding": "3px 9px",
+            "gap": "normal"
+          }
+        }
+      }
+    },
+    {
+      "id": "strategy-panorama",
+      "code": "S1",
+      "title": "战略供应链全景工作台",
+      "status": "draft_design_ready",
+      "stage": "Plan",
+      "screenshot": "screenshots/desktop-1440-S1-strategy-panorama.png",
+      "viewport": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 2626,
+        "overflowX": 0,
+        "heightRatio": 2.92
+      },
+      "h1": "战略供应链全景工作台",
+      "componentStyles": {
+        "body": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 2626.11
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".shell": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 2626.11
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".sidebar": {
+          "present": true,
+          "rect": {
+            "width": 284,
+            "height": 900
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(246, 248, 250, 0.9)",
+            "borderColor": "rgb(29, 31, 35) rgb(216, 224, 231) rgb(29, 31, 35) rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "rgba(31, 43, 55, 0.03) 6px 0px 20px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".brandMark": {
+          "present": true,
+          "rect": {
+            "width": 42,
+            "height": 42
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(255, 255, 255)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(255, 255, 255)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(255, 255, 255, 0.34) 0px 1px 0px 0px inset, rgba(33, 103, 184, 0.16) 0px 8px 18px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "820",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".content": {
+          "present": true,
+          "rect": {
+            "width": 1156,
+            "height": 2626.11
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "22px",
+            "gap": "normal"
+          }
+        },
+        ".topbar": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 67.03
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "8px 2px 4px",
+            "gap": "16px"
+          }
+        },
+        ".pageIntro": {
+          "present": false
+        },
+        ".moduleCard": {
+          "present": false
+        },
+        ".surface": {
+          "present": true,
+          "rect": {
+            "width": 532,
+            "height": 1023.22
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".panel": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 2501.08
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(255, 255, 255, 0.96)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(20, 32, 46, 0.047) 0px 10px 30px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "14px"
+          }
+        },
+        ".canvasShell": {
+          "present": false
+        },
+        ".tableWrap": {
+          "present": false
+        },
+        ".badge": {
+          "present": true,
+          "rect": {
+            "width": 66,
+            "height": 26
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 143, 95)",
+            "backgroundColor": "rgb(230, 246, 239)",
+            "borderColor": "rgb(29, 143, 95)",
+            "borderRadius": "999px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "760",
+            "lineHeight": "12px",
+            "padding": "3px 9px",
+            "gap": "normal"
+          }
+        }
+      }
+    },
+    {
+      "id": "current-risk-radar",
+      "code": "R1",
+      "title": "业务现状与风险雷达",
+      "status": "draft_design_ready_data_pending",
+      "stage": "Sense",
+      "screenshot": "screenshots/desktop-1440-R1-current-risk-radar.png",
+      "viewport": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 2670,
+        "overflowX": 0,
+        "heightRatio": 2.97
+      },
+      "h1": "业务现状与风险雷达",
+      "componentStyles": {
+        "body": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 2670.28
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".shell": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 2670.28
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".sidebar": {
+          "present": true,
+          "rect": {
+            "width": 284,
+            "height": 900
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(246, 248, 250, 0.9)",
+            "borderColor": "rgb(29, 31, 35) rgb(216, 224, 231) rgb(29, 31, 35) rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "rgba(31, 43, 55, 0.03) 6px 0px 20px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".brandMark": {
+          "present": true,
+          "rect": {
+            "width": 42,
+            "height": 42
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(255, 255, 255)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(255, 255, 255)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(255, 255, 255, 0.34) 0px 1px 0px 0px inset, rgba(33, 103, 184, 0.16) 0px 8px 18px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "820",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".content": {
+          "present": true,
+          "rect": {
+            "width": 1156,
+            "height": 2670.28
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "22px",
+            "gap": "normal"
+          }
+        },
+        ".topbar": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 67.03
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "8px 2px 4px",
+            "gap": "16px"
+          }
+        },
+        ".pageIntro": {
+          "present": false
+        },
+        ".moduleCard": {
+          "present": false
+        },
+        ".surface": {
+          "present": true,
+          "rect": {
+            "width": 1086,
+            "height": 384
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgb(255, 255, 255)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "12px",
+            "gap": "10px"
+          }
+        },
+        ".panel": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 2545.25
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(255, 255, 255, 0.96)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(20, 32, 46, 0.047) 0px 10px 30px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "12px",
+            "gap": "12px"
+          }
+        },
+        ".canvasShell": {
+          "present": false
+        },
+        ".tableWrap": {
+          "present": false
+        },
+        ".badge": {
+          "present": true,
+          "rect": {
+            "width": 66,
+            "height": 26
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 143, 95)",
+            "backgroundColor": "rgb(230, 246, 239)",
+            "borderColor": "rgb(29, 143, 95)",
+            "borderRadius": "999px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "760",
+            "lineHeight": "12px",
+            "padding": "3px 9px",
+            "gap": "normal"
+          }
+        }
+      }
+    },
+    {
+      "id": "role-workbenches",
+      "code": "R2",
+      "title": "角色作战工作台",
+      "status": "implemented_local_role_routes",
+      "stage": "Operate",
+      "screenshot": "screenshots/desktop-1440-R2-role-workbenches.png",
+      "viewport": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 1620,
+        "overflowX": 0,
+        "heightRatio": 1.8
+      },
+      "h1": "角色作战工作台",
+      "componentStyles": {
+        "body": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 1620.08
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".shell": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 1620.08
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".sidebar": {
+          "present": true,
+          "rect": {
+            "width": 284,
+            "height": 900
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(246, 248, 250, 0.9)",
+            "borderColor": "rgb(29, 31, 35) rgb(216, 224, 231) rgb(29, 31, 35) rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "rgba(31, 43, 55, 0.03) 6px 0px 20px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".brandMark": {
+          "present": true,
+          "rect": {
+            "width": 42,
+            "height": 42
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(255, 255, 255)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(255, 255, 255)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(255, 255, 255, 0.34) 0px 1px 0px 0px inset, rgba(33, 103, 184, 0.16) 0px 8px 18px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "820",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".content": {
+          "present": true,
+          "rect": {
+            "width": 1156,
+            "height": 1620.08
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "22px",
+            "gap": "normal"
+          }
+        },
+        ".topbar": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 67.03
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "8px 2px 4px",
+            "gap": "16px"
+          }
+        },
+        ".pageIntro": {
+          "present": false
+        },
+        ".moduleCard": {
+          "present": false
+        },
+        ".surface": {
+          "present": true,
+          "rect": {
+            "width": 436.23,
+            "height": 312.38
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "12px"
+          }
+        },
+        ".panel": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 1495.05
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(255, 255, 255, 0.96)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(20, 32, 46, 0.047) 0px 10px 30px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "14px"
+          }
+        },
+        ".canvasShell": {
+          "present": false
+        },
+        ".tableWrap": {
+          "present": true,
+          "rect": {
+            "width": 627.75,
+            "height": 520
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgb(255, 255, 255)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".badge": {
+          "present": true,
+          "rect": {
+            "width": 66,
+            "height": 26
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 143, 95)",
+            "backgroundColor": "rgb(230, 246, 239)",
+            "borderColor": "rgb(29, 143, 95)",
+            "borderRadius": "999px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "760",
+            "lineHeight": "12px",
+            "padding": "3px 9px",
+            "gap": "normal"
+          }
+        }
+      }
+    },
+    {
+      "id": "fulfillment-dashboard",
+      "code": "F1",
+      "title": "供应链履约看板",
+      "status": "local_knowledge_prototype",
+      "stage": "Operate",
+      "screenshot": "screenshots/desktop-1440-F1-fulfillment-dashboard.png",
+      "viewport": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 976,
+        "overflowX": 0,
+        "heightRatio": 1.08
+      },
+      "h1": "供应链履约看板",
+      "componentStyles": {
+        "body": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 975.81
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".shell": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 975.81
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".sidebar": {
+          "present": true,
+          "rect": {
+            "width": 284,
+            "height": 900
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(246, 248, 250, 0.9)",
+            "borderColor": "rgb(29, 31, 35) rgb(216, 224, 231) rgb(29, 31, 35) rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "rgba(31, 43, 55, 0.03) 6px 0px 20px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".brandMark": {
+          "present": true,
+          "rect": {
+            "width": 42,
+            "height": 42
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(255, 255, 255)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(255, 255, 255)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(255, 255, 255, 0.34) 0px 1px 0px 0px inset, rgba(33, 103, 184, 0.16) 0px 8px 18px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "820",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".content": {
+          "present": true,
+          "rect": {
+            "width": 1156,
+            "height": 975.81
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "22px",
+            "gap": "normal"
+          }
+        },
+        ".topbar": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 67.03
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "8px 2px 4px",
+            "gap": "16px"
+          }
+        },
+        ".pageIntro": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 114.78
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgb(255, 255, 255)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(31, 43, 55, 0.04) 0px 7px 20px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "18px",
+            "gap": "18px"
+          }
+        },
+        ".moduleCard": {
+          "present": false
+        },
+        ".surface": {
+          "present": false
+        },
+        ".panel": {
+          "present": false
+        },
+        ".canvasShell": {
+          "present": false
+        },
+        ".tableWrap": {
+          "present": false
+        },
+        ".badge": {
+          "present": true,
+          "rect": {
+            "width": 66,
+            "height": 26
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 143, 95)",
+            "backgroundColor": "rgb(230, 246, 239)",
+            "borderColor": "rgb(29, 143, 95)",
+            "borderRadius": "999px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "760",
+            "lineHeight": "12px",
+            "padding": "3px 9px",
+            "gap": "normal"
+          }
+        }
+      }
+    },
+    {
+      "id": "ontology",
+      "code": "01",
+      "title": "对象本体工作台",
+      "status": "mapped",
+      "stage": "Model",
+      "screenshot": "screenshots/desktop-1440-01-ontology.png",
+      "viewport": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 1112,
+        "overflowX": 0,
+        "heightRatio": 1.24
+      },
+      "h1": "对象本体工作台",
+      "componentStyles": {
+        "body": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 1111.58
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".shell": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 1111.58
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".sidebar": {
+          "present": true,
+          "rect": {
+            "width": 284,
+            "height": 900
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(246, 248, 250, 0.9)",
+            "borderColor": "rgb(29, 31, 35) rgb(216, 224, 231) rgb(29, 31, 35) rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "rgba(31, 43, 55, 0.03) 6px 0px 20px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".brandMark": {
+          "present": true,
+          "rect": {
+            "width": 42,
+            "height": 42
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(255, 255, 255)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(255, 255, 255)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(255, 255, 255, 0.34) 0px 1px 0px 0px inset, rgba(33, 103, 184, 0.16) 0px 8px 18px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "820",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".content": {
+          "present": true,
+          "rect": {
+            "width": 1156,
+            "height": 1111.58
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "22px",
+            "gap": "normal"
+          }
+        },
+        ".topbar": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 67.03
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "8px 2px 4px",
+            "gap": "16px"
+          }
+        },
+        ".pageIntro": {
+          "present": false
+        },
+        ".moduleCard": {
+          "present": false
+        },
+        ".surface": {
+          "present": true,
+          "rect": {
+            "width": 531,
+            "height": 688
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgb(248, 250, 251)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "14px",
+            "gap": "normal"
+          }
+        },
+        ".panel": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 986.55
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(255, 255, 255, 0.96)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(20, 32, 46, 0.047) 0px 10px 30px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".canvasShell": {
+          "present": false
+        },
+        ".tableWrap": {
+          "present": true,
+          "rect": {
+            "width": 501,
+            "height": 520
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgb(255, 255, 255)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".badge": {
+          "present": true,
+          "rect": {
+            "width": 66,
+            "height": 26
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 143, 95)",
+            "backgroundColor": "rgb(230, 246, 239)",
+            "borderColor": "rgb(29, 143, 95)",
+            "borderRadius": "999px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "760",
+            "lineHeight": "12px",
+            "padding": "3px 9px",
+            "gap": "normal"
+          }
+        }
+      }
+    },
+    {
+      "id": "tags",
+      "code": "02",
+      "title": "标签工程工作台",
+      "status": "draft",
+      "stage": "Model",
+      "screenshot": "screenshots/desktop-1440-02-tags.png",
+      "viewport": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 1005,
+        "overflowX": 0,
+        "heightRatio": 1.12
+      },
+      "h1": "标签工程工作台",
+      "componentStyles": {
+        "body": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 1004.83
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".shell": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 1004.83
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".sidebar": {
+          "present": true,
+          "rect": {
+            "width": 284,
+            "height": 900
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(246, 248, 250, 0.9)",
+            "borderColor": "rgb(29, 31, 35) rgb(216, 224, 231) rgb(29, 31, 35) rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "rgba(31, 43, 55, 0.03) 6px 0px 20px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".brandMark": {
+          "present": true,
+          "rect": {
+            "width": 42,
+            "height": 42
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(255, 255, 255)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(255, 255, 255)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(255, 255, 255, 0.34) 0px 1px 0px 0px inset, rgba(33, 103, 184, 0.16) 0px 8px 18px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "820",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".content": {
+          "present": true,
+          "rect": {
+            "width": 1156,
+            "height": 1004.83
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "22px",
+            "gap": "normal"
+          }
+        },
+        ".topbar": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 67.03
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "8px 2px 4px",
+            "gap": "16px"
+          }
+        },
+        ".pageIntro": {
+          "present": false
+        },
+        ".moduleCard": {
+          "present": false
+        },
+        ".surface": {
+          "present": true,
+          "rect": {
+            "width": 1078,
+            "height": 647.25
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgb(248, 250, 251)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "14px",
+            "gap": "normal"
+          }
+        },
+        ".panel": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 879.8
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(255, 255, 255, 0.96)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(20, 32, 46, 0.047) 0px 10px 30px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".canvasShell": {
+          "present": false
+        },
+        ".tableWrap": {
+          "present": true,
+          "rect": {
+            "width": 1048,
+            "height": 520
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgb(255, 255, 255)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".badge": {
+          "present": true,
+          "rect": {
+            "width": 66,
+            "height": 26
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 143, 95)",
+            "backgroundColor": "rgb(230, 246, 239)",
+            "borderColor": "rgb(29, 143, 95)",
+            "borderRadius": "999px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "760",
+            "lineHeight": "12px",
+            "padding": "3px 9px",
+            "gap": "normal"
+          }
+        }
+      }
+    },
+    {
+      "id": "dimensions",
+      "code": "03",
+      "title": "维度工程工作台",
+      "status": "mapped",
+      "stage": "Model",
+      "screenshot": "screenshots/desktop-1440-03-dimensions.png",
+      "viewport": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "overflowX": 0,
+        "heightRatio": 1
+      },
+      "h1": "维度工程工作台",
+      "componentStyles": {
+        "body": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 900
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".shell": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 900
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".sidebar": {
+          "present": true,
+          "rect": {
+            "width": 284,
+            "height": 900
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(246, 248, 250, 0.9)",
+            "borderColor": "rgb(29, 31, 35) rgb(216, 224, 231) rgb(29, 31, 35) rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "rgba(31, 43, 55, 0.03) 6px 0px 20px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".brandMark": {
+          "present": true,
+          "rect": {
+            "width": 42,
+            "height": 42
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(255, 255, 255)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(255, 255, 255)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(255, 255, 255, 0.34) 0px 1px 0px 0px inset, rgba(33, 103, 184, 0.16) 0px 8px 18px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "820",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".content": {
+          "present": true,
+          "rect": {
+            "width": 1156,
+            "height": 900
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "22px",
+            "gap": "normal"
+          }
+        },
+        ".topbar": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 67.03
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "8px 2px 4px",
+            "gap": "16px"
+          }
+        },
+        ".pageIntro": {
+          "present": false
+        },
+        ".moduleCard": {
+          "present": false
+        },
+        ".surface": {
+          "present": true,
+          "rect": {
+            "width": 1078,
+            "height": 517.81
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgb(248, 250, 251)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "14px",
+            "gap": "normal"
+          }
+        },
+        ".panel": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 750.36
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(255, 255, 255, 0.96)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(20, 32, 46, 0.047) 0px 10px 30px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".canvasShell": {
+          "present": false
+        },
+        ".tableWrap": {
+          "present": true,
+          "rect": {
+            "width": 1048,
+            "height": 390.56
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgb(255, 255, 255)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".badge": {
+          "present": true,
+          "rect": {
+            "width": 66,
+            "height": 26
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 143, 95)",
+            "backgroundColor": "rgb(230, 246, 239)",
+            "borderColor": "rgb(29, 143, 95)",
+            "borderRadius": "999px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "760",
+            "lineHeight": "12px",
+            "padding": "3px 9px",
+            "gap": "normal"
+          }
+        }
+      }
+    },
+    {
+      "id": "metric-engineering",
+      "code": "04",
+      "title": "指标工程工作台",
+      "status": "mapped",
+      "stage": "Build",
+      "screenshot": "screenshots/desktop-1440-04-metric-engineering.png",
+      "viewport": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 1059,
+        "overflowX": 0,
+        "heightRatio": 1.18
+      },
+      "h1": "指标工程工作台",
+      "componentStyles": {
+        "body": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 1058.83
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".shell": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 1058.83
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".sidebar": {
+          "present": true,
+          "rect": {
+            "width": 284,
+            "height": 900
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(246, 248, 250, 0.9)",
+            "borderColor": "rgb(29, 31, 35) rgb(216, 224, 231) rgb(29, 31, 35) rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "rgba(31, 43, 55, 0.03) 6px 0px 20px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".brandMark": {
+          "present": true,
+          "rect": {
+            "width": 42,
+            "height": 42
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(255, 255, 255)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(255, 255, 255)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(255, 255, 255, 0.34) 0px 1px 0px 0px inset, rgba(33, 103, 184, 0.16) 0px 8px 18px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "820",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".content": {
+          "present": true,
+          "rect": {
+            "width": 1156,
+            "height": 1058.83
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "22px",
+            "gap": "normal"
+          }
+        },
+        ".topbar": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 67.03
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "8px 2px 4px",
+            "gap": "16px"
+          }
+        },
+        ".pageIntro": {
+          "present": false
+        },
+        ".moduleCard": {
+          "present": false
+        },
+        ".surface": {
+          "present": true,
+          "rect": {
+            "width": 1078,
+            "height": 647.25
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgb(248, 250, 251)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "14px",
+            "gap": "normal"
+          }
+        },
+        ".panel": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 933.8
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(255, 255, 255, 0.96)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(20, 32, 46, 0.047) 0px 10px 30px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".canvasShell": {
+          "present": false
+        },
+        ".tableWrap": {
+          "present": true,
+          "rect": {
+            "width": 1048,
+            "height": 520
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgb(255, 255, 255)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".badge": {
+          "present": true,
+          "rect": {
+            "width": 66,
+            "height": 26
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 143, 95)",
+            "backgroundColor": "rgb(230, 246, 239)",
+            "borderColor": "rgb(29, 143, 95)",
+            "borderRadius": "999px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "760",
+            "lineHeight": "12px",
+            "padding": "3px 9px",
+            "gap": "normal"
+          }
+        }
+      }
+    },
+    {
+      "id": "metric-dictionary",
+      "code": "05",
+      "title": "指标字典工作台",
+      "status": "active",
+      "stage": "Certify",
+      "screenshot": "screenshots/desktop-1440-05-metric-dictionary.png",
+      "viewport": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 1059,
+        "overflowX": 0,
+        "heightRatio": 1.18
+      },
+      "h1": "指标字典工作台",
+      "componentStyles": {
+        "body": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 1058.83
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".shell": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 1058.83
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".sidebar": {
+          "present": true,
+          "rect": {
+            "width": 284,
+            "height": 900
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(246, 248, 250, 0.9)",
+            "borderColor": "rgb(29, 31, 35) rgb(216, 224, 231) rgb(29, 31, 35) rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "rgba(31, 43, 55, 0.03) 6px 0px 20px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".brandMark": {
+          "present": true,
+          "rect": {
+            "width": 42,
+            "height": 42
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(255, 255, 255)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(255, 255, 255)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(255, 255, 255, 0.34) 0px 1px 0px 0px inset, rgba(33, 103, 184, 0.16) 0px 8px 18px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "820",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".content": {
+          "present": true,
+          "rect": {
+            "width": 1156,
+            "height": 1058.83
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "22px",
+            "gap": "normal"
+          }
+        },
+        ".topbar": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 67.03
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "8px 2px 4px",
+            "gap": "16px"
+          }
+        },
+        ".pageIntro": {
+          "present": false
+        },
+        ".moduleCard": {
+          "present": false
+        },
+        ".surface": {
+          "present": true,
+          "rect": {
+            "width": 1078,
+            "height": 647.25
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgb(248, 250, 251)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "14px",
+            "gap": "normal"
+          }
+        },
+        ".panel": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 933.8
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(255, 255, 255, 0.96)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(20, 32, 46, 0.047) 0px 10px 30px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".canvasShell": {
+          "present": false
+        },
+        ".tableWrap": {
+          "present": true,
+          "rect": {
+            "width": 1048,
+            "height": 520
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgb(255, 255, 255)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".badge": {
+          "present": true,
+          "rect": {
+            "width": 66,
+            "height": 26
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 143, 95)",
+            "backgroundColor": "rgb(230, 246, 239)",
+            "borderColor": "rgb(29, 143, 95)",
+            "borderRadius": "999px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "760",
+            "lineHeight": "12px",
+            "padding": "3px 9px",
+            "gap": "normal"
+          }
+        }
+      }
+    },
+    {
+      "id": "kpi-system",
+      "code": "06",
+      "title": "指标体系编排台",
+      "status": "active",
+      "stage": "Certify",
+      "screenshot": "screenshots/desktop-1440-06-kpi-system.png",
+      "viewport": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 1145,
+        "overflowX": 0,
+        "heightRatio": 1.27
+      },
+      "h1": "指标体系编排台",
+      "componentStyles": {
+        "body": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 1144.58
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".shell": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 1144.58
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".sidebar": {
+          "present": true,
+          "rect": {
+            "width": 284,
+            "height": 900
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(246, 248, 250, 0.9)",
+            "borderColor": "rgb(29, 31, 35) rgb(216, 224, 231) rgb(29, 31, 35) rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "rgba(31, 43, 55, 0.03) 6px 0px 20px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".brandMark": {
+          "present": true,
+          "rect": {
+            "width": 42,
+            "height": 42
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(255, 255, 255)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(255, 255, 255)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(255, 255, 255, 0.34) 0px 1px 0px 0px inset, rgba(33, 103, 184, 0.16) 0px 8px 18px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "820",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".content": {
+          "present": true,
+          "rect": {
+            "width": 1156,
+            "height": 1144.58
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "22px",
+            "gap": "normal"
+          }
+        },
+        ".topbar": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 67.03
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "8px 2px 4px",
+            "gap": "16px"
+          }
+        },
+        ".pageIntro": {
+          "present": false
+        },
+        ".moduleCard": {
+          "present": false
+        },
+        ".surface": {
+          "present": false
+        },
+        ".panel": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 1019.55
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(255, 255, 255, 0.96)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(20, 32, 46, 0.047) 0px 10px 30px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".canvasShell": {
+          "present": true,
+          "rect": {
+            "width": 748,
+            "height": 619
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgb(255, 255, 255)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".tableWrap": {
+          "present": false
+        },
+        ".badge": {
+          "present": true,
+          "rect": {
+            "width": 66,
+            "height": 26
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 143, 95)",
+            "backgroundColor": "rgb(230, 246, 239)",
+            "borderColor": "rgb(29, 143, 95)",
+            "borderRadius": "999px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "760",
+            "lineHeight": "12px",
+            "padding": "3px 9px",
+            "gap": "normal"
+          }
+        }
+      }
+    },
+    {
+      "id": "lineage-quality",
+      "code": "07",
+      "title": "血缘与质量工作台",
+      "status": "reviewed",
+      "stage": "Control",
+      "screenshot": "screenshots/desktop-1440-07-lineage-quality.png",
+      "viewport": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 3402,
+        "overflowX": 0,
+        "heightRatio": 3.78
+      },
+      "h1": "血缘与质量工作台",
+      "componentStyles": {
+        "body": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 3402.25
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".shell": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 3402.25
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".sidebar": {
+          "present": true,
+          "rect": {
+            "width": 284,
+            "height": 900
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(246, 248, 250, 0.9)",
+            "borderColor": "rgb(29, 31, 35) rgb(216, 224, 231) rgb(29, 31, 35) rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "rgba(31, 43, 55, 0.03) 6px 0px 20px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".brandMark": {
+          "present": true,
+          "rect": {
+            "width": 42,
+            "height": 42
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(255, 255, 255)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(255, 255, 255)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(255, 255, 255, 0.34) 0px 1px 0px 0px inset, rgba(33, 103, 184, 0.16) 0px 8px 18px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "820",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".content": {
+          "present": true,
+          "rect": {
+            "width": 1156,
+            "height": 3402.25
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "22px",
+            "gap": "normal"
+          }
+        },
+        ".topbar": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 67.03
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "8px 2px 4px",
+            "gap": "16px"
+          }
+        },
+        ".pageIntro": {
+          "present": false
+        },
+        ".moduleCard": {
+          "present": false
+        },
+        ".surface": {
+          "present": true,
+          "rect": {
+            "width": 1086,
+            "height": 407.64
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgb(255, 255, 255)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "12px",
+            "gap": "10px"
+          }
+        },
+        ".panel": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 3277.22
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(255, 255, 255, 0.96)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(20, 32, 46, 0.047) 0px 10px 30px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "12px",
+            "gap": "normal"
+          }
+        },
+        ".canvasShell": {
+          "present": false
+        },
+        ".tableWrap": {
+          "present": true,
+          "rect": {
+            "width": 1060,
+            "height": 216
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgb(255, 255, 255)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".badge": {
+          "present": true,
+          "rect": {
+            "width": 66,
+            "height": 26
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 143, 95)",
+            "backgroundColor": "rgb(230, 246, 239)",
+            "borderColor": "rgb(29, 143, 95)",
+            "borderRadius": "999px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "760",
+            "lineHeight": "12px",
+            "padding": "3px 9px",
+            "gap": "normal"
+          }
+        }
+      }
+    },
+    {
+      "id": "ai-knowledge",
+      "code": "08",
+      "title": "AI 知识库工作台",
+      "status": "draft",
+      "stage": "Serve",
+      "screenshot": "screenshots/desktop-1440-08-ai-knowledge.png",
+      "viewport": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 2584,
+        "overflowX": 0,
+        "heightRatio": 2.87
+      },
+      "h1": "AI 知识库工作台",
+      "componentStyles": {
+        "body": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 2583.91
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".shell": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 2583.91
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".sidebar": {
+          "present": true,
+          "rect": {
+            "width": 284,
+            "height": 900
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(246, 248, 250, 0.9)",
+            "borderColor": "rgb(29, 31, 35) rgb(216, 224, 231) rgb(29, 31, 35) rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "rgba(31, 43, 55, 0.03) 6px 0px 20px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".brandMark": {
+          "present": true,
+          "rect": {
+            "width": 42,
+            "height": 42
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(255, 255, 255)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(255, 255, 255)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(255, 255, 255, 0.34) 0px 1px 0px 0px inset, rgba(33, 103, 184, 0.16) 0px 8px 18px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "820",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".content": {
+          "present": true,
+          "rect": {
+            "width": 1156,
+            "height": 2583.91
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "22px",
+            "gap": "normal"
+          }
+        },
+        ".topbar": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 67.03
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "8px 2px 4px",
+            "gap": "16px"
+          }
+        },
+        ".pageIntro": {
+          "present": false
+        },
+        ".moduleCard": {
+          "present": false
+        },
+        ".surface": {
+          "present": true,
+          "rect": {
+            "width": 424.8,
+            "height": 478.44
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgb(248, 250, 251)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "10px",
+            "gap": "10px"
+          }
+        },
+        ".panel": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 2458.88
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(255, 255, 255, 0.96)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(20, 32, 46, 0.047) 0px 10px 30px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".canvasShell": {
+          "present": false
+        },
+        ".tableWrap": {
+          "present": true,
+          "rect": {
+            "width": 1048,
+            "height": 300
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgb(255, 255, 255)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".badge": {
+          "present": true,
+          "rect": {
+            "width": 66,
+            "height": 26
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 143, 95)",
+            "backgroundColor": "rgb(230, 246, 239)",
+            "borderColor": "rgb(29, 143, 95)",
+            "borderRadius": "999px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "760",
+            "lineHeight": "12px",
+            "padding": "3px 9px",
+            "gap": "normal"
+          }
+        }
+      }
+    },
+    {
+      "id": "chatbi",
+      "code": "09",
+      "title": "ChatBI 语义治理台",
+      "status": "draft",
+      "stage": "Serve",
+      "screenshot": "screenshots/desktop-1440-09-chatbi.png",
+      "viewport": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900,
+        "overflowX": 0,
+        "heightRatio": 1
+      },
+      "h1": "ChatBI 语义治理台",
+      "componentStyles": {
+        "body": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 900
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".shell": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 900
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".sidebar": {
+          "present": true,
+          "rect": {
+            "width": 284,
+            "height": 900
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(246, 248, 250, 0.9)",
+            "borderColor": "rgb(29, 31, 35) rgb(216, 224, 231) rgb(29, 31, 35) rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "rgba(31, 43, 55, 0.03) 6px 0px 20px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".brandMark": {
+          "present": true,
+          "rect": {
+            "width": 42,
+            "height": 42
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(255, 255, 255)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(255, 255, 255)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(255, 255, 255, 0.34) 0px 1px 0px 0px inset, rgba(33, 103, 184, 0.16) 0px 8px 18px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "820",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".content": {
+          "present": true,
+          "rect": {
+            "width": 1156,
+            "height": 900
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "22px",
+            "gap": "normal"
+          }
+        },
+        ".topbar": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 67.03
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "8px 2px 4px",
+            "gap": "16px"
+          }
+        },
+        ".pageIntro": {
+          "present": false
+        },
+        ".moduleCard": {
+          "present": false
+        },
+        ".surface": {
+          "present": true,
+          "rect": {
+            "width": 424.8,
+            "height": 600
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".panel": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 744.55
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(255, 255, 255, 0.96)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(20, 32, 46, 0.047) 0px 10px 30px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".canvasShell": {
+          "present": false
+        },
+        ".tableWrap": {
+          "present": true,
+          "rect": {
+            "width": 637.2,
+            "height": 520
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgb(255, 255, 255)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".badge": {
+          "present": true,
+          "rect": {
+            "width": 66,
+            "height": 26
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 143, 95)",
+            "backgroundColor": "rgb(230, 246, 239)",
+            "borderColor": "rgb(29, 143, 95)",
+            "borderRadius": "999px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "760",
+            "lineHeight": "12px",
+            "padding": "3px 9px",
+            "gap": "normal"
+          }
+        }
+      }
+    },
+    {
+      "id": "decision-loop",
+      "code": "10",
+      "title": "决策闭环工作台",
+      "status": "draft",
+      "stage": "Act",
+      "screenshot": "screenshots/desktop-1440-10-decision-loop.png",
+      "viewport": {
+        "innerWidth": 1440,
+        "innerHeight": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 2162,
+        "overflowX": 0,
+        "heightRatio": 2.4
+      },
+      "h1": "决策闭环工作台",
+      "componentStyles": {
+        "body": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 2162.17
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".shell": {
+          "present": true,
+          "rect": {
+            "width": 1440,
+            "height": 2162.17
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".sidebar": {
+          "present": true,
+          "rect": {
+            "width": 284,
+            "height": 900
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(246, 248, 250, 0.9)",
+            "borderColor": "rgb(29, 31, 35) rgb(216, 224, 231) rgb(29, 31, 35) rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "rgba(31, 43, 55, 0.03) 6px 0px 20px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".brandMark": {
+          "present": true,
+          "rect": {
+            "width": 42,
+            "height": 42
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(255, 255, 255)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(255, 255, 255)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(255, 255, 255, 0.34) 0px 1px 0px 0px inset, rgba(33, 103, 184, 0.16) 0px 8px 18px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "820",
+            "lineHeight": "normal",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        },
+        ".content": {
+          "present": true,
+          "rect": {
+            "width": 1156,
+            "height": 2162.17
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "22px",
+            "gap": "normal"
+          }
+        },
+        ".topbar": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 67.03
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "8px 2px 4px",
+            "gap": "16px"
+          }
+        },
+        ".pageIntro": {
+          "present": false
+        },
+        ".moduleCard": {
+          "present": false
+        },
+        ".surface": {
+          "present": true,
+          "rect": {
+            "width": 1078,
+            "height": 1703.3
+          },
+          "style": {
+            "display": "grid",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgb(255, 255, 255)",
+            "borderColor": "rgb(29, 31, 35)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "14px"
+          }
+        },
+        ".panel": {
+          "present": true,
+          "rect": {
+            "width": 1112,
+            "height": 2037.14
+          },
+          "style": {
+            "display": "block",
+            "color": "rgb(29, 31, 35)",
+            "backgroundColor": "rgba(255, 255, 255, 0.96)",
+            "borderColor": "rgb(216, 224, 231)",
+            "borderRadius": "8px",
+            "boxShadow": "rgba(20, 32, 46, 0.047) 0px 10px 30px 0px",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "padding": "16px",
+            "gap": "normal"
+          }
+        },
+        ".canvasShell": {
+          "present": false
+        },
+        ".tableWrap": {
+          "present": false
+        },
+        ".badge": {
+          "present": true,
+          "rect": {
+            "width": 66,
+            "height": 26
+          },
+          "style": {
+            "display": "flex",
+            "color": "rgb(29, 143, 95)",
+            "backgroundColor": "rgb(230, 246, 239)",
+            "borderColor": "rgb(29, 143, 95)",
+            "borderRadius": "999px",
+            "boxShadow": "none",
+            "fontFamily": "\"SF Pro Display\", \"SF Pro Text\", \"Helvetica Neue\", \"Noto Sans SC\", \"IBM Plex Sans\", Arial, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "760",
+            "lineHeight": "12px",
+            "padding": "3px 9px",
+            "gap": "normal"
+          }
+        }
+      }
+    }
+  ]
+}
