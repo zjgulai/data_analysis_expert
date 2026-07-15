@@ -1,0 +1,11 @@
+gate_id,gate_type,gate_name,pass_condition,owner,loop4_status
+GATE-001,scope_approval,Loop 4 package is design-only,businessRowsImported=false; sourceSystemReads=false; runtimeImportAuthorized=false,Product/Security,design_required
+GATE-002,allowlist_lock,Only 62 allowlist field IDs may appear in templates,field_id must exist in runtime_metadata_projection.allowlist_fields,Data Governance,design_required
+GATE-003,excluded_scan,26 excluded sensitive identifier fields stay out of samples,raw identifier scan returns zero hits,Security,design_required
+GATE-004,tokenization_review,Identifiers use stable token fields before review package sharing,token map stored separately and not included in package,Security,design_required
+GATE-005,dq_precheck,DQ rules run before any sample review,all critical checks have pass or owner-approved caveat,Data Governance,design_required
+GATE-006,manual_gate_link,P0 owner signoff and field mapping gates remain visible,"manual gates are referenced, not auto-closed",Product,design_required
+GATE-007,sqlite_boundary,No SQLite import during Loop 4 design,localSqliteWrites=false for Loop 4,Dev,design_required
+GATE-008,production_boundary,No production write or provider call,productionWrites=false; providerCalls=false; erpWriteback=false; omsWmsWriteback=false,Release Owner,design_required
+GATE-009,sample_row_cap,Any later readonly sample PoC must declare cap and retention,row cap and retention plan approved before extraction,Security,design_required
+GATE-010,approval_packet,Returned owner evidence must be reviewed before Loop 5/6,review ledger exists before runtime import proposal,Product/Security,design_required

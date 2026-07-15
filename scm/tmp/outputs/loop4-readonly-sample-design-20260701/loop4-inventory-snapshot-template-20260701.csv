@@ -1,0 +1,1 @@
+sample_date,platform,country,sku_token,warehouse_token,available_qty,sellable_qty,reserved_qty,frozen_qty,in_transit_qty,warning_stock_qty,age_bucket,coverage_days_calc,source_snapshot_time,dq_status,evidence_ref

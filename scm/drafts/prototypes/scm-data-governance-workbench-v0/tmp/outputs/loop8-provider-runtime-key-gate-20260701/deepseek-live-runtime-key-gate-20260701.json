@@ -1,0 +1,29 @@
+{
+  "generatedAt": "2026-07-01T03:10:58.705Z",
+  "check": "deepseek-live-provider-acceptance",
+  "status": "blocked_runtime_key_missing",
+  "baseUrl": "http://127.0.0.1:5208",
+  "evidencePath": "tmp/outputs/loop8-provider-runtime-key-gate-20260701/deepseek-live-runtime-key-gate-20260701.json",
+  "boundary": {
+    "providerCalls": false,
+    "providerCallScope": "none",
+    "providerModeCalled": "not_called",
+    "webModeCalled": false,
+    "localSqliteWrites": false,
+    "productionWrites": false,
+    "erpWriteback": false,
+    "omsWriteback": false,
+    "wmsWriteback": false,
+    "sourceSystemRead": false,
+    "businessRowImport": false,
+    "deepseekApiKeyPersisted": false
+  },
+  "statusEndpoint": {
+    "configured": false,
+    "model": "deepseek-v4-flash",
+    "webModel": "deepseek-v4-pro",
+    "webSearchEnabled": true,
+    "secretPolicy": "server_side_env_only_key_never_returned_to_browser"
+  },
+  "requiredRuntimeEnv": "DEEPSEEK_API_KEY"
+}

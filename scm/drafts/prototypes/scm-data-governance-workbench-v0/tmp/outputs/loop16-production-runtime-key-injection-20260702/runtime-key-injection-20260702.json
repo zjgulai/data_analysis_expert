@@ -1,0 +1,112 @@
+{
+  "createdAt": "2026-07-02T03:12:43Z",
+  "loop": 16,
+  "project": "ecom_ana_overview/scm",
+  "topic": "production-runtime-key-injection",
+  "status": "blocked_no_production_key_source_available",
+  "baseUrl": "https://scm.lute-tlz-dddd.top",
+  "remote": {
+    "sshAlias": "tencent-lighthouse",
+    "host": "VM-0-16-ubuntu",
+    "user": "ubuntu",
+    "workdir": "/opt/scm-governance-workbench/current",
+    "sudoNonInteractive": true
+  },
+  "authorization": {
+    "userAuthorizedLoop16": true,
+    "authorizedOperations": [
+      "remote read-only key visibility diagnostic",
+      "production runtime env injection if an existing server-side key source is available",
+      "container recreate or restart if env injection is possible"
+    ]
+  },
+  "boundary": {
+    "productionBusinessWrites": false,
+    "productionConfigMutation": false,
+    "providerCalls": false,
+    "erpWriteback": false,
+    "omsWmsWriteback": false,
+    "localSqliteWrites": false,
+    "sourceSystemRead": false,
+    "businessRowImport": false,
+    "deepseekApiKeyPersisted": false,
+    "providerLiveAcceptanceExecuted": false,
+    "remoteShellExecuted": true,
+    "remoteShellMode": "read_only_presence_diagnostic",
+    "envMutationExecuted": false,
+    "containerRestartExecuted": false
+  },
+  "publicStatus": {
+    "configured": false,
+    "provider": "deepseek",
+    "baseUrlHost": "api.deepseek.com",
+    "model": "deepseek-v4-flash",
+    "webModel": "deepseek-v4-pro",
+    "webSearchEnabled": true,
+    "secretPolicy": "server_side_env_only_key_never_returned_to_browser"
+  },
+  "remoteDiagnostics": {
+    "containerStatus": "scm-governance-workbench Up 5 days (healthy)",
+    "composeDeepseekOrEnvFileEntries": [],
+    "containerDeepseekEnvEntries": [],
+    "nodeRuntimePresence": {
+      "keyPresent": false,
+      "model": null,
+      "baseUrlPresent": false,
+      "webSearchEnvPresent": false
+    },
+    "containerEnvFiles": {
+      "/app/.env": "absent",
+      "/app/.env.local": "absent"
+    },
+    "hostEnvCandidateFiles": {
+      ".env": "present_without_key",
+      ".env.local": "absent",
+      ".env.production.local": "absent",
+      "docker-compose.override.yml": "absent"
+    },
+    "sshShellEnvPresence": {
+      "DEEPSEEK_API_KEY": "absent",
+      "DEEPSEEK_MODEL": "absent",
+      "DEEPSEEK_BASE_URL": "absent",
+      "DEEPSEEK_ENABLE_WEB_SEARCH": "absent"
+    },
+    "sudoRootSystemKeyReferencePaths": [],
+    "sudoEnvPresence": [],
+    "referenceOnlyPathsFound": [
+      "/opt/scm-governance-workbench/current/.env.example",
+      "/opt/scm-governance-workbench/current/src/main.tsx",
+      "/opt/scm-governance-workbench/current/scripts/smoke-api.mjs",
+      "/opt/scm-governance-workbench/current/scripts/smoke-deepseek-live.mjs",
+      "/opt/scm-governance-workbench/current/server/index.mjs"
+    ]
+  },
+  "localEnvPresence": {
+    "DEEPSEEK_API_KEY_PRESENT": false,
+    "DEEPSEEK_MODEL_PRESENT": false,
+    "DEEPSEEK_BASE_URL_PRESENT": false,
+    "SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED_PRESENT": false
+  },
+  "decision": {
+    "envInjectionAttempted": false,
+    "containerRecreateAttempted": false,
+    "reason": "No actual server-side DEEPSEEK_API_KEY source was visible in the accessible production runtime, host candidate env files, sudo/root/systemd common locations, SSH shell env, or local env. Creating a placeholder key or blank env file would be unsafe and would not satisfy the provider gate.",
+    "nextGate": "Ops must provide or configure the actual DEEPSEEK_API_KEY in a server-side secret location, then rerun Loop 16 env injection or directly verify configured=true."
+  },
+  "commandsExecuted": [
+    "curl -fsS https://scm.lute-tlz-dddd.top/api/ai-chat/deepseek/status",
+    "curl -fsS https://scm.lute-tlz-dddd.top/api/deploy/health",
+    "ssh -o BatchMode=yes -o ConnectTimeout=10 tencent-lighthouse 'test -d /opt/scm-governance-workbench/current'",
+    "ssh tencent-lighthouse read-only docker compose config grep DEEPSEEK/env_file",
+    "ssh tencent-lighthouse read-only docker inspect redacted DEEPSEEK env",
+    "ssh tencent-lighthouse read-only docker exec node runtime presence",
+    "ssh tencent-lighthouse read-only host candidate env file presence",
+    "ssh tencent-lighthouse sudo/root/systemd DEEPSEEK_API_KEY reference path search without values",
+    "local Node env presence check without values"
+  ],
+  "secretHandling": {
+    "rawSecretPrinted": false,
+    "rawSecretPersisted": false,
+    "outputMode": "boolean_or_redacted_only"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "createdAt": "2026-07-02T04:17:55Z",
+  "loop": 17,
+  "project": "ecom_ana_overview/scm",
+  "topic": "provider-live-smoke-gate-recheck",
+  "status": "blocked_configured_false_key_source_absent",
+  "baseUrl": "https://scm.lute-tlz-dddd.top",
+  "authorization": {
+    "userApprovedNextStep": true,
+    "interpretedScope": "recheck provider live smoke preconditions before any provider call"
+  },
+  "boundary": {
+    "productionBusinessWrites": false,
+    "productionConfigMutation": false,
+    "providerCalls": false,
+    "erpWriteback": false,
+    "omsWmsWriteback": false,
+    "localSqliteWrites": false,
+    "sourceSystemRead": false,
+    "businessRowImport": false,
+    "deepseekApiKeyPersisted": false,
+    "providerLiveAcceptanceExecuted": false,
+    "remoteShellExecuted": true,
+    "remoteShellMode": "read_only_presence_recheck",
+    "envMutationExecuted": false,
+    "containerRestartExecuted": false
+  },
+  "publicStatus": {
+    "configured": false,
+    "provider": "deepseek",
+    "baseUrlHost": "api.deepseek.com",
+    "model": "deepseek-v4-flash",
+    "webModel": "deepseek-v4-pro",
+    "webSearchEnabled": true,
+    "secretPolicy": "server_side_env_only_key_never_returned_to_browser"
+  },
+  "publicHealth": {
+    "ok": true,
+    "releaseId": "scm-workbench-ui-polish-20260627003850",
+    "gitSha": "c1633fe-ui-polish-20260627",
+    "staticBuild": true,
+    "database": {
+      "metrics": 178,
+      "lineageEdges": 278,
+      "governanceTasks": 110,
+      "agentTraces": 4,
+      "traceReviews": 0,
+      "recommendationCards": 3,
+      "agentRuns": 6,
+      "aipScenarios": 3
+    },
+    "boundary": {
+      "productionWrites": false,
+      "providerCalls": false,
+      "erpWriteback": false,
+      "chatbiPolicy": "certified_metric_only"
+    }
+  },
+  "remoteDiagnostics": {
+    "containerStatus": "scm-governance-workbench Up 5 days (healthy)",
+    "nodeRuntimePresence": {
+      "keyPresent": false,
+      "model": null,
+      "baseUrlPresent": false,
+      "webSearchEnvPresent": false
+    },
+    "containerEnvFiles": {
+      "/app/.env": "absent",
+      "/app/.env.local": "absent"
+    },
+    "hostEnvCandidateFiles": {
+      ".env": "present_without_key",
+      ".env.local": "absent",
+      ".env.production.local": "absent",
+      "docker-compose.override.yml": "absent"
+    },
+    "sshShellEnvPresence": {
+      "DEEPSEEK_API_KEY": "absent",
+      "DEEPSEEK_MODEL": "absent",
+      "DEEPSEEK_BASE_URL": "absent",
+      "DEEPSEEK_ENABLE_WEB_SEARCH": "absent"
+    }
+  },
+  "localEnvPresence": {
+    "DEEPSEEK_API_KEY_PRESENT": false,
+    "DEEPSEEK_MODEL_PRESENT": false,
+    "DEEPSEEK_BASE_URL_PRESENT": false,
+    "SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED_PRESENT": false
+  },
+  "observations": {
+    "agentTraceAndRunCountsChangedSincePreviousHealthSnippet": true,
+    "attribution": "not attributed to this loop; this loop executed only GET requests and read-only remote shell diagnostics",
+    "requiresSeparateAuditIfMaterial": true
+  },
+  "decision": {
+    "providerLiveSmokeAttempted": false,
+    "reason": "Provider status is still configured=false and no actual server-side DEEPSEEK_API_KEY source is visible to the current production runtime.",
+    "nextGate": "Ops key input or direct server-side runtime configuration proof; then recheck configured=true before provider live smoke."
+  },
+  "secretHandling": {
+    "rawSecretPrinted": false,
+    "rawSecretPersisted": false,
+    "outputMode": "boolean_or_redacted_only"
+  }
+}

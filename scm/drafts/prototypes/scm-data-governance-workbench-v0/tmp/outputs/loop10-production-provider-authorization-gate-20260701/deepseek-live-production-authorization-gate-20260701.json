@@ -1,0 +1,29 @@
+{
+  "generatedAt": "2026-07-01T08:37:53.383Z",
+  "check": "deepseek-live-provider-acceptance",
+  "status": "blocked_authorization_flag_missing",
+  "baseUrl": "https://scm.lute-tlz-dddd.top",
+  "evidencePath": "tmp/outputs/loop10-production-provider-authorization-gate-20260701/deepseek-live-production-authorization-gate-20260701.json",
+  "boundary": {
+    "providerCalls": false,
+    "providerCallScope": "none",
+    "providerModeCalled": "not_called",
+    "webModeCalled": false,
+    "localSqliteWrites": false,
+    "productionWrites": false,
+    "erpWriteback": false,
+    "omsWriteback": false,
+    "wmsWriteback": false,
+    "sourceSystemRead": false,
+    "businessRowImport": false,
+    "deepseekApiKeyPersisted": false
+  },
+  "statusEndpoint": {
+    "configured": false,
+    "model": "deepseek-v4-flash",
+    "webModel": "deepseek-v4-pro",
+    "webSearchEnabled": true,
+    "secretPolicy": "server_side_env_only_key_never_returned_to_browser"
+  },
+  "requiredEnv": "SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED=1"
+}

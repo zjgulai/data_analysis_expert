@@ -1,0 +1,13 @@
+scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/72-loop-engineering-execution-plan-draft-20260701.md
+scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/73-loop2-manual-gates-owner-packet-execution-draft-20260701.md
+scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/74-loop3-business-closed-loops-execution-draft-20260701.md
+scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/75-loop4-readonly-sample-design-execution-draft-20260701.md
+scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/76-loop5-release-boundary-execution-draft-20260701.md
+scm/drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite
+scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/import-assets.mjs
+scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/smoke-deepseek-live.mjs
+scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/smoke-ui.mjs
+scm/tmp/outputs/loop2-manual-gates-owner-packet-20260701/
+scm/tmp/outputs/loop3-business-closed-loops-20260701/
+scm/tmp/outputs/loop4-readonly-sample-design-20260701/
+scm/tmp/outputs/loop5-release-boundary-20260701/

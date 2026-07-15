@@ -1,0 +1,141 @@
+{
+  "generatedAt": "2026-07-01T01:38:27.103Z",
+  "source": "<repo-root>/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite",
+  "boundary": {
+    "localSqliteWrites": true,
+    "productionWrites": false,
+    "providerCalls": false,
+    "erpWriteback": false,
+    "omsWmsWriteback": false,
+    "actionCeiling": "local_sqlite_suggestion_review_replay_ledger"
+  },
+  "counts": [
+    {
+      "table_name": "aip_scenarios",
+      "count": 6
+    },
+    {
+      "table_name": "recommendation_cards",
+      "count": 16
+    },
+    {
+      "table_name": "agent_traces",
+      "count": 62
+    },
+    {
+      "table_name": "trace_reviews",
+      "count": 14
+    },
+    {
+      "table_name": "action_tasks",
+      "count": 16
+    },
+    {
+      "table_name": "decision_logs",
+      "count": 155
+    }
+  ],
+  "loop3Rows": [
+    {
+      "loop_task": "L3-1 inventory_risk",
+      "scenario_id": "scenario_loop3_inventory_stockout_three_way_20260701",
+      "recommendation_id": "rec_t5_t6_20260627_stockout_three_way",
+      "trace_id": "trace_t5_t6_20260627_stockout_three_way",
+      "action_id": "action_t5_t6_20260627_stockout_three_way",
+      "review_id": "trace_review_t5_t6_20260627_stockout_three_way",
+      "scenario_name": "Loop3 库存风险：核心 SKU 缺货三分法",
+      "scenario_status": "review_ready",
+      "owner": "计划 Owner",
+      "trigger_condition": "coverage_days < 14 或 stockout_loss_amount 进入 P0 风险池；拆分为可售覆盖、采购未交和在途承接三类。",
+      "target_object_type": "sku",
+      "target_object_id": "sku_momcozy_pump_s12",
+      "linked_metric_ids": "[\"SCM-MECE-L3-035\",\"SCM-MECE-L3-033\",\"SCM-MECE-L3-034\",\"SCM-MECE-L3-113\"]",
+      "recommendation_title": "缺货三分法：覆盖/采购未交/在途承接评审",
+      "recommendation_status": "suggestion_review_replay",
+      "trace_answerability": "storyline_review_ready_with_scei_residual",
+      "trace_policy": "local_storyline_replay_no_provider_no_production_no_erp_writeback",
+      "review_status": "approved_for_governance_view_with_caveat",
+      "decision_boundary": "suggestion_review_replay_only_no_writeback",
+      "action_name": "复核缺货三分法下的补货/调拨/活动节奏建议",
+      "action_status": "suggestion_review_replay",
+      "approval_required": 1,
+      "residual_gap": "SCEI five-dimensional weights remain manual gate"
+    },
+    {
+      "loop_task": "L3-2 cost_risk",
+      "scenario_id": "scenario_loop3_finance_cost_tail_warehouse_return_20260701",
+      "recommendation_id": "rec_loop3_20260701_finance_cost_tail_warehouse_return",
+      "trace_id": "trace_loop3_20260701_finance_cost_tail_warehouse_return",
+      "action_id": "action_loop3_20260701_finance_cost_tail_warehouse_return",
+      "review_id": "trace_review_loop3_20260701_finance_cost_tail_warehouse_return",
+      "scenario_name": "Loop3 成本风险：尾程/仓储/退货费用异常",
+      "scenario_status": "review_ready",
+      "owner": "财务/成本 Owner",
+      "trigger_condition": "last_mile_cost_rate、warehousing_cost_rate、reverse_after_sales_cost_rate 或 logistics_estimate_actual_variance_rate 异常上升；账单 drill-down 和交易明细导入仍关闭。",
+      "target_object_type": "cost_event",
+      "target_object_id": "cost_event_loop3_tail_warehouse_return_20260701",
+      "linked_metric_ids": "[\"SCM-MECE-L3-077\",\"SCM-MECE-L3-080\",\"SCM-MECE-L3-081\",\"SCM-MECE-L3-083\",\"SCM-MECE-L3-084\",\"SCM-MECE-L3-088\"]",
+      "recommendation_title": "尾程/仓储/退货费用异常治理复核",
+      "recommendation_status": "suggestion_review_replay",
+      "trace_answerability": "owner_decision_review_ready_local_only",
+      "trace_policy": "local_finance_cost_governance_no_provider_no_production_no_accounting_write_no_erp_writeback",
+      "review_status": "approved_for_governance_view_with_boundary",
+      "decision_boundary": "suggestion_review_replay_only_no_bill_download_no_transaction_import_no_accounting_write_no_provider_no_production_no_erp_writeback",
+      "action_name": "复核尾程/仓储/退货费用异常的费用类型与科目映射口径",
+      "action_status": "suggestion_review_replay",
+      "approval_required": 1,
+      "residual_gap": "billDrilldown=false and transactionDetailImport=false; real finance source mapping still manual gate"
+    },
+    {
+      "loop_task": "L3-3 fulfillment_risk",
+      "scenario_id": "scenario_loop3_fulfillment_eta_delivery_exception_20260701",
+      "recommendation_id": "rec_t5_t6_20260627_review_efficiency_dual_metric",
+      "trace_id": "trace_t5_t6_20260627_review_efficiency_dual_metric",
+      "action_id": "action_t5_t6_20260627_review_efficiency_dual_metric",
+      "review_id": "trace_review_t5_t6_20260627_review_efficiency_dual_metric",
+      "scenario_name": "Loop3 履约风险：ETA/配送异常复核",
+      "scenario_status": "review_ready_with_metric_gap",
+      "owner": "履约运营 Owner",
+      "trigger_condition": "ETA deviation、承运商 SLA、妥投或轨迹停滞出现异常；审核时效和 ETA 口径仍需认证。",
+      "target_object_type": "shipment",
+      "target_object_id": "shipment_fba_us_202606_01",
+      "linked_metric_ids": "[\"SCM-MECE-L3-019\",\"SCM-MECE-L3-064\",\"SCM-MECE-L3-066\",\"SCM-MECE-L3-068\",\"SCM-MECE-L3-070\",\"SCM-MECE-L3-129\"]",
+      "recommendation_title": "审核效能双口径：补齐流程时效与证据可信度",
+      "recommendation_status": "suggestion_review_replay",
+      "trace_answerability": "storyline_review_ready_with_metric_gap",
+      "trace_policy": "local_storyline_replay_no_provider_no_production_no_erp_writeback",
+      "review_status": "approved_for_governance_view_with_caveat",
+      "decision_boundary": "suggestion_review_replay_only_no_writeback",
+      "action_name": "补齐审核节点时间戳并认证 ETA/审核时效口径",
+      "action_status": "suggestion_review_replay",
+      "approval_required": 1,
+      "residual_gap": "ETA/review-time metric certification remains required before hard conclusions"
+    }
+  ],
+  "insertedOrLinkedIds": [
+    {
+      "loop_task": "L3-1 inventory_risk",
+      "scenario_id": "scenario_loop3_inventory_stockout_three_way_20260701",
+      "recommendation_id": "rec_t5_t6_20260627_stockout_three_way",
+      "trace_id": "trace_t5_t6_20260627_stockout_three_way",
+      "action_id": "action_t5_t6_20260627_stockout_three_way",
+      "review_id": "trace_review_t5_t6_20260627_stockout_three_way"
+    },
+    {
+      "loop_task": "L3-2 cost_risk",
+      "scenario_id": "scenario_loop3_finance_cost_tail_warehouse_return_20260701",
+      "recommendation_id": "rec_loop3_20260701_finance_cost_tail_warehouse_return",
+      "trace_id": "trace_loop3_20260701_finance_cost_tail_warehouse_return",
+      "action_id": "action_loop3_20260701_finance_cost_tail_warehouse_return",
+      "review_id": "trace_review_loop3_20260701_finance_cost_tail_warehouse_return"
+    },
+    {
+      "loop_task": "L3-3 fulfillment_risk",
+      "scenario_id": "scenario_loop3_fulfillment_eta_delivery_exception_20260701",
+      "recommendation_id": "rec_t5_t6_20260627_review_efficiency_dual_metric",
+      "trace_id": "trace_t5_t6_20260627_review_efficiency_dual_metric",
+      "action_id": "action_t5_t6_20260627_review_efficiency_dual_metric",
+      "review_id": "trace_review_t5_t6_20260627_review_efficiency_dual_metric"
+    }
+  ]
+}

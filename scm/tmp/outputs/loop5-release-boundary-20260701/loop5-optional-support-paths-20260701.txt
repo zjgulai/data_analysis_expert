@@ -1,0 +1,2 @@
+scm/.cbmignore
+scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/71-scm-business-value-and-investment-case-draft-20260630.md

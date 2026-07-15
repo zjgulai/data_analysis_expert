@@ -1,0 +1,48 @@
+{
+  "generatedAt": "2026-07-01T01:28:39.562Z",
+  "source": "<repo-root>/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite",
+  "boundary": {
+    "productionWrites": false,
+    "providerCalls": false,
+    "erpWriteback": false,
+    "omsWmsWriteback": false,
+    "localSqliteWrites": false,
+    "actionCeiling": "manual_review_packet_generation"
+  },
+  "counts": {
+    "ownerSignoffRows": 30,
+    "fieldMappingRows": 18,
+    "sceiWeightRows": 5,
+    "manualGateLedgerRows": 49,
+    "ownerStatusRollupRows": 6,
+    "sceiBlankWeights": 5
+  },
+  "manualGateStatus": [
+    {
+      "task_type": "field_mapping",
+      "priority": "P0",
+      "status": "待确认",
+      "count": 18
+    },
+    {
+      "task_type": "owner_decision",
+      "priority": "P0",
+      "status": "owner_decision_packet_ready",
+      "count": 1
+    },
+    {
+      "task_type": "owner_signoff",
+      "priority": "P0",
+      "status": "未发起",
+      "count": 30
+    }
+  ],
+  "outputFiles": [
+    "loop2-owner-signoff-intake-20260701.csv",
+    "loop2-field-mapping-intake-20260701.csv",
+    "loop2-scei-weight-intake-20260701.csv",
+    "loop2-manual-gate-ledger-20260701.csv",
+    "loop2-owner-status-rollup-20260701.csv",
+    "loop2-evidence-summary-20260701.json"
+  ]
+}

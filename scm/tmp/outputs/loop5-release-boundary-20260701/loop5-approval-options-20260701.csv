@@ -1,0 +1,5 @@
+"option","action","consequence"
+"A","Proceed with real atomic staging for Chunk A/B/C","Read-only RC moves forward; manual gates remain explicit"
+"B","Collect owner sign-off, field mapping, and SCEI weight source first","Release waits; governance truth improves"
+"C","Clean or separately decide hold-out dirty entries first","Release review noise drops; no RC movement yet"
+"D","Prepare Loop 6 production read-only smoke authorization","Requires production URL, volume/network confirmation, and GET/HEAD-only boundary"

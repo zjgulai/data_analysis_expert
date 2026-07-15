@@ -1,0 +1,61 @@
+{
+  "createdAt": "2026-07-02T11:05:59Z",
+  "loop": 20,
+  "project": "ecom_ana_overview/scm",
+  "topic": "production-key-injection-scaffold",
+  "status": "scaffold_ready_manual_secret_file_required",
+  "baseUrl": "https://scm.lute-tlz-dddd.top",
+  "remote": {
+    "sshAlias": "tencent-lighthouse",
+    "workdir": "/opt/scm-governance-workbench/current",
+    "composeOverride": "docker-compose.deepseek-runtime.yml",
+    "secretDirectory": "/opt/scm-governance-workbench/secrets",
+    "secretFile": "/opt/scm-governance-workbench/secrets/deepseek.env"
+  },
+  "boundary": {
+    "productionBusinessWrites": false,
+    "productionConfigMutation": true,
+    "providerCalls": false,
+    "erpWriteback": false,
+    "omsWmsWriteback": false,
+    "localSqliteWrites": false,
+    "sourceSystemRead": false,
+    "businessRowImport": false,
+    "deepseekApiKeyPersisted": false,
+    "providerLiveAcceptanceExecuted": false,
+    "remoteShellExecuted": true,
+    "envMutationExecuted": false,
+    "containerRestartExecuted": false
+  },
+  "actionsExecuted": [
+    "created /opt/scm-governance-workbench/secrets directory with mode 700 if absent",
+    "created /opt/scm-governance-workbench/current/docker-compose.deepseek-runtime.yml",
+    "did not create /opt/scm-governance-workbench/secrets/deepseek.env",
+    "did not run docker compose up",
+    "did not restart or recreate scm-governance-workbench",
+    "did not call DeepSeek provider"
+  ],
+  "remoteVerification": {
+    "overrideFile": "present",
+    "secretDirectory": "present",
+    "secretFile": "absent",
+    "containerStatus": "scm-governance-workbench Up 5 days (healthy)"
+  },
+  "publicStatus": {
+    "configured": false,
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "webModel": "deepseek-v4-pro",
+    "secretPolicy": "server_side_env_only_key_never_returned_to_browser"
+  },
+  "decision": {
+    "providerLiveSmokeAttempted": false,
+    "reason": "The no-secret scaffold is ready, but the actual server-side secret file is still absent and the running container has not been recreated.",
+    "nextGate": "Ops writes the real secret file, then recreates the container with docker-compose.deepseek-runtime.yml and verifies configured=true."
+  },
+  "secretHandling": {
+    "rawSecretPrinted": false,
+    "rawSecretPersisted": false,
+    "outputMode": "no_secret_scaffold_only"
+  }
+}

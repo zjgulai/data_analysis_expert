@@ -1,0 +1,62 @@
+{
+  "generatedAt": "2026-07-02T00:36:24.738Z",
+  "check": "provider-live-authorization-hold-gate",
+  "status": "blocked_explicit_live_authorization_missing",
+  "baseUrl": "https://scm.lute-tlz-dddd.top",
+  "evidencePath": "tmp/outputs/loop13-provider-live-authorization-hold-20260702/provider-live-authorization-hold-20260702.json",
+  "boundary": {
+    "productionReadOnly": true,
+    "providerCalls": false,
+    "providerModeCalled": "not_called",
+    "webModeCalled": false,
+    "productionWrites": false,
+    "erpWriteback": false,
+    "omsWriteback": false,
+    "wmsWriteback": false,
+    "sourceSystemRead": false,
+    "businessRowImport": false,
+    "localSqliteWrites": false,
+    "deepseekApiKeyPersisted": false,
+    "liveAcceptanceExecuted": false
+  },
+  "authorizationInterpretation": {
+    "latestUserInstruction": "continue_next_loop",
+    "treatedAsProviderLiveAuthorization": false,
+    "reason": "provider live smoke requires explicit authorization and server-side runtime key evidence"
+  },
+  "localEnvPresence": {
+    "DEEPSEEK_API_KEY_PRESENT": false,
+    "SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED_PRESENT": false
+  },
+  "productionHealth": {
+    "ok": true,
+    "httpStatus": 200,
+    "releaseId": "",
+    "gitSha": "",
+    "boundaries": null,
+    "counts": null
+  },
+  "productionProviderStatus": {
+    "ok": true,
+    "httpStatus": 200,
+    "provider": "deepseek",
+    "configured": false,
+    "model": "deepseek-v4-flash",
+    "webModel": "deepseek-v4-pro",
+    "webSearchEnabled": true,
+    "secretPolicy": "server_side_env_only_key_never_returned_to_browser"
+  },
+  "requiredForNextLoop": [
+    "User says: explicitly authorize one knowledge-mode DeepSeek provider live smoke",
+    "Ops confirms DEEPSEEK_API_KEY is configured in production server-side runtime only",
+    "Run uses SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED=1 only for that single command",
+    "Run remains knowledge mode; web mode stays closed",
+    "Evidence is redacted and records traceId/runId/usage/answerLength/doesNotProve only"
+  ],
+  "doesNotProve": [
+    "Does not prove provider call path",
+    "Does not prove DeepSeek answer quality",
+    "Does not prove live trace/run creation",
+    "Does not authorize production writes or ERP/OMS/WMS writeback"
+  ]
+}
