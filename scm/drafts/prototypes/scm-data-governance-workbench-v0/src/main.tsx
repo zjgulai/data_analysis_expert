@@ -399,6 +399,9 @@ type DeepSeekChatMessage = {
 
 type DeepSeekStatus = {
   configured: boolean;
+  providerCallAuthorized: boolean;
+  databaseWriteAuthorized: boolean;
+  available: boolean;
   provider: string;
   baseUrlHost: string;
   anthropicBaseUrlHost: string;
@@ -2540,6 +2543,9 @@ function AiKnowledgePanel({ module }: { module: WorkbenchModule }) {
   );
   const deepSeekStatus = useApi<DeepSeekStatus>("/api/ai-chat/deepseek/status", {
     configured: false,
+    providerCallAuthorized: false,
+    databaseWriteAuthorized: false,
+    available: false,
     provider: "deepseek",
     baseUrlHost: "api.deepseek.com",
     anthropicBaseUrlHost: "api.deepseek.com",
@@ -2693,7 +2699,7 @@ function AiKnowledgePanel({ module }: { module: WorkbenchModule }) {
                 <button onClick={() => runSearch("chat")} disabled={!query.trim() || Boolean(running)}>
                   {running === "chat" ? "生成中..." : "AI 对话"}
                 </button>
-                <button onClick={runDeepSeekChat} disabled={!query.trim() || Boolean(running) || !deepSeekStatus.data.configured}>
+                <button onClick={runDeepSeekChat} disabled={!query.trim() || Boolean(running) || !deepSeekStatus.data.available}>
                   {running === "deepseek" ? "DeepSeek 生成中..." : "DeepSeek 多轮对话"}
                 </button>
                 <button className="secondaryAction" onClick={resetDeepSeekChat} disabled={Boolean(running) || deepSeekMessages.length === 0}>
@@ -2702,7 +2708,13 @@ function AiKnowledgePanel({ module }: { module: WorkbenchModule }) {
               </div>
               <p className="helperText">
                 DeepSeek key 仅在 server 侧环境变量读取；知识库模式会注入本地证据，联网模式会启用 Web Search。当前配置：
-                {deepSeekStatus.data.configured ? ` 已就绪 · ${deepSeekStatus.data.model}` : " 等待 DEEPSEEK_API_KEY"}。
+                {!deepSeekStatus.data.configured
+                  ? " 等待 DEEPSEEK_API_KEY"
+                  : !deepSeekStatus.data.providerCallAuthorized
+                    ? " 等待 provider 显式授权"
+                    : !deepSeekStatus.data.databaseWriteAuthorized
+                      ? " 当前为 SQLite readonly，provider 对话记录写入未授权"
+                      : ` 已就绪 · ${deepSeekStatus.data.model}`}。
               </p>
             </div>
             {error ? <div className="error">{error}</div> : null}
@@ -2864,8 +2876,8 @@ function AiKnowledgePanel({ module }: { module: WorkbenchModule }) {
                     : "知识库模式会把本地证据作为上下文交给 DeepSeek；不启用 Web Search。"}
                 </p>
               </div>
-              <Badge tone={deepSeekStatus.data.configured ? "blue" : "warn"}>
-                {deepSeekStatus.data.configured ? (aiChatMode === "web" ? "联网模式" : "知识库模式") : "key 待配置"}
+              <Badge tone={deepSeekStatus.data.available ? "blue" : "warn"}>
+                {deepSeekStatus.data.available ? (aiChatMode === "web" ? "联网模式" : "知识库模式") : "调用未授权"}
               </Badge>
             </div>
             <div className="deepSeekMeta">

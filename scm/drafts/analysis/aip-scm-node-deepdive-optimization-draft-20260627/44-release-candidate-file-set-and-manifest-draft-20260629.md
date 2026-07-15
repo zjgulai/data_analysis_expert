@@ -26,14 +26,18 @@ boundary:
 
 ## 2. RC 必含文件集合
 
+本节路径均相对 `$SCM_REPO_ROOT/scm`；命令从 Git 仓库根目录动态解析 `$SCM_REPO_ROOT`，不依赖开发机绝对路径。
+
 | group | paths | purpose | evidence | rollback note | verification |
 |---|---|---|---|---|---|
-| package contract | `drafts/prototypes/scm-data-governance-workbench-v0/package.json`、`package-lock.json` | 固化 scripts/deps。 | `preprod-readiness-check-20260629.json` package-script checks。 | 回滚到上一 package lock。 | `npm run check && npm run build` |
+| package/build contract | `drafts/prototypes/scm-data-governance-workbench-v0/package.json`、`package-lock.json`、`index.html`、`tsconfig.json`、`vite.config.ts` | 固化 scripts/deps 与可复现前端构建入口。 | `preprod-readiness-check-20260629.json` package-script checks。 | 回滚到上一 package/build contract。 | `npm run check && npm run build` |
 | runtime server | `drafts/prototypes/scm-data-governance-workbench-v0/server/index.mjs` | API、deploy health、readonly endpoints、local SQLite reads。 | `smoke:api`、`smoke:readonly` 历史通过。 | 回滚 server 文件或容器镜像。 | `npm run smoke:api && npm run smoke:readonly` |
 | frontend | `drafts/prototypes/scm-data-governance-workbench-v0/src/main.tsx`、`src/styles.css`、`src/panels/`、`src/shared/` | SCM workbench UI 与 T8 分块后模块。 | `npm run check`、`npm run smoke:ui` 历史通过。 | 回滚 UI source；dist 重新 build。 | `npm run check && npm run build && npm run smoke:ui` |
-| validation scripts | `scripts/preprod-check.mjs`、`scripts/smoke-api.mjs`、`scripts/smoke-readonly.mjs`、`scripts/smoke-ui.mjs` | 本地 gate 和 smoke。 | preprod hard blockers 0。 | 回滚 scripts；保留旧 smoke。 | `npm run preprod:check` |
+| validation scripts | `scripts/preprod-check.mjs`、`scripts/smoke-api.mjs`、`scripts/smoke-database-gate.mjs`、`scripts/smoke-import-gate.mjs`、`scripts/smoke-path-contract.mjs`、`scripts/smoke-provider-gate.mjs`、`scripts/smoke-readonly.mjs`、`scripts/smoke-ui.mjs` | 本地 gate 和 smoke。 | preprod hard blockers 0。 | 回滚 scripts；保留旧 smoke。 | `npm run preprod:check` |
 | deployment | `Dockerfile`、`docker-compose.yml`、`docker-compose.production.yml` | 容器构建、外部 SQLite volume、edge network。 | preprod checks: external volume and edge network true。 | compose rollback 到上一 override；不覆盖 volume。 | `docker compose -p scm_governance_workbench -f docker-compose.yml -f docker-compose.production.yml config` |
-| local data pack | `data/governance_workbench.sqlite`、`data/import-summary.json`、`data/runtime-metadata-projection.json` | 本地 SQLite truth/evidence/runtime projection。 | certified metrics 20、lineage targets 12、active tags 8。 | 使用 file-history SQLite snapshot restore；禁止生产库覆盖。 | SQLite read-only queries + `preprod:check` |
+| local data pack | `data/governance_workbench.sqlite`、`data/import-summary.json`、`data/runtime-metadata-projection.json` | 本地 SQLite truth/evidence/runtime projection。 | certified metrics 20、lineage targets 12、active tags 8。 | 使用已记录 hash 的 SQLite snapshot restore；禁止生产库覆盖。 | SQLite read-only queries + `preprod:check` |
+| immutable runtime evidence | `runtime/evidence/ai-knowledge-evidence-quality-review-20260622.json` | standalone/container 不依赖可变 `/app/data` volume 即可读取证据。 | `smoke:path-contract` 与 preprod runtime-evidence checks。 | 回滚到上一已校验 evidence artifact。 | `npm run smoke:path-contract` |
+| manual-gate handoff | `data/manual-gate-handoff-20260629.csv`、`data/manual-gate-owner-rollup-20260629.csv`、`data/manual-gate-owner-signoff-intake-20260629.csv`、`data/manual-gate-field-mapping-intake-20260629.csv`、`data/manual-gate-scei-weight-intake-20260629.csv` 与对应 SQLite governance task evidence | 只记录待人工确认的 owner/mapping/SCEI intake，不代表 gate 已通过。 | 45/50/51 handoff docs + preprod manual gates。 | 删除错误 intake 行或恢复上一只读数据包；不得伪造 sign-off。 | `npm run preprod:check`，预期 manual gates 保留 |
 | migrations | `migrations/20260627_b3_t7_additive_schema.*.sql`、`migrations/20260627_b6_rbac_action_tiering.*.sql` | additive schema/rollback evidence。 | T7/RBAC execution docs。 | 使用 paired rollback SQL。 | `sqlite3 ...` schema inspection, no production DB |
 | static fulfillment dashboard | `public/fulfillment-dashboard/` | 只读 CSV dashboard and docs。 | CSV HEAD and build copy checks。 | Remove static folder from deployed image. | `npm run build`; post-deploy `curl -I ...csv` |
 | docs | `README.md`、`docs/tencent-cloud-lightserver-deployment-20260618.md`、`docs/fulfillment-dashboard-aip-scm-integration-plan-draft-20260626.md` | local acceptance and production read-only handoff instructions。 | 41/42/43 plan chain。 | docs-only revert。 | markdown review + commands below |
@@ -45,6 +49,8 @@ boundary:
 | deepdive analysis | `drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/00-*.md` to `42-*.md` | 从 03 指标工程到 preprod readiness 的审计/执行链。 |
 | B42 execution docs | `43-release-candidate-dirty-worktree-manifest-draft-20260629.md` to `47-release-pr-staging-checklist-draft-20260629.md` | release governance pack。 |
 | local evidence JSON | `drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/preprod-readiness-check-20260629.json` | preprod gate machine-readable evidence。 |
+| immutable runtime evidence | `drafts/prototypes/scm-data-governance-workbench-v0/runtime/evidence/ai-knowledge-evidence-quality-review-20260622.json` | standalone/container runtime evidence。 |
+| manual-gate handoff | `drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-*.csv` 与 `data/governance_workbench.sqlite` 中对应 governance tasks | owner/mapping/SCEI 仍为 pending 的交接证据；不构成业务认证。 |
 | historical evidence JSON | `tmp/outputs/t2-*.json`、`tmp/outputs/t3-*.json`、`tmp/outputs/t4-*.json`、`tmp/outputs/t5-t6-*.json`、`tmp/outputs/ai-knowledge-evidence-quality-review-20260622.json` | metric/tag/tree/storyline/AI quality evidence。 |
 
 ## 4. RC 排除集合
@@ -70,16 +76,20 @@ boundary:
 ## 6. RC 验收命令
 
 ```bash
-cd /Users/pray/project/ecom_ana_overview/scm/drafts/prototypes/scm-data-governance-workbench-v0
+export SCM_REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$SCM_REPO_ROOT/scm/drafts/prototypes/scm-data-governance-workbench-v0"
 npm run check
 npm run build
-SCM_PREPROD_SCAN_ROOT=/Users/pray/project/ecom_ana_overview/scm npm run preprod:check
-npm run smoke:api
-npm run smoke:readonly
-npm run smoke:ui
+SCM_PREPROD_SCAN_ROOT="$SCM_REPO_ROOT/scm" npm run preprod:check
+npm run smoke:provider-gate
+npm run smoke:database-gate
+npm run smoke:import-gate
+npm run smoke:path-contract
 docker compose -p scm_governance_workbench -f docker-compose.yml -f docker-compose.production.yml config
-find /Users/pray/project/ecom_ana_overview/scm -name '*.pem' -print
+test -z "$(rg --files "$SCM_REPO_ROOT/scm" -g '*.pem' -g '*.key')"
 ```
+
+`smoke:readonly` 需启动默认只读本地 server；`smoke:api` 与 `smoke:ui` 只允许由 CI 或 README 所述的可丢弃 SQLite 副本流程执行，并在结束后恢复、核对原始 hash。
 
 ## 7. B42-2/B42-3/B42-4 Done Criteria
 

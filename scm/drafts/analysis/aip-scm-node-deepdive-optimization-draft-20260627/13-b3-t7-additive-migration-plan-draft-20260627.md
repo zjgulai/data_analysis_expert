@@ -59,8 +59,10 @@ B3 只处理 T7：把 02/03/04/05 第 7 节提出的增量数据模型落为可�
 |---|---|
 | 评审脚本验证 | 对 DB 副本执行 apply、rollback、reapply，确认可重复执行。 |
 | 主库未迁移 | 本批主库不新增业务表，因此主库回滚只需删除治理记录或恢复备份。 |
-| 后续授权迁移 | 先备份 `data/governance_workbench.sqlite`，再执行 apply；若要撤回，执行 rollback 并跑 `smoke:readonly`。 |
+| 后续授权迁移 | 先备份 `data/governance_workbench.sqlite` 并记录 hash，再执行 apply。rollback 脚本仅允许用于 disposable copy，或确认本迁移新增表全部为空；任一表有数据时必须停止，除非另有明确 destructive authorization 与可核验 backup record。 |
 | 生产边界 | 本迁移仅适配本地 prototype SQLite；任何生产库 DDL 都要另走授权记录。 |
+
+禁止在 populated database 上直接执行 `20260627_b3_t7_additive_schema.rollback.sql`。授权回滚后必须核对备份可恢复性，并跑 `smoke:readonly`；“脚本可执行”不等于“允许删除业务数据”。
 
 ## 6. 验收 SQL
 

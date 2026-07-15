@@ -1,9 +1,8 @@
 import { DatabaseSync } from "node:sqlite";
 import { createReadStream, existsSync, readFileSync, statSync } from "node:fs";
 import { createServer } from "node:http";
-import { extname, isAbsolute, join, resolve } from "node:path";
+import { basename, dirname, extname, isAbsolute, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { dirname } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
@@ -24,8 +23,15 @@ const deploymentMetadata = {
   gitSha: process.env.SCM_GIT_SHA || "unknown",
   dataMountType: process.env.SCM_DATA_MOUNT_TYPE || "image_embedded_data",
   dataVolumeName: process.env.SCM_DATA_VOLUME_NAME || "",
-  dataMountPath: process.env.SCM_DATA_MOUNT_PATH || dbPath
+  dataMountPath: publicMountPath(process.env.SCM_DATA_MOUNT_PATH)
 };
+
+function publicMountPath(value) {
+  const configuredPath = String(value || "").trim();
+  if (!configuredPath) return "data/governance_workbench.sqlite";
+  if (!isAbsolute(configuredPath) || configuredPath === "/app" || configuredPath.startsWith("/app/")) return configuredPath;
+  return `external/${basename(configuredPath)}`;
+}
 
 function resolveProjectRoot() {
   const configuredRoot = String(process.env.SCM_PROJECT_ROOT || "").trim();
@@ -41,6 +47,16 @@ function resolveProjectRoot() {
 function resolveProjectPath(value) {
   const path = String(value || "").trim();
   return isAbsolute(path) ? resolve(path) : resolve(projectRoot, path);
+}
+
+function publicProjectPath(value) {
+  const absolutePath = resolve(value);
+  for (const base of [projectRoot, root]) {
+    const candidate = relative(base, absolutePath);
+    if (candidate === "") return ".";
+    if (!candidate.startsWith("..") && !isAbsolute(candidate)) return candidate;
+  }
+  return `external/${basename(absolutePath)}`;
 }
 
 function resolveAiKnowledgeEvidenceQualityReviewPath() {
@@ -61,9 +77,43 @@ if (!existsSync(dbPath)) {
   process.exit(1);
 }
 
-const db = new DatabaseSync(dbPath);
+const requiredDatabaseTables = [
+  "action_tasks",
+  "agent_runs",
+  "agent_traces",
+  "aip_scenarios",
+  "annotations",
+  "audit_events",
+  "certifications",
+  "chatbi_contexts",
+  "comments",
+  "decision_logs",
+  "dimensions",
+  "export_jobs",
+  "governance_tasks",
+  "knowledge_cards",
+  "knowledge_chunks",
+  "knowledge_crosswalks",
+  "knowledge_domains",
+  "kpi_tree",
+  "lineage_edges",
+  "metric_dimensions",
+  "metrics",
+  "ontology_instance_links",
+  "ontology_links",
+  "ontology_object_instances",
+  "ontology_objects",
+  "recommendation_cards",
+  "revision_proposals",
+  "tags",
+  "trace_reviews"
+];
+const databaseWriteAuthorized = envFlag("SCM_DATABASE_WRITES_AUTHORIZED", false);
+const databaseMode = databaseWriteAuthorized ? "writable" : "readonly";
+const db = new DatabaseSync(dbPath, { readOnly: !databaseWriteAuthorized });
 
-ensureWorkflowSchema();
+if (databaseWriteAuthorized) ensureWorkflowSchema();
+validateDatabaseSchema();
 
 function loadRuntimeMetadataProjection() {
   const fallback = {
@@ -1143,6 +1193,20 @@ function ensureWorkflowSchema() {
   `);
 }
 
+function validateDatabaseSchema() {
+  const existingTables = new Set(
+    db.prepare("SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%'")
+      .all()
+      .map((row) => String(row.name))
+  );
+  const missingTables = requiredDatabaseTables.filter((table) => !existingTables.has(table));
+  if (!missingTables.length) return;
+  throw new Error(
+    `SQLite schema validation failed in ${databaseMode} mode; missing required tables: ${missingTables.join(", ")}. `
+    + "Run `npm run import` to build a complete database. Readonly startup never repairs schema."
+  );
+}
+
 function json(res, payload, status = 200) {
   const body = JSON.stringify(payload);
   res.writeHead(status, {
@@ -1936,7 +2000,7 @@ function getRiskThresholdGovernance() {
       ruleDraft: "coverage_days < 14 或 sku_oos_rate 上升时进入断货风险复核",
       scenarioRefs: ["scenario_stockout_risk"],
       linkedMetricIds: ["metric.coverage_days", "metric.sku_oos_rate"],
-      evidenceRefs: ["SCOV-OMS-INVENTORY-STATS", "SCOV-OMS-REGIONAL-INVENTORY", "SCOV-WMS-INVENTORY-REMAINDER"],
+      evidenceRefs: ["SCOV-OMS-INVENTORY-STATS", "SCOV-OMS-REGIONAL-INVENTORY", "SCOV-WMS-INVENTORY-BALANCE"],
       ownerQuestion: "是否允许覆盖天数阈值作为 S&OE 风险复核候选？",
       reviewBoundary: "threshold_governance_local_review_only_no_operational_scoring"
     },
@@ -1954,7 +2018,7 @@ function getRiskThresholdGovernance() {
       ruleDraft: "batch_age_days > 90 或 coverage_days > 60 时进入库龄/超储复核",
       scenarioRefs: ["scenario_aged_inventory_overstock"],
       linkedMetricIds: ["metric.batch_age_days", "metric.inventory_turnover_days", "metric.storage_fee_rate"],
-      evidenceRefs: ["SCOV-OMS-INVENTORY-STATS", "SCOV-OMS-SALES-STATS", "SCOV-OMS-FEE-STATS"],
+      evidenceRefs: ["SCOV-OMS-INVENTORY-STATS", "SCOV-OMS-SALES-STATS", "SCOV-OMS-COST"],
       ownerQuestion: "是否允许库龄阈值进入治理视图，并等待财务/库存 owner 二次确认？",
       reviewBoundary: "threshold_governance_local_review_only_no_operational_scoring"
     },
@@ -1972,7 +2036,7 @@ function getRiskThresholdGovernance() {
       ruleDraft: "release_close_time 超出 SLA 或 task_status 长时间停留时进入履约延迟复核",
       scenarioRefs: ["scenario_stockout_risk"],
       linkedMetricIds: ["metric.fulfillment_sla", "metric.warehouse_task_delay"],
-      evidenceRefs: ["SCOV-WMS-PICKING-TASK", "SCOV-WMS-SHIPMENT-TASK"],
+      evidenceRefs: ["SCOV-WMS-PICKING-TASK", "SCOV-WMS-PUTAWAY-TASK"],
       ownerQuestion: "是否允许 WMS 任务 SLA 阈值进入本地治理视图？",
       reviewBoundary: "threshold_governance_local_review_only_no_operational_scoring"
     },
@@ -1990,7 +2054,7 @@ function getRiskThresholdGovernance() {
       ruleDraft: "storage_fee_rate 或 logistics_estimate_actual_variance_rate 超出 owner 确认区间时进入成本复核",
       scenarioRefs: ["scenario_aged_inventory_overstock"],
       linkedMetricIds: ["metric.storage_fee_rate", "metric.fulfillment_cost_variance"],
-      evidenceRefs: ["SCOV-OMS-FEE-STATS", "SCOV-OMS-RETURN-FEE-STATS"],
+      evidenceRefs: ["SCOV-OMS-COST"],
       ownerQuestion: "是否允许成本异常阈值进入本地治理视图，并等待财务 owner 确认金额口径？",
       reviewBoundary: "threshold_governance_local_review_only_no_operational_scoring"
     }
@@ -2698,7 +2762,9 @@ function getFinanceCostGovernance() {
 
 function getDeployHealth() {
   const deepSeekConfig = getDeepSeekConfig();
-  const providerAvailable = Boolean(deepSeekConfig.apiKey) && deepSeekConfig.providerCallAuthorized;
+  const providerAvailable = Boolean(deepSeekConfig.apiKey)
+    && deepSeekConfig.providerCallAuthorized
+    && databaseWriteAuthorized;
   return {
     ok: true,
     service: "scm-data-governance-workbench",
@@ -2709,7 +2775,8 @@ function getDeployHealth() {
     deployment: deploymentMetadata,
     staticBuild: existsSync(distPath),
     database: {
-      path: dbPath,
+      path: "data/governance_workbench.sqlite",
+      mode: databaseMode,
       ontologyObjects: tableCount("ontology_objects"),
       ontologyObjectInstances: tableCount("ontology_object_instances"),
       metrics: tableCount("metrics"),
@@ -2723,6 +2790,8 @@ function getDeployHealth() {
     },
     boundary: {
       productionWrites: false,
+      databaseWrites: databaseWriteAuthorized,
+      databaseWriteAuthorized,
       providerCalls: providerAvailable,
       providerCallAuthorized: deepSeekConfig.providerCallAuthorized,
       providerConfigured: Boolean(deepSeekConfig.apiKey),
@@ -3208,7 +3277,7 @@ function getKnowledgeSupport(url) {
 function loadAiKnowledgeEvidenceQualityReview() {
   if (!existsSync(aiKnowledgeEvidenceQualityReviewPath)) {
     const error = new Error(
-      `AI knowledge evidence review is missing at ${aiKnowledgeEvidenceQualityReviewPath}. Configure SCM_PROJECT_ROOT or SCM_AI_KNOWLEDGE_EVIDENCE_PATH.`
+      `AI knowledge evidence review is missing at ${publicProjectPath(aiKnowledgeEvidenceQualityReviewPath)}. Configure SCM_PROJECT_ROOT or SCM_AI_KNOWLEDGE_EVIDENCE_PATH.`
     );
     error.statusCode = 503;
     throw error;
@@ -3220,7 +3289,7 @@ function loadAiKnowledgeEvidenceQualityReview() {
     }
     return packet;
   } catch (error) {
-    const loadError = new Error(`AI knowledge evidence review is invalid at ${aiKnowledgeEvidenceQualityReviewPath}: ${error.message}`);
+    const loadError = new Error(`AI knowledge evidence review is invalid at ${publicProjectPath(aiKnowledgeEvidenceQualityReviewPath)}: ${error.message}`);
     loadError.statusCode = 503;
     throw loadError;
   }
@@ -3316,7 +3385,7 @@ function getAiKnowledgeEvidenceQualityReview() {
   });
   const recommendedPath = reviewPackets.map(() => "A").join("-");
   return {
-    sourcePath: aiKnowledgeEvidenceQualityReviewPath,
+    sourcePath: publicProjectPath(aiKnowledgeEvidenceQualityReviewPath),
     generatedAt: packet.generated_at,
     reviewDate: packet.review_date,
     source: packet.source,
@@ -3723,7 +3792,8 @@ function getDeepSeekStatus() {
   return {
     configured: Boolean(config.apiKey),
     providerCallAuthorized: config.providerCallAuthorized,
-    available: Boolean(config.apiKey) && config.providerCallAuthorized,
+    databaseWriteAuthorized,
+    available: Boolean(config.apiKey) && config.providerCallAuthorized && databaseWriteAuthorized,
     provider: "deepseek",
     baseUrlHost: safeUrlHost(config.baseUrl),
     anthropicBaseUrlHost: safeUrlHost(config.anthropicBaseUrl),
@@ -4400,6 +4470,11 @@ const server = createServer(async (req, res) => {
   try {
     const url = new URL(req.url, `http://${req.headers.host}`);
     if (url.pathname.startsWith("/api")) {
+      if (req.method === "POST" && !databaseWriteAuthorized && url.pathname !== "/api/knowledge/search") {
+        return json(res, {
+          error: "Local SQLite writes are not authorized. Set SCM_DATABASE_WRITES_AUTHORIZED=1 only for an explicitly approved disposable or local write-enabled flow."
+        }, 403);
+      }
       if (req.method === "GET" && url.pathname === "/api/deploy/health") return json(res, getDeployHealth());
       if (req.method === "GET" && url.pathname === "/api/workbench/modules") return json(res, getWorkbenchModules());
       const workbenchModule = url.pathname.match(/^\/api\/workbench\/([^/]+)$/);

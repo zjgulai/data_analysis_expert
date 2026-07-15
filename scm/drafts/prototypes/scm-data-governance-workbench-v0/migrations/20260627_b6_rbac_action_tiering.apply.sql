@@ -94,7 +94,7 @@ INSERT OR IGNORE INTO rbac_roles (
   ('data_governance_owner', 'Data Governance Owner', 'Metric, tag, lineage, certification, and annotation governance owner.', 'L2', 1, 'suggestion_review_replay'),
   ('ai_operator', 'AI Operator', 'Local AI run, trace, and suggestion-card operator.', 'L1', 1, 'local_suggestion_only'),
   ('audit_reviewer', 'Audit Reviewer', 'Review owner for trace, decision, and approval-task ledgers.', 'L2', 1, 'suggestion_review_replay'),
-  ('admin_local_config', 'Admin Local Config', 'Local prototype configuration and reviewed export package owner.', 'L3', 1, 'local_config_and_reviewed_export_only');
+  ('admin_local_config', 'Admin Local Config', 'Future local prototype configuration and reviewed export package owner; disabled until the L3 gate is approved.', 'L3', 0, 'disabled_until_l3_review');
 
 CREATE TABLE IF NOT EXISTS rbac_role_bindings (
   id TEXT PRIMARY KEY,

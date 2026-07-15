@@ -2,7 +2,7 @@
   "generated_at": "2026-06-22T11:54:34.721Z",
   "review_date": "2026-06-22",
   "source": {
-    "db_path": "/Users/pray/project/ecom_ana_overview/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite",
+    "db_path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite",
     "query_policy": "local_sqlite_readonly",
     "search_logic": "mirrors server local knowledge scoring: tokenize query, score title/topic/summary/chunk/keywords, prefer active domain/card"
   },

@@ -37,7 +37,7 @@ async function waitForHealth(baseUrl, child, logs) {
       throw new Error(`SCM server exited before health check.\n${logs.join("").slice(-2000)}`);
     }
     try {
-      const response = await fetch(`${baseUrl}/api/deploy/health`);
+      const response = await fetch(`${baseUrl}/api/deploy/health`, { signal: AbortSignal.timeout(2000) });
       if (response.ok) return response.json();
     } catch {
       // The child may still be binding its local port.
@@ -74,7 +74,8 @@ try {
       DEEPSEEK_BASE_URL: `http://127.0.0.1:${providerPort}`,
       DEEPSEEK_ANTHROPIC_BASE_URL: `http://127.0.0.1:${providerPort}`,
       DEEPSEEK_TIMEOUT_MS: "5000",
-      SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED: ""
+      SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED: "",
+      SCM_DATABASE_WRITES_AUTHORIZED: "1"
     },
     stdio: ["ignore", "pipe", "pipe"]
   });
@@ -82,11 +83,12 @@ try {
   child.stderr.on("data", (chunk) => childLogs.push(String(chunk)));
 
   const health = await waitForHealth(baseUrl, child, childLogs);
-  const statusResponse = await fetch(`${baseUrl}/api/ai-chat/deepseek/status`);
+  const statusResponse = await fetch(`${baseUrl}/api/ai-chat/deepseek/status`, { signal: AbortSignal.timeout(2000) });
   const status = await statusResponse.json();
   const chatResponse = await fetch(`${baseUrl}/api/ai-chat/deepseek`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
+    signal: AbortSignal.timeout(2000),
     body: JSON.stringify({
       mode: "knowledge",
       messages: [{ role: "user", content: "provider gate fixture" }]

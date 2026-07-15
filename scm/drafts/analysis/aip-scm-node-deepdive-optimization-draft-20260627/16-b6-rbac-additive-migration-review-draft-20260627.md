@@ -41,7 +41,7 @@ B6 将 B5 的 RBAC/action tiering 模型落成可评审、可重复执行、可�
 | Table | 设计意图 | 当前种子策略 |
 |---|---|---|
 | `action_tier_policy` | 固化 L0-L5 动作分级、审批、审计和边界开关。 | 6 条 tier；L0-L2 当前允许，L3-L5 保持关闭。 |
-| `rbac_roles` | 固化 B5 角色、责任范围、默认 tier 上限。 | 9 个角色，与 B5 role matrix 一致。 |
+| `rbac_roles` | 固化 B5 角色、责任范围、默认 tier 上限。 | 9 个角色；8 个当前启用，`admin_local_config` 在 L3 gate 前保持 disabled。 |
 | `rbac_role_bindings` | 未来承载 actor 到 role/scope 的绑定。 | 0 条；当前无登录/身份源。 |
 | `rbac_policy_rules` | 固化 role/resource/tier 权限规则。 | 17 条最小策略，覆盖指标、标签、KPI、推荐卡、动作任务、轨迹、导出评审。 |
 | `permission_audit_log` | 未来记录权限判定与本地写动作审计。 | 0 条；当前无运行时拦截。 |

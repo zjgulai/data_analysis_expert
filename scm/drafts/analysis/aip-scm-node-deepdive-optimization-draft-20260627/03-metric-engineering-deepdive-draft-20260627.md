@@ -120,7 +120,7 @@ AIP 原则落位：**AI 只消费认证指标**（F），不自由写 SQL；指�
 | `metrics`（扩展）| +unit, +calc_type(atomic/derived/composite), +depends_on_metric_ids, +time_semantics, +caliber_include, +caliber_exclude | A/B/E |
 | `metric_field_mapping`（强化 lineage）| metric_id, source_system, source_table, source_field, agg, filter, confidence, evidence, confirmed_by | C |
 | `metric_dimension`（扩展兼容）| +compatibility(confirmed/candidate/forbidden), +reason | D |
-| `metric_certification`（强化）| metric_id, owner_sign, lineage_sign, quality_sign, certified_at | F |
+| `certifications`（共享表强化）| asset_type=`metric`, asset_id/metric_id, owner_sign, lineage_sign, quality_sign, certified_at | F；它是唯一认证事实源，与 `metrics.certification_status='certified'` 门禁一致，不另建 `metric_certification` |
 | `metric_validation_log`（新）| metric_id, check_type, result, detail, at | G |
 
 ## 8. 落地路线（P0/P1/P2）

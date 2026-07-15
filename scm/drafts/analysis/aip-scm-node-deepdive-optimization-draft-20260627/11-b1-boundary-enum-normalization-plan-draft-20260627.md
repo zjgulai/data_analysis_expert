@@ -57,6 +57,8 @@ B1 只解决一个问题：把当前本地原型里分散的证据等级和动�
 | `erpWriteback` | `false` | ERP/OMS/WMS/TMS 写回关闭。 |
 | `localSqliteWrites` | `true/false` | 内容开发与 API/UI smoke 可写本地 SQLite；readonly smoke 必须为 false。 |
 
+上述五个结构化字段是规范事实源。兼容单字符串固定序列化为 `stage=<stage>;productionWrites=<bool>;providerCalls=<bool>;erpWriteback=<bool>;localSqliteWrites=<bool>`，字段顺序不可变化；消费者先解析结构化键值，只有历史字符串没有这些键时才进入兼容映射。
+
 兼容分类：
 
 | historical pattern | canonical stage |
@@ -67,13 +69,15 @@ B1 只解决一个问题：把当前本地原型里分散的证据等级和动�
 | `%action_task_created%` / 本地 recommendation workflow | `approved_task_local_only` |
 | `%no_production_write%`、`%no_provider_call%`、`%no_erp_writeback%` | 保留 no-write flags |
 
+历史字符串的 stage 解析优先级固定为：`suggestion_review_replay` > `action_task_created`/本地 recommendation workflow > `read`/`view` > `local`/`only`/`no_external_write`。no-write patterns 只设置对应 flags，不参与 stage 选择；同一字符串命中多个 stage pattern 时只取优先级最高者。无法确定时 fail closed 为 `read_only_evidence` 并进入人工复核。
+
 ## 4. TODO
 
 | # | TODO | 输出 | 验收 |
 |---|---|---|---|
 | 1 | 新增本契约文档 | `11-b1-boundary-enum-normalization-plan-draft-20260627.md` | 有 frontmatter、范围和边界。 |
 | 2 | 写入 SQLite contract annotation | `annotations.target_type='boundary_contract'` | 能用 SQL 查询到标准枚举与兼容映射。 |
-| 3 | 写入 SQLite decision log | `decision_b1_boundary_enum_normalization_20260627` | `action_boundary=suggestion_review_replay_only_no_production_write_no_provider_call_no_erp_writeback`。 |
+| 3 | 写入 SQLite decision log | `decision_b1_boundary_enum_normalization_20260627` | `action_boundary=stage=suggestion_review_replay;productionWrites=false;providerCalls=false;erpWriteback=false;localSqliteWrites=true`。 |
 | 4 | 更新两个 B1 governance task | task status 进入 `review_ready` / `accepted_with_mapping` | 不把历史值批量改写成完成迁移。 |
 | 5 | 验证 | check/build/smoke | 边界仍为 false，readonly smoke 不写 SQLite。 |
 

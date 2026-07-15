@@ -69,7 +69,7 @@ upstream: "drafts/analysis/palantir-aipcon10-scm-aip-plan-draft-20260619（本�
 动作开放阶梯（要义 7）：`只读证据 → 受治理建议 → 审批任务 → 受控导出 → API 辅助写回 → 策略化自动化`。配最小权限 RBAC（对象级/动作级/指标级/知识库级）。当前停在前两级——**这是正确的起点**，逐级开放须各自过门禁。
 
 ### F. 证据链分层（Evidence Chain Tiering）
-每个 AI 结论标注证据等级：`prototype_seed`（种子）/ `real`（真实）/ `certified`（认证）。低等级证据不得驱动高风险动作。直接解 D-P0-04（种子混入）。
+每个 AI 结论持久化规范证据等级：`seed`（种子）/ `real`（真实未认证）/ `certified`（认证）。历史值 `prototype_seed` 仅在读取时兼容并规范化为 `seed`，新写入不得继续使用旧值。低等级证据不得驱动高风险动作。直接解 D-P0-04（种子混入）。
 
 ### G. 多智能体编排（Agent Orchestration）
 角色型 agent（计划/采购/仓储/物流/成本/管理层）沿对象图谱协作，全部受语义层（03）+ 审计（C）+ 权限（E）约束。属中长期，但编排原则须现在定。

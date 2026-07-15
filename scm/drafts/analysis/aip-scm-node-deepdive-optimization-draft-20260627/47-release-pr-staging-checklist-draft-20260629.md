@@ -93,6 +93,9 @@ git add scm/drafts/prototypes/scm-data-governance-workbench-v0/.gitignore
 git add scm/drafts/prototypes/scm-data-governance-workbench-v0/.cbmignore
 git add scm/drafts/prototypes/scm-data-governance-workbench-v0/Dockerfile
 git add scm/drafts/prototypes/scm-data-governance-workbench-v0/README.md
+git add scm/drafts/prototypes/scm-data-governance-workbench-v0/index.html
+git add scm/drafts/prototypes/scm-data-governance-workbench-v0/tsconfig.json
+git add scm/drafts/prototypes/scm-data-governance-workbench-v0/vite.config.ts
 git add scm/drafts/prototypes/scm-data-governance-workbench-v0/package.json
 git add scm/drafts/prototypes/scm-data-governance-workbench-v0/package-lock.json
 git add scm/drafts/prototypes/scm-data-governance-workbench-v0/server/index.mjs
@@ -103,6 +106,10 @@ git add scm/drafts/prototypes/scm-data-governance-workbench-v0/src/panels
 git add scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/import-assets.mjs
 git add scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/preprod-check.mjs
 git add scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/smoke-api.mjs
+git add scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/smoke-database-gate.mjs
+git add scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/smoke-import-gate.mjs
+git add scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/smoke-path-contract.mjs
+git add scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/smoke-provider-gate.mjs
 git add scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/smoke-readonly.mjs
 git add scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/smoke-ui.mjs
 git add scm/drafts/prototypes/scm-data-governance-workbench-v0/docker-compose.yml
@@ -117,8 +124,14 @@ git add scm/drafts/prototypes/scm-data-governance-workbench-v0/docs/fulfillment-
 git add scm/drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite
 git add scm/drafts/prototypes/scm-data-governance-workbench-v0/data/import-summary.json
 git add scm/drafts/prototypes/scm-data-governance-workbench-v0/data/runtime-metadata-projection.json
+git add scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-handoff-20260629.csv
+git add scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-owner-rollup-20260629.csv
+git add scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-owner-signoff-intake-20260629.csv
+git add scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-field-mapping-intake-20260629.csv
+git add scm/drafts/prototypes/scm-data-governance-workbench-v0/data/manual-gate-scei-weight-intake-20260629.csv
 git add scm/drafts/prototypes/scm-data-governance-workbench-v0/migrations
 git add scm/drafts/prototypes/scm-data-governance-workbench-v0/public/fulfillment-dashboard
+git add scm/drafts/prototypes/scm-data-governance-workbench-v0/runtime/evidence/ai-knowledge-evidence-quality-review-20260622.json
 git add scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/preprod-readiness-check-20260629.json
 git add scm/tmp/outputs/t2-metric-certification-evidence-20260627.json
 git add scm/tmp/outputs/t3-tag-certification-evidence-20260627.json
@@ -148,17 +161,21 @@ git add scm/tmp/outputs/ai-knowledge-evidence-quality-review-20260622.json
 在任何 PR 前必须重新跑：
 
 ```bash
-cd /Users/pray/project/ecom_ana_overview/scm/drafts/prototypes/scm-data-governance-workbench-v0
+export SCM_REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$SCM_REPO_ROOT/scm/drafts/prototypes/scm-data-governance-workbench-v0"
 npm run check
 npm run build
-SCM_PREPROD_SCAN_ROOT=/Users/pray/project/ecom_ana_overview/scm npm run preprod:check
-npm run smoke:api
-npm run smoke:readonly
-npm run smoke:ui
-cd /Users/pray/project/ecom_ana_overview
+SCM_PREPROD_SCAN_ROOT="$SCM_REPO_ROOT/scm" npm run preprod:check
+npm run smoke:provider-gate
+npm run smoke:database-gate
+npm run smoke:import-gate
+npm run smoke:path-contract
+cd "$SCM_REPO_ROOT"
 git diff --check -- scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627
 git status --short -uall
 ```
+
+`smoke:api` 与 `smoke:ui` 是写入型本地 smoke，只能在 loopback 可丢弃 SQLite 副本上执行并恢复 hash；完整 clean-checkout CI 会执行该生命周期。`smoke:readonly` 需先启动默认只读 server。
 
 PR body 必须包含：
 

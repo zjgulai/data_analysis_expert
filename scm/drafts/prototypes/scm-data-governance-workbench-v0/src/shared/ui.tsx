@@ -315,6 +315,12 @@ export function DataTable({
                   className={`${onRowSelect ? "clickableRow" : ""} ${selectedId === key ? "selectedRow" : ""}`}
                   key={key}
                   onClick={() => onRowSelect?.(row)}
+                  tabIndex={onRowSelect ? 0 : undefined}
+                  onKeyDown={(event) => {
+                    if (!onRowSelect || (event.key !== "Enter" && event.key !== " ")) return;
+                    event.preventDefault();
+                    onRowSelect(row);
+                  }}
                 >
                   <td className="indexCell">{start + index + 1}</td>
                   {columns.map((column) => <td key={column}>{cellValue(row[column], column)}</td>)}

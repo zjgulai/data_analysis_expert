@@ -77,7 +77,7 @@ covers: ["01-audit","02-tag","03-metric-engineering","04-metric-system","05-insi
 
 | 概念 | 标准枚举 / 定义 | 在各篇的用法 |
 |---|---|---|
-| evidence_level | `seed`（含 prototype_seed 种子）/ `real`（真实未认证）/ `certified`（认证）| 01/06/07，全系列统一 |
+| evidence_level | 持久化仅允许 `seed` / `real` / `certified`；历史 `prototype_seed` 只读兼容并在读取层映射为 `seed`，迁移后禁止新写入旧值 | 01/06/07，全系列统一 |
 | 标签生命周期 | `draft → reviewed → active → deprecated → archived` | 02-G |
 | 指标认证 | 三签：`owner_sign + lineage_sign + quality_sign` → `certified` | 03-F |
 | 维度兼容 | `confirmed / candidate / forbidden` | 03-D |

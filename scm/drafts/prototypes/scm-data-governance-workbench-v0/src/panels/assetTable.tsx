@@ -35,7 +35,7 @@ export function AssetTable({
   const selectedRow = selected?.row || null;
   const selectedTargetType = selected?.targetType || targetType;
   const selectedId = selectedRow ? rowKey(selectedRow) : "";
-  const targetId = selectedRow ? String(selectedRow.id || selectedRow.code || selectedRow.name || "") : "";
+  const targetId = selectedId;
 
   return (
     <div className="surface assetSurface">

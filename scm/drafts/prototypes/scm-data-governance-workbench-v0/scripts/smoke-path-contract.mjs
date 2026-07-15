@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const sourceAppRoot = resolve(scriptDir, "..");
 const evidenceFileName = "ai-knowledge-evidence-quality-review-20260622.json";
-const sourceEvidencePath = resolve(sourceAppRoot, "../../../tmp/outputs", evidenceFileName);
+const sourceEvidencePath = resolve(sourceAppRoot, "runtime", "evidence", evidenceFileName);
 const sandboxRoot = mkdtempSync(join(tmpdir(), "scm-path-contract-"));
 
 if (!existsSync(sourceEvidencePath)) {
@@ -73,7 +73,7 @@ async function startApp(appRoot, extraEnv = {}) {
       throw new Error(`SCM server exited before health check.\n${logs.join("").slice(-2000)}`);
     }
     try {
-      const response = await fetch(`${baseUrl}/api/deploy/health`);
+      const response = await fetch(`${baseUrl}/api/deploy/health`, { signal: AbortSignal.timeout(2000) });
       if (response.ok) return { child, baseUrl, logs };
     } catch {
       // The child may still be binding its local port.
@@ -94,7 +94,7 @@ async function stopApp(app) {
 }
 
 async function requestReview(app) {
-  const response = await fetch(`${app.baseUrl}/api/knowledge/evidence-quality-review`);
+  const response = await fetch(`${app.baseUrl}/api/knowledge/evidence-quality-review`, { signal: AbortSignal.timeout(2000) });
   return { response, payload: await response.json() };
 }
 

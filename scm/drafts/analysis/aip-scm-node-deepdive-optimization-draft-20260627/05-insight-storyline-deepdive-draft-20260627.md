@@ -132,11 +132,11 @@ AIP 落位：页面故事线是 AIP 闭环的**"最后一公里展示层"**—�
 
 | 新增/扩展 | 关键字段（设计）| 说明 |
 |---|---|---|
-| `storyline_template`（新，JSON）| page_id, spine(结论/现状/异常/归因/建议), version | A |
-| `insight_unit`（新，CSV/JSON）| id, page_id, metric_ref, baseline, threshold_or_tag, attribution_ref, suggestion_ref, confidence, evidence_refs | B/C |
+| `storyline_template`（新，JSON）| page_id, spine(结论/现状/异常/归因/建议), accepted_evidence_levels(`seed/real/certified`), version | A |
+| `insight_unit`（新，CSV/JSON）| id, page_id, metric_ref, baseline, threshold_or_tag, attribution_ref, suggestion_ref, confidence, evidence_refs, evidence_level(`seed/real/certified`), metric_certification_status, storyline_gate_status(`allowed/blocked`), gate_reason | B/C；未认证口径必须为 `blocked` |
 | `decision_overlay`（结构化现有 CSV）| metric_card_id, suggestion, owner, sla, risk_level | E |
 | `drill_path`（新）| page_id, step, question, dimension, target | F |
-| `storyline_freshness`（新）| page_id, caliber_aligned, last_refresh, boundary_note | G |
+| `storyline_freshness`（新）| page_id, metric_caliber_certified, evidence_gate_status, last_refresh, boundary_note | G；字段直接表达口径认证与证据门禁结果 |
 
 ## 8. 落地路线（P0/P1/P2）
 

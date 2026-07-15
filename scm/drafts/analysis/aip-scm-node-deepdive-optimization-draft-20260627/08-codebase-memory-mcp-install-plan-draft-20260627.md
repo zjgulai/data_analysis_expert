@@ -108,7 +108,7 @@ Index this project
 ```
 （即调用 `index_repository`，对当前目录首次全量解析、之后按文件内容哈希增量；内置 watcher 会用 git 轮询自适应增量同步。）
 
-- 索引目标优先：`drafts/prototypes/scm-data-governance-workbench-v0`（巨石所在）。
+- 索引目标优先：从 Git 仓库根目录使用 `scm/drafts/prototypes/scm-data-governance-workbench-v0`（巨石所在）；若工具以 `scm/` 为工作目录，则使用 `drafts/prototypes/scm-data-governance-workbench-v0`。
 - 确认 `.cbmignore` 生效，避免把 `tmp/`、`node_modules/`、`*.xlsx` 卷进图谱。
 - 首次索引完成后，可让 agent 做结构查询验证（见下）。
 

@@ -1,5 +1,5 @@
 import { DatabaseSync } from "node:sqlite";
-import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -7,7 +7,17 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
 const sourceRoot = resolve(root, "../../analysis/business-supply-chain-knowledge-base-draft-20260616/metric-system-blueprint");
 const dbPath = resolve(root, "data/governance_workbench.sqlite");
+const temporaryDbPath = resolve(root, "data", `governance_workbench.sqlite.build-${process.pid}`);
 const summaryPath = resolve(root, "data/import-summary.json");
+const databaseRebuildAuthorized = ["1", "true", "yes", "on"].includes(
+  String(process.env.SCM_DATABASE_REBUILD_AUTHORIZED || "").toLowerCase()
+);
+
+if (!databaseRebuildAuthorized) {
+  throw new Error(
+    "Database rebuild is not authorized. Set SCM_DATABASE_REBUILD_AUTHORIZED=1 only after backing up or explicitly approving replacement of the local SQLite ledger."
+  );
+}
 
 const metricJsonPath = resolve(sourceRoot, "supply-chain-metric-system-l0-l3-blueprint-mece-v2-20260618.json");
 const fieldMappingPath = resolve(sourceRoot, "supply-chain-metric-stage2-field-mapping-template-20260618.csv");
@@ -18,7 +28,18 @@ if (!existsSync(metricJsonPath)) {
 }
 
 mkdirSync(resolve(root, "data"), { recursive: true });
-const db = new DatabaseSync(dbPath);
+rmSync(temporaryDbPath, { force: true });
+const db = new DatabaseSync(temporaryDbPath);
+let databaseReplaced = false;
+process.on("exit", () => {
+  if (databaseReplaced) return;
+  try {
+    db.close();
+  } catch {
+    // The database may already be closed after a failed atomic rename.
+  }
+  rmSync(temporaryDbPath, { force: true });
+});
 
 function parseCsv(text) {
   const rows = [];
@@ -1277,7 +1298,9 @@ knowledgeDomains.forEach((domain) => {
 
 const summary = {
   imported_at: new Date().toISOString(),
-  sourceRoot,
+  sourceRoot: "scm/drafts/analysis/business-supply-chain-knowledge-base-draft-20260616/metric-system-blueprint",
+  databaseRebuildAuthorized,
+  replacementMode: "same-directory-temporary-database_then_atomic_rename",
   counts: {
     metrics: metrics.length,
     l3Metrics: l3Metrics.length,
@@ -1297,5 +1320,12 @@ const summary = {
   }
 };
 
+const integrity = db.prepare("PRAGMA integrity_check").get();
+if (integrity.integrity_check !== "ok") {
+  throw new Error(`Generated SQLite integrity check failed: ${integrity.integrity_check}`);
+}
+db.close();
+renameSync(temporaryDbPath, dbPath);
+databaseReplaced = true;
 writeFileSync(summaryPath, JSON.stringify(summary, null, 2));
 console.log(JSON.stringify(summary, null, 2));

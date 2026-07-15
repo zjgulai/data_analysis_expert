@@ -48,6 +48,8 @@ boundary: "analysis only；不改动现有代码；仅产出优化设计与落�
 
 **结论**：标签工程是当前最薄弱的节点——它有正确的表骨架（`tag_type/rule_expression/lifecycle_status/owner/quality_status`），但内容、可执行性、物化、治理流程几乎全空。这与用户"不专业、不完整"的判断完全一致。
 
+生命周期迁移约定：`mapped` 是历史过渡态，不属于规范持久化枚举。迁移时先把现存两条 `mapped` 记录回填为 `reviewed`，保留原值、迁移批次与复核人审计；随后断言 `lifecycle_status='mapped'` 的记录数为 `0`，再启用 `draft → reviewed → active → deprecated → archived` 约束。未完成回填前只允许读取兼容，不得把 `mapped` 当作 `active`。
+
 ## 3. 标杆方法论（Palantir AIP + 行业最佳实践）
 
 **3.1 Palantir 式三重升维**（与本仓 `inbox/ABI_LE_Palantir3_1.md` 一致）：

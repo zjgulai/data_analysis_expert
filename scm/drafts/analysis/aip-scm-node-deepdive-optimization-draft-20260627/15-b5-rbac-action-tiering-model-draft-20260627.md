@@ -56,7 +56,7 @@ B5 只完成 RBAC 与 action tiering 的内容契约：定义角色、资源、�
 | `data_governance_owner` | 指标/标签/血缘/认证治理 | L2 | metrics、tags、lineage、certifications、annotations |
 | `ai_operator` | AI 轨迹与建议作业操作人 | L1 | agent_runs、agent_traces、recommendation_cards |
 | `audit_reviewer` | 审计与复核 | L2 | trace_reviews、decision_logs、action_tasks |
-| `admin_local_config` | 本地原型配置维护 | L3 | 本地配置、迁移脚本、受控导出配置 |
+| `admin_local_config` | 本地原型配置维护；当前未启用 | disabled（L3 gate 通过后再启用） | 本地配置、迁移脚本、受控导出配置；当前不得绑定 actor |
 
 ## 5. 资源与权限矩阵
 
@@ -69,11 +69,13 @@ B5 只完成 RBAC 与 action tiering 的内容契约：定义角色、资源、�
 | `action_tasks` | owner role / `audit_reviewer` | owner role | owner role / `audit_reviewer` | `admin_local_config` | prohibited |
 | `agent_runs` / `agent_traces` / `trace_reviews` | owner role / `audit_reviewer` | `ai_operator` | `audit_reviewer` | `admin_local_config` | prohibited |
 | `decision_logs` | owner role / `audit_reviewer` | `data_governance_owner` | `audit_reviewer` | `admin_local_config` | prohibited |
-| `export_jobs` | scoped viewers | prohibited before L3 | `admin_local_config` | `admin_local_config` | prohibited |
+| `export_jobs` | scoped viewers | prohibited before L3 | prohibited before L3 | `admin_local_config`（当前 disabled） | prohibited |
 | provider chat / external API | prohibited | prohibited | prohibited | prohibited | prohibited |
 | ERP/OMS/WMS writeback | prohibited | prohibited | prohibited | prohibited | prohibited |
 
 `all roles by scope` 表示角色只能看到自己业务范围内的对象和指标；范围绑定未来由 `rbac_role_bindings` 或上游身份源提供。
+
+L3 未开放前，`admin_local_config` 不得启用或绑定，任何角色均不得通过 L2 approve/replay 访问 `export_jobs`；现有动作状态机继续止于 `suggestion_review_replay`。
 
 ## 6. 门禁规则
 

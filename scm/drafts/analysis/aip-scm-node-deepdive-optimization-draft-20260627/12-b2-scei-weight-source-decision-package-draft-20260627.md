@@ -65,8 +65,9 @@ B2 不提供默认数值。任何默认五等分或主观比例都必须先被 o
 
 | 门槛 | SQL / 规则 |
 |---|---|
-| 五项齐全 | `COUNT(weight)=5` for parent `SCM-MECE-L0-001`。 |
-| 合计闭合 | `ABS(SUM(weight)-1.0) <= 0.0001`。 |
+| 五项齐全且唯一 | parent `SCM-MECE-L0-001` 必须恰好包含 `SCM-MECE-L0-002` 至 `SCM-MECE-L0-006` 五个 `child_metric_id`；`COUNT(*)=5`、`COUNT(DISTINCT child_metric_id)=5`，不得出现其他子边。 |
+| 关系与权重 | 五条边均满足 `relation_type='WEIGHTED_COMPONENT'` 且 `weight IS NOT NULL`。 |
+| 合计闭合 | 在上述精确五边集合内校验 `ABS(SUM(weight)-1.0) <= 0.0001`。 |
 | 每项有依据 | `governance_note` 必须包含 `source=`、`owner_signoff=`、`decision_id=`。 |
 | 动作边界 | 所有回填仍只写本地 SQLite，`productionWrites=false/providerCalls=false/erpWriteback=false`。 |
 | 回归 | `npm run check`、`npm run build`、`npm run smoke:readonly`；若跑 api/ui smoke，验收后清理测试写入。 |

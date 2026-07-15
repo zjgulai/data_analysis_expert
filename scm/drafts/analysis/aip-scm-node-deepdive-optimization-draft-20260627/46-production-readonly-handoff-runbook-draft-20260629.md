@@ -29,12 +29,13 @@ boundary:
 本地执行：
 
 ```bash
-cd /Users/pray/project/ecom_ana_overview/scm/drafts/prototypes/scm-data-governance-workbench-v0
+export SCM_REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$SCM_REPO_ROOT/scm/drafts/prototypes/scm-data-governance-workbench-v0"
 npm run check
 npm run build
-SCM_PREPROD_SCAN_ROOT=/Users/pray/project/ecom_ana_overview/scm npm run preprod:check
+SCM_PREPROD_SCAN_ROOT="$SCM_REPO_ROOT/scm" npm run preprod:check
 docker compose -p scm_governance_workbench -f docker-compose.yml -f docker-compose.production.yml config
-find /Users/pray/project/ecom_ana_overview/scm -name '*.pem' -print
+test -z "$(rg --files "$SCM_REPO_ROOT/scm" -g '*.pem' -g '*.key')"
 ```
 
 生产服务器只读检查，必须在任何 `up -d` 前完成：
@@ -63,9 +64,18 @@ docker ps --filter name=scm-governance-workbench
 cd /opt/scm-governance-workbench
 export SCM_RELEASE_ID=scm-readonly-rc-20260629
 export SCM_GIT_SHA=<approved_git_sha>
+test -n "$SCM_GIT_SHA"
+test -z "$(git status --porcelain)"
+git cat-file -e "${SCM_GIT_SHA}^{commit}"
+git switch --detach "$SCM_GIT_SHA"
+test "$(git rev-parse HEAD)" = "$(git rev-parse "${SCM_GIT_SHA}^{commit}")"
+export SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED=0
+export SCM_DATABASE_WRITES_AUTHORIZED=0
 docker compose -p scm_governance_workbench -f docker-compose.yml -f docker-compose.production.yml config
 docker compose -p scm_governance_workbench -f docker-compose.yml -f docker-compose.production.yml up -d --build
 ```
+
+`SCM_GIT_SHA` 必须是 owner 批准的完整 commit SHA；源码校验失败或工作树非 clean 时立即停止。设置环境变量本身不构成源码一致性证明。
 
 不允许：
 

@@ -24,7 +24,10 @@ function checked(name, payload = {}) {
 }
 
 async function request(path, init = {}) {
-  const response = await fetch(`${baseUrl}${path}`, init);
+  const response = await fetch(`${baseUrl}${path}`, {
+    ...init,
+    signal: init.signal || AbortSignal.timeout(Number(process.env.SCM_SMOKE_REQUEST_TIMEOUT_MS || 10000))
+  });
   const contentType = response.headers.get("content-type") || "";
   let payload = null;
   if (init.method !== "HEAD") {
@@ -41,8 +44,12 @@ async function request(path, init = {}) {
 const health = (await request("/api/deploy/health")).payload;
 assert(health.ok === true, "deploy health must be ok");
 assert(health.boundary?.productionWrites === false, "productionWrites boundary must be false");
+assert(health.boundary?.databaseWrites === false, "databaseWrites boundary must be false");
+assert(health.boundary?.databaseWriteAuthorized === false, "databaseWriteAuthorized boundary must be false");
 assert(health.boundary?.providerCalls === false, "providerCalls boundary must be false");
 assert(health.boundary?.erpWriteback === false, "erpWriteback boundary must be false");
+assert(health.database?.path === "data/governance_workbench.sqlite", "deploy health must expose a portable database path");
+assert(!JSON.stringify(health).includes("/Users/"), "deploy health must not expose a developer home path");
 checked("deploy-health-readonly", {
   staticBuild: health.staticBuild,
   metrics: health.database?.metrics,
@@ -74,6 +81,8 @@ assert(aiKnowledgeQuality.summary?.candidateOnlyProbes === 3, "AI knowledge qual
 assert(aiKnowledgeQuality.summary?.boundary?.providerCalls === false, "AI knowledge quality review must keep provider calls closed");
 assert(aiKnowledgeQuality.summary?.boundary?.productionWrites === false, "AI knowledge quality review must keep production writes closed");
 assert(aiKnowledgeQuality.summary?.boundary?.draftDomainPromoted === false, "AI knowledge quality review must keep draft domain promotion closed");
+assert(!String(aiKnowledgeQuality.sourcePath || "").startsWith("/"), "AI knowledge evidence source path must be portable");
+assert(!JSON.stringify(aiKnowledgeQuality).includes("/Users/"), "AI knowledge evidence response must not expose a developer home path");
 checked("ai-knowledge-quality-review-readonly", {
   reviewPackets: aiKnowledgeQuality.reviewPackets.length,
   recommendedPath: aiKnowledgeQuality.summary.recommendedPath,
@@ -109,6 +118,10 @@ const thresholdGovernance = (await request("/api/risk-threshold-governance")).pa
 assert(Array.isArray(thresholdGovernance.thresholdVersions) && thresholdGovernance.thresholdVersions.length >= 5, "threshold governance must expose draft versions");
 assert(Array.isArray(thresholdGovernance.ownerDecisionPackets) && thresholdGovernance.ownerDecisionPackets.length === 3, "threshold governance must expose owner choice pack");
 assert(Array.isArray(thresholdGovernance.valueReviewPackets) && thresholdGovernance.valueReviewPackets.length === 5, "threshold governance must expose threshold value review pack");
+assert(
+  thresholdGovernance.thresholdVersions.every((threshold) => threshold.sourceEvidence?.length === threshold.evidenceRefs?.length),
+  "every threshold evidence ref must resolve to a source-coverage row"
+);
 assert(thresholdGovernance.policySummary?.recommendedPath === "A-A-A", "threshold policy summary must expose A-A-A recommendation");
 assert(thresholdGovernance.valueReviewSummary?.recommendedPath === "A-A-A-A-A", "threshold value summary must expose A-A-A-A-A recommendation");
 assert(thresholdGovernance.boundary?.operationalScoring === false, "threshold governance must keep scoring disabled");

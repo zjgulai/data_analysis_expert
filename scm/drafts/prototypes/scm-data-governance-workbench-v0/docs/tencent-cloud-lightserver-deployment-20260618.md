@@ -33,7 +33,7 @@ erp_writeback_status: not_called
 
 ```bash
 cd /opt/scm-governance-workbench/current
-docker compose -p scm_governance_workbench -f docker-compose.yml -f docker-compose.tencent.yml up -d --build
+SCM_DATABASE_WRITES_AUTHORIZED=0 docker compose -p scm_governance_workbench -f docker-compose.yml -f docker-compose.production.yml up -d --build
 ```
 
 ## 2026-06-22 前置包
@@ -84,7 +84,7 @@ Production deploy invariant:
 Pre-production local gate:
 
 ```bash
-SCM_PREPROD_SCAN_ROOT=/Users/pray/project/ecom_ana_overview/scm npm run preprod:check
+SCM_PREPROD_SCAN_ROOT="$(git rev-parse --show-toplevel)/scm" npm run preprod:check
 ```
 
 The gate is read-only. It can pass the read-only prototype release while still reporting manual gates for owner sign-off, field mappings, SCEI weight source, provider calls, production writes and ERP/OMS/WMS writeback.

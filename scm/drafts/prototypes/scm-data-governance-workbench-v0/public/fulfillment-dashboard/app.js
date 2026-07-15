@@ -1064,7 +1064,16 @@ function showToast(message) {
   window.setTimeout(() => toast.classList.remove("visible"), 1700);
 }
 
-function showModal(kind) {
+let modalTrigger = null;
+
+function closeModal() {
+  const modal = qs("#modal");
+  modal.classList.add("hidden");
+  if (modalTrigger instanceof HTMLElement) modalTrigger.focus();
+  modalTrigger = null;
+}
+
+function showModal(kind, trigger) {
   const modal = qs("#modal");
   const title = qs("#modalTitle");
   const body = qs("#modalBody");
@@ -1098,7 +1107,9 @@ function showModal(kind) {
   }[kind];
   title.textContent = content.title;
   body.innerHTML = content.body;
+  modalTrigger = trigger instanceof HTMLElement ? trigger : document.activeElement;
   modal.classList.remove("hidden");
+  window.requestAnimationFrame(() => qs("#closeModal").focus());
 }
 
 function setupInteractions() {
@@ -1125,12 +1136,35 @@ function setupInteractions() {
 
   qs("#saveView").addEventListener("click", () => showToast("视图已保存为本地原型状态"));
   qs("#clearFilters").addEventListener("click", () => showToast("筛选已恢复为样例默认值"));
-  qs("#closeModal").addEventListener("click", () => qs("#modal").classList.add("hidden"));
+  qs("#closeModal").addEventListener("click", closeModal);
   qs("#modal").addEventListener("click", (event) => {
-    if (event.target.id === "modal") qs("#modal").classList.add("hidden");
+    if (event.target.id === "modal") closeModal();
+  });
+  qs("#modal").addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeModal();
+      return;
+    }
+    if (event.key !== "Tab") return;
+    const focusable = Array.from(qs("#modal").querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'))
+      .filter((element) => !element.disabled && element.getClientRects().length > 0);
+    if (!focusable.length) {
+      event.preventDefault();
+      return;
+    }
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
   });
   qsa("[data-drilldown]").forEach((button) => {
-    button.addEventListener("click", () => showModal(button.dataset.drilldown));
+    button.addEventListener("click", () => showModal(button.dataset.drilldown, button));
   });
 }
 

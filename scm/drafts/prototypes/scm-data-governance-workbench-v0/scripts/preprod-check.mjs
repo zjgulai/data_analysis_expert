@@ -1,5 +1,5 @@
-import { readdirSync, readFileSync, statSync, existsSync } from "node:fs";
-import { isAbsolute, join, relative, resolve } from "node:path";
+import { mkdirSync, readdirSync, readFileSync, statSync, existsSync, writeFileSync } from "node:fs";
+import { dirname, isAbsolute, join, relative, resolve } from "node:path";
 import { execFileSync } from "node:child_process";
 import { DatabaseSync } from "node:sqlite";
 
@@ -10,16 +10,30 @@ const evidenceFileName = "ai-knowledge-evidence-quality-review-20260622.json";
 const configuredProjectRoot = String(process.env.SCM_PROJECT_ROOT || "").trim();
 const projectRoot = configuredProjectRoot ? resolve(configuredProjectRoot) : resolve(scanRoot);
 const configuredEvidencePath = String(process.env.SCM_AI_KNOWLEDGE_EVIDENCE_PATH || "").trim();
+const configuredOutputPath = String(process.env.SCM_PREPROD_OUTPUT_PATH || "").trim();
 const evidencePath = configuredEvidencePath
   ? (isAbsolute(configuredEvidencePath) ? resolve(configuredEvidencePath) : resolve(projectRoot, configuredEvidencePath))
   : join(root, "runtime", "evidence", evidenceFileName);
 const providerCallAuthorized = ["1", "true", "yes", "on"].includes(
   String(process.env.SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED || "").toLowerCase()
 );
+const databaseWriteAuthorized = ["1", "true", "yes", "on"].includes(
+  String(process.env.SCM_DATABASE_WRITES_AUTHORIZED || "").toLowerCase()
+);
 const checks = [];
 const hardBlockers = [];
 const manualGates = [];
 const warnings = [];
+
+function portablePath(path) {
+  const fromScanRoot = relative(resolve(scanRoot), resolve(path));
+  if (fromScanRoot === "") return ".";
+  if (!fromScanRoot.startsWith("..") && !isAbsolute(fromScanRoot)) return fromScanRoot;
+  const fromRoot = relative(root, resolve(path));
+  if (fromRoot === "") return ".";
+  if (!fromRoot.startsWith("..") && !isAbsolute(fromRoot)) return fromRoot;
+  return "external-path";
+}
 
 function record(name, ok, detail, severity = "hard") {
   checks.push({ name, ok, detail, severity });
@@ -79,6 +93,7 @@ function getGitDirtyCount() {
 const packageJson = JSON.parse(read("package.json"));
 const dockerfile = read("Dockerfile");
 const serverSource = read("server/index.mjs");
+const importSource = read("scripts/import-assets.mjs");
 const productionCompose = hasFile("docker-compose.production.yml") ? read("docker-compose.production.yml") : "";
 const requiredFiles = [
   "package-lock.json",
@@ -92,6 +107,8 @@ const requiredFiles = [
   "dist/fulfillment-dashboard/index.html",
   "dist/fulfillment-dashboard/data/fulfillment_chart_data_binding_20260626.csv",
   "scripts/smoke-api.mjs",
+  "scripts/smoke-database-gate.mjs",
+  "scripts/smoke-import-gate.mjs",
   "scripts/smoke-path-contract.mjs",
   "scripts/smoke-provider-gate.mjs",
   "scripts/smoke-readonly.mjs",
@@ -102,7 +119,7 @@ for (const file of requiredFiles) {
   record(`required-file:${file}`, hasFile(file), file);
 }
 
-for (const scriptName of ["check", "build", "smoke:api", "smoke:path-contract", "smoke:provider-gate", "smoke:readonly", "smoke:ui", "preprod:check"]) {
+for (const scriptName of ["check", "build", "smoke:api", "smoke:database-gate", "smoke:import-gate", "smoke:path-contract", "smoke:provider-gate", "smoke:readonly", "smoke:ui", "preprod:check"]) {
   record(`package-script:${scriptName}`, Boolean(packageJson.scripts?.[scriptName]), packageJson.scripts?.[scriptName] || "missing");
 }
 
@@ -110,8 +127,9 @@ const publicCopyIndex = dockerfile.indexOf("COPY public ./public");
 const buildIndex = dockerfile.indexOf("RUN npm run build");
 record("dockerfile-public-before-build", publicCopyIndex >= 0 && buildIndex >= 0 && publicCopyIndex < buildIndex, "Dockerfile copies public assets before Vite build");
 record("dockerfile-healthcheck", dockerfile.includes("HEALTHCHECK"), "Docker image has healthcheck");
-record("dockerfile-runtime-data-copy", dockerfile.includes("COPY data ./data"), "Docker image includes embedded data for standalone prototype");
-record("dockerfile-runtime-evidence-copy", dockerfile.includes("COPY runtime ./runtime"), "Docker image keeps immutable evidence outside the mutable SQLite volume");
+record("dockerfile-runtime-data-copy", dockerfile.includes("data ./data"), "Docker image includes embedded data for standalone prototype");
+record("dockerfile-runtime-evidence-copy", dockerfile.includes("runtime ./runtime"), "Docker image keeps immutable evidence outside the mutable SQLite volume");
+record("dockerfile-non-root-runtime", dockerfile.includes("USER node"), "Docker runtime uses the non-root node user");
 record(
   "server-provider-authorization-gate",
   serverSource.includes("SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED") && serverSource.includes("error.statusCode = 403"),
@@ -123,9 +141,28 @@ record(
   "Evidence path supports project-root and explicit path overrides"
 );
 record(
+  "server-database-authorization-gate",
+  serverSource.includes("SCM_DATABASE_WRITES_AUTHORIZED")
+    && serverSource.includes("readOnly: !databaseWriteAuthorized")
+    && serverSource.includes("validateDatabaseSchema()"),
+  "SQLite opens readonly by default, validates schema without repair, and gates mutation routes"
+);
+record(
+  "import-database-rebuild-authorization-and-atomic-replace",
+  importSource.includes("SCM_DATABASE_REBUILD_AUTHORIZED")
+    && importSource.includes("temporaryDbPath")
+    && importSource.includes("renameSync(temporaryDbPath, dbPath)"),
+  "Destructive import requires explicit authorization and replaces SQLite only after a successful temporary build"
+);
+record(
   "provider-call-authorization-default-closed",
   !providerCallAuthorized,
   { envVar: "SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED", authorized: providerCallAuthorized }
+);
+record(
+  "database-write-authorization-default-closed",
+  !databaseWriteAuthorized,
+  { envVar: "SCM_DATABASE_WRITES_AUTHORIZED", authorized: databaseWriteAuthorized }
 );
 
 let evidenceReviewPackets = 0;
@@ -139,7 +176,9 @@ try {
 record(
   "runtime-evidence-review-packet",
   evidenceReviewPackets >= 4,
-  evidenceLoadError ? { path: evidencePath, error: evidenceLoadError } : { path: evidencePath, evidenceReviewPackets, minimum: 4 }
+  evidenceLoadError
+    ? { path: portablePath(evidencePath), error: evidenceLoadError }
+    : { path: portablePath(evidencePath), evidenceReviewPackets, minimum: 4 }
 );
 
 record(
@@ -215,11 +254,12 @@ record("worktree-clean-for-release-tag", dirtyCount === 0, { dirtyCount }, "warn
 
 const result = {
   generatedAt: new Date().toISOString(),
-  root,
-  scanRoot,
+  root: portablePath(root),
+  scanRoot: ".",
   releaseBoundary: {
     readOnlyPrototypeProduction: hardBlockers.length === 0,
     providerCalls: providerCallAuthorized && Boolean(process.env.DEEPSEEK_API_KEY),
+    databaseWrites: databaseWriteAuthorized,
     productionWrites: false,
     erpWriteback: false,
     controlledWritebackProduction: false
@@ -243,5 +283,13 @@ const result = {
   checks
 };
 
-console.log(JSON.stringify(result, null, 2));
+const serializedResult = `${JSON.stringify(result, null, 2)}\n`;
+if (configuredOutputPath) {
+  const outputPath = isAbsolute(configuredOutputPath)
+    ? resolve(configuredOutputPath)
+    : resolve(root, configuredOutputPath);
+  mkdirSync(dirname(outputPath), { recursive: true });
+  writeFileSync(outputPath, serializedResult);
+}
+console.log(serializedResult.trimEnd());
 process.exitCode = hardBlockers.length ? 1 : 0;

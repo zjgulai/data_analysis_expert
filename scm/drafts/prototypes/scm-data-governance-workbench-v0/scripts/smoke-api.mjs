@@ -1,10 +1,26 @@
 const port = process.env.PORT || "5174";
 const baseUrl = process.env.SCM_WORKBENCH_BASE_URL || `http://127.0.0.1:${port}`;
+const requestTimeoutMs = Number(process.env.SCM_SMOKE_REQUEST_TIMEOUT_MS || 10000);
+
+function envFlag(name) {
+  return ["1", "true", "yes", "on"].includes(String(process.env[name] || "").toLowerCase());
+}
+
+function assertMutatingSmokeTarget() {
+  const hostname = new URL(baseUrl).hostname;
+  const loopback = ["127.0.0.1", "localhost", "::1", "[::1]"].includes(hostname);
+  if (!loopback && !envFlag("SCM_MUTATING_SMOKE_REMOTE_AUTHORIZED")) {
+    throw new Error("Mutating API smoke is restricted to loopback. Set SCM_MUTATING_SMOKE_REMOTE_AUTHORIZED=1 only for an explicitly approved disposable remote target.");
+  }
+}
+
+assertMutatingSmokeTarget();
 
 async function request(path, init = {}) {
   const response = await fetch(`${baseUrl}${path}`, {
     headers: { "Content-Type": "application/json", ...(init.headers || {}) },
-    ...init
+    ...init,
+    signal: init.signal || AbortSignal.timeout(requestTimeoutMs)
   });
   const contentType = response.headers.get("content-type") || "";
   const payload = contentType.includes("application/json")
@@ -19,7 +35,8 @@ async function request(path, init = {}) {
 async function requestRaw(path, init = {}) {
   const response = await fetch(`${baseUrl}${path}`, {
     headers: { "Content-Type": "application/json", ...(init.headers || {}) },
-    ...init
+    ...init,
+    signal: init.signal || AbortSignal.timeout(requestTimeoutMs)
   });
   const contentType = response.headers.get("content-type") || "";
   const payload = contentType.includes("application/json")
@@ -82,6 +99,7 @@ async function verifyExport(assetType, format, minimumRows = 1) {
 
 const health = (await request("/api/deploy/health")).payload;
 assert(health.ok === true, "deploy health must be ok");
+assert(health.boundary?.databaseWriteAuthorized === true, "API smoke requires SCM_DATABASE_WRITES_AUTHORIZED=1 on a disposable target");
 assert(health.database?.ontologyObjectInstances >= 10, "ontology object instances must be seeded");
 assert(health.database?.aipScenarios >= 3, "aip scenarios must be seeded");
 checked("deploy-health", {

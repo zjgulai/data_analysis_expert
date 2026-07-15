@@ -32,7 +32,7 @@ boundary:
 | B42-9/B42-10/B42-11/B42-12 | `46-production-readonly-handoff-runbook-draft-20260629.md` | done |
 | B42-13/B42-14/B42-15/B42-16 | `47-release-pr-staging-checklist-draft-20260629.md` | done |
 
-事实：本轮只写入本地 Markdown 文档与本地 smoke 文件历史备份；没有 stage、commit、push、PR、生产部署、provider call、ERP/OMS/WMS writeback。
+事实：本轮没有持久化生产写入；smoke 期间临时写入本地 SQLite，随后恢复，并写入本地 Markdown 文档与 smoke 文件历史备份。没有 stage、commit、push、PR、生产部署、provider call、ERP/OMS/WMS writeback。
 
 推断：当前 read-only prototype RC governance pack 已可进入人工 PR/发布审批前置讨论。
 

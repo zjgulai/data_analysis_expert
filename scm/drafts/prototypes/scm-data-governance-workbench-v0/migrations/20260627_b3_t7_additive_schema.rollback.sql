@@ -1,3 +1,6 @@
+-- DESTRUCTIVE SCHEMA ROLLBACK.
+-- Run only on a disposable database copy or after verifying every table below is empty.
+-- A populated database requires separate destructive authorization and a verified backup record.
 PRAGMA foreign_keys = OFF;
 
 BEGIN;
@@ -22,8 +25,6 @@ DROP TABLE IF EXISTS tag_assignment;
 
 DELETE FROM schema_migrations
 WHERE id = '20260627_b3_t7_additive_schema';
-
-DROP TABLE IF EXISTS schema_migrations;
 
 COMMIT;
 

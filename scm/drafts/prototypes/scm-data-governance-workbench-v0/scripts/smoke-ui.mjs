@@ -5,8 +5,23 @@ import { chromium } from "playwright";
 const port = process.env.PORT || "5174";
 const baseUrl = process.env.SCM_WORKBENCH_BASE_URL || `http://127.0.0.1:${port}`;
 const chromeExecutablePath = process.env.CHROME_EXECUTABLE_PATH || "";
+const requestTimeoutMs = Number(process.env.SCM_SMOKE_REQUEST_TIMEOUT_MS || 10000);
 const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 const outputDir = process.env.SCM_UI_SMOKE_OUTPUT_DIR || path.join("tmp", `ui-smoke-${timestamp}`);
+
+function envFlag(name) {
+  return ["1", "true", "yes", "on"].includes(String(process.env[name] || "").toLowerCase());
+}
+
+function assertMutatingSmokeTarget() {
+  const hostname = new URL(baseUrl).hostname;
+  const loopback = ["127.0.0.1", "localhost", "::1", "[::1]"].includes(hostname);
+  if (!loopback && !envFlag("SCM_MUTATING_SMOKE_REMOTE_AUTHORIZED")) {
+    throw new Error("Mutating UI smoke is restricted to loopback. Set SCM_MUTATING_SMOKE_REMOTE_AUTHORIZED=1 only for an explicitly approved disposable remote target.");
+  }
+}
+
+assertMutatingSmokeTarget();
 
 const viewports = [
   { name: "desktop-1366", width: 1366, height: 768 },
@@ -442,6 +457,13 @@ async function runInteractiveSmoke(browser) {
 }
 
 await mkdir(outputDir, { recursive: true });
+
+const healthResponse = await fetch(`${baseUrl}/api/deploy/health`, {
+  signal: AbortSignal.timeout(requestTimeoutMs)
+});
+const health = await healthResponse.json();
+assert(healthResponse.ok && health.ok === true, "UI smoke target must be healthy");
+assert(health.boundary?.databaseWriteAuthorized === true, "UI smoke requires SCM_DATABASE_WRITES_AUTHORIZED=1 on a disposable target");
 
 const launchOptions = {
   headless: true,

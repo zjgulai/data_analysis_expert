@@ -276,10 +276,15 @@ select
   count(distinct o.erp_code) as issue_orders,
   count(distinct case when s.stockout_type is not null then o.erp_code end) as linked_stockout_orders
 from fact_order_fulfillment_order_daily o
+left join fact_order_fulfillment_item_daily oi
+  on o.biz_date = oi.biz_date
+  and o.erp_code = oi.erp_code
 left join dim_issue_type i on o.issue_type = i.issue_type
 left join fact_stockout_signal_daily s
   on o.biz_date = s.biz_date
   and o.warehouse_code = s.warehouse_code
+  and oi.sku_code = s.sku_code
+  and s.stockout_type in ('订单缺货', '库存缺货', '预测缺货')
 where o.biz_date between :start_date and :end_date
   and o.issue_type is not null
 group by o.biz_date, coalesce(i.issue_type, '未分类'), coalesce(i.owner_domain, '待分配');
@@ -288,7 +293,7 @@ group by o.biz_date, coalesce(i.issue_type, '未分类'), coalesce(i.owner_domai
 校验规则：
 
 - 问题件类型必须能映射到责任域。
-- 与缺货相关的问题件必须能联动到 `stockout_type`。
+- 与缺货相关的问题件必须先通过订单明细关联到同一 `sku_code`，再联动到三类 `stockout_type`；禁止仅按日期和仓库放大关联。
 - 不能只有数量排行而没有处理动作。
 
 ## 9. 前端或 BI 取数字段
