@@ -1320,11 +1320,27 @@ function inferRefs(text) {
 function chunkText(text, maxChunks = 4, chunkSize = 900) {
   const clean = redactWorkstationPaths(stripMarkdown(text));
   const chunks = [];
-  for (let start = 0; start < clean.length && chunks.length < maxChunks; start += chunkSize) {
-    const chunk = clean.slice(start, start + chunkSize).trim();
-    if (chunk.length > 80) chunks.push(chunk);
+  let start = 0;
+  while (start < clean.length && chunks.length < maxChunks) {
+    while (start < clean.length && /\s/.test(clean[start])) start += 1;
+    if (start >= clean.length) break;
+    const target = Math.min(start + chunkSize, clean.length);
+    let end = target;
+    if (target < clean.length) {
+      const minimumBoundary = Math.min(start + 80, clean.length);
+      const previousBoundary = clean.lastIndexOf(" ", target);
+      if (previousBoundary >= minimumBoundary) {
+        end = previousBoundary;
+      } else {
+        const nextBoundary = clean.indexOf(" ", target);
+        end = nextBoundary === -1 ? clean.length : nextBoundary;
+      }
+    }
+    const chunk = clean.slice(start, end).trim();
+    if (chunk) chunks.push(chunk);
+    start = end;
   }
-  return chunks.length ? chunks : [clean.slice(0, chunkSize)];
+  return chunks.length ? chunks : [clean];
 }
 
 let knowledgeCardCount = 0;

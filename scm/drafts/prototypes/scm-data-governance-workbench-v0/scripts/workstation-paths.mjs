@@ -19,6 +19,15 @@ const terminalPunctuation = new Set([
   "，", "。", "；", "：", "！", "？", "、", "）", "】", "》", "」", "』"
 ]);
 const localFileAuthorities = new Set(["localhost", "127.0.0.1", "[::1]"]);
+const profileStopWords = new Set([
+  "and", "or", "is", "are", "was", "were", "be", "been", "being",
+  "has", "have", "had", "from", "at", "on", "in", "to", "for", "with",
+  "then", "next", "local"
+]);
+const hardProfilePunctuation = new Set([
+  "\"", "`", ")", "]", "}", ">", ",", ";", ":", "!", "?",
+  "，", "。", "；", "：", "！", "？", "、", "）", "】", "》", "」", "』"
+]);
 
 export const workstationHomeRedaction = "<workstation-home>";
 
@@ -27,7 +36,7 @@ function freshWorkstationHomeRootPattern() {
 }
 
 function freshUriPattern() {
-  return /[A-Za-z][A-Za-z0-9+.-]*:\/\/[^\s"'`<>{}()]+/g;
+  return /[A-Za-z][A-Za-z0-9+.-]*:\/\/[^\s"'`<>{}]+/g;
 }
 
 function isEscaped(text, index) {
@@ -152,27 +161,49 @@ function findFirstTokenBoundary(text, start, limit) {
   for (let index = start; index < limit; index += 1) {
     const value = text[index];
     if (/\s/.test(value)) return index;
-    if (terminalPunctuation.has(value) && isDelimiterBoundary(text[index + 1])) return index;
+    if (isProfilePunctuationBoundary(text, index)) return index;
   }
   return null;
 }
 
-function trimTerminalPunctuation(text, start, end) {
-  let cursor = end;
-  while (cursor > start && /\s/.test(text[cursor - 1])) cursor -= 1;
-  while (cursor > start && terminalPunctuation.has(text[cursor - 1])) cursor -= 1;
-  return cursor;
+function isProfilePunctuationBoundary(text, index) {
+  const value = text[index];
+  if (hardProfilePunctuation.has(value)) return true;
+  if (value === "'") return !/[\p{L}\p{N}]/u.test(text[index + 1] || "");
+  if (value === ".") return isDelimiterBoundary(text[index + 1]);
+  return false;
 }
 
 function isPlausibleSpacedProfile(value) {
   if (value !== value.trim()) return false;
   const parts = value.split(/\s+/);
-  return parts.length <= 3 && parts.every((part) => /^[\p{L}\p{N}._'’-]+$/u.test(part));
+  return parts.length <= 3
+    && parts.every((part) => /^[\p{L}\p{N}._'’-]+$/u.test(part))
+    && parts.slice(1).every((part) => !profileStopWords.has(part.toLowerCase()));
 }
 
-function isWholeLineValue(text, contextStart, hardLimit, lineLimit) {
-  const lineStart = Math.max(text.lastIndexOf("\n", contextStart - 1), text.lastIndexOf("\r", contextStart - 1)) + 1;
-  return text.slice(lineStart, contextStart).trim() === "" && text.slice(hardLimit, lineLimit).trim() === "";
+function findRootOnlyProfileEnd(text, start, limit) {
+  let cursor = start;
+  let lastTokenEnd = null;
+  let tokenCount = 0;
+  while (cursor < limit && tokenCount < 3) {
+    while (cursor < limit && /\s/.test(text[cursor])) cursor += 1;
+    if (cursor >= limit || isProfilePunctuationBoundary(text, cursor)) break;
+    const tokenStart = cursor;
+    while (
+      cursor < limit
+      && !/\s/.test(text[cursor])
+      && text[cursor] !== "/"
+      && text[cursor] !== "\\"
+      && !isProfilePunctuationBoundary(text, cursor)
+    ) cursor += 1;
+    if (cursor === tokenStart) break;
+    const token = text.slice(tokenStart, cursor);
+    if (tokenCount > 0 && profileStopWords.has(token.toLowerCase())) break;
+    lastTokenEnd = cursor;
+    tokenCount += 1;
+  }
+  return lastTokenEnd;
 }
 
 function findHomeEnd(text, candidate, nextCandidate) {
@@ -192,18 +223,15 @@ function findHomeEnd(text, candidate, nextCandidate) {
 
   const separator = findFirstSeparator(text, candidate.profileStart, hardLimit);
   const tokenBoundary = findFirstTokenBoundary(text, candidate.profileStart, hardLimit);
-  const wholeLineValue = isWholeLineValue(text, candidate.contextStart, hardLimit, lineLimit);
   if (separator !== null) {
     const profile = text.slice(candidate.profileStart, separator);
     const separatorBeforeBoundary = tokenBoundary === null || separator < tokenBoundary;
-    if (separatorBeforeBoundary || wrapperClose !== null || wholeLineValue || isPlausibleSpacedProfile(profile)) {
+    if (separatorBeforeBoundary || isPlausibleSpacedProfile(profile)) {
       return profile.trim() ? separator : null;
     }
   }
 
-  const end = wrapperClose !== null || wholeLineValue
-    ? trimTerminalPunctuation(text, candidate.profileStart, hardLimit)
-    : trimTerminalPunctuation(text, candidate.profileStart, tokenBoundary ?? hardLimit);
+  const end = findRootOnlyProfileEnd(text, candidate.profileStart, hardLimit);
   return end > candidate.profileStart && text.slice(candidate.profileStart, end).trim() ? end : null;
 }
 

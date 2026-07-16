@@ -134,6 +134,8 @@ try {
   writeFileSync(join(rebuildSource, metricBlueprintFile), `${JSON.stringify({ metrics: [] }, null, 2)}\n`);
   const knowledgeFixtureRoot = resolve(sandboxRoot, "../../analysis/jijia-scm-knowledge-base-draft-20260604");
   const knowledgeFixtureFile = join(knowledgeFixtureRoot, "portable-path-fixture.md");
+  const chunkBoundaryUrlFixtureFile = join(knowledgeFixtureRoot, "chunk-boundary-url-fixture.md");
+  const chunkBoundaryNestedFixtureFile = join(knowledgeFixtureRoot, "chunk-boundary-nested-fixture.md");
   const windowsSeparator = String.fromCharCode(92);
   const workstationPathFixtures = {
     mac: ["", "Users", "smoke-user", "private", "evidence.md"].join("/"),
@@ -168,7 +170,8 @@ try {
     "https://example.com/Users/alice/private",
     "https://example.com/home/alice/private",
     "https://example.com/#/Users/alice/private",
-    "https://example.com//home/alice/private"
+    "https://example.com//home/alice/private",
+    "https://example.com/(group)/Users/alice/private"
   ];
   const expectedFixtureRedactions = {
     mac: `${workstationHomeRedaction}/private/evidence.md`,
@@ -214,6 +217,27 @@ try {
       expectedCount: 2,
       expectedRedaction: `{"paths":"${workstationHomeRedaction} and ${workstationHomeRedaction}"}`,
       json: true
+    },
+    inlineSpacedRoot: {
+      value: "- /Users/Alice Smith",
+      expectedCount: 1,
+      expectedRedaction: `- ${workstationHomeRedaction}`
+    },
+    jsonSpacedHomes: {
+      value: `{"paths":"/Users/Alice Smith and /home/Bob Jones"}`,
+      expectedCount: 2,
+      expectedRedaction: `{"paths":"${workstationHomeRedaction} and ${workstationHomeRedaction}"}`,
+      json: true
+    },
+    commaWithoutSpace: {
+      value: "/Users/alice,next",
+      expectedCount: 1,
+      expectedRedaction: `${workstationHomeRedaction},next`
+    },
+    chinesePunctuationWithoutSpace: {
+      value: "路径=/Users/alice，下一步",
+      expectedCount: 1,
+      expectedRedaction: `路径=${workstationHomeRedaction}，下一步`
     }
   };
   for (const [name, value] of Object.entries(workstationPathFixtures)) {
@@ -267,6 +291,18 @@ try {
     knowledgeFixtureFile,
     knowledgeFixtureContent
   );
+  const urlBoundaryTitle = "Chunk boundary URL fixture";
+  const urlBoundaryPrefix = "https://example.com/#";
+  const urlBoundaryFillerLength = 900 - urlBoundaryTitle.length - 1 - urlBoundaryPrefix.length;
+  const chunkBoundaryBenignUrl = `${urlBoundaryPrefix}${"x".repeat(urlBoundaryFillerLength)}/Users/alice/private`;
+  writeFileSync(chunkBoundaryUrlFixtureFile, `# ${urlBoundaryTitle}\n\n${chunkBoundaryBenignUrl}\n`);
+
+  const nestedBoundaryTitle = "Chunk boundary nested fixture";
+  const nestedBoundaryFillerLength = 900 - nestedBoundaryTitle.length - 1 - workstationHomeRedaction.length - 1;
+  const nestedBoundaryFiller = "x".repeat(nestedBoundaryFillerLength);
+  const chunkBoundaryNestedPath = `/Users/alice/${nestedBoundaryFiller}/Users/bob`;
+  const expectedChunkBoundaryNestedPath = `${workstationHomeRedaction}/${nestedBoundaryFiller}/Users/bob`;
+  writeFileSync(chunkBoundaryNestedFixtureFile, `# ${nestedBoundaryTitle}\n\n${chunkBoundaryNestedPath}\n`);
   const rebuildResult = spawnSync(process.execPath, [join(sandboxScriptDir, "import-assets.mjs")], {
     cwd: sandboxRoot,
     env: {
@@ -320,13 +356,29 @@ try {
       const chunkTextFixture = chunkFixtures.map((chunk) => String(chunk.text || "")).join("");
       const actualImportedRedactions = (chunkTextFixture.match(/<workstation-home>/g) || []).length;
       const missingChunkBenignUrls = benignUrlFixtures.filter((value) => !chunkTextFixture.includes(value));
+      const boundaryCards = rebuiltDb.prepare("SELECT id, title FROM knowledge_cards WHERE title IN (?, ?) ORDER BY title")
+        .all(nestedBoundaryTitle, urlBoundaryTitle);
+      const boundaryChunks = new Map(boundaryCards.map((card) => [
+        card.title,
+        rebuiltDb.prepare("SELECT text FROM knowledge_chunks WHERE card_id = ? ORDER BY chunk_index").all(card.id)
+      ]));
+      const urlBoundaryChunks = boundaryChunks.get(urlBoundaryTitle) || [];
+      const nestedBoundaryChunks = boundaryChunks.get(nestedBoundaryTitle) || [];
+      const allBoundaryChunks = [...urlBoundaryChunks, ...nestedBoundaryChunks].map((chunk) => String(chunk.text || ""));
+      const boundaryChunksPortable = allBoundaryChunks.every((chunk) => countWorkstationHomePaths(chunk) === 0 && redactWorkstationPaths(chunk) === chunk);
+      const reconstructedUrlBoundary = urlBoundaryChunks.map((chunk) => String(chunk.text || "")).join("");
+      const reconstructedNestedBoundary = nestedBoundaryChunks.map((chunk) => String(chunk.text || "")).join("");
       const fixtureChecks = [
         [domainFixture?.source_path === expectedDomainPath, "authorized rebuild knowledge domain path must be repository-relative"],
         [cardFixture?.source_path === expectedCardPath, "authorized rebuild knowledge card path must be repository-relative"],
         [(summaryFixture.match(/<workstation-home>/g) || []).length >= 2, "authorized rebuild knowledge summary must redact path-bearing content"],
         [actualImportedRedactions === expectedImportedRedactions, `authorized rebuild knowledge chunks must redact all workstation homes (${actualImportedRedactions}/${expectedImportedRedactions})`],
         [benignUrlFixtures.slice(0, 3).every((value) => summaryFixture.includes(value)), "authorized rebuild knowledge summary must preserve its benign URL excerpt"],
-        [missingChunkBenignUrls.length === 0, `authorized rebuild knowledge chunks must preserve benign URLs (missing ${missingChunkBenignUrls.join(", ") || "none"})`]
+        [missingChunkBenignUrls.length === 0, `authorized rebuild knowledge chunks must preserve benign URLs (missing ${missingChunkBenignUrls.join(", ") || "none"})`],
+        [boundaryCards.length === 2, "authorized rebuild must import both chunk-boundary fixtures"],
+        [boundaryChunksPortable, "authorized rebuild must not split a benign URL or redacted nested path into a new workstation-home candidate"],
+        [reconstructedUrlBoundary.includes(chunkBoundaryBenignUrl), "authorized rebuild must preserve the boundary-spanning benign URL"],
+        [reconstructedNestedBoundary.includes(expectedChunkBoundaryNestedPath), "authorized rebuild must preserve one idempotently redacted nested path across chunk boundaries"]
       ];
       for (const [ok, message] of fixtureChecks) {
         if (!ok) failures.push(message);
