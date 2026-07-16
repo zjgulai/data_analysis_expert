@@ -335,7 +335,9 @@ export function FinanceCostGovernancePanel({
           <div>
             <p className="eyebrow">Finance Cost Policy Summary</p>
             <h3>{policy.title || "财务成本治理政策摘要"}</h3>
-            <p>把已授权的 A-A-A-A 转成可读规则：费用口径进入治理视图，账单钻取、交易明细、会计写入和生产同步保持关闭。</p>
+            <p>{policy.ownerChoice === "A-A-A-A"
+              ? "把已授权的 A-A-A-A 转成可读规则：费用口径进入治理视图，账单钻取、交易明细、会计写入和生产同步保持关闭。"
+              : "按实际责任人回执呈现受限政策；未获批准或未识别的用途不生效，写入与外部副作用继续关闭。"}</p>
           </div>
           <div className="inlineBadges">
             <Badge tone={policy.ownerChoice === "A-A-A-A" ? "good" : "warn"}>{policy.ownerChoice}</Badge>

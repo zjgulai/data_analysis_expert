@@ -2705,6 +2705,18 @@ function getFinanceCostGovernance() {
   const receiptByMetric = new Map(
     formalOwnerReceipts.map((receipt) => [decisionReference(receipt), receipt])
   );
+  const ownerPacketByMetric = new Map(
+    ownerDecisionPackets.map((packet) => [packet.linkedMetricId, packet])
+  );
+  const effectiveUseByStatus = new Map([
+    ["approved_cost_type_mapping", [
+      "费用类型口径可进入 CostEvent 治理视图",
+      "财务成本证据可用于风险解释和 owner review"
+    ]],
+    ["variance_register_only", ["费用类型差异清单可用于财务 owner review"]],
+    ["reconciliation_rule_draft_only", ["成本异常可生成治理视图候选解释"]],
+    ["reconciliation_exception_candidates", ["成本异常可生成治理视图候选解释"]]
+  ]);
   const policyDecisions = [
     {
       packetId: "FIN-OWNER-001",
@@ -2736,26 +2748,43 @@ function getFinanceCostGovernance() {
     }
   ].map((decision) => {
     const receipt = receiptByMetric.get(decision.linkedMetricId);
+    const packet = ownerPacketByMetric.get(decision.linkedMetricId);
+    const recordedChoice = receipt
+      ? packet?.choices.find((choice) => choice.status === receipt.status)
+      : undefined;
     return {
       ...decision,
-      selectedChoice: receipt ? "A" : "pending",
+      policy: receipt
+        ? (recordedChoice?.reviewNote || `未识别回执状态 ${receipt.status || "empty"}，禁止启用任何政策用途。`)
+        : decision.policy,
+      status: receipt?.status || decision.status,
+      selectedChoice: receipt ? (recordedChoice?.code || "unrecognized") : "pending",
       receiptId: receipt?.id || "",
       recordedStatus: receipt?.status || "owner_pending",
-      recorded: Boolean(receipt)
+      recorded: Boolean(receipt),
+      choiceRecognized: Boolean(recordedChoice),
+      permittedUses: recordedChoice ? (effectiveUseByStatus.get(recordedChoice.status) || []) : []
     };
   });
   const recordedPolicyCount = policyDecisions.filter((decision) => decision.recorded).length;
+  const resolvedPolicyCount = policyDecisions.filter((decision) => decision.choiceRecognized).length;
+  const ownerChoice = resolvedPolicyCount === policyDecisions.length
+    ? policyDecisions.map((decision) => decision.selectedChoice).join("-")
+    : "pending";
+  const policyStatus = recordedPolicyCount !== policyDecisions.length
+    ? "owner_receipts_incomplete"
+    : resolvedPolicyCount !== policyDecisions.length
+      ? "owner_receipts_invalid"
+      : ownerChoice === "A-A-A-A"
+        ? "recorded_local_governance_policy"
+        : "recorded_local_governance_policy_restricted";
   const policySummary = {
-    id: "FIN-COST-POLICY-A-A-A-A",
+    id: `FIN-COST-POLICY-${ownerChoice.toUpperCase()}`,
     title: "财务成本治理政策摘要",
-    ownerChoice: recordedPolicyCount === 4 ? "A-A-A-A" : "pending",
-    status: recordedPolicyCount === 4 ? "recorded_local_governance_policy" : "owner_receipts_incomplete",
+    ownerChoice,
+    status: policyStatus,
     scope: "governance_view_only",
-    effectiveUse: [
-      "费用类型口径可进入 CostEvent 治理视图",
-      "成本异常可生成治理视图候选解释",
-      "财务成本证据可用于风险解释和 owner review"
-    ],
+    effectiveUse: [...new Set(policyDecisions.flatMap((decision) => decision.permittedUses))],
     closedActions: [
       "bill drill-down closed",
       "transaction detail import closed",
