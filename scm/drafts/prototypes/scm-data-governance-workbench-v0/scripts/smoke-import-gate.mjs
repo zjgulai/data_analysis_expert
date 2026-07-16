@@ -139,14 +139,22 @@ try {
     mac: ["", "Users", "smoke-user", "private", "evidence.md"].join("/"),
     linux: ["", "home", "smoke-user", "private", "evidence.md"].join("/"),
     windows: ["C:", "Users", "Alice Smith", "private", "evidence.md"].join(windowsSeparator),
-    mixed: `C:${windowsSeparator}Users/smoke-user/private/evidence.md`
+    mixed: `C:${windowsSeparator}Users/smoke-user/private/evidence.md`,
+    macRoot: ["", "Users", "smoke-root"].join("/"),
+    linuxRoot: ["", "home", "smoke-root"].join("/"),
+    windowsRoot: ["C:", "Users", "smoke-root"].join(windowsSeparator),
+    rootedWindowsRoot: ["", "Users", "smoke-root"].join(windowsSeparator)
   };
   const benignUrlFixture = "https://example.com/users/42";
   const expectedFixtureRedactions = {
     mac: `${workstationHomeRedaction}/private/evidence.md`,
     linux: `${workstationHomeRedaction}/private/evidence.md`,
     windows: `${workstationHomeRedaction}${windowsSeparator}private${windowsSeparator}evidence.md`,
-    mixed: `${workstationHomeRedaction}/private/evidence.md`
+    mixed: `${workstationHomeRedaction}/private/evidence.md`,
+    macRoot: workstationHomeRedaction,
+    linuxRoot: workstationHomeRedaction,
+    windowsRoot: workstationHomeRedaction,
+    rootedWindowsRoot: workstationHomeRedaction
   };
   for (const [name, value] of Object.entries(workstationPathFixtures)) {
     if (countWorkstationHomePaths(value) !== 1) failures.push(`${name} workstation fixture must have exactly one matcher hit`);
@@ -165,6 +173,10 @@ try {
       `windows ${workstationPathFixtures.windows}`,
       `mixed ${workstationPathFixtures.mixed}`,
       `url ${benignUrlFixture}`,
+      `mac-root ${workstationPathFixtures.macRoot}`,
+      `linux-root ${workstationPathFixtures.linuxRoot}`,
+      `windows-root ${workstationPathFixtures.windowsRoot}`,
+      `rooted-windows-root ${workstationPathFixtures.rootedWindowsRoot}`,
       ""
     ].join("\n")
   );
@@ -223,8 +235,8 @@ try {
       const fixtureChecks = [
         [domainFixture?.source_path === expectedDomainPath, "authorized rebuild knowledge domain path must be repository-relative"],
         [cardFixture?.source_path === expectedCardPath, "authorized rebuild knowledge card path must be repository-relative"],
-        [(summaryFixture.match(/<workstation-home>/g) || []).length === 4, "authorized rebuild knowledge summary must redact all workstation homes"],
-        [(chunkTextFixture.match(/<workstation-home>/g) || []).length === 4, "authorized rebuild knowledge chunk must redact all workstation homes"],
+        [(summaryFixture.match(/<workstation-home>/g) || []).length === Object.keys(workstationPathFixtures).length, "authorized rebuild knowledge summary must redact all workstation homes"],
+        [(chunkTextFixture.match(/<workstation-home>/g) || []).length === Object.keys(workstationPathFixtures).length, "authorized rebuild knowledge chunk must redact all workstation homes"],
         [summaryFixture.includes(expectedWindowsRedactedPath), "authorized rebuild knowledge summary must redact a Windows profile containing spaces"],
         [chunkTextFixture.includes(expectedWindowsRedactedPath), "authorized rebuild knowledge chunk must redact a Windows profile containing spaces"],
         [summaryFixture.includes(benignUrlFixture), "authorized rebuild knowledge summary must preserve a benign users URL"],

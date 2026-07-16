@@ -1,9 +1,19 @@
-const workstationHomePattern = /[A-Za-z]:[\\/]+[Uu][Ss][Ee][Rr][Ss][\\/]+[^\\/\r\n"'`<>]+(?=[\\/])|(?<![A-Za-z0-9._~%+-])\\+[Uu][Ss][Ee][Rr][Ss][\\/]+[^\\/\r\n"'`<>]+(?=[\\/])|(?<![A-Za-z0-9._~%+-])\/Users[\\/]+[^\\/\r\n"'`<>]+(?=[\\/])|(?<![A-Za-z0-9._~%+-])\/home[\\/]+[^\\/\r\n"'`<>]+(?=[\\/])/g;
+const workstationHomeBoundary = /(?<![A-Za-z0-9._~%+-])/.source;
+const workstationProfile = /(?:[^\\/\r\n"'`<>]+(?=[\\/])|[^\\/\r\n"'`<>]+(?=["'`<>])|[^\\/\s\r\n"'`<>]+(?=$|\s|["'`<>)}\]]))/.source;
+const workstationHomeRoots = [
+  /[A-Za-z]:[\\/]+[Uu][Ss][Ee][Rr][Ss][\\/]+/.source,
+  /\\+[Uu][Ss][Ee][Rr][Ss][\\/]+/.source,
+  /\/Users[\\/]+/.source,
+  /\/home[\\/]+/.source
+];
+const workstationHomePatternSource = workstationHomeRoots
+  .map((root) => `${workstationHomeBoundary}(?:${root})${workstationProfile}`)
+  .join("|");
 
 export const workstationHomeRedaction = "<workstation-home>";
 
 function freshWorkstationHomePattern() {
-  return new RegExp(workstationHomePattern.source, workstationHomePattern.flags);
+  return new RegExp(workstationHomePatternSource, "g");
 }
 
 export function countWorkstationHomePaths(value) {
