@@ -1,3 +1,5 @@
+import { countWorkstationHomePaths } from "./workstation-paths.mjs";
+
 const port = process.env.PORT || "5174";
 const baseUrl = process.env.SCM_WORKBENCH_READONLY_BASE_URL
   || process.env.SCM_WORKBENCH_BASE_URL
@@ -49,7 +51,7 @@ assert(health.boundary?.databaseWriteAuthorized === false, "databaseWriteAuthori
 assert(health.boundary?.providerCalls === false, "providerCalls boundary must be false");
 assert(health.boundary?.erpWriteback === false, "erpWriteback boundary must be false");
 assert(health.database?.path === "data/governance_workbench.sqlite", "deploy health must expose a portable database path");
-assert(!JSON.stringify(health).includes("/Users/"), "deploy health must not expose a developer home path");
+assert(countWorkstationHomePaths(JSON.stringify(health)) === 0, "deploy health must not expose a developer home path");
 checked("deploy-health-readonly", {
   staticBuild: health.staticBuild,
   metrics: health.database?.metrics,
@@ -82,7 +84,7 @@ assert(aiKnowledgeQuality.summary?.boundary?.providerCalls === false, "AI knowle
 assert(aiKnowledgeQuality.summary?.boundary?.productionWrites === false, "AI knowledge quality review must keep production writes closed");
 assert(aiKnowledgeQuality.summary?.boundary?.draftDomainPromoted === false, "AI knowledge quality review must keep draft domain promotion closed");
 assert(!String(aiKnowledgeQuality.sourcePath || "").startsWith("/"), "AI knowledge evidence source path must be portable");
-assert(!JSON.stringify(aiKnowledgeQuality).includes("/Users/"), "AI knowledge evidence response must not expose a developer home path");
+assert(countWorkstationHomePaths(JSON.stringify(aiKnowledgeQuality)) === 0, "AI knowledge evidence response must not expose a developer home path");
 checked("ai-knowledge-quality-review-readonly", {
   reviewPackets: aiKnowledgeQuality.reviewPackets.length,
   recommendedPath: aiKnowledgeQuality.summary.recommendedPath,

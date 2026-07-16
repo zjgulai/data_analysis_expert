@@ -5,6 +5,7 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { DatabaseSync } from "node:sqlite";
+import { countWorkstationHomePaths, redactWorkstationPaths, workstationHomeRedaction } from "./workstation-paths.mjs";
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const sourceAppRoot = resolve(scriptDir, "..");
@@ -37,22 +38,21 @@ function quoteIdentifier(value) {
 }
 
 function countDatabasePersonalPaths(db) {
-  const patterns = ["%/users/%", "%/home/%", "%:\\users\\%", "%\\users\\%"];
   let hits = 0;
   const tables = db.prepare("SELECT name FROM sqlite_schema WHERE type='table' AND name NOT LIKE 'sqlite_%'").all();
   for (const { name } of tables) {
     const columns = db.prepare(`PRAGMA table_info(${quoteIdentifier(name)})`).all()
-      .filter((column) => String(column.type || "").toUpperCase().includes("TEXT"));
+      .filter((column) => /(CHAR|CLOB|TEXT)/i.test(String(column.type || "")));
     for (const column of columns) {
-      const predicates = patterns.map(() => `lower(${quoteIdentifier(column.name)}) LIKE ?`).join(" OR ");
-      hits += Number(db.prepare(`SELECT COUNT(*) AS count FROM ${quoteIdentifier(name)} WHERE ${predicates}`).get(...patterns)?.count || 0);
+      const values = db.prepare(`SELECT ${quoteIdentifier(column.name)} AS value FROM ${quoteIdentifier(name)} WHERE ${quoteIdentifier(column.name)} IS NOT NULL`).all();
+      hits += values.filter(({ value }) => countWorkstationHomePaths(value) > 0).length;
     }
   }
   return hits;
 }
 
 function countRawDatabasePersonalPaths(path) {
-  return (readFileSync(path).toString("latin1").match(/\/users\/|\/home\/|\\users\\/gi) || []).length;
+  return countWorkstationHomePaths(readFileSync(path).toString("latin1"));
 }
 
 const sourceHashBefore = hashFile(sourceDatabasePath);
@@ -134,11 +134,39 @@ try {
   writeFileSync(join(rebuildSource, metricBlueprintFile), `${JSON.stringify({ metrics: [] }, null, 2)}\n`);
   const knowledgeFixtureRoot = resolve(sandboxRoot, "../../analysis/jijia-scm-knowledge-base-draft-20260604");
   const knowledgeFixtureFile = join(knowledgeFixtureRoot, "portable-path-fixture.md");
-  const workstationPathFixture = ["", "Users", "smoke-user", "private", "evidence.md"].join("/");
+  const windowsSeparator = String.fromCharCode(92);
+  const workstationPathFixtures = {
+    mac: ["", "Users", "smoke-user", "private", "evidence.md"].join("/"),
+    linux: ["", "home", "smoke-user", "private", "evidence.md"].join("/"),
+    windows: ["C:", "Users", "Alice Smith", "private", "evidence.md"].join(windowsSeparator),
+    mixed: `C:${windowsSeparator}Users/smoke-user/private/evidence.md`
+  };
+  const benignUrlFixture = "https://example.com/users/42";
+  const expectedFixtureRedactions = {
+    mac: `${workstationHomeRedaction}/private/evidence.md`,
+    linux: `${workstationHomeRedaction}/private/evidence.md`,
+    windows: `${workstationHomeRedaction}${windowsSeparator}private${windowsSeparator}evidence.md`,
+    mixed: `${workstationHomeRedaction}/private/evidence.md`
+  };
+  for (const [name, value] of Object.entries(workstationPathFixtures)) {
+    if (countWorkstationHomePaths(value) !== 1) failures.push(`${name} workstation fixture must have exactly one matcher hit`);
+    if (redactWorkstationPaths(value) !== expectedFixtureRedactions[name]) failures.push(`${name} workstation fixture must redact exactly the home prefix`);
+  }
+  if (countWorkstationHomePaths(benignUrlFixture) !== 0) failures.push("benign users URL must have zero workstation matcher hits");
+  if (redactWorkstationPaths(benignUrlFixture) !== benignUrlFixture) failures.push("benign users URL must remain unchanged by redaction");
   mkdirSync(knowledgeFixtureRoot, { recursive: true });
   writeFileSync(
     knowledgeFixtureFile,
-    `# Portable path fixture\n\nLocal evidence was previously stored at ${workstationPathFixture}.\n`
+    [
+      "# Portable path fixture",
+      "",
+      `mac ${workstationPathFixtures.mac}`,
+      `linux ${workstationPathFixtures.linux}`,
+      `windows ${workstationPathFixtures.windows}`,
+      `mixed ${workstationPathFixtures.mixed}`,
+      `url ${benignUrlFixture}`,
+      ""
+    ].join("\n")
   );
   const rebuildResult = spawnSync(process.execPath, [join(sandboxScriptDir, "import-assets.mjs")], {
     cwd: sandboxRoot,
@@ -189,12 +217,18 @@ try {
         : null;
       const expectedDomainPath = "scm/drafts/analysis/jijia-scm-knowledge-base-draft-20260604";
       const expectedCardPath = `${expectedDomainPath}/portable-path-fixture.md`;
-      const expectedRedactedPath = "<workstation-home>/private/evidence.md";
+      const expectedWindowsRedactedPath = expectedFixtureRedactions.windows;
+      const summaryFixture = String(cardFixture?.summary || "");
+      const chunkTextFixture = String(chunkFixture?.text || "");
       const fixtureChecks = [
         [domainFixture?.source_path === expectedDomainPath, "authorized rebuild knowledge domain path must be repository-relative"],
         [cardFixture?.source_path === expectedCardPath, "authorized rebuild knowledge card path must be repository-relative"],
-        [String(cardFixture?.summary || "").includes(expectedRedactedPath), "authorized rebuild knowledge summary must redact the workstation home"],
-        [String(chunkFixture?.text || "").includes(expectedRedactedPath), "authorized rebuild knowledge chunk must redact the workstation home"]
+        [(summaryFixture.match(/<workstation-home>/g) || []).length === 4, "authorized rebuild knowledge summary must redact all workstation homes"],
+        [(chunkTextFixture.match(/<workstation-home>/g) || []).length === 4, "authorized rebuild knowledge chunk must redact all workstation homes"],
+        [summaryFixture.includes(expectedWindowsRedactedPath), "authorized rebuild knowledge summary must redact a Windows profile containing spaces"],
+        [chunkTextFixture.includes(expectedWindowsRedactedPath), "authorized rebuild knowledge chunk must redact a Windows profile containing spaces"],
+        [summaryFixture.includes(benignUrlFixture), "authorized rebuild knowledge summary must preserve a benign users URL"],
+        [chunkTextFixture.includes(benignUrlFixture), "authorized rebuild knowledge chunk must preserve a benign users URL"]
       ];
       for (const [ok, message] of fixtureChecks) {
         if (!ok) failures.push(message);

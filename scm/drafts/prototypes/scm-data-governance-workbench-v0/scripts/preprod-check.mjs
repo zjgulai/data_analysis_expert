@@ -3,6 +3,7 @@ import { mkdirSync, readdirSync, readFileSync, statSync, existsSync, writeFileSy
 import { basename, dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { execFileSync } from "node:child_process";
 import { DatabaseSync } from "node:sqlite";
+import { countWorkstationHomePaths } from "./workstation-paths.mjs";
 
 const root = process.cwd();
 const scanRoot = process.env.SCM_PREPROD_SCAN_ROOT || root;
@@ -209,9 +210,8 @@ const manualGateEvidenceFiles = [...new Set(manualGateEvidenceRoots.flatMap((dir
       || /^(?:6[3-9]|70)-manual-gate/.test(basename(path))
     )
   );
-const workstationPathPattern = /(?:[\\/]{1,2}Users[\\/]{1,2}|[\\/]{1,2}home[\\/]{1,2})/i;
 const manualGatePathFailures = manualGateEvidenceFiles
-  .filter((path) => workstationPathPattern.test(readFileSync(path, "utf8")))
+  .filter((path) => countWorkstationHomePaths(readFileSync(path, "utf8")) > 0)
   .map((path) => portablePath(path));
 record(
   "manual-gate-evidence-portable-paths",
@@ -340,25 +340,34 @@ for (const { name } of textTables) {
 }
 record("db-secret-pattern-scan", dbSecretHits === 0, { dbSecretHits });
 
-const personalPathPatterns = ["%/users/%", "%/home/%", "%:\\users\\%", "%\\users\\%"];
 const dbPersonalPathHitLocations = [];
 let dbPersonalPathHits = 0;
+let dbPersonalPathOccurrences = 0;
 for (const { name } of textTables) {
-  const columns = db.prepare(`pragma table_info(${qi(name)})`).all().filter((column) => String(column.type || "").toUpperCase().includes("TEXT"));
+  const columns = db.prepare(`pragma table_info(${qi(name)})`).all()
+    .filter((column) => /(CHAR|CLOB|TEXT)/i.test(String(column.type || "")));
   for (const column of columns) {
-    const predicates = personalPathPatterns.map(() => `lower(${qi(column.name)}) like ?`).join(" or ");
-    const hits = Number(db.prepare(`select count(*) as count from ${qi(name)} where ${predicates}`).get(...personalPathPatterns)?.count || 0);
+    const values = db.prepare(`select ${qi(column.name)} as value from ${qi(name)} where ${qi(column.name)} is not null`).all();
+    let hits = 0;
+    let occurrences = 0;
+    for (const { value } of values) {
+      const count = countWorkstationHomePaths(value);
+      if (!count) continue;
+      hits += 1;
+      occurrences += count;
+    }
     if (!hits) continue;
     dbPersonalPathHits += hits;
-    dbPersonalPathHitLocations.push({ table: name, column: column.name, hits });
+    dbPersonalPathOccurrences += occurrences;
+    dbPersonalPathHitLocations.push({ table: name, column: column.name, hits, occurrences });
   }
 }
 record(
   "db-personal-path-pattern-scan",
   dbPersonalPathHits === 0,
-  { dbPersonalPathHits, locations: dbPersonalPathHitLocations }
+  { dbPersonalPathHits, dbPersonalPathOccurrences, locations: dbPersonalPathHitLocations }
 );
-const dbPersonalPathRawByteHits = (readFileSync(dbPath).toString("latin1").match(/\/users\/|\/home\/|\\users\\/gi) || []).length;
+const dbPersonalPathRawByteHits = countWorkstationHomePaths(readFileSync(dbPath).toString("latin1"));
 record(
   "db-personal-path-raw-byte-scan",
   dbPersonalPathRawByteHits === 0,

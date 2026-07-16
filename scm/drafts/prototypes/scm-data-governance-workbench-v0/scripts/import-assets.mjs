@@ -2,6 +2,7 @@ import { DatabaseSync } from "node:sqlite";
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { basename, dirname, isAbsolute, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+import { redactWorkstationPaths } from "./workstation-paths.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
@@ -167,12 +168,6 @@ function findRepositoryRoot(start) {
     if (parent === current) return root;
     current = parent;
   }
-}
-
-function redactWorkstationPaths(value) {
-  return String(value)
-    .replace(/(?:[A-Za-z]:)?[\\/]+Users[\\/]+[^\\/\s"'`<>]+/gi, "<workstation-home>")
-    .replace(/[\\/]+home[\\/]+[^\\/\s"'`<>]+/gi, "<workstation-home>");
 }
 
 function portableSourcePath(value) {
