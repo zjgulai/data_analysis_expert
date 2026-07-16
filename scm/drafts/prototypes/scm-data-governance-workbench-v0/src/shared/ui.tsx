@@ -78,6 +78,8 @@ export const columnLabels: Record<string, string> = {
   answer_policy: "回答策略",
   insight_title: "洞察",
   linked_metric_id: "关联指标",
+  subject_ref: "关联主题",
+  subject_type: "主题类型",
   recommendation: "建议",
   review_note: "复盘记录",
   insight_ref: "洞察引用",

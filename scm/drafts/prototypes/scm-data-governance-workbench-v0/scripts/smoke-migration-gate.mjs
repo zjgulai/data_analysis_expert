@@ -12,6 +12,10 @@ const applySql = readFileSync(join(appRoot, "migrations", "20260627_b3_t7_additi
 const rollbackSql = readFileSync(join(appRoot, "migrations", "20260627_b3_t7_additive_schema.rollback.sql"), "utf8");
 const loop3ApplySql = readFileSync(join(appRoot, "migrations", "20260701_loop3_business_closed_loops.apply.sql"), "utf8");
 const loop3RollbackSql = readFileSync(join(appRoot, "migrations", "20260701_loop3_business_closed_loops.rollback.sql"), "utf8");
+const certificationGateApplySql = readFileSync(join(appRoot, "migrations", "20260716_certification_gate_remediation.apply.sql"), "utf8");
+const certificationGateRollbackSql = readFileSync(join(appRoot, "migrations", "20260716_certification_gate_remediation.rollback.sql"), "utf8");
+const decisionSubjectApplySql = readFileSync(join(appRoot, "migrations", "20260716_decision_subject_reference.apply.sql"), "utf8");
+const decisionSubjectRollbackSql = readFileSync(join(appRoot, "migrations", "20260716_decision_subject_reference.rollback.sql"), "utf8");
 const sandboxRoot = mkdtempSync(join(tmpdir(), "scm-migration-gate-"));
 const targetTables = [
   "storyline_template",
@@ -39,6 +43,14 @@ const loop3Rows = {
   recommendation_cards: ["rec_loop3_20260701_finance_cost_tail_warehouse_return"],
   trace_reviews: ["trace_review_loop3_20260701_finance_cost_tail_warehouse_return"]
 };
+const loop3MigrationId = "20260701_loop3_business_closed_loops";
+const certificationGateMigrationId = "20260716_certification_gate_remediation";
+const decisionSubjectMigrationId = "20260716_decision_subject_reference";
+const certificationGateTables = ["metrics", "certifications", "chatbi_contexts", "lineage_edges"];
+
+if (/\bINSERT\s+OR\s+IGNORE\b/i.test(loop3ApplySql)) {
+  throw new Error("Loop 3 migration must use explicit conflict semantics; INSERT OR IGNORE is forbidden");
+}
 
 function hashFile(path) {
   return createHash("sha256").update(readFileSync(path)).digest("hex");
@@ -56,6 +68,10 @@ function count(db, sql, ...params) {
 
 function tableExists(db, tableName) {
   return count(db, "SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = ?", tableName) === 1;
+}
+
+function viewExists(db, viewName) {
+  return count(db, "SELECT COUNT(*) FROM sqlite_master WHERE type = 'view' AND name = ?", viewName) === 1;
 }
 
 function emptyTargetTables(db) {
@@ -134,13 +150,29 @@ function loop3TableCounts(db) {
   );
 }
 
+function loop3TableSnapshots(db) {
+  return Object.fromEntries(
+    Object.keys(loop3Rows).map((tableName) => [
+      tableName,
+      db.prepare(`SELECT * FROM ${tableName} ORDER BY id`).all()
+    ])
+  );
+}
+
 function verifyLoop3LedgerApplyRollback() {
   const db = new DatabaseSync(createDatabaseCopy("loop3-ledger"));
   try {
     db.exec(loop3RollbackSql);
     const baseline = loop3TableCounts(db);
+    const baselineRows = loop3TableSnapshots(db);
+    if (count(db, "SELECT COUNT(*) FROM schema_migrations WHERE id = ?", loop3MigrationId) !== 0) {
+      throw new Error("Loop 3 baseline rollback left the migration ledger row behind");
+    }
 
     db.exec(loop3ApplySql);
+    if (count(db, "SELECT COUNT(*) FROM schema_migrations WHERE id = ?", loop3MigrationId) !== 1) {
+      throw new Error("Loop 3 apply did not restore the migration ledger row");
+    }
     const applied = loop3TableCounts(db);
     for (const [tableName, ids] of Object.entries(loop3Rows)) {
       if (applied[tableName] !== baseline[tableName] + ids.length) {
@@ -174,12 +206,18 @@ function verifyLoop3LedgerApplyRollback() {
     }
 
     db.exec(loop3ApplySql);
+    if (count(db, "SELECT COUNT(*) FROM schema_migrations WHERE id = ?", loop3MigrationId) !== 1) {
+      throw new Error("Loop 3 reapply changed the migration ledger cardinality");
+    }
     const reapplied = loop3TableCounts(db);
     if (JSON.stringify(applied) !== JSON.stringify(reapplied)) {
       throw new Error("Loop 3 apply must be idempotent");
     }
 
     db.exec(loop3RollbackSql);
+    if (count(db, "SELECT COUNT(*) FROM schema_migrations WHERE id = ?", loop3MigrationId) !== 0) {
+      throw new Error("Loop 3 rollback left the migration ledger row behind");
+    }
     const rolledBack = loop3TableCounts(db);
     if (JSON.stringify(baseline) !== JSON.stringify(rolledBack)) {
       throw new Error("Loop 3 rollback must restore baseline counts");
@@ -191,8 +229,15 @@ function verifyLoop3LedgerApplyRollback() {
         }
       }
     }
+    const rolledBackRows = loop3TableSnapshots(db);
+    if (JSON.stringify(baselineRows) !== JSON.stringify(rolledBackRows)) {
+      throw new Error("Loop 3 rollback did not restore complete baseline table contents");
+    }
 
     db.exec(loop3ApplySql);
+    if (count(db, "SELECT COUNT(*) FROM schema_migrations WHERE id = ?", loop3MigrationId) !== 1) {
+      throw new Error("Loop 3 final reapply did not restore the migration ledger row");
+    }
     if (db.prepare("PRAGMA integrity_check").get().integrity_check !== "ok") {
       throw new Error("SQLite integrity_check failed after Loop 3 reapply");
     }
@@ -207,14 +252,190 @@ function verifyLoop3LedgerApplyRollback() {
   }
 }
 
+function certificationGateSnapshots(db) {
+  return Object.fromEntries(certificationGateTables.map((tableName) => [
+    tableName,
+    db.prepare(`SELECT * FROM ${tableName} ORDER BY id`).all()
+  ]));
+}
+
+function unresolvedCertifiedCount(db) {
+  return count(db, `
+    SELECT COUNT(*)
+    FROM metrics m
+    WHERE m.certification_status = 'certified'
+      AND EXISTS (
+        SELECT 1
+        FROM governance_tasks g
+        WHERE g.target_ref = m.id
+          AND g.priority = 'P0'
+          AND g.status NOT IN ('已签字', 'certified', 'done')
+      )
+  `);
+}
+
+function verifyCertificationGateApplyRollback() {
+  const db = new DatabaseSync(createDatabaseCopy("certification-gate"));
+  try {
+    if (tableExists(db, "schema_migrations")
+      && count(db, "SELECT COUNT(*) FROM schema_migrations WHERE id = ?", certificationGateMigrationId) === 1) {
+      db.exec(certificationGateRollbackSql);
+    }
+    const baseline = certificationGateSnapshots(db);
+    const baselineViolationCount = unresolvedCertifiedCount(db);
+    if (baselineViolationCount === 0) {
+      throw new Error("Certification gate fixture must expose at least one unresolved certified metric before apply");
+    }
+
+    db.exec(certificationGateApplySql);
+    if (count(db, "SELECT COUNT(*) FROM schema_migrations WHERE id = ?", certificationGateMigrationId) !== 1) {
+      throw new Error("Certification gate apply did not write its migration ledger row");
+    }
+    if (unresolvedCertifiedCount(db) !== 0) {
+      throw new Error("Certification gate apply left unresolved P0 metrics certified");
+    }
+    if (count(db, `
+      SELECT COUNT(*)
+      FROM chatbi_contexts ctx
+      JOIN governance_tasks g ON g.target_ref = ctx.metric_id
+      WHERE g.priority = 'P0'
+        AND g.status NOT IN ('已签字', 'certified', 'done')
+    `) !== 0) {
+      throw new Error("Certification gate apply left unresolved P0 metrics in certified ChatBI contexts");
+    }
+    const capturedMetricCount = count(db, `
+      SELECT COUNT(*)
+      FROM migration_20260716_cert_metric_snapshot
+      WHERE migration_id = ?
+    `, certificationGateMigrationId);
+    if (capturedMetricCount !== baselineViolationCount) {
+      throw new Error(`Certification gate snapshot count mismatch: ${capturedMetricCount}/${baselineViolationCount}`);
+    }
+    const applied = certificationGateSnapshots(db);
+
+    db.exec(certificationGateApplySql);
+    const reapplied = certificationGateSnapshots(db);
+    if (JSON.stringify(applied) !== JSON.stringify(reapplied)) {
+      throw new Error("Certification gate apply must be idempotent");
+    }
+
+    db.exec(certificationGateRollbackSql);
+    if (count(db, "SELECT COUNT(*) FROM schema_migrations WHERE id = ?", certificationGateMigrationId) !== 0) {
+      throw new Error("Certification gate rollback left its migration ledger row behind");
+    }
+    const rolledBack = certificationGateSnapshots(db);
+    if (JSON.stringify(baseline) !== JSON.stringify(rolledBack)) {
+      throw new Error("Certification gate rollback did not restore complete baseline contents");
+    }
+    for (const tableName of [
+      "migration_20260716_cert_metric_snapshot",
+      "migration_20260716_cert_ledger_snapshot",
+      "migration_20260716_cert_chatbi_snapshot",
+      "migration_20260716_cert_lineage_snapshot"
+    ]) {
+      if (tableExists(db, tableName)) throw new Error(`Certification gate rollback left ${tableName} behind`);
+    }
+
+    db.exec(certificationGateApplySql);
+    if (unresolvedCertifiedCount(db) !== 0) {
+      throw new Error("Certification gate final apply did not close unresolved certification violations");
+    }
+    if (db.prepare("PRAGMA integrity_check").get().integrity_check !== "ok") {
+      throw new Error("SQLite integrity_check failed after certification gate final apply");
+    }
+    return {
+      downgradedMetrics: baselineViolationCount,
+      chatbiContextsRemoved: baseline.chatbi_contexts.length - applied.chatbi_contexts.length,
+      rollback: "complete_baseline_restored"
+    };
+  } finally {
+    db.close();
+  }
+}
+
+function verifyDecisionSubjectApplyRollback() {
+  const db = new DatabaseSync(createDatabaseCopy("decision-subject"));
+  try {
+    if (tableExists(db, "schema_migrations")
+      && count(db, "SELECT COUNT(*) FROM schema_migrations WHERE id = ?", decisionSubjectMigrationId) === 1) {
+      db.exec(decisionSubjectRollbackSql);
+    }
+    const baseline = db.prepare("SELECT * FROM decision_logs ORDER BY id").all();
+    const invalidBefore = count(db, `
+      SELECT COUNT(*)
+      FROM decision_logs d
+      WHERE d.linked_metric_id <> ''
+        AND NOT EXISTS (
+          SELECT 1 FROM metrics m
+          WHERE m.id = d.linked_metric_id OR m.code = d.linked_metric_id
+        )
+    `);
+    if (invalidBefore === 0) throw new Error("Decision subject fixture must expose legacy non-metric references before apply");
+
+    db.exec(decisionSubjectApplySql);
+    if (!tableExists(db, "decision_subject_refs") || !viewExists(db, "decision_logs_with_subject")) {
+      throw new Error("Decision subject apply did not create its table and view");
+    }
+    const invalidAfter = count(db, `
+      SELECT COUNT(*)
+      FROM decision_logs d
+      WHERE d.linked_metric_id <> ''
+        AND NOT EXISTS (
+          SELECT 1 FROM metrics m
+          WHERE m.id = d.linked_metric_id OR m.code = d.linked_metric_id
+        )
+    `);
+    if (invalidAfter !== 0) throw new Error("Decision subject apply left non-metric values in linked_metric_id");
+    const subjectCount = count(db, "SELECT COUNT(*) FROM decision_subject_refs");
+    if (subjectCount !== invalidBefore) {
+      throw new Error(`Decision subject apply count mismatch: ${subjectCount}/${invalidBefore}`);
+    }
+    const appliedDecisionRows = db.prepare("SELECT * FROM decision_logs ORDER BY id").all();
+    const appliedSubjectRows = db.prepare("SELECT * FROM decision_subject_refs ORDER BY decision_id").all();
+
+    db.exec(decisionSubjectApplySql);
+    if (JSON.stringify(appliedDecisionRows) !== JSON.stringify(db.prepare("SELECT * FROM decision_logs ORDER BY id").all())
+      || JSON.stringify(appliedSubjectRows) !== JSON.stringify(db.prepare("SELECT * FROM decision_subject_refs ORDER BY decision_id").all())) {
+      throw new Error("Decision subject apply must be idempotent");
+    }
+
+    db.exec(decisionSubjectRollbackSql);
+    if (tableExists(db, "decision_subject_refs") || viewExists(db, "decision_logs_with_subject")) {
+      throw new Error("Decision subject rollback left its table or view behind");
+    }
+    if (count(db, "SELECT COUNT(*) FROM schema_migrations WHERE id = ?", decisionSubjectMigrationId) !== 0) {
+      throw new Error("Decision subject rollback left its migration ledger row behind");
+    }
+    if (JSON.stringify(baseline) !== JSON.stringify(db.prepare("SELECT * FROM decision_logs ORDER BY id").all())) {
+      throw new Error("Decision subject rollback did not restore complete baseline contents");
+    }
+
+    db.exec(decisionSubjectApplySql);
+    if (db.prepare("PRAGMA integrity_check").get().integrity_check !== "ok") {
+      throw new Error("SQLite integrity_check failed after decision subject final apply");
+    }
+    return {
+      migratedSubjects: invalidBefore,
+      invalidMetricReferences: 0,
+      rollback: "complete_baseline_restored"
+    };
+  } finally {
+    db.close();
+  }
+}
+
 const sourceHashBefore = hashFile(sourceDatabasePath);
 let gateError;
 let rejectionMessage = "";
 let loop3LedgerSummary = {};
+let certificationGateSummary = {};
+let decisionSubjectSummary = {};
 try {
   rejectionMessage = verifyPopulatedRollbackIsRejected();
   verifyEmptyRollbackAndReapply();
   loop3LedgerSummary = verifyLoop3LedgerApplyRollback();
+  certificationGateSummary = verifyCertificationGateApplyRollback();
+  decisionSubjectSummary = verifyDecisionSubjectApplyRollback();
 } catch (error) {
   gateError = error instanceof Error ? error : new Error(String(error));
 }
@@ -250,6 +471,8 @@ console.log(JSON.stringify({
   loop3LedgerApply: "applied_idempotently",
   loop3LedgerRollback: "restored_baseline",
   loop3Ledger: loop3LedgerSummary,
+  certificationGate: certificationGateSummary,
+  decisionSubjectReference: decisionSubjectSummary,
   sourceDatabaseHashPreserved: true,
   databaseWrite: "disposable_test_copies_only",
   productionWrites: false

@@ -5,7 +5,7 @@ module: scm
 topic: fulfillment-dashboard-aip-scm-integration
 status: draft
 created: 2026-06-26
-updated: 2026-06-26
+updated: 2026-07-16
 source:
   - "drafts/prototypes/scm-fulfillment-dashboard-v0"
   - "drafts/prototypes/scm-data-governance-workbench-v0"
@@ -60,16 +60,20 @@ boundary: static_knowledge_prototype_no_production_db_write_no_provider_call
 ## 5. 后续部署步骤
 
 1. 本地完成 `npm run check`、`npm run build`、`npm run smoke:ui`、`npm run smoke:readonly`。
-2. 生成 scoped AIP-SCM 部署包，包含 `dist/fulfillment-dashboard/`。
-3. 确认 Docker 构建上下文包含 `public/fulfillment-dashboard/`，否则 Vite 重新构建时会丢失 `data/*.csv`、`docs/*.md` 等静态知识原型资产。
-4. 部署到当前 `scm.lute-tlz-dddd.top` 服务目录。
-5. 生产环境必须保留外部 SQLite volume 和 `lighthouse_ai_video_net` 网络配置；不要用本地嵌入数据模式的 `docker-compose.yml` 覆盖生产 Compose。
-6. 线上只读验证：
+2. 部署授权前必须由 `preprod:check` 同时验证以下正式人工门禁；数量完整但状态不在 accepted completion status 中仍不得部署：
+   - 30 项 P0 owner 签字全部为 `已签字`、`certified` 或 `done`；
+   - 18 项 P0 字段映射全部为 `已映射`、`certified` 或 `done`；
+   - 1 项 SCEI owner 决策为 `已签字`、`certified` 或 `done`。
+3. 生成 scoped AIP-SCM 部署包，包含 `dist/fulfillment-dashboard/`。
+4. 确认 Docker 构建上下文包含 `public/fulfillment-dashboard/`，否则 Vite 重新构建时会丢失 `data/*.csv`、`docs/*.md` 等静态知识原型资产。
+5. 部署到当前 `scm.lute-tlz-dddd.top` 服务目录。
+6. 生产环境必须保留外部 SQLite volume 和 `lighthouse_ai_video_net` 网络配置；不要用本地嵌入数据模式的 `docker-compose.yml` 覆盖生产 Compose。
+7. 线上只读验证：
    - `/api/deploy/health`
    - `/api/workbench/modules`
    - `/fulfillment-dashboard/index.html`
    - 侧边栏点击 `供应链履约看板`
-7. 截图留存桌面端和移动端页面。
+8. 截图留存桌面端和移动端页面。
 
 ## 6. 风险与缓解
 
@@ -86,7 +90,7 @@ boundary: static_knowledge_prototype_no_production_db_write_no_provider_call
 
 事实：集成方案以静态资源和 iframe 容器为核心，能把履约看板纳入 AIP-SCM 侧边栏，同时保持与其他侧边页面独立。
 
-事实：2026-06-26 生产发布使用 release `scm-workbench-fulfillment-dashboard-202606260358`，线上 health 显示 `dataMountType=docker_external_volume`，`/fulfillment-dashboard/data/fulfillment_chart_data_binding_20260626.csv` 返回 `text/csv`。
+事实：2026-06-26 历史生产快照使用 release `scm-workbench-fulfillment-dashboard-202606260358`；当时线上 health 显示 `dataMountType=docker_external_volume`，`/fulfillment-dashboard/data/fulfillment_chart_data_binding_20260626.csv` 返回 `text/csv`。该记录不代表 2026-07-16 当前线上状态。
 
 推断：这是当前最稳妥的原型集成方式；后续如需深度 React 化，可以在业务验收后把 iframe 内页面拆成主站组件。
 

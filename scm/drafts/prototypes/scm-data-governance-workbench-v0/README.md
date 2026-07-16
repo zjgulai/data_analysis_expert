@@ -85,7 +85,9 @@ SCM_WORKBENCH_READONLY_BASE_URL=http://127.0.0.1:5174 npm run smoke:readonly
 
 `npm run import` 会重建并替换本地 SQLite ledger，只能在包含完整源资产的 monorepo 中、完成备份或明确同意替换后执行：`SCM_DATABASE_REBUILD_AUTHORIZED=1 npm run import`。脚本先在同目录临时数据库完成构建与 integrity check，成功后才原子替换目标文件；默认无授权时拒绝执行。
 
-`preprod:check` 是上线前只读 gate：检查构建产物、Docker/Compose 生产边界、本地 SQLite 可信最低线、密钥文件扫描和 provider/ERP/writeback 关闭状态。它会把 owner sign-off、字段映射和 SCEI 权重来源列为 manual gates；这些不阻塞只读原型发布，但阻塞任何 provider、生产写入或 ERP/OMS/WMS 回写能力开放。
+导入前可用 `SCM_IMPORT_PREFLIGHT_ONLY=1 npm run import` 做只读预检，无需 rebuild 授权。指标蓝图使用 `SCM_WORKBENCH_IMPORT_SOURCE_ROOT`（次选 `SCM_IMPORT_SOURCE_ROOT`）；四个知识域分别使用 `SCM_KNOWLEDGE_JIJIA_ROOT`、`SCM_KNOWLEDGE_STOCKING_RULES_ROOT`、`SCM_KNOWLEDGE_BUSINESS_SUPPLY_CHAIN_ROOT`、`SCM_KNOWLEDGE_ERP_SUPPLEMENT_ROOT`。环境变量未设置时才使用仓库默认相对目录；任何已配置或默认知识目录缺失、不是目录或没有 Markdown 文件都会返回 `blocked_knowledge_domain_required`，不会生成 active/0-card 假成功。卡片身份由 `data/knowledge-card-id-manifest.json` 的 domain-relative path 映射控制，新路径使用同一 domain-relative path 的 SHA-256 短哈希，因此插入更早文件不会重定向既有引用；原子替换前会校验 `aip_scenarios`、`recommendation_cards`、`agent_traces` 与 `agent_runs` 的全部知识卡引用，推荐卡写接口也会以 HTTP 400 拒绝未知知识卡 ID。
+
+`preprod:check` 是上线前只读 gate：检查构建产物、Docker/Compose 生产边界、本地 SQLite 可信最低线、密钥文件扫描和 provider/ERP/writeback 关闭状态。它会按正式状态契约核验 30 项 P0 owner sign-off、18 项 P0 字段映射和 1 项 SCEI 权重来源任务；数量缺失或状态不在 `scripts/manual-gate-status-contract.mjs` 的 accepted completion statuses 中都会保持 manual gate。它们不阻塞只读原型发布，但阻塞任何 provider、生产写入或 ERP/OMS/WMS 回写能力开放。
 
 ### Runtime 路径与显式授权
 

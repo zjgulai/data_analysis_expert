@@ -65,6 +65,9 @@ jobs:
       - name: Verify database authorization gate
         run: npm run smoke:database-gate
 
+      - name: Verify fulfillment calculation contracts
+        run: npm run smoke:fulfillment-contracts
+
       - name: Verify import authorization gate
         run: npm run smoke:import-gate
 
@@ -73,6 +76,12 @@ jobs:
 
       - name: Verify monorepo and standalone path contract
         run: npm run smoke:path-contract
+
+      - name: Verify preproduction path and evidence boundaries
+        run: npm run smoke:preprod-boundaries
+
+      - name: Verify mutating UI redirect boundary
+        run: npm run smoke:ui-target-boundary
 
       - name: Verify manual-gate receipt contracts
         run: npm run smoke:manual-gate-receipts

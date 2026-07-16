@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
+import { manualGateReceiptDecisionResults } from "./manual-gate-status-contract.mjs";
 
 const root = process.cwd();
 const receiptDir = process.env.SCM_MANUAL_GATE_RECEIPT_DIR || join(root, "tmp", "outputs", "manual-gate-receipt-templates-20260630");
@@ -62,11 +63,7 @@ const reviewRoutes = {
   field_mapping: "manual_field_mapping_review_queue",
   scei_weight_source: "manual_scei_weight_review_queue"
 };
-const decisionResultAllowedValues = {
-  approved_for_manual_review: "Owner approves this receipt for downstream manual review.",
-  approved_with_conditions: "Owner approves with explicit conditions captured in scope/evidence_ref.",
-  rejected_needs_rework: "Owner rejects this gate and requests rework before another receipt."
-};
+const decisionResultAllowedValues = manualGateReceiptDecisionResults;
 const decisionResultValues = Object.keys(decisionResultAllowedValues);
 const expectedBlockerNames = new Set(
   (process.env.SCM_MANUAL_GATE_EXPECTED_BLOCKER_NAMES ||
@@ -161,9 +158,9 @@ const decisionResultCounts = {};
 let invalidDecisionResultRows = 0;
 const summary = existsSync(summaryPath) ? JSON.parse(readFileSync(summaryPath, "utf8")) : null;
 
-if (!summary) errors.push(`missing_summary:${summaryPath}`);
+if (!summary) errors.push(`missing_summary:${portablePath(summaryPath)}`);
 
-if (!existsSync(receiptDir)) errors.push(`missing_receipt_dir:${receiptDir}`);
+if (!existsSync(receiptDir)) errors.push(`missing_receipt_dir:${portablePath(receiptDir)}`);
 const templateFiles = existsSync(receiptDir)
   ? readdirSync(receiptDir)
       .filter((name) => name.endsWith(".csv"))
@@ -195,7 +192,9 @@ let inputFiles = [];
 if (templateMode) {
   inputFiles = templateFiles;
 } else {
-  if (!existsSync(receiptIntakePath)) errors.push(`missing_receipt_intake:${receiptIntakePath}`);
+  if (!existsSync(receiptIntakePath)) {
+    errors.push(`missing_receipt_intake:${portablePath(receiptIntakePath)}`);
+  }
   if (existsSync(receiptIntakePath)) {
     inputFiles = [{ fileName: basename(receiptIntakePath), path: receiptIntakePath }];
   }
@@ -245,6 +244,12 @@ for (const inputFile of inputFiles) {
     totalRows += 1;
     const rowLabel = `${fileName}:${index + 2}`;
     const rowBlockers = [];
+    const columnCount = parsed[index + 1]?.length ?? 0;
+    if (columnCount !== expectedColumns.length) {
+      schemaValid = false;
+      fileErrors.push(`${rowLabel}:invalid_column_count:${columnCount}:expected:${expectedColumns.length}`);
+      rowBlockers.push("invalid_column_count");
+    }
 
     identityFields.forEach((field) => {
       if (!String(record[field] || "").trim()) {
@@ -394,7 +399,9 @@ for (const inputFile of inputFiles) {
     fileName,
     path: portablePath(path),
     rowCount: records.length,
-    schemaValid: fileErrors.every((error) => !error.startsWith("columns:")),
+    schemaValid: fileErrors.every((error) =>
+      !error.startsWith("columns:") && !error.includes(":invalid_column_count:")
+    ),
     templateRowsAwaitingReceipt: records.filter((record) =>
       humanReceiptFields.every((field) => String(record[field] || "").trim() === "")
     ).length

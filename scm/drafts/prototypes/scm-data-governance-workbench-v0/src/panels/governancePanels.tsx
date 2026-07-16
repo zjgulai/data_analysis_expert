@@ -252,7 +252,7 @@ export function RiskThresholdGovernancePanel({
               <p>{humanizeOperationalLabel(receipt.status)} · {humanizeBoundary(receipt.action_boundary)}</p>
             </div>
           ) : null}
-          <DataTable rows={data.latestThresholdReviews.slice(0, 5)} columns={["id", "linked_metric_id", "status", "review_note"]} />
+          <DataTable rows={data.latestThresholdReviews.slice(0, 5)} columns={["id", "subject_ref", "status", "review_note"]} />
         </section>
       </div>
     </section>
@@ -456,12 +456,12 @@ export function FinanceCostGovernancePanel({
           </div>
           {receipt ? (
             <div className="decisionReceipt financeReceipt">
-              <span>{String(receipt.linked_metric_id || "").startsWith("finance_owner.") ? "财务责任人选择回执" : "财务成本回执"}</span>
+              <span>{String(receipt.subject_ref || receipt.linked_metric_id || "").startsWith("finance_owner.") ? "财务责任人选择回执" : "财务成本回执"}</span>
               <strong>{String(receipt.insight_title || "")}</strong>
               <p>{humanizeOperationalLabel(receipt.status)} · {humanizeBoundary(receipt.action_boundary)}</p>
             </div>
           ) : null}
-          <DataTable rows={data.latestFinanceReviews.slice(0, 5)} columns={["id", "linked_metric_id", "status", "review_note"]} />
+          <DataTable rows={data.latestFinanceReviews.slice(0, 5)} columns={["id", "subject_ref", "status", "review_note"]} />
         </section>
       </div>
     </section>

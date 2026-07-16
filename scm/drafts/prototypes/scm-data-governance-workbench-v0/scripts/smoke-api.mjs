@@ -111,6 +111,7 @@ const deepSeekStatus = (await request("/api/ai-chat/deepseek/status")).payload;
 assert(deepSeekStatus.provider === "deepseek", "DeepSeek status endpoint must identify provider");
 assert(typeof deepSeekStatus.configured === "boolean", "DeepSeek status must expose configured flag");
 assert(typeof deepSeekStatus.providerCallAuthorized === "boolean", "DeepSeek status must expose provider authorization flag");
+assert(Number.isInteger(deepSeekStatus.providerCallAttemptCount), "DeepSeek status must expose an integer provider call attempt count");
 assert(typeof deepSeekStatus.available === "boolean", "DeepSeek status must expose provider availability");
 assert(deepSeekStatus.available === (deepSeekStatus.configured && deepSeekStatus.providerCallAuthorized), "DeepSeek availability must require both key and authorization");
 assert(health.boundary?.providerCalls === deepSeekStatus.available, "Deploy health provider boundary must match DeepSeek availability");
@@ -125,6 +126,7 @@ checked("deepseek-chat-status", {
   available: deepSeekStatus.available
 });
 if (!deepSeekStatus.configured) {
+  const providerCallAttemptCountBefore = deepSeekStatus.providerCallAttemptCount;
   const missingKeyProbe = await requestRaw("/api/ai-chat/deepseek", {
     method: "POST",
     body: JSON.stringify({
@@ -134,11 +136,16 @@ if (!deepSeekStatus.configured) {
   });
   assert(missingKeyProbe.response.status === 503, "DeepSeek chat must be gated when API key is absent");
   assert(String(missingKeyProbe.payload?.error || "").includes("DEEPSEEK_API_KEY"), "DeepSeek missing-key response must explain env configuration");
+  const providerCallAttemptCountAfter = (await request("/api/ai-chat/deepseek/status")).payload.providerCallAttemptCount;
+  assert(providerCallAttemptCountAfter === providerCallAttemptCountBefore, "DeepSeek missing-key gate must not increment the observed provider call attempt count");
   checked("deepseek-chat-missing-key-gate", {
     status: missingKeyProbe.response.status,
-    providerCallAttempted: false
+    providerCallAttempted: providerCallAttemptCountAfter > providerCallAttemptCountBefore,
+    providerCallAttemptCountBefore,
+    providerCallAttemptCountAfter
   });
 } else if (!deepSeekStatus.providerCallAuthorized) {
+  const providerCallAttemptCountBefore = deepSeekStatus.providerCallAttemptCount;
   const unauthorizedProbe = await requestRaw("/api/ai-chat/deepseek", {
     method: "POST",
     body: JSON.stringify({
@@ -148,9 +155,13 @@ if (!deepSeekStatus.configured) {
   });
   assert(unauthorizedProbe.response.status === 403, "DeepSeek chat must be gated when provider authorization is absent");
   assert(String(unauthorizedProbe.payload?.error || "").includes("SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED"), "DeepSeek authorization response must name the server-side flag");
+  const providerCallAttemptCountAfter = (await request("/api/ai-chat/deepseek/status")).payload.providerCallAttemptCount;
+  assert(providerCallAttemptCountAfter === providerCallAttemptCountBefore, "DeepSeek authorization gate must not increment the observed provider call attempt count");
   checked("deepseek-chat-authorization-gate", {
     status: unauthorizedProbe.response.status,
-    providerCallAttempted: false
+    providerCallAttempted: providerCallAttemptCountAfter > providerCallAttemptCountBefore,
+    providerCallAttemptCountBefore,
+    providerCallAttemptCountAfter
   });
 } else {
   checked("deepseek-chat-live-call-skipped", {
@@ -413,7 +424,7 @@ const createdRecommendation = (await request("/api/recommendation-cards", {
     targetObjectType: "InventoryBatch",
     targetObjectId: "batch_fba_negative_available",
     linkedMetricIds: ["metric.business_available_inventory", "metric.fba_available_inventory"],
-    linkedKnowledgeCardIds: ["knowledge.fba_available_negative"],
+    linkedKnowledgeCardIds: ["business-supply-chain-card-0144"],
     businessImpact: "Prove create, review, and convert are captured in the local governance ledger.",
     confidenceLevel: "smoke_checked",
     riskLevel: "P1",

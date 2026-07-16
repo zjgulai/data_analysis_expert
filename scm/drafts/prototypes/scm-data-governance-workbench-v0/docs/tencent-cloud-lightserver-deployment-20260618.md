@@ -5,7 +5,7 @@ module: scm
 topic: scm-data-governance-workbench
 status: draft
 created: 2026-06-18
-updated: 2026-06-26
+updated: 2026-07-16
 owner: self
 source: human+ai
 production_status: production_readonly_smoke_passed
@@ -36,7 +36,7 @@ cd /opt/scm-governance-workbench/current
 SCM_DATABASE_WRITES_AUTHORIZED=0 docker compose -p scm_governance_workbench -f docker-compose.yml -f docker-compose.production.yml up -d --build
 ```
 
-## 2026-06-22 前置包
+## 2026-06-22 前置包（历史发布快照）
 
 | item | value |
 |---|---|
@@ -55,6 +55,8 @@ SCM_DATABASE_WRITES_AUTHORIZED=0 docker compose -p scm_governance_workbench -f d
 | post_sync_evidence | `tmp/outputs/scm-production-runtime-metadata-live-sync-evidence-20260622.json` |
 | post_sync_smoke | `SCM_WORKBENCH_READONLY_BASE_URL=https://scm.lute-tlz-dddd.top npm run smoke:readonly` passed |
 | remaining_gate | business-row runtime import, provider calls and ERP/OMS/WMS writeback require separate explicit approval |
+
+`scm-workbench-runtime-metadata-a3-20260622182004` 为历史发布快照，不是下方履约看板验收清单对应的 release。
 
 Post-sync read-only validation:
 
@@ -139,7 +141,9 @@ server {
 
 ## 上线验收
 
-- `curl /api/deploy/health` 返回 `ok=true`，releaseId=`scm-workbench-runtime-metadata-a3-20260622182004`。
+本节对应 2026-06-26 履约看板历史发布快照；不据此推断当前生产状态。
+
+- `curl /api/deploy/health` 返回 `ok=true`，releaseId=`scm-workbench-fulfillment-dashboard-202606260358`。
 - `/api/workbench/modules` 返回 13 个模块，包含 `strategy-panorama` 与 `current-risk-radar`。
 - `/api/source-coverage/lineage` 返回 12 条 source coverage export/API lineage projection。
 - `/api/decision/receipt-summary` 返回 7 个 packet、7 条 receipt、12 条 runtime-gated row。
