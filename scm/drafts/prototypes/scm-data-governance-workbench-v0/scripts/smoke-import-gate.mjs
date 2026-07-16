@@ -31,9 +31,34 @@ function hashFile(path) {
   return createHash("sha256").update(readFileSync(path)).digest("hex");
 }
 
+function quoteIdentifier(value) {
+  return `"${String(value).replaceAll("\"", "\"\"")}"`;
+}
+
+function countDatabasePersonalPaths(db) {
+  const patterns = ["%/users/%", "%/home/%", "%:\\users\\%", "%\\users\\%"];
+  let hits = 0;
+  const tables = db.prepare("SELECT name FROM sqlite_schema WHERE type='table' AND name NOT LIKE 'sqlite_%'").all();
+  for (const { name } of tables) {
+    const columns = db.prepare(`PRAGMA table_info(${quoteIdentifier(name)})`).all()
+      .filter((column) => String(column.type || "").toUpperCase().includes("TEXT"));
+    for (const column of columns) {
+      const predicates = patterns.map(() => `lower(${quoteIdentifier(column.name)}) LIKE ?`).join(" OR ");
+      hits += Number(db.prepare(`SELECT COUNT(*) AS count FROM ${quoteIdentifier(name)} WHERE ${predicates}`).get(...patterns)?.count || 0);
+    }
+  }
+  return hits;
+}
+
+function countRawDatabasePersonalPaths(path) {
+  return (readFileSync(path).toString("latin1").match(/\/users\/|\/home\/|\\users\\/gi) || []).length;
+}
+
 const sourceHashBefore = hashFile(sourceDatabasePath);
 let gateError;
 let gateSummary;
+let rebuiltPersonalPathHits = null;
+let rebuiltRawPersonalPathHits = null;
 try {
   cpSync(join(sourceAppRoot, "scripts"), sandboxScriptDir, { recursive: true });
   cpSync(join(sourceAppRoot, "data"), join(sandboxRoot, "data"), { recursive: true });
@@ -138,6 +163,14 @@ try {
       if (rebuiltDb.prepare("PRAGMA integrity_check").get().integrity_check !== "ok") {
         failures.push("authorized rebuild SQLite integrity_check must be ok");
       }
+      rebuiltPersonalPathHits = countDatabasePersonalPaths(rebuiltDb);
+      if (rebuiltPersonalPathHits !== 0) {
+        failures.push(`authorized rebuild must contain zero personal workstation paths, got ${rebuiltPersonalPathHits}`);
+      }
+      rebuiltRawPersonalPathHits = countRawDatabasePersonalPaths(sandboxDatabasePath);
+      if (rebuiltRawPersonalPathHits !== 0) {
+        failures.push(`authorized rebuild raw bytes must contain zero personal workstation paths, got ${rebuiltRawPersonalPathHits}`);
+      }
     } finally {
       rebuiltDb.close();
     }
@@ -155,6 +188,8 @@ try {
     authorizedRebuildStatus: rebuildResult.status,
     migrationsReplayed: true,
     loop3RowsRetained: Object.values(loop3Rows).reduce((total, ids) => total + ids.length, 0),
+    rebuiltPersonalPathHits,
+    rebuiltRawPersonalPathHits,
     sourceDatabaseHashPreserved: sourceHashBefore === hashFile(sourceDatabasePath),
     databaseRebuild: "disposable_fixture_only",
     sourceDatabaseRebuild: false,

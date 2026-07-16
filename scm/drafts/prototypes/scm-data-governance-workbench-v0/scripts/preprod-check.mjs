@@ -339,6 +339,31 @@ for (const { name } of textTables) {
   }
 }
 record("db-secret-pattern-scan", dbSecretHits === 0, { dbSecretHits });
+
+const personalPathPatterns = ["%/users/%", "%/home/%", "%:\\users\\%", "%\\users\\%"];
+const dbPersonalPathHitLocations = [];
+let dbPersonalPathHits = 0;
+for (const { name } of textTables) {
+  const columns = db.prepare(`pragma table_info(${qi(name)})`).all().filter((column) => String(column.type || "").toUpperCase().includes("TEXT"));
+  for (const column of columns) {
+    const predicates = personalPathPatterns.map(() => `lower(${qi(column.name)}) like ?`).join(" or ");
+    const hits = Number(db.prepare(`select count(*) as count from ${qi(name)} where ${predicates}`).get(...personalPathPatterns)?.count || 0);
+    if (!hits) continue;
+    dbPersonalPathHits += hits;
+    dbPersonalPathHitLocations.push({ table: name, column: column.name, hits });
+  }
+}
+record(
+  "db-personal-path-pattern-scan",
+  dbPersonalPathHits === 0,
+  { dbPersonalPathHits, locations: dbPersonalPathHitLocations }
+);
+const dbPersonalPathRawByteHits = (readFileSync(dbPath).toString("latin1").match(/\/users\/|\/home\/|\\users\\/gi) || []).length;
+record(
+  "db-personal-path-raw-byte-scan",
+  dbPersonalPathRawByteHits === 0,
+  { dbPersonalPathRawByteHits }
+);
 db.close();
 
 record("manual-p0-owner-signoffs", p0OwnerSignoffs === 0, { p0OwnerSignoffs }, "manual");

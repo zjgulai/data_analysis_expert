@@ -1,10 +1,11 @@
 import { DatabaseSync } from "node:sqlite";
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
+import { basename, dirname, isAbsolute, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
+const repositoryRoot = findRepositoryRoot(root);
 const dbPath = resolve(root, "data/governance_workbench.sqlite");
 const temporaryDbPath = resolve(root, "data", `governance_workbench.sqlite.build-${process.pid}`);
 const summaryPath = resolve(root, "data/import-summary.json");
@@ -158,6 +159,32 @@ function parseCsv(text) {
   return body.map((cells) => Object.fromEntries(headers.map((header, index) => [header, cells[index] ?? ""])));
 }
 
+function findRepositoryRoot(start) {
+  let current = resolve(start);
+  while (true) {
+    if (existsSync(resolve(current, ".git"))) return current;
+    const parent = dirname(current);
+    if (parent === current) return root;
+    current = parent;
+  }
+}
+
+function redactWorkstationPaths(value) {
+  return String(value)
+    .replace(/(?:[A-Za-z]:)?[\\/]+Users[\\/]+[^\\/\s"'`<>]+/gi, "<workstation-home>")
+    .replace(/[\\/]+home[\\/]+[^\\/\s"'`<>]+/gi, "<workstation-home>");
+}
+
+function portableSourcePath(value) {
+  const absolutePath = resolve(value);
+  const repositoryPath = relative(repositoryRoot, absolutePath);
+  if (repositoryPath === "") return ".";
+  if (!repositoryPath.startsWith(`..${sep}`) && repositoryPath !== ".." && !isAbsolute(repositoryPath)) {
+    return repositoryPath.split(sep).join("/");
+  }
+  return `external-source/${basename(absolutePath)}`;
+}
+
 function execMany(sql) {
   db.exec(sql);
 }
@@ -166,7 +193,7 @@ function insert(table, record) {
   const keys = Object.keys(record);
   const placeholders = keys.map(() => "?").join(", ");
   const stmt = db.prepare(`INSERT INTO ${table} (${keys.join(", ")}) VALUES (${placeholders})`);
-  stmt.run(...keys.map((key) => record[key]));
+  stmt.run(...keys.map((key) => typeof record[key] === "string" ? redactWorkstationPaths(record[key]) : record[key]));
 }
 
 const lifecycle = ["draft", "mapped", "reviewed", "certified", "active", "deprecated"];
@@ -1311,7 +1338,7 @@ knowledgeDomains.forEach((domain) => {
     id: domain.id,
     name: domain.name,
     theme: domain.theme,
-    source_path: domain.root,
+    source_path: portableSourcePath(domain.root),
     status: domain.status,
     evidence_level: domain.evidence_level,
     description: domain.description,
@@ -1334,7 +1361,7 @@ knowledgeDomains.forEach((domain) => {
       domain_id: domain.id,
       title,
       topic,
-      source_path: filePath,
+      source_path: portableSourcePath(filePath),
       source_section: title,
       summary: clean.slice(0, 360),
       object_refs: JSON.stringify(refs.objectRefs),
@@ -1355,7 +1382,7 @@ knowledgeDomains.forEach((domain) => {
         text: chunk,
         keywords: JSON.stringify([...refs.objectRefs, ...refs.metricRefs, topic]),
         evidence_level: domain.evidence_level,
-        source_path: filePath
+        source_path: portableSourcePath(filePath)
       });
       knowledgeChunkCount += 1;
       domainChunkCount += 1;
