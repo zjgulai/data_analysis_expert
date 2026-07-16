@@ -676,70 +676,73 @@ assert(
   "Finance policy summary must include normal API-generated finance_owner subject receipts"
 );
 assert(refreshedFinanceOwnerDecision?.selectedChoice === "A", "Finance policy summary must derive choice A from its recorded status");
-const deferredFinanceOwnerChoice = financeOwnerChoice.choices.find((choice) => choice.code === "C");
-const deferredFinanceOwnerDecisionId = `decision_finance_owner_api_smoke_deferred_${Date.now()}`;
-await request("/api/decision/logs", {
-  method: "POST",
-  body: JSON.stringify({
-    id: deferredFinanceOwnerDecisionId,
-    insightTitle: "API smoke deferred finance owner choice",
-    linkedMetricId: financeOwnerChoice.linkedMetricId,
-    recommendation: "Record a deferred finance owner choice locally only.",
-    actionBoundary: financeOwnerChoice.actionBoundary,
-    status: deferredFinanceOwnerChoice.status,
-    reviewNote: deferredFinanceOwnerChoice.reviewNote,
-    actor: "api-smoke"
-  })
-});
-const restrictedFinanceCostGovernance = (await request("/api/finance-cost-governance")).payload;
-const deferredFinanceOwnerDecision = restrictedFinanceCostGovernance.policySummary?.decisions
-  ?.find((decision) => decision.packetId === financeOwnerChoice.id);
-assert(deferredFinanceOwnerDecision?.receiptId === deferredFinanceOwnerDecisionId, "Finance policy summary must use the latest deferred owner receipt");
-assert(deferredFinanceOwnerDecision?.selectedChoice === "C", "Finance policy summary must preserve deferred choice C");
-assert(deferredFinanceOwnerDecision?.recordedStatus === deferredFinanceOwnerChoice.status, "Finance policy summary must preserve the deferred receipt status");
-assert(deferredFinanceOwnerDecision?.policy === deferredFinanceOwnerChoice.reviewNote, "Finance policy summary must derive policy text from the recorded choice");
-assert(restrictedFinanceCostGovernance.policySummary?.ownerChoice === "C-A-A-A", "Finance policy summary must derive the complete choice sequence from receipts");
-assert(
-  restrictedFinanceCostGovernance.policySummary?.effectiveUse?.includes("费用类型口径可进入 CostEvent 治理视图") === false,
-  "Deferred cost-type mapping must not retain the approved CostEvent effective-use claim"
-);
-const unknownFinanceOwnerDecisionId = `decision_finance_owner_api_smoke_unknown_${Date.now()}`;
-await request("/api/decision/logs", {
-  method: "POST",
-  body: JSON.stringify({
-    id: unknownFinanceOwnerDecisionId,
-    insightTitle: "API smoke unknown finance owner status",
-    linkedMetricId: financeOwnerChoice.linkedMetricId,
-    recommendation: "Reject unrecognized finance owner policy status.",
-    actionBoundary: financeOwnerChoice.actionBoundary,
-    status: "unknown_finance_owner_policy_status",
-    reviewNote: "Unrecognized status fixture must fail closed.",
-    actor: "api-smoke"
-  })
-});
-const invalidFinanceCostGovernance = (await request("/api/finance-cost-governance")).payload;
-const invalidFinanceOwnerDecision = invalidFinanceCostGovernance.policySummary?.decisions
-  ?.find((decision) => decision.packetId === financeOwnerChoice.id);
-assert(invalidFinanceOwnerDecision?.receiptId === unknownFinanceOwnerDecisionId, "Finance policy summary must surface the latest unknown-status receipt");
-assert(invalidFinanceOwnerDecision?.selectedChoice === "unrecognized", "Unknown finance owner status must not fall back to choice A");
-assert(invalidFinanceOwnerDecision?.permittedUses?.length === 0, "Unknown finance owner status must authorize no policy uses");
-assert(invalidFinanceCostGovernance.policySummary?.ownerChoice === "pending", "Unknown finance owner status must make the summary pending");
-assert(invalidFinanceCostGovernance.policySummary?.status === "owner_receipts_invalid", "Unknown finance owner status must fail closed as invalid");
-assert(invalidFinanceOwnerDecision?.policy.includes("禁止启用任何政策用途"), "Unknown finance owner status must replace the default A policy text");
 const restoredFinanceOwnerDecisionId = `decision_finance_owner_api_smoke_zz_restore_a_${Date.now()}`;
-await request("/api/decision/logs", {
-  method: "POST",
-  body: JSON.stringify({
-    id: restoredFinanceOwnerDecisionId,
-    insightTitle: "API smoke restore finance owner choice A",
-    linkedMetricId: financeOwnerChoice.linkedMetricId,
-    recommendation: "Restore the disposable finance policy fixture to choice A.",
-    actionBoundary: financeOwnerChoice.actionBoundary,
-    status: financeOwnerChoice.choices[0].status,
-    reviewNote: financeOwnerChoice.choices[0].reviewNote,
-    actor: "api-smoke"
-  })
-});
+try {
+  const deferredFinanceOwnerChoice = financeOwnerChoice.choices.find((choice) => choice.code === "C");
+  const deferredFinanceOwnerDecisionId = `decision_finance_owner_api_smoke_deferred_${Date.now()}`;
+  await request("/api/decision/logs", {
+    method: "POST",
+    body: JSON.stringify({
+      id: deferredFinanceOwnerDecisionId,
+      insightTitle: "API smoke deferred finance owner choice",
+      linkedMetricId: financeOwnerChoice.linkedMetricId,
+      recommendation: "Record a deferred finance owner choice locally only.",
+      actionBoundary: financeOwnerChoice.actionBoundary,
+      status: deferredFinanceOwnerChoice.status,
+      reviewNote: deferredFinanceOwnerChoice.reviewNote,
+      actor: "api-smoke"
+    })
+  });
+  const restrictedFinanceCostGovernance = (await request("/api/finance-cost-governance")).payload;
+  const deferredFinanceOwnerDecision = restrictedFinanceCostGovernance.policySummary?.decisions
+    ?.find((decision) => decision.packetId === financeOwnerChoice.id);
+  assert(deferredFinanceOwnerDecision?.receiptId === deferredFinanceOwnerDecisionId, "Finance policy summary must use the latest deferred owner receipt");
+  assert(deferredFinanceOwnerDecision?.selectedChoice === "C", "Finance policy summary must preserve deferred choice C");
+  assert(deferredFinanceOwnerDecision?.recordedStatus === deferredFinanceOwnerChoice.status, "Finance policy summary must preserve the deferred receipt status");
+  assert(deferredFinanceOwnerDecision?.policy === deferredFinanceOwnerChoice.reviewNote, "Finance policy summary must derive policy text from the recorded choice");
+  assert(restrictedFinanceCostGovernance.policySummary?.ownerChoice === "C-A-A-A", "Finance policy summary must derive the complete choice sequence from receipts");
+  assert(
+    restrictedFinanceCostGovernance.policySummary?.effectiveUse?.includes("费用类型口径可进入 CostEvent 治理视图") === false,
+    "Deferred cost-type mapping must not retain the approved CostEvent effective-use claim"
+  );
+  const unknownFinanceOwnerDecisionId = `decision_finance_owner_api_smoke_unknown_${Date.now()}`;
+  await request("/api/decision/logs", {
+    method: "POST",
+    body: JSON.stringify({
+      id: unknownFinanceOwnerDecisionId,
+      insightTitle: "API smoke unknown finance owner status",
+      linkedMetricId: financeOwnerChoice.linkedMetricId,
+      recommendation: "Reject unrecognized finance owner policy status.",
+      actionBoundary: financeOwnerChoice.actionBoundary,
+      status: "unknown_finance_owner_policy_status",
+      reviewNote: "Unrecognized status fixture must fail closed.",
+      actor: "api-smoke"
+    })
+  });
+  const invalidFinanceCostGovernance = (await request("/api/finance-cost-governance")).payload;
+  const invalidFinanceOwnerDecision = invalidFinanceCostGovernance.policySummary?.decisions
+    ?.find((decision) => decision.packetId === financeOwnerChoice.id);
+  assert(invalidFinanceOwnerDecision?.receiptId === unknownFinanceOwnerDecisionId, "Finance policy summary must surface the latest unknown-status receipt");
+  assert(invalidFinanceOwnerDecision?.selectedChoice === "unrecognized", "Unknown finance owner status must not fall back to choice A");
+  assert(invalidFinanceOwnerDecision?.permittedUses?.length === 0, "Unknown finance owner status must authorize no policy uses");
+  assert(invalidFinanceCostGovernance.policySummary?.ownerChoice === "pending", "Unknown finance owner status must make the summary pending");
+  assert(invalidFinanceCostGovernance.policySummary?.status === "owner_receipts_invalid", "Unknown finance owner status must fail closed as invalid");
+  assert(invalidFinanceOwnerDecision?.policy.includes("禁止启用任何政策用途"), "Unknown finance owner status must replace the default A policy text");
+} finally {
+  await request("/api/decision/logs", {
+    method: "POST",
+    body: JSON.stringify({
+      id: restoredFinanceOwnerDecisionId,
+      insightTitle: "API smoke restore finance owner choice A",
+      linkedMetricId: financeOwnerChoice.linkedMetricId,
+      recommendation: "Restore the disposable finance policy fixture to choice A.",
+      actionBoundary: financeOwnerChoice.actionBoundary,
+      status: financeOwnerChoice.choices[0].status,
+      reviewNote: financeOwnerChoice.choices[0].reviewNote,
+      actor: "api-smoke"
+    })
+  });
+}
 const restoredFinanceCostGovernance = (await request("/api/finance-cost-governance")).payload;
 const restoredFinanceOwnerDecision = restoredFinanceCostGovernance.policySummary?.decisions
   ?.find((decision) => decision.packetId === financeOwnerChoice.id);

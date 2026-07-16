@@ -54,10 +54,10 @@ related:
 2. source PR #20–#25 已全部 merge；旧 PR #2–#19 已关闭为 superseded，远端 branches 保留。
 3. standalone PR #2 已通过普通内容同步 merge；当前 standalone main 为 `d722c41`，未使用 unrelated-history merge。
 4. standalone exact-head `077d1e8` 的 CodeRabbit review 返回 46 个 Major、0 个 Critical；source PR #26 初始 exact-head `d7343ce` 产生 17 个追踪项。候选 exact-head `a97b419ff55356eb87765b8d58be721a458c73aa` 已包含这 17 项修复，并通过 clean clone 与 required CI。
-5. CodeRabbit 对 `a97b419` 的复审新增 2 项：计划精确头记录不一致、finance receipt choice 被硬编码为 A。本文件所在后续候选提交已修复这 2 项，仍须通过新 exact-head 的 clean clone、required CI 与 CodeRabbit 复审后才能 merge；随后再同步 standalone。
+5. exact-head `b35a9e175c2ac204e86aba5e6c758c5c2a7ca7ec` 已包含 `a97b419` 复审的 2 项修复，并通过 clean clone 与 required CI；CodeRabbit 对 `b35a9e1` 又新增 1 项：异常路径未在 `finally` 恢复共享 finance fixture。本文件所在后续候选提交已修复该项，仍须通过新 exact-head 复审后才能 merge；随后再同步 standalone。
 6. 用户已授权本计划内 branch / commit / push / PR / merge 自动执行；branch 删除、production deploy 与真实 provider call 继续排除。
 
-定性把握：**高**（关于当前 Git、测试与 review remediation 事实）。依据是新鲜 Git/GitHub 状态、两轮完整 CodeRabbit review、RED→GREEN 目标回归、本地 gate、浏览器 smoke、当前 Docker 只读验收与 `a97b419` clean clone/CI；本文件所在后续候选提交的 clean clone / CI / 复审仍待执行，生产运行态未在本轮重新验收。
+定性把握：**高**（关于当前 Git、测试与 review remediation 事实）。依据是新鲜 Git/GitHub 状态、三轮完整 CodeRabbit review、RED→GREEN 目标回归、本地 gate、浏览器 smoke、当前 Docker 只读验收，以及 `a97b419` / `b35a9e1` 的 clean clone/CI；本文件所在后续候选提交的 CI / 复审仍待执行，生产运行态未在本轮重新验收。
 
 ## 1.1 当前执行断点（2026-07-16）
 
@@ -68,6 +68,7 @@ related:
 - 当前执行分支为 `codex/scm-post-merge-review-remediation-20260716`，base 为 source main `91f0741`；source PR #26 为 OPEN，初始受评审 exact-head 为 `d7343ce0c47b008bde7da01601e7535c90baa754`。
 - PR #26 初始 exact-head 的 SCM integration gate 通过；GitHub API 返回 16 条 CodeRabbit inline comments，正式 review body 另列 1 条 outside-diff finding。候选 exact-head `a97b419` 已包含 17 项修复，完成独立 clean clone 全量 gate 并通过 SCM integration gate。
 - `a97b419` 的 CodeRabbit 复审在 2026-07-16 产生 2 条 Major：执行计划未记录实际候选 SHA，以及 finance B/C receipt 被摘要硬编码成 A。当前后续候选已用实际 status 反查 A/B/C、policy 与 permitted uses；C/deferred 回归已 RED→GREEN。
+- exact-head `b35a9e1` 已完成 clean clone 全量 gate 并通过 SCM integration gate；其 CodeRabbit 复审产生 1 条 Major，要求即使临时 finance 断言失败也必须恢复共享 choice-A fixture。当前候选已把恢复请求移入 `finally`。
 - `a97b419` 之前的修复树通过 `check`、`build`、全部专项 smoke、preprod、一次性 SQLite API、三视口 UI、宿主与容器 readonly smoke；其 Docker image 为 `sha256:477fd41f...`。当前 finance server 修复又通过 `check`、`build`、preprod、A/C/unknown API 回归、API→三视口 UI 组合流程，以及最新 Docker image `sha256:42a1b8172d63f496fd1c2ee0aa0e7993d2fa7fcfc53f1c9fd7f7b894292cac65` 的 healthy / UID 1000 / 17 项 readonly 验收。源码 SQLite SHA-256 保持 `3d972e46ec43a64ad69265f295af4ffd9039dfe721a0e9f7f22d02e9b7652af7`。
 - 3 个 manual gates 保持 30 owner pending / 18 mapping pending / 1 SCEI ready；`provider_call=false`、`database_write=local-test-only`、`production unchanged`。
 - 原始脏工作区 `/Users/pray/project/ecom_ana_overview/scm` 未修改；本批次只在 clean source worktree 中执行。
@@ -540,7 +541,7 @@ Expected：runtime/source diff、data/evidence diff、旧 docs 处置分开说�
 | #23 | `codex/scm-ci-bootstrap-20260716@6c077abf971ed758c5c3eb00472d441ca11a1202` | MERGED | 0 | — |
 | #24 | `codex/scm-post-stack-loop-assets-20260716@e7cc2f7cb6d89a39a255c6961271fa219582a312` | MERGED | 0 | — |
 | #25 | `codex/scm-sanitize-db-paths-20260716@aba978cc866017acd337f6096950dd325fc0c158` | MERGED | 0 | — |
-| #26 | `codex/scm-post-merge-review-remediation-20260716`；初始 head `d7343ce`；第二轮受评审 head `a97b419ff55356eb87765b8d58be721a458c73aa` | OPEN；`a97b419` clean clone + CI passed；当前候选 HEAD 包含第二轮 2 个 review fixes | 3 candidate commits（含当前候选） | `/Users/pray/project/ecom_ana_overview_scm_cleanmain_20260716` |
+| #26 | `codex/scm-post-merge-review-remediation-20260716`；初始 `d7343ce`；第二轮 `a97b419`；第三轮 `b35a9e175c2ac204e86aba5e6c758c5c2a7ca7ec` | OPEN；`b35a9e1` clean clone + CI passed；当前候选 HEAD 包含第三轮 1 个 review fix | 4 candidate commits（含当前候选） | `/Users/pray/project/ecom_ana_overview_scm_cleanmain_20260716` |
 
 **standalone 远端 branch / PR 清单（相对 `standalone main@d722c41`）：**
 
@@ -664,7 +665,13 @@ PR #26 初始 exact-head `d7343ce` 已通过 SCM integration gate，但其 CodeR
 | 18 | 计划仍称 candidate commit/push 待形成，且未记录 `a97b419` | 已修复：记录初始 `d7343ce`、第二轮受评审 `a97b419` 与当前符号 HEAD，避免把证据附到错误提交 |
 | 19 | finance B/C receipt 被 policy summary 硬编码成 A | 已修复：按 packet choice status 反查 choice/policy/permitted uses；C/deferred API 回归 RED→GREEN |
 
-已验证证据：`a97b419` 的 clean clone 依次通过 `npm ci`、`check` / `build`、9 组专项 smoke、preprod、17 项 readonly、API + 三视口 UI、SQLite restore 与 clean diff；SCM integration gate 也通过。该 exact-head 的 CodeRabbit 结果仍是 2 项而非 0，因此未 merge。本文件所在后续候选提交完成 #18–#19 后，已通过本地 `check` / `build` / preprod、API→UI 和 Docker `sha256:42a1b817...` 只读 gate；仍须重跑 clean clone、source PR CI 与 exact-head review。源 SQLite SHA-256 保持 `3d972e46ec43a64ad69265f295af4ffd9039dfe721a0e9f7f22d02e9b7652af7`。
+`b35a9e1` 的 CodeRabbit 复审新增 1 项：
+
+| ID | PR #26 third review finding | 当前候选状态 |
+|---:|---|---|
+| 20 | finance 临时 C/unknown fixture 只在成功路径恢复 A | 已修复：临时写入与断言置于 `try`，choice-A 恢复请求置于 `finally`；正常 API→UI 与强制中途失败注入均验证恢复成功 |
+
+已验证证据：`a97b419` 与 `b35a9e1` 均完成独立 clean clone 全量 gate 并通过 SCM integration gate；两者分别得到 2 项与 1 项 CodeRabbit 复审意见，因此均未 merge。`b35a9e1` 还通过本地 Docker `sha256:42a1b817...` 的 healthy / UID 1000 / 17 项 readonly gate。本文件所在后续候选提交完成 #20 后，正常 API→UI 通过，且强制中途断言失败的注入验证 `finally` 仍恢复 choice A；仍须重跑 source PR CI 与 exact-head review。源 SQLite SHA-256 保持 `3d972e46ec43a64ad69265f295af4ffd9039dfe721a0e9f7f22d02e9b7652af7`。
 
 - [ ] **Step 8.5：从最新 standalone main 重新同步 remediation**
 
@@ -711,7 +718,7 @@ PR #26 初始 exact-head `d7343ce` 已通过 SCM integration gate，但其 CodeR
 ## 9. 当前未完成事项
 
 - source 与 standalone 的历史同步均已 merge；当前 source remediation PR #26 已创建但仍为 OPEN，本文件所在候选提交包含 review fixes。
-- standalone CodeRabbit 46 个 Major 与 PR #26 首轮 17 项已完成整改；`a97b419` clean clone/CI passed，但第二轮复审新增 2 项。当前候选已完成 #18–#19 的本地整改与最新 Docker gate，新的 clean clone / CI / 复审 / merge 尚未完成。
+- standalone CodeRabbit 46 个 Major、PR #26 首轮 17 项及第二轮 2 项已完成整改；`b35a9e1` clean clone/CI passed，但第三轮复审新增 1 项。当前候选已完成 #20 本地整改，新的 CI / 复审 / merge 尚未完成。
 - 3 个 manual gates 仍是 30 owner pending / 18 mapping pending / 1 SCEI ready，不伪造 owner signoff、field mapping 或 SCEI 权重批准。
 - 最终本地 remediation Docker image 已重建并通过 healthy + 17 项容器只读 smoke；镜像验证不等于 deploy，production 仍 unchanged。
 - source remediation merge 后，仍需从 `standalone main@d722c41` 新开 content-sync branch、保留 9 个 target-only 文件并完成独立 CI/review/merge。
