@@ -156,6 +156,10 @@ try {
     commaMacRoot: `${["", "Users", "alice"].join("/")},`,
     periodLinuxRoot: `${["", "home", "alice"].join("/")}.`,
     fileUri: `file://${["", "Users", "alice", "file"].join("/")}`,
+    fileUriSpacedDescendant: "file:///Users/Alice Smith/private/report.md",
+    fileUriParticleDescendant: "file:///Users/Juan Carlos de la Cruz/private/report.md",
+    fileUriConnectorDescendant: "file:///Users/Alice & Bob/private/report.md",
+    localhostFileUriSpacedDescendant: "file://localhost/Users/Alice Smith/private/report.md",
     nestedMac: ["", "Users", "alice", "Users", "bob"].join("/"),
     nestedLinux: ["", "home", "alice", "home", "bob"].join("/"),
     nestedWindows: ["C:", "Users", "alice", "Users", "bob"].join(windowsSeparator),
@@ -203,6 +207,10 @@ try {
     commaMacRoot: `${workstationHomeRedaction},`,
     periodLinuxRoot: `${workstationHomeRedaction}.`,
     fileUri: `file://${workstationHomeRedaction}/file`,
+    fileUriSpacedDescendant: `file://${workstationHomeRedaction}/private/report.md`,
+    fileUriParticleDescendant: `file://${workstationHomeRedaction}/private/report.md`,
+    fileUriConnectorDescendant: `file://${workstationHomeRedaction}/private/report.md`,
+    localhostFileUriSpacedDescendant: `file://localhost${workstationHomeRedaction}/private/report.md`,
     nestedMac: `${workstationHomeRedaction}/Users/bob`,
     nestedLinux: `${workstationHomeRedaction}/home/bob`,
     nestedWindows: `${workstationHomeRedaction}${windowsSeparator}Users${windowsSeparator}bob`,
@@ -256,6 +264,11 @@ try {
       value: "/Users/alice works remotely.",
       expectedCount: 1,
       expectedRedaction: `${workstationHomeRedaction} works remotely.`
+    },
+    titleCasedProseAfterLowercaseProfile: {
+      value: "/Users/alice Read This Important Note",
+      expectedCount: 1,
+      expectedRedaction: `${workstationHomeRedaction} Read This Important Note`
     },
     spacedProfileFollowedByProse: {
       value: "/Users/Alice Smith reviewed evidence.",

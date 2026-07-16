@@ -146,7 +146,7 @@ function localFileCandidate(text, span) {
       start: rootStart,
       contextStart: span.start,
       profileStart: rootStart + match[0].length,
-      tokenLimit: span.end
+      tokenLimit: null
     };
   }
   return null;
@@ -220,6 +220,7 @@ function findRootOnlyProfileEnd(text, start, limit) {
   if (!tokens.length) return null;
 
   let end = tokens[0].end;
+  if (!isNameLikeProfileToken(tokens[0].value)) return end;
   for (let index = 1; index < tokens.length;) {
     if (isNameLikeProfileToken(tokens[index].value)) {
       end = tokens[index].end;
