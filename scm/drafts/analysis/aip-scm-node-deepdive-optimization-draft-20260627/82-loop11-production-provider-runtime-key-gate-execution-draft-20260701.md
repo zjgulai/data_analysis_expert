@@ -63,7 +63,8 @@ npm run smoke:deepseek-live
 |---|---|---|
 | Base URL | `https://scm.lute-tlz-dddd.top` | production runtime key gate |
 | Authorization flag | 单次命令内设置 `SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED=1` | local command env |
-| Provider status endpoint | `configured=false`；`secretPolicy=server_side_env_only_key_never_returned_to_browser` | production GET |
+| Server authorization fields | `providerCallAuthorized`、`databaseWriteAuthorized`、`available` 均未被原始 evidence 记录；不能由 command flag 推定 | historical evidence gap |
+| Provider status endpoint | `configured=false`；其余 server authorization fields 未记录；`secretPolicy=server_side_env_only_key_never_returned_to_browser` | production GET |
 | Runtime key gate | `blocked_runtime_key_missing` | production runtime key gate |
 | Provider call | `providerCalls=false`、`providerModeCalled=not_called` | local evidence JSON |
 | Write boundary | `productionWrites=false`、`erpWriteback=false`、`localSqliteWrites=false` | local evidence JSON |
@@ -80,6 +81,7 @@ npm run smoke:deepseek-live
 |---|---|
 | 事实 | 生产 base URL 的 `smoke:deepseek-live` 在单次授权 flag 下停在 `blocked_runtime_key_missing`。 |
 | 事实 | production provider status 仍为 `configured=false`，secret policy 为 `server_side_env_only_key_never_returned_to_browser`。 |
+| 事实 | 原始 evidence 未记录 server-side `providerCallAuthorized`、`databaseWriteAuthorized` 与 `available`；当前 gate 必须在这些字段明确为 true 且取得相应独立授权后才能进入 provider POST。 |
 | 事实 | evidence 显示 `providerCalls=false`、`providerModeCalled=not_called`、`webModeCalled=false`、`productionWrites=false`、`localSqliteWrites=false`。 |
 | 事实 | 本轮未执行 provider live call、POST chat、production write、ERP/OMS/WMS writeback、source system read 或 business row import。 |
 | 推断 | 生产路径下 runtime key gate 有效；server-side key 是进入 live provider call 的必要条件。 |
@@ -89,8 +91,9 @@ npm run smoke:deepseek-live
 
 下一层只能是 **authorized live side effect**：
 
-1. Ops 在 production/server-side runtime 配置 `DEEPSEEK_API_KEY`，不写入仓库、文档、日志或 evidence 正文。
-2. 用户明确授权单 prompt knowledge mode provider live smoke。
-3. 继续设置 `SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED=1`。
-4. 仅允许 knowledge mode；web mode closed。
-5. 输出 redacted evidence，记录 traceId、runId、usage、answerLength 和 doesNotProve。
+1. 用户明确授权单 prompt knowledge mode provider live smoke，并仅在单次命令内设置 client flag。
+2. production status endpoint 明确返回 `providerCallAuthorized=true`。
+3. Ops 在 production/server-side runtime 配置 `DEEPSEEK_API_KEY`，status 返回 `configured=true`；key 不写入仓库、文档、日志或 evidence 正文。
+4. 独立批准目标 workbench SQLite 写入并设置 `SCM_DATABASE_WRITES_AUTHORIZED=1`；status 返回 `databaseWriteAuthorized=true` 与 `available=true`。live POST 会写 trace/run。
+5. 仅允许 knowledge mode；web mode closed。
+6. 输出 redacted evidence，记录 traceId、runId、usage、answerLength、doesNotProve 与实际 workbench SQLite write。

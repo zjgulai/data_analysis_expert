@@ -11,6 +11,7 @@ const providerCallAuthorized = ["1", "true", "yes", "on"].includes(
   String(process.env.SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED || "").toLowerCase()
 );
 let providerCallAttempted = false;
+let lastStatusEndpoint = null;
 
 const prompt = "请用不超过80字说明 AIP-SCM DeepSeek live acceptance 的事实、推断和不确定项边界。";
 
@@ -36,6 +37,20 @@ function assertNoSecretLeak(serializedEvidence) {
   assert(!/sk-[A-Za-z0-9_-]{8,}/.test(serializedEvidence), "evidence must not contain secret-like sk token");
   assert(!/Bearer\s+[A-Za-z0-9._-]+/i.test(serializedEvidence), "evidence must not contain bearer token");
   assert(!/x-api-key\s*[:=]\s*[A-Za-z0-9._-]+/i.test(serializedEvidence), "evidence must not contain x-api-key value");
+}
+
+function buildStatusEndpointPayload(status, overrides = {}) {
+  return {
+    configured: Boolean(status.configured),
+    providerCallAuthorized: Boolean(status.providerCallAuthorized),
+    databaseWriteAuthorized: Boolean(status.databaseWriteAuthorized),
+    available: Boolean(status.available),
+    model: status.model,
+    webModel: status.webModel,
+    webSearchEnabled: Boolean(status.webSearchEnabled),
+    secretPolicy: status.secretPolicy,
+    ...overrides
+  };
 }
 
 async function request(pathname, init = {}) {
@@ -71,7 +86,10 @@ async function writeEvidence(status, detail = {}) {
     webModeCalled: false,
     localSqliteWrites: status === "passed",
     localSqliteWritePossibleButUnconfirmed: providerCallAttempted && status !== "passed",
+    workbenchSqliteWrites: status === "passed",
+    workbenchSqliteWritePossibleButUnconfirmed: providerCallAttempted && status !== "passed",
     productionWrites: false,
+    productionBusinessWrites: false,
     erpWriteback: false,
     omsWriteback: false,
     wmsWriteback: false,
@@ -123,18 +141,11 @@ async function main() {
   const status = await request("/api/ai-chat/deepseek/status");
   assert(status.provider === "deepseek", "status endpoint must identify deepseek provider");
   assert(status.secretPolicy === "server_side_env_only_key_never_returned_to_browser", "status endpoint must keep server-side secret policy");
+  lastStatusEndpoint = buildStatusEndpointPayload(status);
 
   if (!providerCallAuthorized) {
     await finishBlocked("blocked_authorization_flag_missing", {
-      statusEndpoint: {
-        configured: Boolean(status.configured),
-        providerCallAuthorized: Boolean(status.providerCallAuthorized),
-        available: Boolean(status.available),
-        model: status.model,
-        webModel: status.webModel,
-        webSearchEnabled: Boolean(status.webSearchEnabled),
-        secretPolicy: status.secretPolicy
-      },
+      statusEndpoint: lastStatusEndpoint,
       requiredEnv: "SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED=1"
     });
     return;
@@ -142,14 +153,7 @@ async function main() {
 
   if (!status.providerCallAuthorized) {
     await finishBlocked("blocked_server_authorization_flag_missing", {
-      statusEndpoint: {
-        configured: Boolean(status.configured),
-        providerCallAuthorized: false,
-        available: Boolean(status.available),
-        model: status.model,
-        webModel: status.webModel,
-        secretPolicy: status.secretPolicy
-      },
+      statusEndpoint: buildStatusEndpointPayload(status, { providerCallAuthorized: false }),
       requiredServerEnv: "SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED=1"
     });
     return;
@@ -157,30 +161,37 @@ async function main() {
 
   if (!status.configured) {
     await finishBlocked("blocked_runtime_key_missing", {
-      statusEndpoint: {
+      statusEndpoint: buildStatusEndpointPayload(status, {
         configured: false,
         providerCallAuthorized: true,
-        available: false,
-        model: status.model,
-        webModel: status.webModel,
-        webSearchEnabled: Boolean(status.webSearchEnabled),
-        secretPolicy: status.secretPolicy
-      },
+        available: false
+      }),
       requiredRuntimeEnv: "DEEPSEEK_API_KEY"
+    });
+    return;
+  }
+
+  if (!status.databaseWriteAuthorized) {
+    await finishBlocked("blocked_database_write_authorization_flag_missing", {
+      statusEndpoint: buildStatusEndpointPayload(status, {
+        configured: true,
+        providerCallAuthorized: true,
+        databaseWriteAuthorized: false,
+        available: false
+      }),
+      requiredServerEnv: "SCM_DATABASE_WRITES_AUTHORIZED=1"
     });
     return;
   }
 
   if (!status.available) {
     await finishBlocked("blocked_provider_unavailable", {
-      statusEndpoint: {
+      statusEndpoint: buildStatusEndpointPayload(status, {
         configured: true,
         providerCallAuthorized: true,
-        available: false,
-        model: status.model,
-        webModel: status.webModel,
-        secretPolicy: status.secretPolicy
-      }
+        databaseWriteAuthorized: true,
+        available: false
+      })
     });
     return;
   }
@@ -204,15 +215,12 @@ async function main() {
   const answer = String(response.answer || "").trim();
   const evidence = await writeEvidence("passed", {
     promptHash: crypto.createHash("sha256").update(prompt).digest("hex"),
-    statusEndpoint: {
+    statusEndpoint: buildStatusEndpointPayload(status, {
       configured: true,
       providerCallAuthorized: true,
-      available: true,
-      model: status.model,
-      webModel: status.webModel,
-      webSearchEnabled: Boolean(status.webSearchEnabled),
-      secretPolicy: status.secretPolicy
-    },
+      databaseWriteAuthorized: true,
+      available: true
+    }),
     response: {
       answerable: Boolean(response.answerable),
       provider: response.provider,
@@ -253,6 +261,7 @@ main().catch(async (error) => {
   const message = redactSecretLike(error?.message || error);
   try {
     const evidence = await writeEvidence("failed", {
+      ...(lastStatusEndpoint ? { statusEndpoint: lastStatusEndpoint } : {}),
       error: message.slice(0, 500)
     });
     console.log(JSON.stringify({

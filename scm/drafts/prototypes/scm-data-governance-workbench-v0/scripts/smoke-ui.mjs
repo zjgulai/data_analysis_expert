@@ -357,6 +357,7 @@ const interactiveChecks = [
 const summary = {
   baseUrl,
   outputDir,
+  expectedScenarioCount,
   chromeExecutablePath: chromeExecutablePath || "playwright-bundled-chromium",
   boundary: {
     productionWrites: false,

@@ -70,12 +70,22 @@ Loop 15 的目标是做 **read-only runtime key visibility diagnostic**：核对
 以下命令只输出布尔或 redacted 信息，不输出 secret 正文：
 
 ```bash
-cd /opt/scm-governance-workbench/current
+: "${SCM_PRODUCTION_APP_ROOT:?set from restricted Ops inventory}"
+cd "${SCM_PRODUCTION_APP_ROOT}"
 
-docker compose -p scm_governance_workbench \
+if ! docker compose -p scm_governance_workbench \
   -f docker-compose.yml \
   -f docker-compose.production.yml \
-  config | grep -E "DEEPSEEK|env_file" || true
+  config --quiet >/dev/null 2>&1; then
+  printf '%s\n' '{"composeConfig":"unknown"}' >&2
+  exit 1
+fi
+
+if grep -Eq 'DEEPSEEK_|env_file' docker-compose.yml docker-compose.production.yml; then
+  printf '%s\n' '{"deepseekOrEnvFileDeclared":true}'
+else
+  printf '%s\n' '{"deepseekOrEnvFileDeclared":false}'
+fi
 
 docker inspect scm-governance-workbench \
   --format "{{range .Config.Env}}{{println .}}{{end}}" \

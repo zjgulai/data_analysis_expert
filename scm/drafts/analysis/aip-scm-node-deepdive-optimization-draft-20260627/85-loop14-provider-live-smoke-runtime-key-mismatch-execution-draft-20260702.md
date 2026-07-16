@@ -67,7 +67,7 @@ npm run smoke:deepseek-live
 | 检查项 | 结果 | 证据层级 |
 |---|---|---|
 | Smoke script status | `blocked_runtime_key_missing` | authorized live gate preflight |
-| Provider status endpoint | `configured=false` | evidence JSON |
+| Provider status endpoint | `configured=false`；`providerCallAuthorized`/`databaseWriteAuthorized`/`available` 未被原始 evidence 记录 | evidence JSON + historical evidence gap |
 | Provider call | `providerCalls=false`、`providerModeCalled=not_called` | evidence JSON |
 | Web mode | `webModeCalled=false` | evidence JSON |
 | Write boundary | `productionWrites=false`、`erpWriteback=false`、`localSqliteWrites=false` | evidence JSON |
@@ -85,6 +85,7 @@ npm run smoke:deepseek-live
 |---|---|
 | 事实 | 用户已给出一次 knowledge-mode provider live smoke 授权。 |
 | 事实 | production status endpoint 返回 `configured=false`，脚本停在 `blocked_runtime_key_missing`。 |
+| 事实 | 原始 evidence 没有记录 server-side `providerCallAuthorized`、`databaseWriteAuthorized` 或 `available`；command flag 不能替代 server-side authorization/DB-write authorization。 |
 | 事实 | 本轮未执行 provider live call，未 POST chat，未写生产业务数据，未回写 ERP/OMS/WMS，未读取源系统，未导入业务行。 |
 | 事实 | evidence 显示 `providerCalls=false`、`providerModeCalled=not_called`、`productionWrites=false`、`localSqliteWrites=false`。 |
 | 推断 | production server-side key 尚未被当前运行中的 workbench runtime 识别；可能需要 Ops 检查环境变量注入、容器重启或部署实例一致性。 |
@@ -95,6 +96,7 @@ npm run smoke:deepseek-live
 Loop 15 进入条件：
 
 1. Ops 复核 production runtime 对 `DEEPSEEK_API_KEY` 的实际可见性；
-2. production `/api/ai-chat/deepseek/status` 返回 `configured=true`；
-3. 用户重新确认一次 knowledge-mode provider live smoke 授权；
-4. 继续保持 web mode closed、ERP/OMS/WMS writeback closed、production business writes closed。
+2. 用户重新确认一次 knowledge-mode provider live smoke 授权，并仅在单次命令内设置 client flag；
+3. production `/api/ai-chat/deepseek/status` 返回 `providerCallAuthorized=true` 与 `configured=true`；
+4. 独立批准目标 workbench SQLite trace/run 写入，设置 `SCM_DATABASE_WRITES_AUTHORIZED=1`，并确认 status 返回 `databaseWriteAuthorized=true` 与 `available=true`；
+5. 继续保持 web mode closed、ERP/OMS/WMS writeback closed、production business writes closed，并如实记录 workbench SQLite write。

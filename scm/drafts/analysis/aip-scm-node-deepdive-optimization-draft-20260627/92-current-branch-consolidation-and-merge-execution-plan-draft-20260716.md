@@ -10,7 +10,10 @@ owner: self
 source: codex
 evidence_level: github_merged_clean_main_local_gate_and_smoke_verification
 boundary:
-  mergeExecuted: true
+  priorStackMergeExecuted: true
+  currentPrNumber: 24
+  currentPrMergeExecuted: false
+  currentPrStateAtArtifactCommit: open
   commitCreated: true
   pushCreated: true
   pullRequestMutated: true
@@ -62,6 +65,7 @@ related:
 - fresh `main` 已通过 `npm ci`、`check`、`build`、72 项 preprod、API/UI/readonly smoke、SQLite restore/hash 与两套 Compose config；`provider_call=false`、`production unchanged`。
 - Docker image build 在拉取 `node:22-bookworm-slim` metadata 时被本机腾讯镜像 `EOF` 阻塞；项目 Dockerfile 尚未开始执行，不归类为代码回归。
 - 当前执行分支为 `codex/scm-post-stack-loop-assets-20260716`，仅移植 frozen allowlist。
+- 当前 PR #24 在本 artifact commit 时仍为 open；本文件不预写 merge 成功，必须以 GitHub exact-head merge 结果另行验收。
 
 ## 2. 审计基线（2026-07-16）
 
@@ -239,7 +243,7 @@ Expected：有明确审批记录；未确认时不创建 integration branch。
 
 - [x] **Step 0.3：冻结 merge/deploy 边界**
 
-记录：`production unchanged`、`provider_call=false`、`database_write=false`、`live_send=false`、`merge_executed=false`。
+历史 pre-execution 冻结记录：`production unchanged`、`provider_call=false`、`database_write=false`、`live_send=false`、`merge_executed=false`。其中 `merge_executed=false` 仅描述执行开始前的快照；Foundation/UI Proof/Manual Gate 已合并，但当前 PR #24 仍为 `currentPrMergeExecuted=false`，状态以 frontmatter 和 §1.1 为准。
 
 ### Task 1：密钥与工作区隔离
 

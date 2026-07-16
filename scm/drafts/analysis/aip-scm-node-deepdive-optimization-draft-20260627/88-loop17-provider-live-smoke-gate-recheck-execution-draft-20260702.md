@@ -73,7 +73,7 @@ related:
 
 **Loop 17 停在 `blocked_configured_false_key_source_absent`。**
 
-未满足 `configured=true` 和真实 key 来源可见两个前置条件，因此没有执行 knowledge-mode provider live smoke。
+未满足 `configured=true` 和真实 key 来源可见两个前置条件；原始 evidence 也未记录 server-side `providerCallAuthorized`/`available`，因此没有执行 knowledge-mode provider live smoke。
 
 ## 5. 下一步所需输入
 
@@ -83,4 +83,4 @@ related:
 2. 或提供真实 key 所在的 secret manager / 运维路径，并授权只读确认或注入；
 3. 或由 Ops 直接完成注入并提供 `/api/ai-chat/deepseek/status` 返回 `configured=true` 的只读证据。
 
-满足后再进入 knowledge-mode provider live smoke gate。
+满足后仍必须分别取得本次明确的 knowledge-mode live-call approval 与目标 workbench SQLite trace/run 写入授权，并由新鲜 status 证明 `providerCallAuthorized=true`、`configured=true`、`databaseWriteAuthorized=true`、`available=true`；随后只在单次命令内设置 client flag，才可进入 provider live smoke gate。

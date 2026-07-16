@@ -3,13 +3,16 @@
   "loop": 18,
   "project": "ecom_ana_overview/scm",
   "topic": "deepseek-billing-vs-runtime-key-gate",
-  "status": "blocked_billing_confirmed_runtime_key_absent",
+  "status": "blocked_runtime_key_absent_billing_user_reported_unverified",
+  "legacyStatus": "blocked_billing_confirmed_runtime_key_absent",
   "baseUrl": "https://scm.lute-tlz-dddd.top",
   "authorization": {
     "userApprovedNextStep": true,
     "userConfirmedDeepSeekBillingToppedUp": true,
-    "billingConfirmationEvidenceLevel": "conversation",
-    "providerCallAuthorizationInterpretedAsConditional": "only after configured=true and runtime key presence are verified"
+    "providerAccountBillingVerified": false,
+    "billingConfirmationEvidenceLevel": "conversation_unverified_by_provider_account",
+    "providerCallAuthorizationInterpretedAsConditional": "requires a fresh explicit live-call approval after configured=true plus independent target-workbench SQLite trace/run write approval",
+    "databaseWriteAuthorization": "not_granted"
   },
   "boundary": {
     "productionBusinessWrites": false,
@@ -29,12 +32,16 @@
   },
   "publicStatus": {
     "configured": false,
+    "providerCallAuthorized": null,
+    "databaseWriteAuthorized": null,
+    "available": null,
     "provider": "deepseek",
     "baseUrlHost": "api.deepseek.com",
     "model": "deepseek-v4-flash",
     "webModel": "deepseek-v4-pro",
     "webSearchEnabled": true,
-    "secretPolicy": "server_side_env_only_key_never_returned_to_browser"
+    "secretPolicy": "server_side_env_only_key_never_returned_to_browser",
+    "historicalFieldCoverage": "providerCallAuthorized, databaseWriteAuthorized, and available were not recorded in the original evidence"
   },
   "publicHealth": {
     "ok": true,
@@ -91,8 +98,19 @@
   },
   "decision": {
     "providerLiveSmokeAttempted": false,
-    "reason": "Billing/top-up confirmation does not make the server runtime configured. The public status endpoint remains configured=false and the current production runtime still has no visible DEEPSEEK_API_KEY source.",
-    "nextGate": "Inject the real DEEPSEEK_API_KEY into the current production runtime or provide configured=true read-only evidence, then rerun provider live smoke gate."
+    "reason": "The user's billing/top-up report is not provider-account verification and does not make the server runtime configured. The public status endpoint remains configured=false and the current production runtime still has no visible DEEPSEEK_API_KEY source.",
+    "nextGate": "Inject the real DEEPSEEK_API_KEY and obtain fresh explicit provider-call plus target-workbench SQLite trace/run write approvals; require providerCallAuthorized=true, configured=true, databaseWriteAuthorized=true, and available=true before any live smoke."
+  },
+  "providerGate": {
+    "currentRequiredOrder": [
+      "explicit live-call approval and one-shot client flag",
+      "server status providerCallAuthorized=true",
+      "server status configured=true",
+      "independent target-workbench SQLite trace/run write approval",
+      "server status databaseWriteAuthorized=true",
+      "server status available=true"
+    ],
+    "historicalProviderCallAttempted": false
   },
   "secretHandling": {
     "rawSecretPrinted": false,

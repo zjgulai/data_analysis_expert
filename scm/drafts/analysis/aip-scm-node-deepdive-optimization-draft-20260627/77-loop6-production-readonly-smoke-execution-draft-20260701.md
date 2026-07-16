@@ -40,7 +40,7 @@ boundary:
 
 | Artifact | Path |
 |---|---|
-| Production readonly smoke JSON | `tmp/outputs/loop6-production-readonly-smoke-20260701/loop6-production-readonly-smoke-20260701.json` |
+| Production readonly smoke JSON | `scm/tmp/outputs/loop6-production-readonly-smoke-20260701/loop6-production-readonly-smoke-20260701.json` |
 
 ## 3. Readonly Probe Results
 

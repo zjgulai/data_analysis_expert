@@ -69,8 +69,9 @@ npm run smoke:deepseek-live
 | 检查项 | 结果 | 证据层级 |
 |---|---|---|
 | Provider authorization flag | 单次命令内已设置 `SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED=1` | local command env |
+| Server authorization fields | `providerCallAuthorized`、`databaseWriteAuthorized`、`available` 均未被原始 evidence 记录；不能由 command flag 推定 | historical evidence gap |
 | Runtime key | `DEEPSEEK_API_KEY` 未配置 | local API status |
-| DeepSeek status endpoint | `configured=false`；`secretPolicy=server_side_env_only_key_never_returned_to_browser` | local API GET |
+| DeepSeek status endpoint | `configured=false`；其余 server authorization fields 未记录；`secretPolicy=server_side_env_only_key_never_returned_to_browser` | local API GET |
 | Runtime key gate | `blocked_runtime_key_missing` | local key gate |
 | Provider call | `providerCalls=false`、`providerModeCalled=not_called` | local evidence JSON |
 | SQLite | hash 保持 `cb91dd0d63dad2d62d73f7da5c7058254b08ac36feb139921a38121dcf61cc99` | local file hash |
@@ -87,6 +88,7 @@ npm run smoke:deepseek-live
 |---|---|
 | 事实 | 授权 flag 在单次 smoke 命令中已设置。 |
 | 事实 | runtime key 未配置，脚本停在 `blocked_runtime_key_missing`。 |
+| 事实 | 原始 evidence 未记录 server-side `providerCallAuthorized`、`databaseWriteAuthorized` 与 `available`，因此不能用本次历史结果证明当前完整授权门禁通过。 |
 | 事实 | evidence 显示 `providerCalls=false`、`providerModeCalled=not_called`、`webModeCalled=false`、`localSqliteWrites=false`。 |
 | 事实 | 本轮没有 production write、provider call、ERP/OMS/WMS writeback、source system read、business row import，也没有持久化 key。 |
 | 推断 | 当前 provider live gate 的第二道 fail-closed 行为成立：授权 flag 已给出但 runtime key 缺失时，脚本不会进入 POST provider 分支。 |
@@ -96,7 +98,9 @@ npm run smoke:deepseek-live
 
 下一层只能是 **authorized live side effect**：
 
-1. server-side runtime 提供 `DEEPSEEK_API_KEY`。
-2. 明确允许单 prompt knowledge mode live call。
-3. 保持 web mode closed。
-4. 验收 evidence redacted、trace/run 生成、`productionWrites=false`、`erpWriteback=false`。
+1. 明确允许单 prompt knowledge mode live call，并仅在单次命令内设置 client flag。
+2. status endpoint 明确返回 `providerCallAuthorized=true`。
+3. server-side runtime 提供 `DEEPSEEK_API_KEY`，status 返回 `configured=true`。
+4. 独立批准目标 workbench SQLite 写入并设置 `SCM_DATABASE_WRITES_AUTHORIZED=1`；status 返回 `databaseWriteAuthorized=true` 与 `available=true`。live POST 会写 trace/run，不能继续声称 `localSqliteWrites=false`。
+5. 保持 web mode closed。
+6. 验收 evidence redacted、trace/run 生成、`productionBusinessWrites=false`、`erpWriteback=false`，并如实记录 workbench SQLite write。

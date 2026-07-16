@@ -5,11 +5,16 @@ module: scm
 topic: loop-engineering-execution-plan
 status: draft_loop20_scaffold_ready_manual_secret_file_required
 created: 2026-07-01
-updated: 2026-07-02
+updated: 2026-07-16
 owner: self
 source: human+ai
 boundary:
-  productionWrites: false
+  productionBusinessWrites: false
+  historicalProductionConfigMutationRecorded: true
+  currentPrProductionConfigMutation: false
+  historicalAuthorizationEvidence: not_attached
+  historicalRollbackEvidence: not_recorded
+  currentRemoteStateReverified: false
   providerCalls: false
   erpWriteback: false
   omsWmsWriteback: false
@@ -65,7 +70,7 @@ related:
 |---|---|
 | 产品闭环 | 至少 3 条跨境电商供应链高频场景进入 `risk signal -> recommendation card -> owner review -> action task -> trace review` 的本地闭环。 |
 | 数据可信 | Top 指标保持 certified baseline，补齐 sourceRoot 可复现链路，P0 字段映射和 Owner sign-off 不再停留在无主 pending。 |
-| 安全边界 | `providerCalls=false`、`productionWrites=false`、`erpWriteback=false` 默认成立；任何升级必须单独授权。 |
+| 安全边界 | `providerCalls=false`、`productionBusinessWrites=false`、`erpWriteback=false` 默认成立；生产配置修改必须单独授权。历史 Loop 20 已记录 `productionConfigMutation=true`，不属于纯只读动作；本次 PR 整合未执行该远端动作。 |
 | 发布治理 | read-only prototype 可从干净 release 边界打包，preprod hard blockers 为 0，manual gates 被显式列账。 |
 | 经营价值 | 库存对账、缺货/超龄库存、尾程成本、履约异常、退货成本至少各有一个可追踪价值指标。 |
 
@@ -151,6 +156,14 @@ Loop 0  基线确认与方案固化
   -> Loop 13 Provider live authorization hold gate（已完成；explicit live authorization missing，live call 未执行）
   -> Loop 14 Provider live smoke runtime key mismatch gate（已完成；status configured=false，live call 未执行）
   -> Loop 15 Runtime key visibility diagnostic（已完成；remote mutation/restart 未执行）
+
+DEFAULT STOP — Loops 16–20 均需独立范围与授权；以下仅为历史 lineage，不是当前自动下一步：
+
+  -> Loop 16 Production runtime key injection diagnostic（已完成；未发现 key 来源，mutation/restart 未执行）
+  -> Loop 17 Provider live smoke gate recheck（已完成；configured=false，live call 未执行）
+  -> Loop 18 Billing vs runtime key gate（已完成；billing 仅有用户口头确认，live call 未执行）
+  -> Loop 19 Production runtime key injection Ops handoff（已完成；handoff only）
+  -> Loop 20 Production key injection scaffold（历史执行：productionConfigMutation=true；无 secret、无 restart、无 provider call）
 ```
 
 ## 4. 执行计划
@@ -467,7 +480,7 @@ Loop 0  基线确认与方案固化
 
 | Task | Effort | Owner | Depends On | Done Criteria | 状态 |
 |---|---:|---|---|---|---|
-| L16-1 确认远端 SSH 与目标 release 目录 | 0.25h | Dev/Ops | Loop 15 + 用户授权 | 目标机和 `/opt/scm-governance-workbench/current` 可访问 | done |
+| L16-1 确认远端 SSH 与目标 release 目录 | 0.25h | Dev/Ops | Loop 15 + 用户授权 | 受限 Ops inventory 指定的目标机和 production app root 可访问 | done |
 | L16-2 只读检查 Compose / container / Node runtime key presence | 0.5h | Dev/Ops | L16-1 | 只输出布尔或 redacted 信息 | done：均未发现 key |
 | L16-3 查找可注入的 server-side key 来源 | 0.5h | Dev/Ops | L16-2 | 若存在真实 key 来源则注入；若不存在则停止 | blocked：未发现真实 key 来源 |
 | L16-4 注入 env 并重建/重启容器 | 0.5h | Dev/Ops | L16-3 | status endpoint 变为 `configured=true` | not_executed：无真实 key 来源 |
@@ -477,7 +490,7 @@ Loop 0  基线确认与方案固化
 
 | 维度 | 结论 | 证据层级 |
 |---|---|---|
-| 事实 | 远端 `tencent-lighthouse` 可访问，当前目录为 `/opt/scm-governance-workbench/current`，容器 `scm-governance-workbench` 处于 healthy。 | production remote read-only shell |
+| 事实 | 历史 evidence 记录受限 Ops inventory 指定的远端与 production app root 可访问，容器当时处于 healthy；SSH alias、用户与绝对路径已从仓库脱敏。 | production remote read-only shell |
 | 事实 | production `/api/ai-chat/deepseek/status` 仍返回 `configured=false`。 | production read-only GET |
 | 事实 | 远端 Compose 渲染结果、container env、Node runtime env、容器内 `/app/.env`/`/app/.env.local` 均没有 `DEEPSEEK_API_KEY`。 | production remote read-only shell |
 | 事实 | 当前 release `.env` 存在但不含 key；`.env.local`、`.env.production.local`、`docker-compose.override.yml` 不存在。 | production remote read-only shell |
@@ -543,7 +556,7 @@ Loop 0  基线确认与方案固化
 | 维度 | 结论 | 证据层级 |
 |---|---|---|
 | 事实 | production `/api/ai-chat/deepseek/status` fresh GET 仍返回 `configured=false`。 | production read-only GET |
-| 事实 | 已生成 Ops handoff packet，明确使用 `/opt/scm-governance-workbench/secrets/deepseek.env` + `docker-compose.deepseek-runtime.yml` 注入 key。 | ops handoff |
+| 事实 | 已生成 Ops handoff packet，明确使用 restricted server-side secret file + `docker-compose.deepseek-runtime.yml` 注入 key；实际主机与绝对路径只保留在受限 Ops inventory。 | ops handoff |
 | 事实 | handoff 只包含交互式输入和 placeholder 命令，不包含真实 key。 | secret hygiene check |
 | 事实 | 本轮没有执行 production env mutation、container restart/recreate、provider call、production business write、ERP/OMS/WMS writeback 或 local SQLite write。 | evidence JSON |
 | 推断 | 这是当前 blocker 下唯一可推进的下一步；继续重复 smoke 不会改变 `configured=false`。 | loop evidence |
@@ -553,7 +566,7 @@ Loop 0  基线确认与方案固化
 
 | Task | Effort | Owner | Depends On | Done Criteria | 状态 |
 |---|---:|---|---|---|---|
-| L20-1 创建 server-side secret 目录 | 0.1h | Dev/Ops | Loop 19 + 用户继续授权 | `/opt/scm-governance-workbench/secrets` present | done |
+| L20-1 创建 server-side secret 目录 | 0.1h | Dev/Ops | Loop 19 + 用户继续授权 | restricted production secret directory present | done |
 | L20-2 创建 Compose override 文件 | 0.1h | Dev/Ops | L20-1 | `docker-compose.deepseek-runtime.yml` present | done |
 | L20-3 确认没有写入真实 key | 0.1h | Dev/Ops | L20-2 | secret file absent，`deepseekApiKeyPersisted=false` | done |
 | L20-4 容器重建和 status 验收 | 0.5h | Ops | L20-3 + 真实 key | `configured=true` | not_executed：manual secret file required |
@@ -563,10 +576,13 @@ Loop 0  基线确认与方案固化
 
 | 维度 | 结论 | 证据层级 |
 |---|---|---|
-| 事实 | 已在生产服务器创建 no-secret scaffold：secret 目录和 Compose override 文件存在。 | production config scaffold |
-| 事实 | `/opt/scm-governance-workbench/secrets/deepseek.env` 仍不存在，未写入真实 key。 | production read-only check |
+| 事实 | 2026-07-02 历史执行已在生产服务器创建 no-secret scaffold：secret 目录和 Compose override 文件存在；这是 `productionConfigMutation=true`，不是 production no-op。 | production config scaffold |
+| 事实 | restricted production secret file 仍不存在，未写入真实 key。 | production read-only check |
 | 事实 | 容器没有重建或重启，仍为 Up 5 days healthy。 | production read-only check |
 | 事实 | production `/api/ai-chat/deepseek/status` 仍返回 `configured=false`，本轮没有 provider call。 | production read-only GET |
+| 证据边界 | 原执行记录声称“用户继续授权下一步”，但授权附件未随本批证据提供；本次 PR 整合没有重新核验该授权，也没有执行任何生产动作。 | historical authorization evidence not attached |
+| 回滚证据 | 历史是否执行回滚没有记录，当前远端状态也未在本次 PR 中重新核验；回滚步骤只能标为 proposed。 | historical rollback not recorded; current remote state not reverified |
+| Proposed 回滚路径 | 如 Owner/Ops 明确授权，应先停用或移除 Compose override，再仅在目录为空且无其他用途时移除 secret 目录，并复核 health/status。 | operator rollback handoff only |
 | 推断 | Ops 下一步只需写入真实 secret file，再使用三份 compose 文件重建当前容器。 | handoff execution |
 | 不确定项 | 真实 key 何时输入、重建后 health/status 是否通过，仍需下一轮 production evidence。 | manual execution required |
 
@@ -652,7 +668,7 @@ Loop 0 当前状态：
 进入条件：
 
 1. 允许修改本地 prototype 脚本或文档。
-2. 明确仍保持 `productionWrites=false`、`providerCalls=false`、`erpWriteback=false`。
+2. 明确本次 PR 整合仍保持 `productionBusinessWrites=false`、`currentPrProductionConfigMutation=false`、`providerCalls=false`、`erpWriteback=false`；不得把历史 Loop 20 配置写入算作本次动作。
 3. 若需要迁移或恢复源资产，只在 `drafts/analysis/` 或 prototype 本地配置内操作，不触碰生产系统。
 
 停止条件：

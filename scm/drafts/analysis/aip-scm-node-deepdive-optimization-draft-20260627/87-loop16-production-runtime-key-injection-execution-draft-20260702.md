@@ -49,7 +49,7 @@ related:
 |---|---|---|
 | GET production `/api/ai-chat/deepseek/status` | HTTP 200，`configured=false` | production read-only GET |
 | GET production `/api/deploy/health` | HTTP 200，服务仍健康 | production read-only GET |
-| SSH 进入 `tencent-lighthouse` | 成功，用户 `ubuntu`，目标目录存在 | production remote read-only shell |
+| SSH 进入受限 Ops inventory 指定的生产目标 | 成功；SSH alias、用户与绝对路径已从仓库 evidence 脱敏 | production remote read-only shell |
 | 检查 Compose 渲染结果 | 未发现 `DEEPSEEK` 或 `env_file` 注入项 | production remote read-only shell |
 | 检查容器 env | 未发现 `DEEPSEEK_API_KEY`、`DEEPSEEK_MODEL`、`DEEPSEEK_BASE_URL`、`DEEPSEEK_ENABLE_WEB_SEARCH` | production remote read-only shell |
 | 检查 Node runtime env | `keyPresent=false`，`model=null`，`baseUrlPresent=false` | production remote read-only shell |
@@ -87,8 +87,8 @@ related:
 
 进入下一步前需要 Ops 完成以下任一动作：
 
-1. 在当前服务器 `/opt/scm-governance-workbench/current` 可用的 server-side secret 文件中配置真实 `DEEPSEEK_API_KEY`；
+1. 在受限 Ops inventory 指定的当前 production app root 下，以 server-side secret 文件配置真实 `DEEPSEEK_API_KEY`；
 2. 或确认真实 key 位于哪个 secret manager / 运维路径，并授权读取或注入；
 3. 或由 Ops 直接完成容器 env 注入后，重新提供 status endpoint `configured=true` 的只读证据。
 
-只有当 status endpoint 变为 `configured=true` 后，才能再次进入 knowledge-mode provider live smoke gate。
+只有在同一次新鲜 status 证据中满足 `providerCallAuthorized=true`、`configured=true`、`databaseWriteAuthorized=true`、`available=true`，并分别取得本次明确的 knowledge-mode live-call approval 与目标 workbench SQLite trace/run 写入授权后，才能设置单次 client flag 并进入 provider live smoke gate。原始 Loop 16 evidence 未记录这些 server-side 授权字段，不能把 `configured=true` 单独当作完整授权。

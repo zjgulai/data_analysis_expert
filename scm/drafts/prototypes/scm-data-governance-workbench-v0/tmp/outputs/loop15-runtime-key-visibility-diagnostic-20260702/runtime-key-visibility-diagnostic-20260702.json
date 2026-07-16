@@ -3,7 +3,8 @@
   "check": "loop15-runtime-key-visibility-diagnostic",
   "status": "runtime_key_not_visible_to_production_status_endpoint",
   "baseUrl": "https://scm.lute-tlz-dddd.top",
-  "evidencePath": "drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/loop15-runtime-key-visibility-diagnostic-20260702/runtime-key-visibility-diagnostic-20260702.json",
+  "pathBase": "prototype_root",
+  "evidencePath": "tmp/outputs/loop15-runtime-key-visibility-diagnostic-20260702/runtime-key-visibility-diagnostic-20260702.json",
   "boundary": {
     "productionReadOnly": true,
     "providerCalls": false,
@@ -47,7 +48,7 @@
   },
   "localConfigFacts": [
     {
-      "file": "drafts/prototypes/scm-data-governance-workbench-v0/docker-compose.yml",
+      "file": "docker-compose.yml",
       "mentionsDeepseekApiKey": false,
       "mentionsDeepseekEnvFile": false,
       "loadsDotEnvInApp": false,
@@ -55,7 +56,7 @@
       "hasComposeEnvironmentBlock": true
     },
     {
-      "file": "drafts/prototypes/scm-data-governance-workbench-v0/docker-compose.production.yml",
+      "file": "docker-compose.production.yml",
       "mentionsDeepseekApiKey": false,
       "mentionsDeepseekEnvFile": false,
       "loadsDotEnvInApp": false,
@@ -63,7 +64,7 @@
       "hasComposeEnvironmentBlock": true
     },
     {
-      "file": "drafts/prototypes/scm-data-governance-workbench-v0/Dockerfile",
+      "file": "Dockerfile",
       "mentionsDeepseekApiKey": false,
       "mentionsDeepseekEnvFile": false,
       "loadsDotEnvInApp": false,
@@ -71,7 +72,7 @@
       "hasComposeEnvironmentBlock": false
     },
     {
-      "file": "drafts/prototypes/scm-data-governance-workbench-v0/server/index.mjs",
+      "file": "server/index.mjs",
       "mentionsDeepseekApiKey": true,
       "mentionsDeepseekEnvFile": false,
       "loadsDotEnvInApp": true,
@@ -89,7 +90,7 @@
     ]
   },
   "opsReadOnlyCommands": [
-    "cd /opt/scm-governance-workbench/current && docker compose -p scm_governance_workbench -f docker-compose.yml -f docker-compose.production.yml config | grep -E \"DEEPSEEK|env_file\" || true",
+    "if ! docker compose -p scm_governance_workbench -f docker-compose.yml -f docker-compose.production.yml config --quiet >/dev/null 2>&1; then echo compose_config=unknown >&2; exit 1; fi; if grep -Eq 'DEEPSEEK_|env_file' docker-compose.yml docker-compose.production.yml; then echo deepseek_or_env_file_declared=true; else echo deepseek_or_env_file_declared=false; fi",
     "docker inspect scm-governance-workbench --format \"{{range .Config.Env}}{{println .}}{{end}}\" | grep -E \"^DEEPSEEK_(API_KEY|MODEL|BASE_URL|ENABLE_WEB_SEARCH)=\" | sed \"s/=.*/=<redacted>/\" || true",
     "docker exec scm-governance-workbench node -e \"console.log(JSON.stringify({keyPresent:Boolean(process.env.DEEPSEEK_API_KEY), model:process.env.DEEPSEEK_MODEL||null, baseUrlPresent:Boolean(process.env.DEEPSEEK_BASE_URL)}))\"",
     "docker exec scm-governance-workbench sh -lc \"test -f /app/.env && echo app_env_present || echo app_env_absent; test -f /app/.env.local && echo app_env_local_present || echo app_env_local_absent\"",

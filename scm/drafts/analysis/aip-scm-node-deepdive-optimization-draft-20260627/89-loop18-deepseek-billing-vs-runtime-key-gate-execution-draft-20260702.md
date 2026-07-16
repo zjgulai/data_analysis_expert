@@ -3,7 +3,7 @@ title: "Loop 18 DeepSeek Billing vs Runtime Key Gate Execution"
 doc_type: execution_log
 module: scm
 topic: loop18-deepseek-billing-vs-runtime-key-gate
-status: draft_loop18_blocked_billing_confirmed_runtime_key_absent
+status: draft_loop18_blocked_runtime_key_absent_billing_user_reported_unverified
 created: 2026-07-02
 updated: 2026-07-02
 owner: self
@@ -64,7 +64,7 @@ related:
 
 | 类型 | 结论 |
 |---|---|
-| 事实 | 用户已确认 DeepSeek 充值完成。 |
+| 未验证输入 | 用户口头确认 DeepSeek 充值完成；本轮没有 DeepSeek 账户侧账单或额度证据，不能视为 provider/account 已验证事实。 |
 | 事实 | 当前 production provider status 仍为 `configured=false`。 |
 | 事实 | 当前生产 Node runtime、容器 env 文件、当前 release 候选 env 文件和 SSH shell env 仍没有可见 `DEEPSEEK_API_KEY`。 |
 | 事实 | 本轮没有执行 provider live smoke、production env mutation、container restart/recreate、production business write、ERP/OMS/WMS writeback 或 local SQLite write。 |
@@ -73,16 +73,16 @@ related:
 
 ## 4. Gate 结论
 
-**Loop 18 停在 `blocked_billing_confirmed_runtime_key_absent`。**
+**Loop 18 停在 `blocked_runtime_key_absent_billing_user_reported_unverified`。** 历史标签 `blocked_billing_confirmed_runtime_key_absent` 已废弃，因为它会把用户口头输入误写成账户侧已验证事实。
 
-本轮没有进入 provider call，因为 `configured=true` 前置条件未满足。下一步必须把真实 `DEEPSEEK_API_KEY` 注入当前生产 runtime，或提供 status endpoint `configured=true` 的只读证据。
+本轮没有进入 provider call，因为 `configured=true` 前置条件未满足。下一步必须把真实 `DEEPSEEK_API_KEY` 注入当前生产 runtime；billing 口头确认不能替代 provider、数据库写入或运行时门禁。
 
 ## 5. 可执行的 Ops 输入
 
 下一步需要完成其一：
 
-1. 在 `/opt/scm-governance-workbench/current` 的 server-side secret/env 路径配置真实 `DEEPSEEK_API_KEY`，并重建或重启容器；
+1. 在受限 Ops inventory 指定的 production app root 与 server-side secret/env 路径配置真实 `DEEPSEEK_API_KEY`，并重建或重启容器；
 2. 或把真实 key 配入容器运行时环境，使 Node runtime `keyPresent=true`；
 3. 或提供 `/api/ai-chat/deepseek/status` 返回 `configured=true` 的只读证据。
 
-满足后再执行 knowledge-mode provider live smoke。
+满足后仍需分别取得本次明确的 knowledge-mode live-call approval 与目标 workbench SQLite trace/run 写入授权，并由新鲜 status 证明 `providerCallAuthorized=true`、`configured=true`、`databaseWriteAuthorized=true`、`available=true`；只在单次命令内设置 client flag，才可执行 knowledge-mode provider live smoke。
