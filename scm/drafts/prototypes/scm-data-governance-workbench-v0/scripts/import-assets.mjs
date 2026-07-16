@@ -1,10 +1,12 @@
 import { DatabaseSync } from "node:sqlite";
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
+import { basename, dirname, isAbsolute, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+import { redactWorkstationPaths } from "./workstation-paths.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
+const repositoryRoot = findRepositoryRoot(root);
 const dbPath = resolve(root, "data/governance_workbench.sqlite");
 const temporaryDbPath = resolve(root, "data", `governance_workbench.sqlite.build-${process.pid}`);
 const summaryPath = resolve(root, "data/import-summary.json");
@@ -158,15 +160,38 @@ function parseCsv(text) {
   return body.map((cells) => Object.fromEntries(headers.map((header, index) => [header, cells[index] ?? ""])));
 }
 
+function findRepositoryRoot(start) {
+  let current = resolve(start);
+  while (true) {
+    if (existsSync(resolve(current, ".git"))) return current;
+    const parent = dirname(current);
+    if (parent === current) return root;
+    current = parent;
+  }
+}
+
+function portableSourcePath(value) {
+  const absolutePath = resolve(value);
+  const repositoryPath = relative(repositoryRoot, absolutePath);
+  if (repositoryPath === "") return ".";
+  if (!repositoryPath.startsWith(`..${sep}`) && repositoryPath !== ".." && !isAbsolute(repositoryPath)) {
+    return repositoryPath.split(sep).join("/");
+  }
+  return `external-source/${basename(absolutePath)}`;
+}
+
 function execMany(sql) {
   db.exec(sql);
 }
 
-function insert(table, record) {
+function insert(table, record, preSanitizedKeys = []) {
   const keys = Object.keys(record);
+  const preSanitizedKeySet = new Set(preSanitizedKeys);
   const placeholders = keys.map(() => "?").join(", ");
   const stmt = db.prepare(`INSERT INTO ${table} (${keys.join(", ")}) VALUES (${placeholders})`);
-  stmt.run(...keys.map((key) => record[key]));
+  stmt.run(...keys.map((key) => typeof record[key] === "string" && !preSanitizedKeySet.has(key)
+    ? redactWorkstationPaths(record[key])
+    : record[key]));
 }
 
 const lifecycle = ["draft", "mapped", "reviewed", "certified", "active", "deprecated"];
@@ -1226,13 +1251,57 @@ function walkMarkdownFiles(dir) {
   return files;
 }
 
+function findBalancedMarkdownClose(text, start, opener, closer) {
+  let depth = 1;
+  for (let index = start + 1; index < text.length; index += 1) {
+    if (text[index] === "\\") {
+      index += 1;
+      continue;
+    }
+    if (text[index] === opener) depth += 1;
+    if (text[index] !== closer) continue;
+    depth -= 1;
+    if (depth === 0) return index;
+  }
+  return null;
+}
+
+function stripInlineMarkdownLinks(text) {
+  let cursor = 0;
+  let stripped = "";
+  while (cursor < text.length) {
+    const labelStart = text.indexOf("[", cursor);
+    if (labelStart === -1) return `${stripped}${text.slice(cursor)}`;
+
+    const imageStart = labelStart > cursor && text[labelStart - 1] === "!" ? labelStart - 1 : null;
+    const syntaxStart = imageStart ?? labelStart;
+    const labelEnd = findBalancedMarkdownClose(text, labelStart, "[", "]");
+    if (labelEnd === null || text[labelEnd + 1] !== "(") {
+      stripped += text.slice(cursor, labelStart + 1);
+      cursor = labelStart + 1;
+      continue;
+    }
+    const destinationEnd = findBalancedMarkdownClose(text, labelEnd + 1, "(", ")");
+    if (destinationEnd === null) {
+      stripped += text.slice(cursor, labelStart + 1);
+      cursor = labelStart + 1;
+      continue;
+    }
+
+    stripped += text.slice(cursor, syntaxStart);
+    stripped += imageStart === null ? ` ${text.slice(labelStart + 1, labelEnd)} ` : " ";
+    cursor = destinationEnd + 1;
+  }
+  return stripped;
+}
+
 function stripMarkdown(text) {
-  return text
+  const withoutBlocks = text
     .replace(/^---[\s\S]*?---/m, " ")
-    .replace(/```[\s\S]*?```/g, " ")
-    .replace(/!\[[^\]]*]\([^)]*\)/g, " ")
-    .replace(/\[[^\]]*]\([^)]*\)/g, (match) => match.replace(/\[|\]\([^)]*\)/g, ""))
-    .replace(/[#>*_`|]/g, " ")
+    .replace(/```[\s\S]*?```/g, " ");
+  return stripInlineMarkdownLinks(withoutBlocks)
+    .replace(/^#{1,6}\s+/gm, " ")
+    .replace(/[>*_`|]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -1292,13 +1361,29 @@ function inferRefs(text) {
 }
 
 function chunkText(text, maxChunks = 4, chunkSize = 900) {
-  const clean = stripMarkdown(text);
+  const clean = redactWorkstationPaths(stripMarkdown(text));
   const chunks = [];
-  for (let start = 0; start < clean.length && chunks.length < maxChunks; start += chunkSize) {
-    const chunk = clean.slice(start, start + chunkSize).trim();
-    if (chunk.length > 80) chunks.push(chunk);
+  let start = 0;
+  while (start < clean.length && chunks.length < maxChunks) {
+    while (start < clean.length && /\s/.test(clean[start])) start += 1;
+    if (start >= clean.length) break;
+    const target = Math.min(start + chunkSize, clean.length);
+    let end = target;
+    if (target < clean.length) {
+      const minimumBoundary = Math.min(start + 80, clean.length);
+      const previousBoundary = clean.lastIndexOf(" ", target);
+      if (previousBoundary >= minimumBoundary) {
+        end = previousBoundary;
+      } else {
+        const nextBoundary = clean.indexOf(" ", target);
+        end = nextBoundary === -1 ? clean.length : nextBoundary;
+      }
+    }
+    const chunk = clean.slice(start, end).trim();
+    if (chunk) chunks.push(chunk);
+    start = end;
   }
-  return chunks.length ? chunks : [clean.slice(0, chunkSize)];
+  return chunks.length ? chunks : [clean];
 }
 
 let knowledgeCardCount = 0;
@@ -1311,7 +1396,7 @@ knowledgeDomains.forEach((domain) => {
     id: domain.id,
     name: domain.name,
     theme: domain.theme,
-    source_path: domain.root,
+    source_path: portableSourcePath(domain.root),
     status: domain.status,
     evidence_level: domain.evidence_level,
     description: domain.description,
@@ -1325,7 +1410,7 @@ knowledgeDomains.forEach((domain) => {
   files.forEach((filePath, fileIndex) => {
     const raw = readFileSync(filePath, "utf8");
     const title = extractTitle(raw, filePath);
-    const clean = stripMarkdown(raw);
+    const clean = redactWorkstationPaths(stripMarkdown(raw));
     const topic = inferTopic(filePath, raw);
     const refs = inferRefs(`${filePath} ${raw}`);
     const cardId = `${domain.id}-card-${String(fileIndex + 1).padStart(4, "0")}`;
@@ -1334,7 +1419,7 @@ knowledgeDomains.forEach((domain) => {
       domain_id: domain.id,
       title,
       topic,
-      source_path: filePath,
+      source_path: portableSourcePath(filePath),
       source_section: title,
       summary: clean.slice(0, 360),
       object_refs: JSON.stringify(refs.objectRefs),
@@ -1343,7 +1428,7 @@ knowledgeDomains.forEach((domain) => {
       evidence_level: domain.evidence_level,
       status: domain.status,
       updated_at: new Date().toISOString()
-    });
+    }, ["summary"]);
     knowledgeCardCount += 1;
     domainCardCount += 1;
     chunkText(raw).forEach((chunk, chunkIndex) => {
@@ -1355,8 +1440,8 @@ knowledgeDomains.forEach((domain) => {
         text: chunk,
         keywords: JSON.stringify([...refs.objectRefs, ...refs.metricRefs, topic]),
         evidence_level: domain.evidence_level,
-        source_path: filePath
-      });
+        source_path: portableSourcePath(filePath)
+      }, ["text"]);
       knowledgeChunkCount += 1;
       domainChunkCount += 1;
     });
