@@ -68,7 +68,10 @@ async function waitForChildExit(child, timeoutMs) {
   });
 }
 
-async function startApp(appRoot, extraEnv = {}) {
+async function startApp(appRoot, extraEnv = {}, { startupTimeoutMs = 10_000 } = {}) {
+  if (!Number.isInteger(startupTimeoutMs) || startupTimeoutMs <= 0) {
+    throw new Error("startupTimeoutMs must be a positive integer");
+  }
   const port = await reservePort();
   const logs = [];
   const child = spawn(process.execPath, [join(appRoot, "server", "index.mjs")], {
@@ -91,17 +94,22 @@ async function startApp(appRoot, extraEnv = {}) {
   const app = { child, baseUrl, logs };
   runningApps.push(app);
   try {
-    for (let attempt = 0; attempt < 100; attempt += 1) {
+    const startupDeadline = Date.now() + startupTimeoutMs;
+    while (Date.now() < startupDeadline) {
       if (hasChildExited(child)) {
         throw new Error(`SCM server exited before health check.\n${logs.join("").slice(-2000)}`);
       }
       try {
-        const response = await fetch(`${baseUrl}/api/deploy/health`, { signal: AbortSignal.timeout(2000) });
+        const remainingMs = Math.max(1, startupDeadline - Date.now());
+        const response = await fetch(`${baseUrl}/api/deploy/health`, {
+          signal: AbortSignal.timeout(Math.min(2000, remainingMs))
+        });
         if (response.ok) return app;
       } catch {
         // The child may still be binding its local port.
       }
-      await delay(100);
+      const delayMs = Math.min(100, Math.max(0, startupDeadline - Date.now()));
+      if (delayMs > 0) await delay(delayMs);
     }
     throw new Error(`SCM server did not become healthy.\n${logs.join("").slice(-2000)}`);
   } catch (error) {
@@ -136,6 +144,40 @@ const results = [];
 const runningApps = [];
 
 try {
+  const stalledStartupRoot = join(sandboxRoot, "stalled-startup");
+  mkdirSync(join(stalledStartupRoot, "server"), { recursive: true });
+  writeFileSync(
+    join(stalledStartupRoot, "server", "index.mjs"),
+    `import { createServer } from "node:http";
+     createServer(() => {}).listen(Number(process.env.PORT), "127.0.0.1");
+    `,
+    "utf8"
+  );
+  const stalledStartupIndex = runningApps.length;
+  const stalledStartupStartedAt = Date.now();
+  const stalledStartupPromise = startApp(stalledStartupRoot, {}, { startupTimeoutMs: 250 }).then(
+    () => ({ ok: true, error: "" }),
+    (error) => ({ ok: false, error: String(error?.message || error) })
+  );
+  const stalledStartupOutcome = await Promise.race([
+    stalledStartupPromise,
+    delay(1000).then(() => ({ watchdogExpired: true }))
+  ]);
+  const stalledStartupElapsedMs = Date.now() - stalledStartupStartedAt;
+  if (stalledStartupOutcome.watchdogExpired) {
+    const stalledApp = runningApps[stalledStartupIndex];
+    if (stalledApp) await stopApp(stalledApp);
+    await stalledStartupPromise;
+    failures.push("stalled health endpoint must respect one overall startup deadline");
+  } else {
+    if (stalledStartupOutcome.ok || !stalledStartupOutcome.error.includes("did not become healthy")) {
+      failures.push(`stalled health endpoint must surface the startup deadline, got: ${stalledStartupOutcome.error || "no error"}`);
+    }
+    if (stalledStartupElapsedMs > 750) {
+      failures.push(`stalled health endpoint exceeded the bounded startup deadline: ${stalledStartupElapsedMs}ms`);
+    }
+  }
+
   const failedStartupRoot = join(sandboxRoot, "failed-startup");
   const failedStartupPidPath = join(failedStartupRoot, "server.pid");
   mkdirSync(join(failedStartupRoot, "server"), { recursive: true });
