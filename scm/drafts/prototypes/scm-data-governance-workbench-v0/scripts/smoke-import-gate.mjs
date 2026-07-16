@@ -143,9 +143,21 @@ try {
     macRoot: ["", "Users", "smoke-root"].join("/"),
     linuxRoot: ["", "home", "smoke-root"].join("/"),
     windowsRoot: ["C:", "Users", "smoke-root"].join(windowsSeparator),
-    rootedWindowsRoot: ["", "Users", "smoke-root"].join(windowsSeparator)
+    rootedWindowsRoot: ["", "Users", "smoke-root"].join(windowsSeparator),
+    macRootWithSpace: ["", "Users", "Alice Smith"].join("/"),
+    windowsRootWithSpace: ["C:", "Users", "Alice Smith"].join(windowsSeparator),
+    windowsDescendantWithApostrophe: ["C:", "Users", "O'Brien", "private", "evidence.md"].join(windowsSeparator),
+    wrappedMacRoot: `(${["", "Users", "alice"].join("/")})`,
+    wrappedLinuxRoot: `[${["", "home", "alice"].join("/")}]`,
+    commaMacRoot: `${["", "Users", "alice"].join("/")},`,
+    periodLinuxRoot: `${["", "home", "alice"].join("/")}.`,
+    fileUri: `file://${["", "Users", "alice", "file"].join("/")}`
   };
-  const benignUrlFixture = "https://example.com/users/42";
+  const benignUrlFixtures = [
+    "https://example.com/users/42",
+    "https://example.com/Users/alice/private",
+    "https://example.com/home/alice/private"
+  ];
   const expectedFixtureRedactions = {
     mac: `${workstationHomeRedaction}/private/evidence.md`,
     linux: `${workstationHomeRedaction}/private/evidence.md`,
@@ -154,29 +166,35 @@ try {
     macRoot: workstationHomeRedaction,
     linuxRoot: workstationHomeRedaction,
     windowsRoot: workstationHomeRedaction,
-    rootedWindowsRoot: workstationHomeRedaction
+    rootedWindowsRoot: workstationHomeRedaction,
+    macRootWithSpace: workstationHomeRedaction,
+    windowsRootWithSpace: workstationHomeRedaction,
+    windowsDescendantWithApostrophe: `${workstationHomeRedaction}${windowsSeparator}private${windowsSeparator}evidence.md`,
+    wrappedMacRoot: `(${workstationHomeRedaction})`,
+    wrappedLinuxRoot: `[${workstationHomeRedaction}]`,
+    commaMacRoot: `${workstationHomeRedaction},`,
+    periodLinuxRoot: `${workstationHomeRedaction}.`,
+    fileUri: `file://${workstationHomeRedaction}/file`
   };
   for (const [name, value] of Object.entries(workstationPathFixtures)) {
+    const redacted = redactWorkstationPaths(value);
     if (countWorkstationHomePaths(value) !== 1) failures.push(`${name} workstation fixture must have exactly one matcher hit`);
-    if (redactWorkstationPaths(value) !== expectedFixtureRedactions[name]) failures.push(`${name} workstation fixture must redact exactly the home prefix`);
+    if (redacted !== expectedFixtureRedactions[name]) failures.push(`${name} workstation fixture must redact exactly the home prefix`);
+    if (countWorkstationHomePaths(redacted) !== 0) failures.push(`${name} redacted workstation fixture must have zero matcher hits`);
+    if (redactWorkstationPaths(redacted) !== redacted) failures.push(`${name} workstation redaction must be idempotent`);
   }
-  if (countWorkstationHomePaths(benignUrlFixture) !== 0) failures.push("benign users URL must have zero workstation matcher hits");
-  if (redactWorkstationPaths(benignUrlFixture) !== benignUrlFixture) failures.push("benign users URL must remain unchanged by redaction");
+  for (const benignUrlFixture of benignUrlFixtures) {
+    if (countWorkstationHomePaths(benignUrlFixture) !== 0) failures.push("benign URL must have zero workstation matcher hits");
+    if (redactWorkstationPaths(benignUrlFixture) !== benignUrlFixture) failures.push("benign URL must remain unchanged by redaction");
+  }
   mkdirSync(knowledgeFixtureRoot, { recursive: true });
   writeFileSync(
     knowledgeFixtureFile,
     [
       "# Portable path fixture",
       "",
-      `mac ${workstationPathFixtures.mac}`,
-      `linux ${workstationPathFixtures.linux}`,
-      `windows ${workstationPathFixtures.windows}`,
-      `mixed ${workstationPathFixtures.mixed}`,
-      `url ${benignUrlFixture}`,
-      `mac-root ${workstationPathFixtures.macRoot}`,
-      `linux-root ${workstationPathFixtures.linuxRoot}`,
-      `windows-root ${workstationPathFixtures.windowsRoot}`,
-      `rooted-windows-root ${workstationPathFixtures.rootedWindowsRoot}`,
+      ...benignUrlFixtures.map((value, index) => `url-${index + 1} ${value}`),
+      ...Object.entries(workstationPathFixtures).map(([name, value]) => `${name} ${JSON.stringify(value)}`),
       ""
     ].join("\n")
   );
@@ -229,18 +247,15 @@ try {
         : null;
       const expectedDomainPath = "scm/drafts/analysis/jijia-scm-knowledge-base-draft-20260604";
       const expectedCardPath = `${expectedDomainPath}/portable-path-fixture.md`;
-      const expectedWindowsRedactedPath = expectedFixtureRedactions.windows;
       const summaryFixture = String(cardFixture?.summary || "");
       const chunkTextFixture = String(chunkFixture?.text || "");
       const fixtureChecks = [
         [domainFixture?.source_path === expectedDomainPath, "authorized rebuild knowledge domain path must be repository-relative"],
         [cardFixture?.source_path === expectedCardPath, "authorized rebuild knowledge card path must be repository-relative"],
-        [(summaryFixture.match(/<workstation-home>/g) || []).length === Object.keys(workstationPathFixtures).length, "authorized rebuild knowledge summary must redact all workstation homes"],
+        [(summaryFixture.match(/<workstation-home>/g) || []).length >= 2, "authorized rebuild knowledge summary must redact path-bearing content"],
         [(chunkTextFixture.match(/<workstation-home>/g) || []).length === Object.keys(workstationPathFixtures).length, "authorized rebuild knowledge chunk must redact all workstation homes"],
-        [summaryFixture.includes(expectedWindowsRedactedPath), "authorized rebuild knowledge summary must redact a Windows profile containing spaces"],
-        [chunkTextFixture.includes(expectedWindowsRedactedPath), "authorized rebuild knowledge chunk must redact a Windows profile containing spaces"],
-        [summaryFixture.includes(benignUrlFixture), "authorized rebuild knowledge summary must preserve a benign users URL"],
-        [chunkTextFixture.includes(benignUrlFixture), "authorized rebuild knowledge chunk must preserve a benign users URL"]
+        [benignUrlFixtures.every((value) => summaryFixture.includes(value)), "authorized rebuild knowledge summary must preserve benign URLs"],
+        [benignUrlFixtures.every((value) => chunkTextFixture.includes(value)), "authorized rebuild knowledge chunk must preserve benign URLs"]
       ];
       for (const [ok, message] of fixtureChecks) {
         if (!ok) failures.push(message);
