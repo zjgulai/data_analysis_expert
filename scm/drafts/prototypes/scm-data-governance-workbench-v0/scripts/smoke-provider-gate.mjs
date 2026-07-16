@@ -39,7 +39,7 @@ async function reservePort() {
 
 async function waitForHealth(baseUrl, child, logs) {
   for (let attempt = 0; attempt < 50; attempt += 1) {
-    if (child.exitCode !== null) {
+    if (child.exitCode !== null || child.signalCode !== null) {
       throw new Error(`SCM server exited before health check.\n${logs.join("").slice(-2000)}`);
     }
     try {
@@ -64,7 +64,7 @@ function runProcess(command, args, options) {
       timedOut = true;
       childProcess.kill("SIGTERM");
       forceKillTimer = setTimeout(() => {
-        if (childProcess.exitCode === null) childProcess.kill("SIGKILL");
+        if (childProcess.exitCode === null && childProcess.signalCode === null) childProcess.kill("SIGKILL");
       }, 1000);
     }, childTimeoutMs);
     childProcess.stdout.on("data", (chunk) => { stdout += String(chunk); });
@@ -86,19 +86,28 @@ function runProcess(command, args, options) {
   });
 }
 
-async function stopChildProcess(childProcess) {
-  if (!childProcess || childProcess.exitCode !== null) return;
-  childProcess.kill("SIGTERM");
-  const exited = await Promise.race([
+function childHasExited(childProcess) {
+  return childProcess.exitCode !== null || childProcess.signalCode !== null;
+}
+
+async function waitForChildExit(childProcess, timeoutMs) {
+  if (childHasExited(childProcess)) return true;
+  return Promise.race([
     new Promise((resolveExit) => childProcess.once("exit", () => resolveExit(true))),
-    delay(2000).then(() => false)
+    delay(timeoutMs).then(() => false)
   ]);
-  if (exited || childProcess.exitCode !== null) return;
+}
+
+async function stopChildProcess(childProcess) {
+  if (!childProcess || childHasExited(childProcess)) return;
+  childProcess.kill("SIGTERM");
+  const exited = await waitForChildExit(childProcess, 2000);
+  if (exited || childHasExited(childProcess)) return;
   childProcess.kill("SIGKILL");
-  await Promise.race([
-    new Promise((resolveExit) => childProcess.once("exit", resolveExit)),
-    delay(2000)
-  ]);
+  const forceExited = await waitForChildExit(childProcess, 2000);
+  if (!forceExited && !childHasExited(childProcess)) {
+    throw new Error(`Child process ${childProcess.pid || "unknown"} remained alive after SIGKILL`);
+  }
 }
 
 let providerRequestCount = 0;

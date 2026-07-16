@@ -27,6 +27,20 @@ function assertMutatingSmokeTarget(targetUrl, finalDestination = false) {
   }
 }
 
+async function waitForFixture(promise, label, timeoutMs = requestTimeoutMs) {
+  let timeout;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise((_, reject) => {
+        timeout = setTimeout(() => reject(new Error(`${label} timed out after ${timeoutMs}ms`)), timeoutMs);
+      })
+    ]);
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 assertMutatingSmokeTarget(baseUrl);
 
 const viewports = [
@@ -187,6 +201,24 @@ const interactiveChecks = [
       const delayedWriteStarted = new Promise((resolveStarted) => { resolveDelayedWriteStarted = resolveStarted; });
       const delayedWriteRelease = new Promise((resolveRelease) => { releaseDelayedWrite = resolveRelease; });
       const delayedWriteCompleted = new Promise((resolveCompleted) => { resolveDelayedWriteCompleted = resolveCompleted; });
+      await page.evaluate(() => {
+        window.__scmOriginalFetch = window.fetch;
+        window.__scmAnnotationResponsesProcessed = 0;
+        const originalFetch = window.fetch.bind(window);
+        window.fetch = async (...args) => {
+          const response = await originalFetch(...args);
+          const requestUrl = String(args[0] instanceof Request ? args[0].url : args[0]);
+          if (requestUrl.includes("/api/annotations")) {
+            const originalJson = response.json.bind(response);
+            response.json = async () => {
+              const payload = await originalJson();
+              setTimeout(() => { window.__scmAnnotationResponsesProcessed += 1; }, 0);
+              return payload;
+            };
+          }
+          return response;
+        };
+      });
       await page.route("**/api/annotations", async (route) => {
         resolveDelayedWriteStarted();
         await delayedWriteRelease;
@@ -207,18 +239,34 @@ const interactiveChecks = [
       const sourceDraft = dialog.getByPlaceholder("写入治理注解，例如口径边界、样本异常或 owner 判断...");
       await sourceDraft.fill("source-target-draft");
       await dialog.getByRole("button", { name: "保存注解" }).click();
-      await delayedWriteStarted;
+      await waitForFixture(delayedWriteStarted, "delayed annotation request start");
       await dialog.getByRole("button", { name: /打开对象|打开指标/ }).first().click();
       const currentDraft = dialog.getByPlaceholder("写入治理注解，例如口径边界、样本异常或 owner 判断...");
       await currentDraft.waitFor({ timeout: 10000 });
       assert(await currentDraft.inputValue() === "", "Drawer write drafts must reset when the selected target changes");
+      await currentDraft.fill("intermediate-target-draft");
+      const sourceSupportCard = dialog.locator(".supportCard")
+        .filter({ hasText: "BI 字段到业务知识库分类登记" })
+        .first();
+      await sourceSupportCard.getByRole("button", { name: "打开知识卡" }).click();
+      await dialog.getByText("BI 字段到业务知识库分类登记").first().waitFor({ timeout: 10000 });
+      assert(await currentDraft.inputValue() === "", "Drawer write drafts must reset when returning to the original target");
       await currentDraft.fill("current-target-draft");
       releaseDelayedWrite();
-      await delayedWriteCompleted;
-      await page.waitForTimeout(100);
-      assert(await currentDraft.inputValue() === "current-target-draft", "A stale submit completion must not clear the current target draft");
-      assert((await dialog.innerText()).includes("stale-target-response") === false, "A stale submit completion must not replace the current target ledger");
+      await waitForFixture(delayedWriteCompleted, "delayed annotation route completion");
+      await page.waitForFunction(
+        () => window.__scmAnnotationResponsesProcessed >= 1,
+        undefined,
+        { timeout: requestTimeoutMs }
+      );
+      assert(await currentDraft.inputValue() === "current-target-draft", "An A-to-B-to-A stale submit completion must not clear the returned target draft");
+      assert((await dialog.innerText()).includes("stale-target-response") === false, "An A-to-B-to-A stale submit completion must not replace the returned target ledger");
       await page.unroute("**/api/annotations");
+      await page.evaluate(() => {
+        window.fetch = window.__scmOriginalFetch;
+        delete window.__scmOriginalFetch;
+        delete window.__scmAnnotationResponsesProcessed;
+      });
 
       await page.route("**/api/annotations", (route) => route.fulfill({
         status: 500,

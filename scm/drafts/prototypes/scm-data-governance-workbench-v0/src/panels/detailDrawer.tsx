@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { AnyRow } from "../shared/ui";
 import {
   AssetDetailSection,
@@ -147,9 +147,16 @@ export function DetailDrawer({
   const [knowledgeSupport, setKnowledgeSupport] = useState<KnowledgeSupportPayload | null>(null);
   const [writeError, setWriteError] = useState("");
   const targetKey = `${targetType}:${targetId}`;
-  const activeTargetRef = useRef(targetKey);
+  const selectionIdentity = row ? targetKey : "";
+  const activeSelectionRef = useRef({ identity: selectionIdentity, epoch: 0 });
   const mountedRef = useRef(false);
-  activeTargetRef.current = targetKey;
+
+  useLayoutEffect(() => {
+    activeSelectionRef.current = {
+      identity: selectionIdentity,
+      epoch: activeSelectionRef.current.epoch + 1
+    };
+  }, [selectionIdentity]);
 
   useEffect(() => {
     mountedRef.current = true;
@@ -208,6 +215,10 @@ export function DetailDrawer({
 
   async function submit(path: string, payload: Record<string, unknown>, clear: () => void, mode: string) {
     const requestTargetKey = targetKey;
+    const requestSelectionEpoch = activeSelectionRef.current.epoch;
+    const submissionIsCurrent = () => mountedRef.current
+      && activeSelectionRef.current.identity === requestTargetKey
+      && activeSelectionRef.current.epoch === requestSelectionEpoch;
     setWriteError("");
     setSaving(mode);
     try {
@@ -215,15 +226,15 @@ export function DetailDrawer({
         method: "POST",
         body: JSON.stringify({ targetType, targetId, ...payload })
       });
-      if (!mountedRef.current || activeTargetRef.current !== requestTargetKey) return;
+      if (!submissionIsCurrent()) return;
       setLedger(result.ledger);
       clear();
     } catch (error) {
-      if (!mountedRef.current || activeTargetRef.current !== requestTargetKey) return;
+      if (!submissionIsCurrent()) return;
       const detail = error instanceof Error ? error.message : String(error || "unknown error");
       setWriteError(`保存失败：${detail.slice(0, 300)}`);
     } finally {
-      if (mountedRef.current && activeTargetRef.current === requestTargetKey) setSaving("");
+      if (submissionIsCurrent()) setSaving("");
     }
   }
 

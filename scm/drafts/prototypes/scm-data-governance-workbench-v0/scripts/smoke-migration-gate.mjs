@@ -205,6 +205,26 @@ function verifyLoop3LedgerApplyRollback() {
       throw new Error("Loop 3 action task must preserve closed external-write boundaries");
     }
 
+    db.exec(`
+      UPDATE action_tasks SET status = 'migration_gate_user_changed'
+      WHERE id = 'action_loop3_20260701_finance_cost_tail_warehouse_return';
+      UPDATE agent_traces SET answerability = 'migration_gate_user_changed'
+      WHERE id = 'trace_loop3_20260701_finance_cost_tail_warehouse_return';
+      UPDATE aip_scenarios SET status = 'migration_gate_user_changed'
+      WHERE id LIKE 'scenario_loop3_%_20260701';
+      UPDATE decision_logs SET status = 'migration_gate_user_changed'
+      WHERE id = 'decision_loop3_20260701_finance_cost_tail_warehouse_return';
+      UPDATE ontology_object_instances SET status = 'migration_gate_user_changed'
+      WHERE id = 'cost_event_loop3_tail_warehouse_return_20260701';
+      UPDATE recommendation_cards
+      SET approval_status = 'migration_gate_user_changed',
+          execution_status = 'migration_gate_user_changed'
+      WHERE id = 'rec_loop3_20260701_finance_cost_tail_warehouse_return';
+      UPDATE trace_reviews SET review_status = 'migration_gate_user_changed'
+      WHERE id = 'trace_review_loop3_20260701_finance_cost_tail_warehouse_return';
+    `);
+    const userModifiedRows = loop3TableSnapshots(db);
+
     db.exec(loop3ApplySql);
     if (count(db, "SELECT COUNT(*) FROM schema_migrations WHERE id = ?", loop3MigrationId) !== 1) {
       throw new Error("Loop 3 reapply changed the migration ledger cardinality");
@@ -212,6 +232,9 @@ function verifyLoop3LedgerApplyRollback() {
     const reapplied = loop3TableCounts(db);
     if (JSON.stringify(applied) !== JSON.stringify(reapplied)) {
       throw new Error("Loop 3 apply must be idempotent");
+    }
+    if (JSON.stringify(userModifiedRows) !== JSON.stringify(loop3TableSnapshots(db))) {
+      throw new Error("Loop 3 reapply must preserve mutable workflow, review, and audit state");
     }
 
     db.exec(loop3RollbackSql);
@@ -269,7 +292,11 @@ function unresolvedCertifiedCount(db) {
         FROM governance_tasks g
         WHERE g.target_ref = m.id
           AND g.priority = 'P0'
-          AND g.status NOT IN ('已签字', 'certified', 'done')
+          AND NOT (
+            g.status IN ('certified', 'done')
+            OR (g.task_type = 'owner_signoff' AND g.status = '已签字')
+            OR (g.task_type = 'field_mapping' AND g.status = '已映射')
+          )
       )
   `);
 }
@@ -286,6 +313,34 @@ function verifyCertificationGateApplyRollback() {
     if (baselineViolationCount === 0) {
       throw new Error("Certification gate fixture must expose at least one unresolved certified metric before apply");
     }
+    const affectedMetric = db.prepare(`
+      SELECT m.id
+      FROM metrics m
+      WHERE m.certification_status = 'certified'
+        AND EXISTS (
+          SELECT 1
+          FROM governance_tasks g
+          WHERE g.target_ref = m.id
+            AND g.priority = 'P0'
+            AND NOT (
+              g.status IN ('certified', 'done')
+              OR (g.task_type = 'owner_signoff' AND g.status = '已签字')
+              OR (g.task_type = 'field_mapping' AND g.status = '已映射')
+            )
+        )
+      ORDER BY m.id
+      LIMIT 1
+    `).get();
+    const nonMetricCertificationId = "migration-gate-non-metric-certification";
+    db.prepare(`
+      INSERT INTO certifications (
+        id, asset_type, asset_ref, status, certified_by, evidence
+      ) VALUES (?, 'ontology_object', ?, 'certified', 'migration gate', 'must remain unchanged')
+    `).run(nonMetricCertificationId, affectedMetric.id);
+    const nonMetricCertificationBefore = db.prepare(
+      "SELECT * FROM certifications WHERE id = ?"
+    ).get(nonMetricCertificationId);
+    const baselineWithNonMetricFixture = certificationGateSnapshots(db);
 
     db.exec(certificationGateApplySql);
     if (count(db, "SELECT COUNT(*) FROM schema_migrations WHERE id = ?", certificationGateMigrationId) !== 1) {
@@ -299,7 +354,11 @@ function verifyCertificationGateApplyRollback() {
       FROM chatbi_contexts ctx
       JOIN governance_tasks g ON g.target_ref = ctx.metric_id
       WHERE g.priority = 'P0'
-        AND g.status NOT IN ('已签字', 'certified', 'done')
+        AND NOT (
+          g.status IN ('certified', 'done')
+          OR (g.task_type = 'owner_signoff' AND g.status = '已签字')
+          OR (g.task_type = 'field_mapping' AND g.status = '已映射')
+        )
     `) !== 0) {
       throw new Error("Certification gate apply left unresolved P0 metrics in certified ChatBI contexts");
     }
@@ -310,6 +369,18 @@ function verifyCertificationGateApplyRollback() {
     `, certificationGateMigrationId);
     if (capturedMetricCount !== baselineViolationCount) {
       throw new Error(`Certification gate snapshot count mismatch: ${capturedMetricCount}/${baselineViolationCount}`);
+    }
+    if (count(db, `
+      SELECT COUNT(*)
+      FROM migration_20260716_cert_ledger_snapshot
+      WHERE migration_id = ? AND id = ?
+    `, certificationGateMigrationId, nonMetricCertificationId) !== 0) {
+      throw new Error("Certification gate must not snapshot a non-metric certification sharing a metric asset_ref");
+    }
+    if (JSON.stringify(nonMetricCertificationBefore) !== JSON.stringify(db.prepare(
+      "SELECT * FROM certifications WHERE id = ?"
+    ).get(nonMetricCertificationId))) {
+      throw new Error("Certification gate must not mutate a non-metric certification sharing a metric asset_ref");
     }
     const applied = certificationGateSnapshots(db);
 
@@ -324,7 +395,7 @@ function verifyCertificationGateApplyRollback() {
       throw new Error("Certification gate rollback left its migration ledger row behind");
     }
     const rolledBack = certificationGateSnapshots(db);
-    if (JSON.stringify(baseline) !== JSON.stringify(rolledBack)) {
+    if (JSON.stringify(baselineWithNonMetricFixture) !== JSON.stringify(rolledBack)) {
       throw new Error("Certification gate rollback did not restore complete baseline contents");
     }
     for (const tableName of [
@@ -372,7 +443,42 @@ function verifyDecisionSubjectApplyRollback() {
     `);
     if (invalidBefore === 0) throw new Error("Decision subject fixture must expose legacy non-metric references before apply");
 
+    const unknownDecisionId = "migration-gate-unknown-decision-subject";
+    const unknownSubjectRef = "metric_typo_decision_subject_gate";
+    db.prepare(`
+      INSERT INTO decision_logs (
+        id, insight_title, linked_metric_id, recommendation, action_boundary, status, review_note
+      ) VALUES (?, 'unknown subject guard', ?, 'reject unknown subject', 'local_only', 'fixture', 'fixture')
+    `).run(unknownDecisionId, unknownSubjectRef);
+    let unknownSubjectError = "";
+    try {
+      db.exec(decisionSubjectApplySql);
+    } catch (error) {
+      unknownSubjectError = String(error.message || error);
+      try {
+        db.exec("ROLLBACK");
+      } catch {
+        // The failed migration may already have closed its transaction.
+      }
+    }
+    if (!unknownSubjectError.includes("CHECK constraint failed")) {
+      throw new Error(`Decision subject apply did not fail closed on an unknown reference: ${unknownSubjectError || "no error"}`);
+    }
+    if (db.prepare("SELECT linked_metric_id FROM decision_logs WHERE id = ?").get(unknownDecisionId).linked_metric_id !== unknownSubjectRef) {
+      throw new Error("Failed decision subject apply changed the unknown reference fixture");
+    }
+    if (tableExists(db, "decision_subject_refs") || viewExists(db, "decision_logs_with_subject")) {
+      throw new Error("Failed decision subject apply left its table or view behind");
+    }
+    if (count(db, "SELECT COUNT(*) FROM schema_migrations WHERE id = ?", decisionSubjectMigrationId) !== 0) {
+      throw new Error("Failed decision subject apply wrote a migration ledger row");
+    }
+    db.prepare("DELETE FROM decision_logs WHERE id = ?").run(unknownDecisionId);
+
     db.exec(decisionSubjectApplySql);
+    if (count(db, "SELECT COUNT(*) FROM schema_migrations WHERE id = ?", decisionSubjectMigrationId) !== 1) {
+      throw new Error("Decision subject apply must write exactly one migration ledger row");
+    }
     if (!tableExists(db, "decision_subject_refs") || !viewExists(db, "decision_logs_with_subject")) {
       throw new Error("Decision subject apply did not create its table and view");
     }
@@ -394,6 +500,9 @@ function verifyDecisionSubjectApplyRollback() {
     const appliedSubjectRows = db.prepare("SELECT * FROM decision_subject_refs ORDER BY decision_id").all();
 
     db.exec(decisionSubjectApplySql);
+    if (count(db, "SELECT COUNT(*) FROM schema_migrations WHERE id = ?", decisionSubjectMigrationId) !== 1) {
+      throw new Error("Decision subject reapply changed the migration ledger cardinality");
+    }
     if (JSON.stringify(appliedDecisionRows) !== JSON.stringify(db.prepare("SELECT * FROM decision_logs ORDER BY id").all())
       || JSON.stringify(appliedSubjectRows) !== JSON.stringify(db.prepare("SELECT * FROM decision_subject_refs ORDER BY decision_id").all())) {
       throw new Error("Decision subject apply must be idempotent");
@@ -411,6 +520,9 @@ function verifyDecisionSubjectApplyRollback() {
     }
 
     db.exec(decisionSubjectApplySql);
+    if (count(db, "SELECT COUNT(*) FROM schema_migrations WHERE id = ?", decisionSubjectMigrationId) !== 1) {
+      throw new Error("Decision subject final apply must restore exactly one migration ledger row");
+    }
     if (db.prepare("PRAGMA integrity_check").get().integrity_check !== "ok") {
       throw new Error("SQLite integrity_check failed after decision subject final apply");
     }

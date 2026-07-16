@@ -60,20 +60,22 @@ boundary: static_knowledge_prototype_no_production_db_write_no_provider_call
 ## 5. 后续部署步骤
 
 1. 本地完成 `npm run check`、`npm run build`、`npm run smoke:ui`、`npm run smoke:readonly`。
-2. 部署授权前必须由 `preprod:check` 同时验证以下正式人工门禁；数量完整但状态不在 accepted completion status 中仍不得部署：
+2. 部署授权前必须由 `preprod:check` 同时验证以下正式人工门禁：
    - 30 项 P0 owner 签字全部为 `已签字`、`certified` 或 `done`；
    - 18 项 P0 字段映射全部为 `已映射`、`certified` 或 `done`；
    - 1 项 SCEI owner 决策为 `已签字`、`certified` 或 `done`。
-3. 生成 scoped AIP-SCM 部署包，包含 `dist/fulfillment-dashboard/`。
-4. 确认 Docker 构建上下文包含 `public/fulfillment-dashboard/`，否则 Vite 重新构建时会丢失 `data/*.csv`、`docs/*.md` 等静态知识原型资产。
-5. 部署到当前 `scm.lute-tlz-dddd.top` 服务目录。
-6. 生产环境必须保留外部 SQLite volume 和 `lighthouse_ai_video_net` 网络配置；不要用本地嵌入数据模式的 `docker-compose.yml` 覆盖生产 Compose。
-7. 线上只读验证：
+3. 人工门禁未全部完成时，只能在另行取得部署授权后考虑只读能力上限：`SCM_DATABASE_WRITES_AUTHORIZED=false`、provider call 关闭、业务行导入关闭、ERP/OMS/WMS/TMS 写回关闭；不得据此开放写入、provider 或导入能力。当前执行批次没有 deploy authorization，`production unchanged`。
+4. 人工门禁全部完成也不自动授权部署或外部副作用；完整能力部署仍需独立 deploy authorization，并重新验证 provider、数据库写入和生产写回边界。
+5. 获得与目标能力相符的独立部署授权后，生成 scoped AIP-SCM 部署包，包含 `dist/fulfillment-dashboard/`。
+6. 确认 Docker 构建上下文包含 `public/fulfillment-dashboard/`，否则 Vite 重新构建时会丢失 `data/*.csv`、`docs/*.md` 等静态知识原型资产。
+7. 部署到当前 `scm.lute-tlz-dddd.top` 服务目录。
+8. 生产环境必须保留外部 SQLite volume 和 `lighthouse_ai_video_net` 网络配置；不要用本地嵌入数据模式的 `docker-compose.yml` 覆盖生产 Compose。
+9. 线上只读验证：
    - `/api/deploy/health`
    - `/api/workbench/modules`
    - `/fulfillment-dashboard/index.html`
    - 侧边栏点击 `供应链履约看板`
-8. 截图留存桌面端和移动端页面。
+10. 截图留存桌面端和移动端页面。
 
 ## 6. 风险与缓解
 

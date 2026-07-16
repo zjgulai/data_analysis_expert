@@ -70,7 +70,11 @@ WHERE m.certification_status = 'certified'
     FROM governance_tasks g
     WHERE g.target_ref = m.id
       AND g.priority = 'P0'
-      AND g.status NOT IN ('已签字', 'certified', 'done')
+      AND NOT (
+        g.status IN ('certified', 'done')
+        OR (g.task_type = 'owner_signoff' AND g.status = '已签字')
+        OR (g.task_type = 'field_mapping' AND g.status = '已映射')
+      )
   )
 ON CONFLICT(migration_id, metric_id) DO NOTHING;
 
@@ -89,7 +93,7 @@ FROM certifications c
 JOIN migration_20260716_cert_metric_snapshot s
   ON s.migration_id = '20260716_certification_gate_remediation'
   AND s.metric_id = c.asset_ref
-WHERE 1 = 1
+WHERE c.asset_type = 'metric'
 ON CONFLICT(migration_id, id) DO NOTHING;
 
 INSERT INTO migration_20260716_cert_chatbi_snapshot (
@@ -142,9 +146,9 @@ UPDATE certifications
 SET status = 'not_certified',
     certified_by = '',
     evidence = 'Certification seed retained, but P0 owner-signoff or field-mapping gates remain unresolved.'
-WHERE asset_ref IN (
-  SELECT metric_id
-  FROM migration_20260716_cert_metric_snapshot
+WHERE id IN (
+  SELECT id
+  FROM migration_20260716_cert_ledger_snapshot
   WHERE migration_id = '20260716_certification_gate_remediation'
 );
 

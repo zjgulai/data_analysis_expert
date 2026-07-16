@@ -1,6 +1,6 @@
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -296,6 +296,54 @@ try {
       direction: "lower_better",
       source_status: "blueprint_node",
       definition: "Owner and field mapping remain pending in this fixture."
+    }, {
+      metric_id: "SCM-MECE-L3-077",
+      metric_code: "supply_chain_total_cost_rate",
+      name: "供应链总成本率",
+      level: "L3",
+      l1_domain: "成本财务与资金效率",
+      l2_group: "总成本与节点成本",
+      formula: "total supply chain cost / sales amount",
+      grain: "period + channel + country + category + sku",
+      direction: "lower_better",
+      source_status: "migration_reference_fixture",
+      definition: "Loop 3 finance decision metric reference fixture."
+    }, {
+      metric_id: "SCM-MECE-L3-036",
+      metric_code: "full_chain_turnover_days_amount",
+      name: "全链条库存资金周转天数",
+      level: "L3",
+      l1_domain: "成本财务与资金效率",
+      l2_group: "库存资金效率",
+      formula: "inventory amount / daily cost",
+      grain: "channel + country + category + sku + period",
+      direction: "lower_better",
+      source_status: "decision_reference_fixture",
+      definition: "Seed decision metric reference fixture."
+    }, {
+      metric_id: "SCM-MECE-L3-126",
+      metric_code: "transfer_success_rate",
+      name: "调拨成功率",
+      level: "L3",
+      l1_domain: "物流运输与履约体验",
+      l2_group: "头程与调拨运输",
+      formula: "completed transfers / planned transfers",
+      grain: "source warehouse + target warehouse + sku + period",
+      direction: "higher_better",
+      source_status: "decision_reference_fixture",
+      definition: "Seed decision metric reference fixture."
+    }, {
+      metric_id: "SCM-MECE-L3-137",
+      metric_code: "unmatched_planned_inventory_qty",
+      name: "未匹配计划库存数量",
+      level: "L3",
+      l1_domain: "主数据指标治理与数据质量",
+      l2_group: "SKU 映射质量",
+      formula: "unmatched planned inventory quantity",
+      grain: "source sku key type + platform + period",
+      direction: "lower_better",
+      source_status: "decision_reference_fixture",
+      definition: "Seed decision metric reference fixture."
     }]
   }, null, 2)}\n`);
   writeFileSync(
@@ -317,6 +365,8 @@ try {
   const longDocumentFixtureFile = join(knowledgeFixtureRoot, "long-document-fixture.md");
   const duplicateBasenameFixtureA = join(knowledgeFixtureRoot, "duplicate-a", "same-name.md");
   const duplicateBasenameFixtureB = join(knowledgeFixtureRoot, "duplicate-b", "same-name.md");
+  const escapedKnowledgeFixtureFile = join(sandboxExternalRoot, "outside-configured-domain.md");
+  const escapedKnowledgeFixtureLink = join(knowledgeFixtureRoot, "escaped-domain-link.md");
   const windowsSeparator = String.fromCharCode(92);
   const workstationPathFixtures = {
     mac: ["", "Users", "smoke-user", "private", "evidence.md"].join("/"),
@@ -619,6 +669,8 @@ try {
   );
   writeMarkdown(duplicateBasenameFixtureA, "Duplicate basename A", "first hierarchy");
   writeMarkdown(duplicateBasenameFixtureB, "Duplicate basename B", "second hierarchy");
+  writeMarkdown(escapedKnowledgeFixtureFile, "Escaped domain fixture", "must not be imported through a symlink");
+  symlinkSync(escapedKnowledgeFixtureFile, escapedKnowledgeFixtureLink);
   const rebuildResult = spawnSync(process.execPath, [join(sandboxScriptDir, "import-assets.mjs")], {
     cwd: sandboxRoot,
     env: importEnvironment({
@@ -726,6 +778,9 @@ try {
       const duplicateBasenamePaths = rebuiltDb.prepare(
         "SELECT source_path FROM knowledge_cards WHERE title IN (?, ?) ORDER BY source_path"
       ).all("Duplicate basename A", "Duplicate basename B").map((row) => String(row.source_path));
+      const escapedDomainCardCount = Number(rebuiltDb.prepare(
+        "SELECT COUNT(*) AS count FROM knowledge_cards WHERE title = ?"
+      ).get("Escaped domain fixture").count);
       const unresolvedKnowledgeReferences = Number(rebuiltDb.prepare(`
         WITH knowledge_references AS (
           SELECT CAST(linked.value AS TEXT) AS card_id
@@ -798,6 +853,7 @@ try {
           JSON.stringify(duplicateBasenamePaths) === JSON.stringify(expectedDuplicatePaths),
           `external knowledge paths must preserve domain namespace and hierarchy, got ${JSON.stringify(duplicateBasenamePaths)}`
         ],
+        [escapedDomainCardCount === 0, "knowledge import must skip Markdown symlinks that escape the configured domain"],
         [unresolvedKnowledgeReferences === 0, `all active knowledge references must resolve, got ${unresolvedKnowledgeReferences}`],
         [keywordBoundaryCard?.topic === "general-supply-chain", "short po/bi keywords must not match substrings in ordinary English words"],
         [

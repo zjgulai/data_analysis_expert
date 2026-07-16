@@ -392,9 +392,25 @@ function hydrateSourceCoverage(row) {
 function sourceCoverageLineageRows() {
   return getSourceCoverage().map((row) => {
     const gateStatuses = row.gate_ids.map((gateId) => {
+      const seed = get(
+        "SELECT id, linked_metric_id, subject_ref FROM decision_logs_with_subject WHERE id = ?",
+        [gateId]
+      );
+      const gateReference = decisionReference(seed) || gateId;
       const decision = get(
-        "SELECT id, insight_title, status, review_note, action_boundary FROM decision_logs_with_subject WHERE id = ? OR subject_ref = ? OR linked_metric_id = ? ORDER BY id DESC LIMIT 1",
-        [gateId, row.target_object_type, row.target_object_type]
+        `SELECT decisions.id, decisions.insight_title, decisions.status,
+                decisions.review_note, decisions.action_boundary
+         FROM decision_logs_with_subject decisions
+         LEFT JOIN (
+           SELECT target_id, MAX(created_at) AS recorded_at
+           FROM audit_events
+           WHERE event_type = 'owner_decision_recorded' AND target_type = 'decision_log'
+           GROUP BY target_id
+         ) audit ON audit.target_id = decisions.id
+         WHERE decisions.id = ? OR decisions.subject_ref = ? OR decisions.linked_metric_id = ?
+         ORDER BY COALESCE(audit.recorded_at, '') DESC, decisions.id DESC
+         LIMIT 1`,
+        [gateId, gateReference, gateReference]
       );
       return {
         gateId,
@@ -1710,7 +1726,16 @@ function moduleHealth() {
   const totalMetrics = tableCount("metrics");
   const certifiedMetrics = get("SELECT COUNT(*) AS count FROM metrics WHERE certification_status = 'certified'").count;
   const p0Total = get("SELECT COUNT(*) AS count FROM governance_tasks WHERE priority = 'P0'").count;
-  const p0Done = get("SELECT COUNT(*) AS count FROM governance_tasks WHERE priority = 'P0' AND status IN ('已签字', 'certified', 'done')").count;
+  const p0Done = get(`
+    SELECT COUNT(*) AS count
+    FROM governance_tasks
+    WHERE priority = 'P0'
+      AND (
+        status IN ('certified', 'done')
+        OR (task_type = 'owner_signoff' AND status = '已签字')
+        OR (task_type = 'field_mapping' AND status = '已映射')
+      )
+  `).count;
   return [
     { module: "对象本体", score: 76, status: "mapped", note: "对象类型全覆盖，关键实例待补。" },
     { module: "标签工程", score: 48, status: "draft", note: "标签规则已种子化，阈值未冻结。" },
@@ -1731,7 +1756,16 @@ function getWorkbenchModules() {
   const l3Metrics = scalar("SELECT COUNT(*) AS count FROM metrics WHERE level = 'L3'");
   const certifiedMetrics = scalar("SELECT COUNT(*) AS count FROM metrics WHERE certification_status = 'certified'");
   const p0Total = scalar("SELECT COUNT(*) AS count FROM governance_tasks WHERE priority = 'P0'");
-  const p0Done = scalar("SELECT COUNT(*) AS count FROM governance_tasks WHERE priority = 'P0' AND status IN ('已签字', 'certified', 'done')");
+  const p0Done = scalar(`
+    SELECT COUNT(*) AS count
+    FROM governance_tasks
+    WHERE priority = 'P0'
+      AND (
+        status IN ('certified', 'done')
+        OR (task_type = 'owner_signoff' AND status = '已签字')
+        OR (task_type = 'field_mapping' AND status = '已映射')
+      )
+  `);
   const lineageMapped = scalar("SELECT COUNT(*) AS count FROM lineage_edges WHERE status IN ('mapped', 'certified')");
   const lineageTotal = tableCount("lineage_edges");
   return [
@@ -2656,7 +2690,17 @@ function getFinanceCostGovernance() {
     }
   ];
   const formalOwnerReceipts = all(
-    "SELECT * FROM decision_logs_with_subject WHERE id LIKE 'decision_fin-owner-%' ORDER BY id"
+    `SELECT decisions.*
+     FROM decision_logs_with_subject decisions
+     LEFT JOIN (
+       SELECT target_id, MAX(created_at) AS recorded_at
+       FROM audit_events
+       WHERE event_type = 'owner_decision_recorded' AND target_type = 'decision_log'
+       GROUP BY target_id
+     ) audit ON audit.target_id = decisions.id
+     WHERE decisions.subject_ref LIKE 'finance_owner.%'
+        OR decisions.id LIKE 'decision_fin-owner-%'
+     ORDER BY COALESCE(audit.recorded_at, ''), decisions.id`
   );
   const receiptByMetric = new Map(
     formalOwnerReceipts.map((receipt) => [decisionReference(receipt), receipt])

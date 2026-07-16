@@ -40,11 +40,19 @@ with order_base as (
     erp_code,
     order_status,
     issue_type,
+    paid_flag,
+    valid_self_fulfillment_flag,
+    paid_cancelled_flag,
+    split_abandoned_flag,
     pay_time,
     os_auth_time,
     send_time
   from fact_order_fulfillment_order_daily
   where biz_date between :start_date and :end_date
+    and paid_flag = 1
+    and valid_self_fulfillment_flag = 1
+    and paid_cancelled_flag = 0
+    and split_abandoned_flag = 0
 ),
 item_base as (
   select
@@ -95,6 +103,8 @@ select
   cast(delivery_10d_num as decimal(18, 6)) / nullif(delivery_10d_den, 0) as delivery_10d_rate
 from daily_kpi;
 ```
+
+`paid_flag`、`valid_self_fulfillment_flag`、`paid_cancelled_flag`、`split_abandoned_flag` 是源映射层归一化字段；`raw_order_count` 与 `split_order_count` 必须由上述同一有效订单群体计算，不能在聚合层使用不同状态过滤。
 
 BI 计算：
 

@@ -57,8 +57,8 @@ boundary: local_analysis_only_no_production_write_no_provider_call
 
 | 指标 | 定义 | 分母/粒度 | 来源/字段 | 当前状态 |
 |---|---|---|---|---|
-| 原始总单量 | 同一拆单分析群体内的拆分前有效平台订单量：已付款、进入有效自发货范围，排除已付款取消 | 平台单号 `ref_no` 去重 | `lute_os.t_erp_order.ref_no` + 有效自发货/取消状态 | 可进入 V0 |
-| 拆分总单量 | 与原始总单量同一群体的拆分后有效自发货订单量；排除拆单废弃和已付款取消 | 系统自发货单号 `erp_code` 去重 | `lute_os.t_erp_order.erp_code` + 与分母相同的状态过滤 | 可进入 V0 |
+| 原始总单量 | 同一拆单分析群体内的拆分前有效平台订单量：已付款、进入有效自发货范围，排除已付款取消与拆单废弃 | 平台单号 `ref_no` 去重 | `lute_os.t_erp_order.ref_no` + `paid_flag`, `valid_self_fulfillment_flag`, `paid_cancelled_flag`, `split_abandoned_flag` | 可进入 V0 |
+| 拆分总单量 | 与原始总单量同一群体的拆分后有效自发货订单量；排除拆单废弃和已付款取消 | 系统自发货单号 `erp_code` 去重 | `lute_os.t_erp_order.erp_code` + 与分母相同的归一化状态标记 | 可进入 V0 |
 | 未审核单量 | 已付款未审核订单数量，异常状态订单也要展示 | 拆分总单量 | `order_status` + 审核状态 | 待确认状态码 |
 | 异常订单量 | 订单异常小状态数量 | 拆分总单量 | `order_status` 小状态映射 | 可进入 V0 |
 | 24h/48h 审单及时率 | 末次审核时间 - 付款时间小于阈值的单量 / 总有效订单 | 拆分总单量 | `pay_time`, `os_auth_time` | 多次审核日志待优化 |

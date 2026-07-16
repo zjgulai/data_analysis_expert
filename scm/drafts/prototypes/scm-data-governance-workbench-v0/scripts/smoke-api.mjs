@@ -511,6 +511,20 @@ const omsWmsDecisionLog = (await request("/api/decision/logs", {
 })).payload.decisionLog;
 assert(omsWmsDecisionLog?.id === omsWmsDecisionRecordId, "OMSWMS staged decision must be recorded");
 assert(omsWmsDecisionLog.status === "approved_for_governance_view", "OMSWMS staged decision must preserve status");
+const sourceCoverageLineageAfterReceipt = (await request("/api/source-coverage/lineage")).payload;
+const sourceCoverageGateStatuses = sourceCoverageLineageAfterReceipt.flatMap((row) => row.gate_statuses);
+const recordedCoverageGateStatuses = sourceCoverageGateStatuses.filter((gate) => gate.gateId === "OMSWMS-001");
+assert(recordedCoverageGateStatuses.length > 0, "OMSWMS-001 must be represented in source coverage lineage");
+assert(
+  recordedCoverageGateStatuses.every((gate) => gate.decisionRef === omsWmsDecisionRecordId && gate.status === omsWmsDecisionLog.status),
+  "OMSWMS-001 lineage rows must resolve the receipt through the seeded gate decision reference"
+);
+assert(
+  sourceCoverageGateStatuses
+    .filter((gate) => gate.gateId !== "OMSWMS-001")
+    .every((gate) => gate.decisionRef !== omsWmsDecisionRecordId),
+  "One OMS/WMS receipt must not leak into another lineage gate"
+);
 checked("omswms-owner-decision-gates", {
   seeded: omsWmsDecisionIds.length,
   recordedDecisionId: omsWmsDecisionRecordId,
@@ -654,6 +668,13 @@ const financeOwnerReview = (await request("/api/decision/logs", {
   })
 })).payload.decisionLog;
 assert(financeOwnerReview?.status === "approved_cost_type_mapping", "finance owner choice must write local receipt");
+const refreshedFinanceCostGovernance = (await request("/api/finance-cost-governance")).payload;
+const refreshedFinanceOwnerDecision = refreshedFinanceCostGovernance.policySummary?.decisions
+  ?.find((decision) => decision.packetId === financeOwnerChoice.id);
+assert(
+  refreshedFinanceOwnerDecision?.receiptId === financeOwnerDecisionId,
+  "Finance policy summary must include normal API-generated finance_owner subject receipts"
+);
 checked("finance-cost-governance", {
   evidencePackets: financeCostGovernance.evidencePackets.length,
   financeCoverage: financeCostGovernance.financeCoverage.length,

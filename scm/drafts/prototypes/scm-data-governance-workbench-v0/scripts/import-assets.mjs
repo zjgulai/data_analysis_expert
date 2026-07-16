@@ -1461,14 +1461,15 @@ aipScenarios.forEach((record) => {
 
 function walkMarkdownFiles(dir) {
   if (!existsSync(dir)) return [];
-  const entries = readdirSync(dir).sort();
+  const entries = readdirSync(dir, { withFileTypes: true })
+    .sort((left, right) => left.name.localeCompare(right.name));
   const files = [];
   entries.forEach((entry) => {
-    const fullPath = resolve(dir, entry);
-    const stat = statSync(fullPath);
-    if (stat.isDirectory()) {
+    if (entry.isSymbolicLink()) return;
+    const fullPath = resolve(dir, entry.name);
+    if (entry.isDirectory()) {
       files.push(...walkMarkdownFiles(fullPath));
-    } else if (stat.isFile() && fullPath.endsWith(".md")) {
+    } else if (entry.isFile() && entry.name.endsWith(".md")) {
       files.push(fullPath);
     }
   });

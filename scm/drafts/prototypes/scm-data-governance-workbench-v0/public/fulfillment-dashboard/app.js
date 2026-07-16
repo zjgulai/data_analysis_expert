@@ -226,7 +226,7 @@ const auditToShipGap = auditSla24hRate === null || payShipSla24hRate === null
   : Number((auditSla24hRate - payShipSla24hRate).toFixed(1));
 const auditVolumeCounts = Object.freeze({
   system: 58920,
-  manual: 55560
+  manual: 76972
 });
 const auditVolumeTotal = auditVolumeCounts.system + auditVolumeCounts.manual;
 const systemAuditShare = rateFromCounts(auditVolumeCounts.system, auditVolumeTotal);

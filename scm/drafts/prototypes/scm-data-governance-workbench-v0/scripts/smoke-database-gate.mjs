@@ -27,7 +27,11 @@ function verifyCertificationGates(databasePath) {
         SELECT DISTINCT target_ref
         FROM governance_tasks
         WHERE priority = 'P0'
-          AND status NOT IN ('已签字', 'certified', 'done')
+          AND NOT (
+            status IN ('certified', 'done')
+            OR (task_type = 'owner_signoff' AND status = '已签字')
+            OR (task_type = 'field_mapping' AND status = '已映射')
+          )
       )
       SELECT m.id
       FROM metrics m
@@ -44,7 +48,11 @@ function verifyCertificationGates(databasePath) {
       FROM certifications c
       JOIN governance_tasks g ON g.target_ref = c.asset_ref
       WHERE g.priority = 'P0'
-        AND g.status NOT IN ('已签字', 'certified', 'done')
+        AND NOT (
+          g.status IN ('certified', 'done')
+          OR (g.task_type = 'owner_signoff' AND g.status = '已签字')
+          OR (g.task_type = 'field_mapping' AND g.status = '已映射')
+        )
         AND c.status = 'certified'
       GROUP BY c.asset_ref
       ORDER BY c.asset_ref
@@ -58,7 +66,11 @@ function verifyCertificationGates(databasePath) {
       FROM chatbi_contexts ctx
       JOIN governance_tasks g ON g.target_ref = ctx.metric_id
       WHERE g.priority = 'P0'
-        AND g.status NOT IN ('已签字', 'certified', 'done')
+        AND NOT (
+          g.status IN ('certified', 'done')
+          OR (g.task_type = 'owner_signoff' AND g.status = '已签字')
+          OR (g.task_type = 'field_mapping' AND g.status = '已映射')
+        )
       ORDER BY ctx.metric_id
     `).all().map((row) => row.metric_id);
     if (blockedChatbiContexts.length) {
@@ -166,6 +178,64 @@ function copyApp(name) {
   return targetRoot;
 }
 
+function verifyAcceptedManualGateStatuses(appRoot) {
+  const databasePath = join(appRoot, "data", "governance_workbench.sqlite");
+  const fixture = new DatabaseSync(databasePath);
+  try {
+    fixture.exec(`
+      INSERT INTO governance_tasks (
+        id, task_type, target_ref, title, owner, status, priority, due_date, notes
+      ) VALUES (
+        'database-gate-status-owner', 'owner_signoff', 'SCM-MECE-L3-028',
+        'accepted owner status fixture', 'database gate', 'done', 'P0', '', 'disposable fixture'
+      ) ON CONFLICT(id) DO UPDATE SET status = excluded.status;
+      INSERT INTO governance_tasks (
+        id, task_type, target_ref, title, owner, status, priority, due_date, notes
+      ) VALUES (
+        'database-gate-status-mapping', 'field_mapping', 'SCM-MECE-L3-028',
+        'accepted mapping status fixture', 'database gate', '已映射', 'P0', '', 'disposable fixture'
+      ) ON CONFLICT(id) DO UPDATE SET status = excluded.status;
+      UPDATE metrics SET lifecycle_status = 'certified', certification_status = 'certified'
+      WHERE id = 'SCM-MECE-L3-028';
+      UPDATE certifications SET status = 'certified', certified_by = 'database gate'
+      WHERE asset_type = 'metric' AND asset_ref = 'SCM-MECE-L3-028';
+      INSERT INTO chatbi_contexts (
+        id, metric_id, question_sample, allowed_dimensions, evidence_chain, answer_policy
+      ) VALUES (
+        'database-gate-accepted-mapping-context',
+        'SCM-MECE-L3-028',
+        'accepted mapping fixture',
+        '[]',
+        '[]',
+        'certified_metric_only'
+      ) ON CONFLICT(id) DO NOTHING;
+    `);
+  } finally {
+    fixture.close();
+  }
+  verifyCertificationGates(databasePath);
+  const mismatchedFixture = new DatabaseSync(databasePath);
+  try {
+    mismatchedFixture.exec(`
+      UPDATE governance_tasks SET status = '已映射'
+      WHERE id = 'database-gate-status-owner';
+      UPDATE governance_tasks SET status = '已签字'
+      WHERE id = 'database-gate-status-mapping';
+    `);
+  } finally {
+    mismatchedFixture.close();
+  }
+  let mismatchedStatusRejected = false;
+  try {
+    verifyCertificationGates(databasePath);
+  } catch {
+    mismatchedStatusRejected = true;
+  }
+  if (!mismatchedStatusRejected) {
+    throw new Error("Manual-gate completion statuses must only close their matching task types");
+  }
+}
+
 function listen(server) {
   return new Promise((resolveListen, reject) => {
     server.once("error", reject);
@@ -264,6 +334,7 @@ try {
   verifyCertificationGates(sourceDatabasePath);
   verifyDecisionReferences(sourceDatabasePath);
   verifyKnowledgeReferences(sourceDatabasePath);
+  verifyAcceptedManualGateStatuses(copyApp("accepted-manual-gate-status"));
   const readonlyRoot = copyApp("readonly");
   const readonlyDatabasePath = join(readonlyRoot, "data", "governance_workbench.sqlite");
   const readonlyHashBefore = hashFile(readonlyDatabasePath);
@@ -389,6 +460,7 @@ try {
     unresolvedRecommendationStatus: invalidRecommendation.response.status,
     policySubjectDecisionStatus: policyDecision.response.status,
     metricReferenceDecisionStatus: metricDecision.response.status,
+    acceptedFieldMappingStatusRecognized: true,
     sourceDatabaseHashPreserved: sourceHashBefore === hashFile(sourceDatabasePath),
     providerCalls: false,
     productionWrites: false

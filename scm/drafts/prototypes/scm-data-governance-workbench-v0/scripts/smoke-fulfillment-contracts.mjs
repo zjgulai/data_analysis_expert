@@ -81,6 +81,15 @@ assert.equal(
   false,
   "BI formulas must not use unguarded division"
 );
+const orderBaseSql = section(overviewSql, "with order_base as (", "),\nitem_base as (");
+for (const populationPredicate of [
+  /paid_flag\s*=\s*1/,
+  /valid_self_fulfillment_flag\s*=\s*1/,
+  /paid_cancelled_flag\s*=\s*0/,
+  /split_abandoned_flag\s*=\s*0/
+]) {
+  assert.match(orderBaseSql, populationPredicate, "Overview order_base must use the canonical valid self-fulfillment population");
+}
 
 const unshippedSql = section(sqlContract, "## 3. 未发货预警", "## 4. TMS 妥投阶梯");
 assert.match(unshippedSql, /\)\s*select\s+biz_date,\s+erp_code,/s, "Unshipped output must include erp_code");
@@ -135,6 +144,21 @@ assert.doesNotMatch(dashboardApp, /低于审单及时率 9\.6pct/, "Overview mus
 assert.match(dashboardApp, /const auditVolumeCounts = Object\.freeze\(/, "Audit split counts must have one shared source");
 assert.doesNotMatch(dashboardApp, /系统自动审核", value:\s*58,/, "Audit split must not hardcode 58%");
 assert.doesNotMatch(dashboardApp, /人工审核", value:\s*42,/, "Audit split must not hardcode 42%");
+function numericObject(name) {
+  const match = dashboardApp.match(new RegExp(`const ${name} = Object\\.freeze\\(\\{([\\s\\S]*?)\\}\\);`));
+  assert(match, `Missing numeric object: ${name}`);
+  return Object.fromEntries([...match[1].matchAll(/([A-Za-z0-9_]+):\s*(\d+)/g)]
+    .map(([, key, value]) => [key, Number(value)]));
+}
+const auditSlaCounts = numericObject("auditSlaCounts");
+const auditVolumeCounts = numericObject("auditVolumeCounts");
+assert(auditSlaCounts.within24h <= auditSlaCounts.denominator, "24h audit numerator must not exceed its population");
+assert(auditSlaCounts.within48h <= auditSlaCounts.denominator, "48h audit numerator must not exceed its population");
+assert.equal(
+  auditVolumeCounts.system + auditVolumeCounts.manual,
+  auditSlaCounts.denominator,
+  "System and manual audit volumes must partition the same population as audit SLA"
+);
 
 const deploymentSteps = section(integrationPlan, "## 5. 后续部署步骤", "## 6. 风险与缓解");
 for (const requiredGate of [

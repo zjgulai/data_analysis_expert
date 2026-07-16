@@ -28,12 +28,7 @@ INSERT INTO schema_migrations (
   'migrations/20260701_loop3_business_closed_loops.rollback.sql',
   'Apply and rollback are verified on disposable SQLite copies with complete table snapshots.'
 )
-ON CONFLICT(id) DO UPDATE SET
-  title = excluded.title,
-  applied_at = excluded.applied_at,
-  boundary = excluded.boundary,
-  rollback_script = excluded.rollback_script,
-  verification_note = excluded.verification_note;
+ON CONFLICT(id) DO NOTHING;
 
 INSERT INTO ontology_object_instances (
   id, object_type_id, business_key, display_name, status, owner, properties,
@@ -50,16 +45,7 @@ INSERT INTO ontology_object_instances (
   'local_governance_review_packet',
   '2026-07-01T09:36:31+08:00'
 )
-ON CONFLICT(id) DO UPDATE SET
-  object_type_id = excluded.object_type_id,
-  business_key = excluded.business_key,
-  display_name = excluded.display_name,
-  status = excluded.status,
-  owner = excluded.owner,
-  properties = excluded.properties,
-  source_system = excluded.source_system,
-  evidence_level = excluded.evidence_level,
-  created_at = excluded.created_at;
+ON CONFLICT(id) DO NOTHING;
 
 INSERT INTO aip_scenarios (
   id, name, scenario_type, priority, status, owner, trigger_condition,
@@ -121,22 +107,7 @@ INSERT INTO aip_scenarios (
     'local_sqlite_storyline_review_ready_with_metric_gap',
     '履约运营 Owner 补齐审核节点时间戳并认证 ETA/配送异常口径后，再进入运营处置建议。'
   )
-ON CONFLICT(id) DO UPDATE SET
-  name = excluded.name,
-  scenario_type = excluded.scenario_type,
-  priority = excluded.priority,
-  status = excluded.status,
-  owner = excluded.owner,
-  trigger_condition = excluded.trigger_condition,
-  target_object_type = excluded.target_object_type,
-  target_object_id = excluded.target_object_id,
-  linked_metric_ids = excluded.linked_metric_ids,
-  linked_knowledge_card_ids = excluded.linked_knowledge_card_ids,
-  linked_recommendation_card_ids = excluded.linked_recommendation_card_ids,
-  diagnostic_question = excluded.diagnostic_question,
-  decision_boundary = excluded.decision_boundary,
-  evidence_level = excluded.evidence_level,
-  next_action = excluded.next_action;
+ON CONFLICT(id) DO NOTHING;
 
 INSERT INTO recommendation_cards (
   id, scenario, title, target_object_type, target_object_id, linked_metric_ids,
@@ -164,25 +135,7 @@ INSERT INTO recommendation_cards (
   '2026-07-01T09:36:31+08:00',
   '2026-07-01T09:36:31+08:00'
 )
-ON CONFLICT(id) DO UPDATE SET
-  scenario = excluded.scenario,
-  title = excluded.title,
-  target_object_type = excluded.target_object_type,
-  target_object_id = excluded.target_object_id,
-  linked_metric_ids = excluded.linked_metric_ids,
-  linked_knowledge_card_ids = excluded.linked_knowledge_card_ids,
-  business_impact = excluded.business_impact,
-  confidence_level = excluded.confidence_level,
-  risk_level = excluded.risk_level,
-  owner = excluded.owner,
-  sla_due_at = excluded.sla_due_at,
-  action_options = excluded.action_options,
-  approval_status = excluded.approval_status,
-  execution_status = excluded.execution_status,
-  trace_id = excluded.trace_id,
-  replay_note = excluded.replay_note,
-  created_at = excluded.created_at,
-  updated_at = excluded.updated_at;
+ON CONFLICT(id) DO NOTHING;
 
 INSERT INTO agent_traces (
   id, source_type, source_id, question, intent, matched_objects, matched_metrics,
@@ -205,21 +158,7 @@ INSERT INTO agent_traces (
   'Codex Loop3 local ledger',
   '2026-07-01T09:36:31+08:00'
 )
-ON CONFLICT(id) DO UPDATE SET
-  source_type = excluded.source_type,
-  source_id = excluded.source_id,
-  question = excluded.question,
-  intent = excluded.intent,
-  matched_objects = excluded.matched_objects,
-  matched_metrics = excluded.matched_metrics,
-  matched_knowledge_cards = excluded.matched_knowledge_cards,
-  matched_lineage_edges = excluded.matched_lineage_edges,
-  answerability = excluded.answerability,
-  public_steps = excluded.public_steps,
-  recommendation_ref = excluded.recommendation_ref,
-  policy = excluded.policy,
-  created_by = excluded.created_by,
-  created_at = excluded.created_at;
+ON CONFLICT(id) DO NOTHING;
 
 INSERT INTO trace_reviews (
   id, trace_id, source_type, intent, answerability, review_status, reviewer,
@@ -238,18 +177,7 @@ INSERT INTO trace_reviews (
   '2026-07-01T09:36:31+08:00',
   '2026-07-01T09:36:31+08:00'
 )
-ON CONFLICT(id) DO UPDATE SET
-  trace_id = excluded.trace_id,
-  source_type = excluded.source_type,
-  intent = excluded.intent,
-  answerability = excluded.answerability,
-  review_status = excluded.review_status,
-  reviewer = excluded.reviewer,
-  review_note = excluded.review_note,
-  decision_boundary = excluded.decision_boundary,
-  action_ref = excluded.action_ref,
-  created_at = excluded.created_at,
-  updated_at = excluded.updated_at;
+ON CONFLICT(id) DO NOTHING;
 
 INSERT INTO decision_logs (
   id, insight_title, linked_metric_id, recommendation, action_boundary,
@@ -263,13 +191,7 @@ INSERT INTO decision_logs (
   'review_ready_local_only',
   'Loop3 local closed-loop ledger. Reuses finance owner choice A as governance boundary; does not approve source field mapping or real transaction import.'
 )
-ON CONFLICT(id) DO UPDATE SET
-  insight_title = excluded.insight_title,
-  linked_metric_id = excluded.linked_metric_id,
-  recommendation = excluded.recommendation,
-  action_boundary = excluded.action_boundary,
-  status = excluded.status,
-  review_note = excluded.review_note;
+ON CONFLICT(id) DO NOTHING;
 
 INSERT INTO action_tasks (
   id, insight_ref, action_name, owner, status, approval_required, replay_note
@@ -282,12 +204,6 @@ INSERT INTO action_tasks (
   1,
   'Local task only; billDrilldown=false; transactionDetailImport=false; accountingWrite=false; productionWrites=false; providerCalls=false; erpWriteback=false.'
 )
-ON CONFLICT(id) DO UPDATE SET
-  insight_ref = excluded.insight_ref,
-  action_name = excluded.action_name,
-  owner = excluded.owner,
-  status = excluded.status,
-  approval_required = excluded.approval_required,
-  replay_note = excluded.replay_note;
+ON CONFLICT(id) DO NOTHING;
 
 COMMIT;

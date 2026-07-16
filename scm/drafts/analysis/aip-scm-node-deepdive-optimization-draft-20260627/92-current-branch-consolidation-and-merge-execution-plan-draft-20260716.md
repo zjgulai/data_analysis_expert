@@ -3,21 +3,21 @@ title: "SCM 当前分支收敛、合并与独立仓发布同步执行计划"
 doc_type: execution_plan
 module: scm
 topic: current-branch-consolidation-and-merge
-status: post_merge_review_remediation_in_progress
+status: source_pr_exact_head_review_remediation_in_progress
 created: 2026-07-16
 updated: 2026-07-16
 owner: self
 source: codex
-evidence_level: source_and_standalone_merged_local_review_remediation_verified
+evidence_level: source_pr_open_local_review_remediation_verified
 boundary:
   priorStackMergeExecuted: true
   standaloneSyncMerged: true
-  currentPrNumber: null
+  currentPrNumber: 26
   currentPrMergeExecuted: false
-  currentPrStateAtArtifactCommit: not_created
-  commitCreated: false
-  pushCreated: false
-  pullRequestMutated: false
+  currentPrStateAtArtifactCommit: open
+  commitCreated: true
+  pushCreated: true
+  pullRequestMutated: true
   productionDeploy: false
   providerCalls: false
   providerCallAttempted: false
@@ -53,11 +53,11 @@ related:
 1. 开发主线仍固定为 `origin/main`（`zjgulai/data_analysis_expert`）；当前 source main 为 `91f0741`。
 2. source PR #20–#25 已全部 merge；旧 PR #2–#19 已关闭为 superseded，远端 branches 保留。
 3. standalone PR #2 已通过普通内容同步 merge；当前 standalone main 为 `d722c41`，未使用 unrelated-history merge。
-4. standalone exact-head `077d1e8` 的 CodeRabbit review 返回 46 个 Major、0 个 Critical；当前 remediation 分支已逐项修复并完成目标回归，进入全量验证与 source PR gate。
-5. remediation 必须先进入 source PR，通过 required CI 与 exact-head review 后才能 merge；随后从最新 standalone main 新建同步分支，重新验证并独立评审。
+4. standalone exact-head `077d1e8` 的 CodeRabbit review 返回 46 个 Major、0 个 Critical；source PR #26 初始 exact-head `d7343ce` 的 required CI 通过，但 CodeRabbit 发布 16 条 inline comments，并在正式 review body 另列 1 条 outside-diff finding。当前工作树按 17 个整改项逐项修复并完成本地回归。
+5. 当前修复仍须形成新的 committed/pushed exact-head，并通过 clean clone、required CI 与 CodeRabbit 复审后才能 merge；随后从最新 standalone main 新建同步分支，重新验证并独立评审。
 6. 用户已授权本计划内 branch / commit / push / PR / merge 自动执行；branch 删除、production deploy 与真实 provider call 继续排除。
 
-定性把握：**高**（关于当前 Git、测试与 review remediation 事实）。依据是新鲜 Git/GitHub 状态、完整 CodeRabbit review、RED→GREEN 目标回归、本地 gate 和浏览器 smoke；最终容器与 clean checkout gate 尚待执行，生产运行态未在本轮重新验收。
+定性把握：**高**（关于当前 Git、测试与 review remediation 事实）。依据是新鲜 Git/GitHub 状态、完整 CodeRabbit review、RED→GREEN 目标回归、本地 gate、浏览器 smoke 与最终容器只读验收；新提交头的 clean clone / CI / 复审仍待执行，生产运行态未在本轮重新验收。
 
 ## 1.1 当前执行断点（2026-07-16）
 
@@ -65,8 +65,9 @@ related:
 - 旧 source PR #2–#19 已关闭为 superseded；所有 branches 保留，branch deletion 为 0。
 - standalone PR #2 已 merge；standalone main `d722c41353a549f757b19fc62efbb2530bedca47`，parents 为 `315775f` 与 exact-head `077d1e800f32360906cda01187970e6620da811f`。
 - CodeRabbit review `4710731850` 已完整读取：46 Major、0 Critical。当前分支已关闭全部 46 项；#23 通过共享 `manual-gate-status-contract.mjs` 同时校验精确 population 与 accepted completion status，不再以 pending 数量为零伪完成。
-- 当前执行分支为 `codex/scm-post-merge-review-remediation-20260716`，base 为 source main `91f0741`；remediation PR 尚未创建。
-- 当前修复树已通过 `check`、`build`、履约合同、import、manual-gate、preprod-boundaries 与三视口 UI 目标 smoke；终态建议卡重复批准也已在真实浏览器流程验证。前一 remediation checkpoint 的 Docker legacy builder 镜像 `sha256:72062bcc2a4d88eed55127de73b0d0fddb0fc04e896892d753263626c9b803cc` 曾达到 `healthy` 并通过 17 项只读 smoke；本轮新增变更仍需在最终 gate 重新构建验证。
+- 当前执行分支为 `codex/scm-post-merge-review-remediation-20260716`，base 为 source main `91f0741`；source PR #26 为 OPEN，初始受评审 exact-head 为 `d7343ce0c47b008bde7da01601e7535c90baa754`。
+- PR #26 初始 exact-head 的 SCM integration gate 通过；GitHub API 返回 16 条 CodeRabbit inline comments，正式 review body 另列 1 条 outside-diff finding。本文件所在候选提交已完成 17 个追踪项的修复与目标回归；初始头的 CI 结果不能沿用到新修复头。
+- 当前修复树已通过 `check`、`build`、全部专项 smoke、preprod、一次性 SQLite API、三视口 UI、宿主与容器 readonly smoke。最终 Docker image 为 `sha256:477fd41f845da588888b06d57079715500f4bd5d7c5048425373d123973aad65`，容器达到 `healthy`、UID 1000，并通过 17 项只读检查；源码 SQLite SHA-256 前后均为 `3d972e46ec43a64ad69265f295af4ffd9039dfe721a0e9f7f22d02e9b7652af7`。
 - 3 个 manual gates 保持 30 owner pending / 18 mapping pending / 1 SCEI ready；`provider_call=false`、`database_write=local-test-only`、`production unchanged`。
 - 原始脏工作区 `/Users/pray/project/ecom_ana_overview/scm` 未修改；本批次只在 clean source worktree 中执行。
 
@@ -107,8 +108,11 @@ flowchart LR
   SA --> R["CodeRabbit 46 Major / 0 Critical"]
   OM --> SR["source remediation branch"]
   R --> SR
-  SR --> SP["source remediation PR pending"]
-  SP --> SS["new standalone remediation sync pending"]
+  SR --> SP["source PR #26 initial head d7343ce"]
+  SP --> CR["CodeRabbit 16 inline + 1 outside-diff"]
+  CR --> RR["local review remediation verified"]
+  RR --> NH["new exact-head CI / review pending"]
+  NH --> SS["new standalone remediation sync pending"]
 ```
 
 | 波次 | 提交范围 | 现有 PR | 当前规模 | 说明 |
@@ -148,8 +152,8 @@ flowchart LR
 | 当前 remediation | `npm run check && npm run build` | passed；46 modules transformed。 |
 | 当前 remediation | 目标 smoke | manual-gate / import / preprod-boundary / provider / UI-target / migration / database / fulfillment / path-contract 全部 passed。 |
 | 当前 remediation | `npm run preprod:check` | hard blockers 0；certified eligibility 10/10、invalid decision metric references 0、decision subject rows 144；30 owner + 18 mapping pending，1 SCEI ready；provider/database/production boundary 均为 false。 |
-| 前一 remediation checkpoint | 宿主 `smoke:readonly` | 17 checks passed；仅 GET/HEAD；`localSqliteWrites=false`、`providerCalls=false`。 |
-| 前一 remediation checkpoint | Docker build + container `smoke:readonly` | image `sha256:72062bcc...`；container `healthy`；17 checks passed。BuildKit 首次 metadata 阶段被手动终止，legacy builder fallback 成功；本轮新增变更后待重跑。 |
+| 当前 PR review remediation | 一次性 SQLite API + 三视口 UI + 宿主 `smoke:readonly` | passed；UI console/page errors 0；只读检查仅 GET/HEAD，`localSqliteWrites=false`、`providerCalls=false`。 |
+| 当前 PR review remediation | Docker build + container `smoke:readonly` | image `sha256:477fd41f...`；container `healthy`；`USER node`、UID 1000；17 checks passed；源码 SQLite hash unchanged。 |
 
 说明：clean archive 不是 Git checkout，因此 `preprod:check` 的 dirtyCount 为 `-1`；这不等于“工作区 clean”。提交对象完整性由 `git archive` 和提交 SHA 保证，最终合并候选仍需在真实 clean clone 中复跑。
 
@@ -254,7 +258,7 @@ Expected：有明确审批记录；未确认时不创建 integration branch。
 
 - [x] **Step 0.3：冻结 merge/deploy 边界**
 
-历史 pre-execution 冻结记录：`production unchanged`、`provider_call=false`、`database_write=false`、`live_send=false`、`merge_executed=false`。其中 `merge_executed=false` 仅描述执行开始前的快照；source PR #20–#25 与 standalone PR #2 已合并。当前 remediation PR 尚未创建，因此 frontmatter 的 `currentPrMergeExecuted=false` 仍成立。
+历史 pre-execution 冻结记录：`production unchanged`、`provider_call=false`、`database_write=false`、`live_send=false`、`merge_executed=false`。其中 `merge_executed=false` 仅描述执行开始前的快照；source PR #20–#25 与 standalone PR #2 已合并。当前 remediation PR #26 已创建但仍为 OPEN，因此 frontmatter 的 `currentPrMergeExecuted=false` 仍成立。
 
 ### Task 1：密钥与工作区隔离
 
@@ -535,6 +539,7 @@ Expected：runtime/source diff、data/evidence diff、旧 docs 处置分开说�
 | #23 | `codex/scm-ci-bootstrap-20260716@6c077abf971ed758c5c3eb00472d441ca11a1202` | MERGED | 0 | — |
 | #24 | `codex/scm-post-stack-loop-assets-20260716@e7cc2f7cb6d89a39a255c6961271fa219582a312` | MERGED | 0 | — |
 | #25 | `codex/scm-sanitize-db-paths-20260716@aba978cc866017acd337f6096950dd325fc0c158` | MERGED | 0 | — |
+| #26 | `codex/scm-post-merge-review-remediation-20260716`；初始受评审 head `d7343ce` | OPEN；初始 CI passed；当前候选 HEAD 包含 17 个 review fixes | 2 candidate commits | `/Users/pray/project/ecom_ana_overview_scm_cleanmain_20260716` |
 
 **standalone 远端 branch / PR 清单（相对 `standalone main@d722c41`）：**
 
@@ -550,9 +555,9 @@ Expected：runtime/source diff、data/evidence diff、旧 docs 处置分开说�
 | `codex/scm-deploy-20260618` | `a6bfb5c69c071c6791f79cd689577e9efbca33a5` | 无 merge base | — | 保留，未删除。 |
 | `codex/scm-ledger-workbench` | `1a18fb21a1d9c32f7f1ef8111e83b5801485c023` | 82 unique（审计基线） | `/Users/pray/project/ecom_ana_overview_scm_ledger_next` | 保留，未删除。 |
 | `codex/scm-ledger-workbench-export` | `44e3818a60427474368dce6fd649e9a9a5cc4c67` | 无 merge base | — | 保留，未删除。 |
-| `codex/scm-post-merge-review-remediation-20260716` | 未提交 working tree；base `91f0741` | 当前 remediation diff | `/Users/pray/project/ecom_ana_overview_scm_cleanmain_20260716` | 当前执行，不是删除候选。 |
+| `codex/scm-post-merge-review-remediation-20260716` | 当前候选 HEAD 包含 17 个 review fixes；base `91f0741` | PR #26 当前 remediation diff | `/Users/pray/project/ecom_ana_overview_scm_cleanmain_20260716` | 当前执行，不是删除候选。 |
 
-两仓当前 open PR 数均为 0；branch deletion / worktree remove / worktree prune 执行数均为 0。
+source 当前 open PR 数为 1（#26），standalone 当前 open PR 数为 0；branch deletion / worktree remove / worktree prune 执行数均为 0。
 
 - [ ] **Step 7.3：请求明确 discard 确认**
 
@@ -613,7 +618,7 @@ Review：standalone PR #2 / review `4710731850` / exact-head `077d1e800f32360906
 | 45 | preflight should not require rebuild auth | 已修复并验证 |
 | 46 | terminal recommendation reapproval | 已修复并验证 |
 
-汇总：**46 已修复并完成目标回归 + 0 部分修复 + 0 待执行 = 46**。该结论只代表 review remediation closure；source PR、CI、exact-head review、merge、standalone 重同步和 deploy 仍是后续独立证据层。
+汇总：**46 已修复并完成目标回归 + 0 部分修复 + 0 待执行 = 46**。该结论只代表 standalone review remediation closure；PR #26 新 exact-head 的 CI、review、merge、standalone 重同步和 deploy 仍是后续独立证据层。
 
 - [x] **Step 8.2：完成首批高风险边界修复与 RED → GREEN 回归**
 
@@ -625,11 +630,33 @@ Review：standalone PR #2 / review `4710731850` / exact-head `077d1e800f32360906
 
 收尾一致性审计另发现跟踪 SQLite 中有 9 张历史 smoke 推荐卡及其 9 条 `agent_runs.input_refs` 仍引用旧别名 `knowledge.fba_available_negative`。现已统一映射到语义匹配且由 manifest 固定的 `business-supply-chain-card-0144`；importer、preprod 与 database gate 覆盖 `aip_scenarios`、`recommendation_cards`、`agent_traces`、`agent_runs` 四类活动引用，当前 unresolved=0。推荐卡写接口会以 HTTP 400 拒绝未知知识卡 ID，且回归验证未落库。
 
-- [ ] **Step 8.4：创建并验收 source remediation PR**
+- [ ] **Step 8.4：验收并合并 source remediation PR #26**
 
-前置：46 项均有 closed / rejected-with-evidence / explicitly-deferred 决议；`check`、`build`、preprod、全量 smoke、Docker readonly、CI 与 exact-head review 通过。Merge 使用 merge commit；未满足时保持 PR open。
+前置：原 46 项与 PR #26 的 17 个追踪项均有 closed / rejected-with-evidence / explicitly-deferred 决议；`check`、`build`、preprod、全量 smoke、Docker readonly、clean clone、CI 与 exact-head review 通过。Merge 使用 merge commit；未满足时保持 PR open。
 
-本地前置证据已完成：`check` / `build`、全部专项 smoke、一次性 SQLite API + 三视口 UI、17 项 readonly smoke、preprod hard blockers=0、最终本地 Docker image `sha256:9af3200b7c662fc4f825301112159681022891c1fe6f98a74e3881cba3a18389`（healthy、`USER node`、UID 1000）均通过；源 SQLite SHA-256 保持 `3d972e46ec43a64ad69265f295af4ffd9039dfe721a0e9f7f22d02e9b7652af7`。该证据不替代 source PR CI / exact-head review / merge。
+PR #26 初始 exact-head `d7343ce` 已通过 SCM integration gate，但其 CodeRabbit review 产生下列 17 个追踪项。表中“已修复并验证”指本文件所在候选提交的本地证据；必须在新 exact-head 重跑 CI 与复审。
+
+| ID | PR #26 review finding | 当前本地状态 |
+|---:|---|---|
+| 1 | 执行计划仍称最终 Docker gate pending | 已修复：本文统一为最终镜像实测状态 |
+| 2 | manual gates 未完成时的 deploy policy 不一致 | 已修复：只允许另行授权的只读能力上限，禁止 write/provider/import/writeback |
+| 3 | Loop 3 migration reapply 覆盖业务状态 | 已修复并以两次 apply + 状态不变回归验证 |
+| 4 | certification snapshot/update 可能误伤同 ref 非 metric 记录 | 已修复并以异类型同 ref fixture 验证 |
+| 5 | decision subject migration 把任意缺失 metric 当治理 subject | 已修复：42 项显式 allowlist + typo fail-closed + ledger cardinality 回归 |
+| 6 | product denominator 文档混用 row count 与 `item_qty` | 已修复并通过 fulfillment contract smoke |
+| 7 | knowledge-domain symlink 可逃逸根目录 | 已修复：遍历跳过 symlink，并以外部 Markdown symlink fixture 验证 |
+| 8 | field-mapping 完成状态未识别 `已映射` | 已修复：按 task type 校验 accepted status，并覆盖正确/错配状态 |
+| 9 | audit split 未证明与 SLA population 一致 | 已修复：数值解析并断言 system + manual = SLA denominator |
+| 10 | decision-subject migration ledger 未断言恰好一条 | 已修复：初次、重复及最终 apply 均断言 cardinality=1 |
+| 11 | preprod boundary smoke 丢弃 subprocess exit status | 已修复：每个 blocker/no-blocker 场景同时断言退出码 |
+| 12 | provider child 在 SIGKILL 超时后可能静默遗留 | 已修复：最终等待超时会抛错，并通过 provider gate |
+| 13 | UI delayed-write 测试存在无界等待/固定 sleep | 已修复：有界等待 + 浏览器侧响应消费信号 |
+| 14 | source-coverage receipt 按共享 object type 串 gate | 已修复：按 gate decision reference 作用域查询，并验证不跨 gate |
+| 15 | finance normal API decisions 未进入 receipt summary | 已修复：按 `finance_owner.*` subject_ref 查询并按 audit 时间取新记录 |
+| 16 | A→B→A 会让旧 A 响应污染返回后的新 A | 已修复：selection epoch + target key 双校验，真实浏览器回归通过 |
+| 17 | outside-diff：fulfillment KPI 未先限定 valid-order population | 已修复：paid / valid self-fulfilled / non-cancelled / non-abandoned 共用过滤 |
+
+本地前置证据已完成：`check` / `build`、全部专项 smoke、一次性 SQLite API + 三视口 UI、17 项 readonly smoke、preprod hard blockers=0、最终本地 Docker image `sha256:477fd41f845da588888b06d57079715500f4bd5d7c5048425373d123973aad65`（healthy、`USER node`、UID 1000）均通过；源 SQLite SHA-256 保持 `3d972e46ec43a64ad69265f295af4ffd9039dfe721a0e9f7f22d02e9b7652af7`。新提交头的 clean clone、source PR CI、exact-head review 与 merge 仍待执行。
 
 - [ ] **Step 8.5：从最新 standalone main 重新同步 remediation**
 
@@ -675,8 +702,8 @@ Review：standalone PR #2 / review `4710731850` / exact-head `077d1e800f32360906
 
 ## 9. 当前未完成事项
 
-- source 与 standalone 的历史同步均已 merge；当前 remediation PR 尚未创建或 merge。
-- CodeRabbit 46 个 Major 已全部完成代码整改与目标回归；尚未把该状态扩张为 source PR/CI/exact-head review 或 merge 完成。
+- source 与 standalone 的历史同步均已 merge；当前 source remediation PR #26 已创建但仍为 OPEN，本文件所在候选提交包含 review fixes。
+- standalone CodeRabbit 46 个 Major 已完成整改；PR #26 初始头新增的 16 条 inline comments + 1 条 outside-diff finding 已在本地修复并回归，但新 exact-head 的 clean clone / CI / 复审 / merge 尚未完成。
 - 3 个 manual gates 仍是 30 owner pending / 18 mapping pending / 1 SCEI ready，不伪造 owner signoff、field mapping 或 SCEI 权重批准。
 - 最终本地 remediation Docker image 已重建并通过 healthy + 17 项容器只读 smoke；镜像验证不等于 deploy，production 仍 unchanged。
 - source remediation merge 后，仍需从 `standalone main@d722c41` 新开 content-sync branch、保留 9 个 target-only 文件并完成独立 CI/review/merge。

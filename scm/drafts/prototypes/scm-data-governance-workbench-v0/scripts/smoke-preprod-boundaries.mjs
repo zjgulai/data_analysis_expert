@@ -29,7 +29,10 @@ function runPreprod(scanRoot, name, cwd = appRoot, scriptPath = preprodCheckPath
     encoding: "utf8"
   });
   assert(result.status !== null, `${name}:preprod-process-did-not-exit`);
-  return JSON.parse(readFileSync(outputPath, "utf8"));
+  const report = JSON.parse(readFileSync(outputPath, "utf8"));
+  const expectedStatus = report.hardBlockers.length > 0 ? 1 : 0;
+  assert(result.status === expectedStatus, `${name}:exit-status-${result.status}-did-not-match-hard-blockers-${expectedStatus}`);
+  return { report, status: result.status };
 }
 
 function execDatabaseSql(path, sql) {
@@ -45,7 +48,8 @@ try {
   const uppercaseExtensionScanRoot = join(sandboxRoot, "uppercase-extension-scan");
   mkdirSync(uppercaseExtensionScanRoot, { recursive: true });
   writeFileSync(join(uppercaseExtensionScanRoot, "fixture-credential.PEM"), "fixture only\n", "utf8");
-  const uppercaseExtensionReport = runPreprod(uppercaseExtensionScanRoot, "uppercase-extension");
+  const { report: uppercaseExtensionReport, status: uppercaseExtensionStatus } = runPreprod(uppercaseExtensionScanRoot, "uppercase-extension");
+  assert(uppercaseExtensionStatus === 1, "uppercase-extension:failed-secret-scan-must-exit-nonzero");
   const uppercaseExtensionCheck = uppercaseExtensionReport.checks.find(
     (check) => check.name === "secret-file-scan:pem-key"
   );
@@ -71,7 +75,11 @@ try {
   mkdirSync(outsideScanRoot, { recursive: true });
   writeFileSync(join(outsideScanRoot, "outside-secret.key"), "fixture only\n", "utf8");
   symlinkSync(outsideScanRoot, join(symlinkScanRoot, "linked-outside"), "dir");
-  const symlinkReport = runPreprod(symlinkScanRoot, "symlink-traversal");
+  const { report: symlinkReport, status: symlinkStatus } = runPreprod(symlinkScanRoot, "symlink-traversal");
+  assert(
+    symlinkStatus === 0,
+    `symlink-traversal:clean-contained-scan-must-exit-zero:${JSON.stringify(symlinkReport.hardBlockers)}`
+  );
   const symlinkSecretCheck = symlinkReport.checks.find(
     (check) => check.name === "secret-file-scan:pem-key"
   );
@@ -86,7 +94,8 @@ try {
   });
   const artifactRoot = join(screenshotSandboxRoot, "tmp", "outputs", "ui-proof-screenshots-20260716");
   const summaryPath = join(artifactRoot, "summary.json");
-  const summary = JSON.parse(readFileSync(summaryPath, "utf8"));
+  const originalSummaryText = readFileSync(summaryPath, "utf8");
+  const summary = JSON.parse(originalSummaryText);
   const [originalScreenshotPath] = Object.keys(summary.screenshotSha256);
   const traversalScreenshotPath = "screenshots/../outside-screenshots.png";
   const traversalScreenshotFile = join(artifactRoot, "outside-screenshots.png");
@@ -100,12 +109,13 @@ try {
   assert(matchingModule, "screenshot-containment:matching-module-not-found");
   matchingModule.screenshot = traversalScreenshotPath;
   writeFileSync(summaryPath, `${JSON.stringify(summary, null, 2)}\n`, "utf8");
-  const screenshotContainmentReport = runPreprod(
+  const { report: screenshotContainmentReport, status: screenshotContainmentStatus } = runPreprod(
     screenshotSandboxRoot,
     "screenshot-containment",
     screenshotSandboxRoot,
     join(screenshotSandboxRoot, "scripts", "preprod-check.mjs")
   );
+  assert(screenshotContainmentStatus === 1, "screenshot-containment:failed-artifact-check-must-exit-nonzero");
   const screenshotContainmentCheck = screenshotContainmentReport.checks.find(
     (check) => check.name === "ui-proof-screenshot-artifacts"
   );
@@ -117,6 +127,7 @@ try {
     ),
     "screenshot-containment:traversal-rejection-not-reported"
   );
+  writeFileSync(summaryPath, originalSummaryText, "utf8");
 
   const governanceDatabasePath = join(screenshotSandboxRoot, "data", "governance_workbench.sqlite");
   execDatabaseSql(governanceDatabasePath, `
@@ -124,12 +135,13 @@ try {
     WHERE priority='P0'
       AND (task_type IN ('owner_signoff','field_mapping') OR id='aip_20260627_d_p1_05_scei_weight_source_required');
   `);
-  const unacceptedStatusReport = runPreprod(
+  const { report: unacceptedStatusReport, status: unacceptedStatus } = runPreprod(
     screenshotSandboxRoot,
     "unaccepted-governance-statuses",
     screenshotSandboxRoot,
     join(screenshotSandboxRoot, "scripts", "preprod-check.mjs")
   );
+  assert(unacceptedStatus === 0, "unaccepted-governance-statuses:manual-gates-must-not-masquerade-as-hard-failures");
   for (const checkName of [
     "manual-p0-owner-signoffs",
     "manual-p0-field-mappings",
@@ -146,12 +158,13 @@ try {
     UPDATE governance_tasks SET status='已映射' WHERE priority='P0' AND task_type='field_mapping';
     UPDATE governance_tasks SET status='certified' WHERE id='aip_20260627_d_p1_05_scei_weight_source_required';
   `);
-  const acceptedStatusReport = runPreprod(
+  const { report: acceptedStatusReport, status: acceptedStatus } = runPreprod(
     screenshotSandboxRoot,
     "accepted-governance-statuses",
     screenshotSandboxRoot,
     join(screenshotSandboxRoot, "scripts", "preprod-check.mjs")
   );
+  assert(acceptedStatus === 0, "accepted-governance-statuses:clean-hard-gates-must-exit-zero");
   const acceptedExpectations = {
     "manual-p0-owner-signoffs": 30,
     "manual-p0-field-mappings": 18,
@@ -169,12 +182,13 @@ try {
     WHERE priority='P0'
       AND (task_type IN ('owner_signoff','field_mapping') OR id='aip_20260627_d_p1_05_scei_weight_source_required');
   `);
-  const missingGovernanceReport = runPreprod(
+  const { report: missingGovernanceReport, status: missingGovernanceStatus } = runPreprod(
     screenshotSandboxRoot,
     "missing-governance-populations",
     screenshotSandboxRoot,
     join(screenshotSandboxRoot, "scripts", "preprod-check.mjs")
   );
+  assert(missingGovernanceStatus === 0, "missing-governance-populations:manual-gates-must-not-masquerade-as-hard-failures");
   for (const checkName of [
     "manual-p0-owner-signoffs",
     "manual-p0-field-mappings",
