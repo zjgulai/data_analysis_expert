@@ -19,11 +19,14 @@ const terminalPunctuation = new Set([
   "，", "。", "；", "：", "！", "？", "、", "）", "】", "》", "」", "』"
 ]);
 const localFileAuthorities = new Set(["localhost", "127.0.0.1", "[::1]"]);
-const profileStopWords = new Set([
-  "and", "or", "is", "are", "was", "were", "be", "been", "being",
-  "has", "have", "had", "from", "at", "on", "in", "to", "for", "with",
-  "then", "next", "local"
+const uriCloserByOpener = new Map([["(", ")"], ["[", "]"]]);
+const uriClosers = new Set(uriCloserByOpener.values());
+const uriHardDelimiters = new Set(["\"", "'", "`", "<", ">", "{", "}"]);
+const lowercaseNameParticles = new Set([
+  "al", "ap", "ben", "bin", "da", "das", "de", "del", "della", "der",
+  "di", "dos", "du", "el", "ibn", "la", "le", "st", "ter", "van", "von"
 ]);
+const nameConnectors = new Set(["&", "+"]);
 const hardProfilePunctuation = new Set([
   "\"", "`", ")", "]", "}", ">", ",", ";", ":", "!", "?",
   "，", "。", "；", "：", "！", "？", "、", "）", "】", "》", "」", "』"
@@ -35,8 +38,8 @@ function freshWorkstationHomeRootPattern() {
   return new RegExp(workstationHomeRootSource, "g");
 }
 
-function freshUriPattern() {
-  return /[A-Za-z][A-Za-z0-9+.-]*:\/\/[^\s"'`<>{}]+/g;
+function freshUriStartPattern() {
+  return /([A-Za-z][A-Za-z0-9+.-]*):\/\//g;
 }
 
 function isEscaped(text, index) {
@@ -61,15 +64,33 @@ function findWrapperClose(text, contextStart, profileStart, searchLimit) {
 }
 
 function locateUriSpans(text) {
-  return Array.from(text.matchAll(freshUriPattern()), (match) => {
+  const spans = [];
+  const pattern = freshUriStartPattern();
+  let match;
+  while ((match = pattern.exec(text)) !== null) {
     const start = match.index;
-    const value = match[0];
-    return {
+    if (match[1].length === 1 && /^Users[\\/]/i.test(text.slice(pattern.lastIndex))) continue;
+    let end = pattern.lastIndex;
+    const closerStack = [];
+    while (end < text.length) {
+      const value = text[end];
+      if (/\s/.test(value) || uriHardDelimiters.has(value)) break;
+      if (uriCloserByOpener.has(value)) {
+        closerStack.push(uriCloserByOpener.get(value));
+      } else if (uriClosers.has(value)) {
+        if (closerStack[closerStack.length - 1] !== value) break;
+        closerStack.pop();
+      }
+      end += 1;
+    }
+    spans.push({
       start,
-      end: start + value.length,
-      scheme: value.slice(0, value.indexOf(":")).toLowerCase()
-    };
-  });
+      end,
+      scheme: match[1].toLowerCase()
+    });
+    pattern.lastIndex = Math.max(pattern.lastIndex, end);
+  }
+  return spans;
 }
 
 function containingUriSpan(uriSpans, index) {
@@ -157,15 +178,6 @@ function findFirstSeparator(text, start, limit) {
   return null;
 }
 
-function findFirstTokenBoundary(text, start, limit) {
-  for (let index = start; index < limit; index += 1) {
-    const value = text[index];
-    if (/\s/.test(value)) return index;
-    if (isProfilePunctuationBoundary(text, index)) return index;
-  }
-  return null;
-}
-
 function isProfilePunctuationBoundary(text, index) {
   const value = text[index];
   if (hardProfilePunctuation.has(value)) return true;
@@ -174,19 +186,15 @@ function isProfilePunctuationBoundary(text, index) {
   return false;
 }
 
-function isPlausibleSpacedProfile(value) {
+function isPlausibleDescendantProfile(value) {
   if (value !== value.trim()) return false;
-  const parts = value.split(/\s+/);
-  return parts.length <= 3
-    && parts.every((part) => /^[\p{L}\p{N}._'’-]+$/u.test(part))
-    && parts.slice(1).every((part) => !profileStopWords.has(part.toLowerCase()));
+  return value.length > 0 && !/[\\/\r\n<>:"|?*\u0000]/u.test(value);
 }
 
-function findRootOnlyProfileEnd(text, start, limit) {
+function collectRootOnlyProfileTokens(text, start, limit) {
+  const tokens = [];
   let cursor = start;
-  let lastTokenEnd = null;
-  let tokenCount = 0;
-  while (cursor < limit && tokenCount < 3) {
+  while (cursor < limit) {
     while (cursor < limit && /\s/.test(text[cursor])) cursor += 1;
     if (cursor >= limit || isProfilePunctuationBoundary(text, cursor)) break;
     const tokenStart = cursor;
@@ -198,12 +206,46 @@ function findRootOnlyProfileEnd(text, start, limit) {
       && !isProfilePunctuationBoundary(text, cursor)
     ) cursor += 1;
     if (cursor === tokenStart) break;
-    const token = text.slice(tokenStart, cursor);
-    if (tokenCount > 0 && profileStopWords.has(token.toLowerCase())) break;
-    lastTokenEnd = cursor;
-    tokenCount += 1;
+    tokens.push({ start: tokenStart, end: cursor, value: text.slice(tokenStart, cursor) });
   }
-  return lastTokenEnd;
+  return tokens;
+}
+
+function isNameLikeProfileToken(value) {
+  return /^[\p{Lu}\p{Lt}][\p{L}\p{M}\p{N}._'’\-]*$/u.test(value);
+}
+
+function findRootOnlyProfileEnd(text, start, limit) {
+  const tokens = collectRootOnlyProfileTokens(text, start, limit);
+  if (!tokens.length) return null;
+
+  let end = tokens[0].end;
+  for (let index = 1; index < tokens.length;) {
+    if (isNameLikeProfileToken(tokens[index].value)) {
+      end = tokens[index].end;
+      index += 1;
+      continue;
+    }
+    if (
+      nameConnectors.has(tokens[index].value)
+      && isNameLikeProfileToken(tokens[index + 1]?.value || "")
+    ) {
+      end = tokens[index + 1].end;
+      index += 2;
+      continue;
+    }
+    if (!lowercaseNameParticles.has(tokens[index].value.toLowerCase())) break;
+
+    let nameIndex = index;
+    while (
+      nameIndex < tokens.length
+      && lowercaseNameParticles.has(tokens[nameIndex].value.toLowerCase())
+    ) nameIndex += 1;
+    if (nameIndex >= tokens.length || !isNameLikeProfileToken(tokens[nameIndex].value)) break;
+    end = tokens[nameIndex].end;
+    index = nameIndex + 1;
+  }
+  return end;
 }
 
 function findHomeEnd(text, candidate, nextCandidate) {
@@ -222,11 +264,9 @@ function findHomeEnd(text, candidate, nextCandidate) {
   if (hardLimit <= candidate.profileStart) return null;
 
   const separator = findFirstSeparator(text, candidate.profileStart, hardLimit);
-  const tokenBoundary = findFirstTokenBoundary(text, candidate.profileStart, hardLimit);
   if (separator !== null) {
     const profile = text.slice(candidate.profileStart, separator);
-    const separatorBeforeBoundary = tokenBoundary === null || separator < tokenBoundary;
-    if (separatorBeforeBoundary || isPlausibleSpacedProfile(profile)) {
+    if (isPlausibleDescendantProfile(profile)) {
       return profile.trim() ? separator : null;
     }
   }

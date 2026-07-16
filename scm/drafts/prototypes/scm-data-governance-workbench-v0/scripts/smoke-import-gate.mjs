@@ -141,6 +141,8 @@ try {
     mac: ["", "Users", "smoke-user", "private", "evidence.md"].join("/"),
     linux: ["", "home", "smoke-user", "private", "evidence.md"].join("/"),
     windows: ["C:", "Users", "Alice Smith", "private", "evidence.md"].join(windowsSeparator),
+    windowsForwardDoubleSlash: "C://Users/Alice Smith/private/evidence.md",
+    windowsAmpersandDescendant: ["C:", "Users", "Alice & Bob", "private"].join(windowsSeparator),
     mixed: `C:${windowsSeparator}Users/smoke-user/private/evidence.md`,
     macRoot: ["", "Users", "smoke-root"].join("/"),
     linuxRoot: ["", "home", "smoke-root"].join("/"),
@@ -171,12 +173,23 @@ try {
     "https://example.com/home/alice/private",
     "https://example.com/#/Users/alice/private",
     "https://example.com//home/alice/private",
-    "https://example.com/(group)/Users/alice/private"
+    "https://example.com/(group)/Users/alice/private",
+    "https://[::1]/Users/alice/private"
+  ];
+  const markdownUrlFixtures = [
+    "before-image ![private-image-alt](https://example.com/(group)/Users/alice/private) after-image",
+    "before-link [private-link-label](https://example.com/(group)/Users/alice/private) after-link"
+  ];
+  const expectedMarkdownUrlText = [
+    "before-image after-image",
+    "before-link private-link-label after-link"
   ];
   const expectedFixtureRedactions = {
     mac: `${workstationHomeRedaction}/private/evidence.md`,
     linux: `${workstationHomeRedaction}/private/evidence.md`,
     windows: `${workstationHomeRedaction}${windowsSeparator}private${windowsSeparator}evidence.md`,
+    windowsForwardDoubleSlash: `${workstationHomeRedaction}/private/evidence.md`,
+    windowsAmpersandDescendant: `${workstationHomeRedaction}${windowsSeparator}private`,
     mixed: `${workstationHomeRedaction}/private/evidence.md`,
     macRoot: workstationHomeRedaction,
     linuxRoot: workstationHomeRedaction,
@@ -238,6 +251,51 @@ try {
       value: "路径=/Users/alice，下一步",
       expectedCount: 1,
       expectedRedaction: `路径=${workstationHomeRedaction}，下一步`
+    },
+    lowercaseProfileFollowedByProse: {
+      value: "/Users/alice works remotely.",
+      expectedCount: 1,
+      expectedRedaction: `${workstationHomeRedaction} works remotely.`
+    },
+    spacedProfileFollowedByProse: {
+      value: "/Users/Alice Smith reviewed evidence.",
+      expectedCount: 1,
+      expectedRedaction: `${workstationHomeRedaction} reviewed evidence.`
+    },
+    chineseProseAfterProfile: {
+      value: "路径=/Users/alice 下一步",
+      expectedCount: 1,
+      expectedRedaction: `路径=${workstationHomeRedaction} 下一步`
+    },
+    titleCasedConjunctionProfile: {
+      value: ["C:", "Users", "Alice And Bob"].join(windowsSeparator),
+      expectedCount: 1,
+      expectedRedaction: workstationHomeRedaction
+    },
+    ampersandProfile: {
+      value: ["C:", "Users", "Alice & Bob"].join(windowsSeparator),
+      expectedCount: 1,
+      expectedRedaction: workstationHomeRedaction
+    },
+    multiPartDescendantProfile: {
+      value: ["C:", "Users", "Juan Carlos de la Cruz", "private"].join(windowsSeparator),
+      expectedCount: 1,
+      expectedRedaction: `${workstationHomeRedaction}${windowsSeparator}private`
+    },
+    parenthesizedUrlThenHome: {
+      value: "(https://example.com/docs)/Users/alice/private",
+      expectedCount: 1,
+      expectedRedaction: `(https://example.com/docs)${workstationHomeRedaction}/private`
+    },
+    nestedParenthesizedUrlThenHome: {
+      value: "(https://example.com/(group))/Users/alice/private",
+      expectedCount: 1,
+      expectedRedaction: `(https://example.com/(group))${workstationHomeRedaction}/private`
+    },
+    bracketedUrlThenHome: {
+      value: "[https://example.com/docs]/home/bob/private",
+      expectedCount: 1,
+      expectedRedaction: `[https://example.com/docs]${workstationHomeRedaction}/private`
     }
   };
   for (const [name, value] of Object.entries(workstationPathFixtures)) {
@@ -274,6 +332,7 @@ try {
     ...benignUrlFixtures,
     ...Object.entries(workstationPathFixtures).map(([name, value]) => name === "escapedJsonMacRoot" ? value : JSON.stringify(value)),
     ...Object.values(workstationTextFixtures).map((fixture) => JSON.stringify(fixture.value)),
+    ...markdownUrlFixtures,
     ""
   ].join("\n");
   const combinedFixtureCount = countWorkstationHomePaths(knowledgeFixtureContent);
@@ -353,9 +412,13 @@ try {
       const expectedDomainPath = "scm/drafts/analysis/jijia-scm-knowledge-base-draft-20260604";
       const expectedCardPath = `${expectedDomainPath}/portable-path-fixture.md`;
       const summaryFixture = String(cardFixture?.summary || "");
-      const chunkTextFixture = chunkFixtures.map((chunk) => String(chunk.text || "")).join("");
+      const chunkTextFixture = chunkFixtures.map((chunk) => String(chunk.text || "")).join(" ");
       const actualImportedRedactions = (chunkTextFixture.match(/<workstation-home>/g) || []).length;
       const missingChunkBenignUrls = benignUrlFixtures.filter((value) => !chunkTextFixture.includes(value));
+      const missingTextFixtureRedactions = Object.values(workstationTextFixtures)
+        .map((fixture) => JSON.stringify(fixture.expectedRedaction))
+        .filter((value) => !chunkTextFixture.includes(value));
+      const missingMarkdownUrlText = expectedMarkdownUrlText.filter((value) => !chunkTextFixture.includes(value));
       const boundaryCards = rebuiltDb.prepare("SELECT id, title FROM knowledge_cards WHERE title IN (?, ?) ORDER BY title")
         .all(nestedBoundaryTitle, urlBoundaryTitle);
       const boundaryChunks = new Map(boundaryCards.map((card) => [
@@ -373,6 +436,9 @@ try {
         [cardFixture?.source_path === expectedCardPath, "authorized rebuild knowledge card path must be repository-relative"],
         [(summaryFixture.match(/<workstation-home>/g) || []).length >= 2, "authorized rebuild knowledge summary must redact path-bearing content"],
         [actualImportedRedactions === expectedImportedRedactions, `authorized rebuild knowledge chunks must redact all workstation homes (${actualImportedRedactions}/${expectedImportedRedactions})`],
+        [missingTextFixtureRedactions.length === 0, `authorized rebuild knowledge chunks must preserve non-path text fixture content (missing ${missingTextFixtureRedactions.join(", ") || "none"})`],
+        [missingMarkdownUrlText.length === 0, `authorized rebuild must strip balanced Markdown URLs without losing surrounding text (missing ${missingMarkdownUrlText.join(", ") || "none"})`],
+        [!chunkTextFixture.includes("private-image-alt"), "authorized rebuild must remove image alt text with its balanced Markdown URL"],
         [benignUrlFixtures.slice(0, 3).every((value) => summaryFixture.includes(value)), "authorized rebuild knowledge summary must preserve its benign URL excerpt"],
         [missingChunkBenignUrls.length === 0, `authorized rebuild knowledge chunks must preserve benign URLs (missing ${missingChunkBenignUrls.join(", ") || "none"})`],
         [boundaryCards.length === 2, "authorized rebuild must import both chunk-boundary fixtures"],

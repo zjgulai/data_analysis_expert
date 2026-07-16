@@ -1251,12 +1251,55 @@ function walkMarkdownFiles(dir) {
   return files;
 }
 
+function findBalancedMarkdownClose(text, start, opener, closer) {
+  let depth = 1;
+  for (let index = start + 1; index < text.length; index += 1) {
+    if (text[index] === "\\") {
+      index += 1;
+      continue;
+    }
+    if (text[index] === opener) depth += 1;
+    if (text[index] !== closer) continue;
+    depth -= 1;
+    if (depth === 0) return index;
+  }
+  return null;
+}
+
+function stripInlineMarkdownLinks(text) {
+  let cursor = 0;
+  let stripped = "";
+  while (cursor < text.length) {
+    const labelStart = text.indexOf("[", cursor);
+    if (labelStart === -1) return `${stripped}${text.slice(cursor)}`;
+
+    const imageStart = labelStart > cursor && text[labelStart - 1] === "!" ? labelStart - 1 : null;
+    const syntaxStart = imageStart ?? labelStart;
+    const labelEnd = findBalancedMarkdownClose(text, labelStart, "[", "]");
+    if (labelEnd === null || text[labelEnd + 1] !== "(") {
+      stripped += text.slice(cursor, labelStart + 1);
+      cursor = labelStart + 1;
+      continue;
+    }
+    const destinationEnd = findBalancedMarkdownClose(text, labelEnd + 1, "(", ")");
+    if (destinationEnd === null) {
+      stripped += text.slice(cursor, labelStart + 1);
+      cursor = labelStart + 1;
+      continue;
+    }
+
+    stripped += text.slice(cursor, syntaxStart);
+    stripped += imageStart === null ? text.slice(labelStart + 1, labelEnd) : " ";
+    cursor = destinationEnd + 1;
+  }
+  return stripped;
+}
+
 function stripMarkdown(text) {
-  return text
+  const withoutBlocks = text
     .replace(/^---[\s\S]*?---/m, " ")
-    .replace(/```[\s\S]*?```/g, " ")
-    .replace(/!\[[^\]]*]\([^)]*\)/g, " ")
-    .replace(/\[[^\]]*]\([^)]*\)/g, (match) => match.replace(/\[|\]\([^)]*\)/g, ""))
+    .replace(/```[\s\S]*?```/g, " ");
+  return stripInlineMarkdownLinks(withoutBlocks)
     .replace(/^#{1,6}\s+/gm, " ")
     .replace(/[>*_`|]/g, " ")
     .replace(/\s+/g, " ")
