@@ -143,6 +143,7 @@ try {
     windows: ["C:", "Users", "Alice Smith", "private", "evidence.md"].join(windowsSeparator),
     windowsForwardDoubleSlash: "C://Users/Alice Smith/private/evidence.md",
     windowsAmpersandDescendant: ["C:", "Users", "Alice & Bob", "private"].join(windowsSeparator),
+    windowsExtendedLength: `${windowsSeparator}${windowsSeparator}?${windowsSeparator}${["C:", "Users", "Alice", "private"].join(windowsSeparator)}`,
     mixed: `C:${windowsSeparator}Users/smoke-user/private/evidence.md`,
     macRoot: ["", "Users", "smoke-root"].join("/"),
     linuxRoot: ["", "home", "smoke-root"].join("/"),
@@ -194,6 +195,7 @@ try {
     windows: `${workstationHomeRedaction}${windowsSeparator}private${windowsSeparator}evidence.md`,
     windowsForwardDoubleSlash: `${workstationHomeRedaction}/private/evidence.md`,
     windowsAmpersandDescendant: `${workstationHomeRedaction}${windowsSeparator}private`,
+    windowsExtendedLength: `${workstationHomeRedaction}${windowsSeparator}private`,
     mixed: `${workstationHomeRedaction}/private/evidence.md`,
     macRoot: workstationHomeRedaction,
     linuxRoot: workstationHomeRedaction,
@@ -270,6 +272,16 @@ try {
       expectedCount: 1,
       expectedRedaction: `${workstationHomeRedaction} Read This Important Note`
     },
+    titleCasedProseAfterTitleProfile: {
+      value: "/Users/Alice Read This Important Note",
+      expectedCount: 1,
+      expectedRedaction: `${workstationHomeRedaction} Read This Important Note`
+    },
+    titleCasedProseAfterSpacedFileUriProfile: {
+      value: "file:///Users/Alice Smith Read This Important Note",
+      expectedCount: 1,
+      expectedRedaction: `file://${workstationHomeRedaction} Read This Important Note`
+    },
     spacedProfileFollowedByProse: {
       value: "/Users/Alice Smith reviewed evidence.",
       expectedCount: 1,
@@ -279,6 +291,16 @@ try {
       value: "路径=/Users/alice 下一步",
       expectedCount: 1,
       expectedRedaction: `路径=${workstationHomeRedaction} 下一步`
+    },
+    spacedHanProfile: {
+      value: "/Users/张 三",
+      expectedCount: 1,
+      expectedRedaction: workstationHomeRedaction
+    },
+    hanProseAfterProfile: {
+      value: "/Users/张 下一步",
+      expectedCount: 1,
+      expectedRedaction: `${workstationHomeRedaction} 下一步`
     },
     titleCasedConjunctionProfile: {
       value: ["C:", "Users", "Alice And Bob"].join(windowsSeparator),
@@ -309,6 +331,12 @@ try {
       value: "[https://example.com/docs]/home/bob/private",
       expectedCount: 1,
       expectedRedaction: `[https://example.com/docs]${workstationHomeRedaction}/private`
+    },
+    markdownLinkThenHome: {
+      value: "before [label](https://example.com/(group))/Users/Alice Smith/private after",
+      expectedCount: 1,
+      expectedRedaction: `before [label](https://example.com/(group))${workstationHomeRedaction}/private after`,
+      importExpectedRedaction: `before label ${workstationHomeRedaction}/private after`
     }
   };
   for (const [name, value] of Object.entries(workstationPathFixtures)) {
@@ -429,7 +457,7 @@ try {
       const actualImportedRedactions = (chunkTextFixture.match(/<workstation-home>/g) || []).length;
       const missingChunkBenignUrls = benignUrlFixtures.filter((value) => !chunkTextFixture.includes(value));
       const missingTextFixtureRedactions = Object.values(workstationTextFixtures)
-        .map((fixture) => JSON.stringify(fixture.expectedRedaction))
+        .map((fixture) => JSON.stringify(fixture.importExpectedRedaction ?? fixture.expectedRedaction))
         .filter((value) => !chunkTextFixture.includes(value));
       const missingMarkdownUrlText = expectedMarkdownUrlText.filter((value) => !chunkTextFixture.includes(value));
       const boundaryCards = rebuiltDb.prepare("SELECT id, title FROM knowledge_cards WHERE title IN (?, ?) ORDER BY title")

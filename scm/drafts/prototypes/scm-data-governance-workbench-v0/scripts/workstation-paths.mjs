@@ -27,6 +27,17 @@ const lowercaseNameParticles = new Set([
   "di", "dos", "du", "el", "ibn", "la", "le", "st", "ter", "van", "von"
 ]);
 const nameConnectors = new Set(["&", "+"]);
+const wordNameConnectors = new Set(["and"]);
+const profileProseWords = new Set([
+  "are", "at", "check", "checked", "complete", "completed", "copy", "create",
+  "delete", "for", "from", "had", "has", "have", "important", "in", "is",
+  "local", "move", "next", "note", "notes", "on", "open", "read", "remote",
+  "remotely", "review", "reviewed", "run", "see", "then", "to", "update",
+  "use", "was", "were", "with", "working", "works"
+]);
+const profileProseFollowers = new Set([
+  "a", "an", "my", "our", "that", "the", "these", "this", "those", "your"
+]);
 const hardProfilePunctuation = new Set([
   "\"", "`", ")", "]", "}", ">", ",", ";", ":", "!", "?",
   "，", "。", "；", "：", "！", "？", "、", "）", "】", "》", "」", "』"
@@ -109,12 +120,30 @@ function hasIndependentLeftBoundary(text, start) {
   return !/[A-Za-z0-9._~%+\\/-]/.test(text[start - 1]);
 }
 
+function windowsExtendedPrefixStart(text, rootStart) {
+  let cursor = rootStart - 1;
+  let separatorSlashes = 0;
+  while (cursor >= 0 && text[cursor] === "\\") {
+    separatorSlashes += 1;
+    cursor -= 1;
+  }
+  if (!separatorSlashes || (text[cursor] !== "?" && text[cursor] !== ".")) return null;
+  cursor -= 1;
+  const prefixEnd = cursor;
+  while (cursor >= 0 && text[cursor] === "\\") cursor -= 1;
+  const prefixSlashes = prefixEnd - cursor;
+  return prefixSlashes === separatorSlashes * 2 ? cursor + 1 : null;
+}
+
 function ordinaryCandidate(text, match, uriSpans) {
   const rootStart = match.index;
   if (rootStart === undefined || containingUriSpan(uriSpans, rootStart)) return null;
 
   let start = rootStart;
-  if (text[rootStart] === "/" && text[rootStart - 1] === "\\" && hasIndependentLeftBoundary(text, rootStart - 1)) {
+  const extendedStart = windowsExtendedPrefixStart(text, rootStart);
+  if (extendedStart !== null && hasIndependentLeftBoundary(text, extendedStart)) {
+    start = extendedStart;
+  } else if (text[rootStart] === "/" && text[rootStart - 1] === "\\" && hasIndependentLeftBoundary(text, rootStart - 1)) {
     start = rootStart - 1;
   }
   if (!hasIndependentLeftBoundary(text, start) || followsRedactedHome(text, start)) return null;
@@ -215,36 +244,59 @@ function isNameLikeProfileToken(value) {
   return /^[\p{Lu}\p{Lt}][\p{L}\p{M}\p{N}._'’\-]*$/u.test(value);
 }
 
+function isShortHanNameToken(value) {
+  return /^[\p{Script=Han}]{1,2}$/u.test(value);
+}
+
+function isProfileProseCue(tokens, index) {
+  const normalized = tokens[index]?.value.toLowerCase() || "";
+  const nextNormalized = tokens[index + 1]?.value.toLowerCase() || "";
+  return profileProseWords.has(normalized) || profileProseFollowers.has(nextNormalized);
+}
+
 function findRootOnlyProfileEnd(text, start, limit) {
   const tokens = collectRootOnlyProfileTokens(text, start, limit);
   if (!tokens.length) return null;
 
   let end = tokens[0].end;
+  if (isShortHanNameToken(tokens[0].value)) {
+    if (isShortHanNameToken(tokens[1]?.value || "")) end = tokens[1].end;
+    return end;
+  }
   if (!isNameLikeProfileToken(tokens[0].value)) return end;
   for (let index = 1; index < tokens.length;) {
-    if (isNameLikeProfileToken(tokens[index].value)) {
-      end = tokens[index].end;
-      index += 1;
-      continue;
-    }
+    const normalized = tokens[index].value.toLowerCase();
+    if (isProfileProseCue(tokens, index)) break;
     if (
-      nameConnectors.has(tokens[index].value)
+      (nameConnectors.has(tokens[index].value) || wordNameConnectors.has(normalized))
       && isNameLikeProfileToken(tokens[index + 1]?.value || "")
     ) {
       end = tokens[index + 1].end;
       index += 2;
       continue;
     }
-    if (!lowercaseNameParticles.has(tokens[index].value.toLowerCase())) break;
-
-    let nameIndex = index;
-    while (
-      nameIndex < tokens.length
-      && lowercaseNameParticles.has(tokens[nameIndex].value.toLowerCase())
-    ) nameIndex += 1;
-    if (nameIndex >= tokens.length || !isNameLikeProfileToken(tokens[nameIndex].value)) break;
-    end = tokens[nameIndex].end;
-    index = nameIndex + 1;
+    if (lowercaseNameParticles.has(normalized)) {
+      let nameIndex = index;
+      while (
+        nameIndex < tokens.length
+        && lowercaseNameParticles.has(tokens[nameIndex].value.toLowerCase())
+      ) nameIndex += 1;
+      if (nameIndex >= tokens.length || !isNameLikeProfileToken(tokens[nameIndex].value)) break;
+      end = tokens[nameIndex].end;
+      index = nameIndex + 1;
+      continue;
+    }
+    if (!isNameLikeProfileToken(tokens[index].value)) break;
+    const next = tokens[index + 1];
+    const nextNormalized = next?.value.toLowerCase() || "";
+    const ambiguousTitleRun = next
+      && isNameLikeProfileToken(next.value)
+      && !lowercaseNameParticles.has(nextNormalized)
+      && !wordNameConnectors.has(nextNormalized)
+      && !isProfileProseCue(tokens, index + 1);
+    if (ambiguousTitleRun) break;
+    end = tokens[index].end;
+    index += 1;
   }
   return end;
 }

@@ -1289,7 +1289,7 @@ function stripInlineMarkdownLinks(text) {
     }
 
     stripped += text.slice(cursor, syntaxStart);
-    stripped += imageStart === null ? text.slice(labelStart + 1, labelEnd) : " ";
+    stripped += imageStart === null ? ` ${text.slice(labelStart + 1, labelEnd)} ` : " ";
     cursor = destinationEnd + 1;
   }
   return stripped;
