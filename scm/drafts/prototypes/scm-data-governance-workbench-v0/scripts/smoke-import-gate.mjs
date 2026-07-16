@@ -9,7 +9,8 @@ import { DatabaseSync } from "node:sqlite";
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const sourceAppRoot = resolve(scriptDir, "..");
 const sourceDatabasePath = join(sourceAppRoot, "data", "governance_workbench.sqlite");
-const sandboxRoot = mkdtempSync(join(tmpdir(), "scm-import-gate-"));
+const sandboxRepositoryRoot = mkdtempSync(join(tmpdir(), "scm-import-gate-"));
+const sandboxRoot = join(sandboxRepositoryRoot, "scm", "drafts", "prototypes", "scm-data-governance-workbench-v0");
 const sandboxScriptDir = join(sandboxRoot, "scripts");
 const sandboxDatabasePath = join(sandboxRoot, "data", "governance_workbench.sqlite");
 const metricBlueprintFile = "supply-chain-metric-system-l0-l3-blueprint-mece-v2-20260618.json";
@@ -59,7 +60,9 @@ let gateError;
 let gateSummary;
 let rebuiltPersonalPathHits = null;
 let rebuiltRawPersonalPathHits = null;
+let rebuiltKnowledgePathFixtureVerified = false;
 try {
+  mkdirSync(join(sandboxRepositoryRoot, ".git"), { recursive: true });
   cpSync(join(sourceAppRoot, "scripts"), sandboxScriptDir, { recursive: true });
   cpSync(join(sourceAppRoot, "data"), join(sandboxRoot, "data"), { recursive: true });
   cpSync(join(sourceAppRoot, "migrations"), join(sandboxRoot, "migrations"), { recursive: true });
@@ -129,6 +132,14 @@ try {
   const rebuildSource = join(sandboxRoot, "authorized-rebuild-source");
   mkdirSync(rebuildSource, { recursive: true });
   writeFileSync(join(rebuildSource, metricBlueprintFile), `${JSON.stringify({ metrics: [] }, null, 2)}\n`);
+  const knowledgeFixtureRoot = resolve(sandboxRoot, "../../analysis/jijia-scm-knowledge-base-draft-20260604");
+  const knowledgeFixtureFile = join(knowledgeFixtureRoot, "portable-path-fixture.md");
+  const workstationPathFixture = ["", "Users", "smoke-user", "private", "evidence.md"].join("/");
+  mkdirSync(knowledgeFixtureRoot, { recursive: true });
+  writeFileSync(
+    knowledgeFixtureFile,
+    `# Portable path fixture\n\nLocal evidence was previously stored at ${workstationPathFixture}.\n`
+  );
   const rebuildResult = spawnSync(process.execPath, [join(sandboxScriptDir, "import-assets.mjs")], {
     cwd: sandboxRoot,
     env: {
@@ -171,6 +182,24 @@ try {
       if (rebuiltRawPersonalPathHits !== 0) {
         failures.push(`authorized rebuild raw bytes must contain zero personal workstation paths, got ${rebuiltRawPersonalPathHits}`);
       }
+      const domainFixture = rebuiltDb.prepare("SELECT source_path FROM knowledge_domains WHERE id = ?").get("jijia-scm-main");
+      const cardFixture = rebuiltDb.prepare("SELECT id, source_path, summary FROM knowledge_cards WHERE title = ?").get("Portable path fixture");
+      const chunkFixture = cardFixture
+        ? rebuiltDb.prepare("SELECT text FROM knowledge_chunks WHERE card_id = ? ORDER BY chunk_index LIMIT 1").get(cardFixture.id)
+        : null;
+      const expectedDomainPath = "scm/drafts/analysis/jijia-scm-knowledge-base-draft-20260604";
+      const expectedCardPath = `${expectedDomainPath}/portable-path-fixture.md`;
+      const expectedRedactedPath = "<workstation-home>/private/evidence.md";
+      const fixtureChecks = [
+        [domainFixture?.source_path === expectedDomainPath, "authorized rebuild knowledge domain path must be repository-relative"],
+        [cardFixture?.source_path === expectedCardPath, "authorized rebuild knowledge card path must be repository-relative"],
+        [String(cardFixture?.summary || "").includes(expectedRedactedPath), "authorized rebuild knowledge summary must redact the workstation home"],
+        [String(chunkFixture?.text || "").includes(expectedRedactedPath), "authorized rebuild knowledge chunk must redact the workstation home"]
+      ];
+      for (const [ok, message] of fixtureChecks) {
+        if (!ok) failures.push(message);
+      }
+      rebuiltKnowledgePathFixtureVerified = fixtureChecks.every(([ok]) => ok);
     } finally {
       rebuiltDb.close();
     }
@@ -190,6 +219,7 @@ try {
     loop3RowsRetained: Object.values(loop3Rows).reduce((total, ids) => total + ids.length, 0),
     rebuiltPersonalPathHits,
     rebuiltRawPersonalPathHits,
+    rebuiltKnowledgePathFixtureVerified,
     sourceDatabaseHashPreserved: sourceHashBefore === hashFile(sourceDatabasePath),
     databaseRebuild: "disposable_fixture_only",
     sourceDatabaseRebuild: false,
@@ -201,7 +231,7 @@ try {
 
 let cleanupError;
 try {
-  rmSync(sandboxRoot, { recursive: true, force: true });
+  rmSync(sandboxRepositoryRoot, { recursive: true, force: true });
 } catch (error) {
   cleanupError = error instanceof Error ? error : new Error(String(error));
 }
