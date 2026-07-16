@@ -184,11 +184,14 @@ function execMany(sql) {
   db.exec(sql);
 }
 
-function insert(table, record) {
+function insert(table, record, preSanitizedKeys = []) {
   const keys = Object.keys(record);
+  const preSanitizedKeySet = new Set(preSanitizedKeys);
   const placeholders = keys.map(() => "?").join(", ");
   const stmt = db.prepare(`INSERT INTO ${table} (${keys.join(", ")}) VALUES (${placeholders})`);
-  stmt.run(...keys.map((key) => typeof record[key] === "string" ? redactWorkstationPaths(record[key]) : record[key]));
+  stmt.run(...keys.map((key) => typeof record[key] === "string" && !preSanitizedKeySet.has(key)
+    ? redactWorkstationPaths(record[key])
+    : record[key]));
 }
 
 const lifecycle = ["draft", "mapped", "reviewed", "certified", "active", "deprecated"];
@@ -1254,7 +1257,8 @@ function stripMarkdown(text) {
     .replace(/```[\s\S]*?```/g, " ")
     .replace(/!\[[^\]]*]\([^)]*\)/g, " ")
     .replace(/\[[^\]]*]\([^)]*\)/g, (match) => match.replace(/\[|\]\([^)]*\)/g, ""))
-    .replace(/[#>*_`|]/g, " ")
+    .replace(/^#{1,6}\s+/gm, " ")
+    .replace(/[>*_`|]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -1314,7 +1318,7 @@ function inferRefs(text) {
 }
 
 function chunkText(text, maxChunks = 4, chunkSize = 900) {
-  const clean = stripMarkdown(text);
+  const clean = redactWorkstationPaths(stripMarkdown(text));
   const chunks = [];
   for (let start = 0; start < clean.length && chunks.length < maxChunks; start += chunkSize) {
     const chunk = clean.slice(start, start + chunkSize).trim();
@@ -1347,7 +1351,7 @@ knowledgeDomains.forEach((domain) => {
   files.forEach((filePath, fileIndex) => {
     const raw = readFileSync(filePath, "utf8");
     const title = extractTitle(raw, filePath);
-    const clean = stripMarkdown(raw);
+    const clean = redactWorkstationPaths(stripMarkdown(raw));
     const topic = inferTopic(filePath, raw);
     const refs = inferRefs(`${filePath} ${raw}`);
     const cardId = `${domain.id}-card-${String(fileIndex + 1).padStart(4, "0")}`;
@@ -1365,7 +1369,7 @@ knowledgeDomains.forEach((domain) => {
       evidence_level: domain.evidence_level,
       status: domain.status,
       updated_at: new Date().toISOString()
-    });
+    }, ["summary"]);
     knowledgeCardCount += 1;
     domainCardCount += 1;
     chunkText(raw).forEach((chunk, chunkIndex) => {
@@ -1378,7 +1382,7 @@ knowledgeDomains.forEach((domain) => {
         keywords: JSON.stringify([...refs.objectRefs, ...refs.metricRefs, topic]),
         evidence_level: domain.evidence_level,
         source_path: portableSourcePath(filePath)
-      });
+      }, ["text"]);
       knowledgeChunkCount += 1;
       domainChunkCount += 1;
     });

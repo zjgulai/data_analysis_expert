@@ -151,12 +151,24 @@ try {
     wrappedLinuxRoot: `[${["", "home", "alice"].join("/")}]`,
     commaMacRoot: `${["", "Users", "alice"].join("/")},`,
     periodLinuxRoot: `${["", "home", "alice"].join("/")}.`,
-    fileUri: `file://${["", "Users", "alice", "file"].join("/")}`
+    fileUri: `file://${["", "Users", "alice", "file"].join("/")}`,
+    nestedMac: ["", "Users", "alice", "Users", "bob"].join("/"),
+    nestedLinux: ["", "home", "alice", "home", "bob"].join("/"),
+    nestedWindows: ["C:", "Users", "alice", "Users", "bob"].join(windowsSeparator),
+    nestedFileUri: `file://${["", "Users", "alice", "Users", "bob"].join("/")}`,
+    localhostFileUri: "file://localhost/Users/alice/private",
+    loopbackFileUri: "file://127.0.0.1/home/alice/private",
+    exclamationMacRoot: `${["", "Users", "alice"].join("/")}!`,
+    questionLinuxRoot: `${["", "home", "alice"].join("/")}?`,
+    chinesePunctuationMacRoot: `${["", "Users", "alice"].join("/")}，。！？；：`,
+    escapedJsonMacRoot: `{"path":"${windowsSeparator}/Users${windowsSeparator}/alice"}`
   };
   const benignUrlFixtures = [
     "https://example.com/users/42",
     "https://example.com/Users/alice/private",
-    "https://example.com/home/alice/private"
+    "https://example.com/home/alice/private",
+    "https://example.com/#/Users/alice/private",
+    "https://example.com//home/alice/private"
   ];
   const expectedFixtureRedactions = {
     mac: `${workstationHomeRedaction}/private/evidence.md`,
@@ -174,7 +186,35 @@ try {
     wrappedLinuxRoot: `[${workstationHomeRedaction}]`,
     commaMacRoot: `${workstationHomeRedaction},`,
     periodLinuxRoot: `${workstationHomeRedaction}.`,
-    fileUri: `file://${workstationHomeRedaction}/file`
+    fileUri: `file://${workstationHomeRedaction}/file`,
+    nestedMac: `${workstationHomeRedaction}/Users/bob`,
+    nestedLinux: `${workstationHomeRedaction}/home/bob`,
+    nestedWindows: `${workstationHomeRedaction}${windowsSeparator}Users${windowsSeparator}bob`,
+    nestedFileUri: `file://${workstationHomeRedaction}/Users/bob`,
+    localhostFileUri: `file://localhost${workstationHomeRedaction}/private`,
+    loopbackFileUri: `file://127.0.0.1${workstationHomeRedaction}/private`,
+    exclamationMacRoot: `${workstationHomeRedaction}!`,
+    questionLinuxRoot: `${workstationHomeRedaction}?`,
+    chinesePunctuationMacRoot: `${workstationHomeRedaction}，。！？；：`,
+    escapedJsonMacRoot: `{"path":"${workstationHomeRedaction}"}`
+  };
+  const workstationTextFixtures = {
+    inlineProse: {
+      value: "home=/Users/alice is local.",
+      expectedCount: 1,
+      expectedRedaction: `home=${workstationHomeRedaction} is local.`
+    },
+    independentHomes: {
+      value: "/Users/alice and /home/bob",
+      expectedCount: 2,
+      expectedRedaction: `${workstationHomeRedaction} and ${workstationHomeRedaction}`
+    },
+    jsonIndependentHomes: {
+      value: `{"paths":"/Users/alice and /home/bob"}`,
+      expectedCount: 2,
+      expectedRedaction: `{"paths":"${workstationHomeRedaction} and ${workstationHomeRedaction}"}`,
+      json: true
+    }
   };
   for (const [name, value] of Object.entries(workstationPathFixtures)) {
     const redacted = redactWorkstationPaths(value);
@@ -183,20 +223,49 @@ try {
     if (countWorkstationHomePaths(redacted) !== 0) failures.push(`${name} redacted workstation fixture must have zero matcher hits`);
     if (redactWorkstationPaths(redacted) !== redacted) failures.push(`${name} workstation redaction must be idempotent`);
   }
+  for (const [name, fixture] of Object.entries(workstationTextFixtures)) {
+    const redacted = redactWorkstationPaths(fixture.value);
+    if (countWorkstationHomePaths(fixture.value) !== fixture.expectedCount) failures.push(`${name} workstation text fixture must have ${fixture.expectedCount} matcher hits`);
+    if (redacted !== fixture.expectedRedaction) failures.push(`${name} workstation text fixture must preserve non-path content`);
+    if (countWorkstationHomePaths(redacted) !== 0) failures.push(`${name} redacted workstation text fixture must have zero matcher hits`);
+    if (redactWorkstationPaths(redacted) !== redacted) failures.push(`${name} workstation text redaction must be idempotent`);
+    if (fixture.json) {
+      try {
+        JSON.parse(redacted);
+      } catch {
+        failures.push(`${name} redacted workstation text fixture must remain valid JSON`);
+      }
+    }
+  }
   for (const benignUrlFixture of benignUrlFixtures) {
     if (countWorkstationHomePaths(benignUrlFixture) !== 0) failures.push("benign URL must have zero workstation matcher hits");
     if (redactWorkstationPaths(benignUrlFixture) !== benignUrlFixture) failures.push("benign URL must remain unchanged by redaction");
   }
   mkdirSync(knowledgeFixtureRoot, { recursive: true });
+  const expectedImportedRedactions = Object.keys(workstationPathFixtures).length
+    + Object.values(workstationTextFixtures).reduce((sum, fixture) => sum + fixture.expectedCount, 0);
+  const knowledgeFixtureContent = [
+    "# Portable path fixture",
+    "",
+    ...benignUrlFixtures,
+    ...Object.entries(workstationPathFixtures).map(([name, value]) => name === "escapedJsonMacRoot" ? value : JSON.stringify(value)),
+    ...Object.values(workstationTextFixtures).map((fixture) => JSON.stringify(fixture.value)),
+    ""
+  ].join("\n");
+  const combinedFixtureCount = countWorkstationHomePaths(knowledgeFixtureContent);
+  const individualLineCount = knowledgeFixtureContent
+    .split("\n")
+    .reduce((sum, line) => sum + countWorkstationHomePaths(line), 0);
+  if (combinedFixtureCount !== expectedImportedRedactions) {
+    failures.push(`combined workstation fixture must have ${expectedImportedRedactions} matcher hits (combined ${combinedFixtureCount}, individual lines ${individualLineCount})`);
+  }
+  const redactedKnowledgeFixtureContent = redactWorkstationPaths(knowledgeFixtureContent);
+  if (benignUrlFixtures.some((value) => !redactedKnowledgeFixtureContent.includes(value))) {
+    failures.push("combined workstation fixture must preserve benign URLs");
+  }
   writeFileSync(
     knowledgeFixtureFile,
-    [
-      "# Portable path fixture",
-      "",
-      ...benignUrlFixtures.map((value, index) => `url-${index + 1} ${value}`),
-      ...Object.entries(workstationPathFixtures).map(([name, value]) => `${name} ${JSON.stringify(value)}`),
-      ""
-    ].join("\n")
+    knowledgeFixtureContent
   );
   const rebuildResult = spawnSync(process.execPath, [join(sandboxScriptDir, "import-assets.mjs")], {
     cwd: sandboxRoot,
@@ -242,20 +311,22 @@ try {
       }
       const domainFixture = rebuiltDb.prepare("SELECT source_path FROM knowledge_domains WHERE id = ?").get("jijia-scm-main");
       const cardFixture = rebuiltDb.prepare("SELECT id, source_path, summary FROM knowledge_cards WHERE title = ?").get("Portable path fixture");
-      const chunkFixture = cardFixture
-        ? rebuiltDb.prepare("SELECT text FROM knowledge_chunks WHERE card_id = ? ORDER BY chunk_index LIMIT 1").get(cardFixture.id)
-        : null;
+      const chunkFixtures = cardFixture
+        ? rebuiltDb.prepare("SELECT text FROM knowledge_chunks WHERE card_id = ? ORDER BY chunk_index").all(cardFixture.id)
+        : [];
       const expectedDomainPath = "scm/drafts/analysis/jijia-scm-knowledge-base-draft-20260604";
       const expectedCardPath = `${expectedDomainPath}/portable-path-fixture.md`;
       const summaryFixture = String(cardFixture?.summary || "");
-      const chunkTextFixture = String(chunkFixture?.text || "");
+      const chunkTextFixture = chunkFixtures.map((chunk) => String(chunk.text || "")).join("");
+      const actualImportedRedactions = (chunkTextFixture.match(/<workstation-home>/g) || []).length;
+      const missingChunkBenignUrls = benignUrlFixtures.filter((value) => !chunkTextFixture.includes(value));
       const fixtureChecks = [
         [domainFixture?.source_path === expectedDomainPath, "authorized rebuild knowledge domain path must be repository-relative"],
         [cardFixture?.source_path === expectedCardPath, "authorized rebuild knowledge card path must be repository-relative"],
         [(summaryFixture.match(/<workstation-home>/g) || []).length >= 2, "authorized rebuild knowledge summary must redact path-bearing content"],
-        [(chunkTextFixture.match(/<workstation-home>/g) || []).length === Object.keys(workstationPathFixtures).length, "authorized rebuild knowledge chunk must redact all workstation homes"],
-        [benignUrlFixtures.every((value) => summaryFixture.includes(value)), "authorized rebuild knowledge summary must preserve benign URLs"],
-        [benignUrlFixtures.every((value) => chunkTextFixture.includes(value)), "authorized rebuild knowledge chunk must preserve benign URLs"]
+        [actualImportedRedactions === expectedImportedRedactions, `authorized rebuild knowledge chunks must redact all workstation homes (${actualImportedRedactions}/${expectedImportedRedactions})`],
+        [benignUrlFixtures.slice(0, 3).every((value) => summaryFixture.includes(value)), "authorized rebuild knowledge summary must preserve its benign URL excerpt"],
+        [missingChunkBenignUrls.length === 0, `authorized rebuild knowledge chunks must preserve benign URLs (missing ${missingChunkBenignUrls.join(", ") || "none"})`]
       ];
       for (const [ok, message] of fixtureChecks) {
         if (!ok) failures.push(message);
