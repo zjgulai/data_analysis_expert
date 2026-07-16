@@ -59,7 +59,7 @@ boundary: local_design_contract_no_production_write_no_provider_call
 | 层级 | 表 | 作用 |
 |---|---|---|
 | 订单事实 | `fact_order_fulfillment_order_daily` | 订单主链路，承接总览、明细、未发货、发货时效 |
-| 商品行事实 | `fact_order_fulfillment_item_daily` | 商品行分母，承接商品履约和商品维度及时率 |
+| 商品行事实 | `fact_order_fulfillment_item_daily` | 商品件数 `item_qty` 分母，承接商品履约和商品维度及时率；商品行数只做质量核对 |
 | 包裹事实 | `fact_order_package_delivery_daily` | TMS 妥投，承接签收阶梯和超期未妥投 |
 | 审核事件事实 | `fact_audit_event_daily` | 审核人机拆分、多次审核和人工排行 |
 | 缺货信号事实 | `fact_stockout_signal_daily` | 订单缺货、库存缺货、预测缺货三分法 |
@@ -77,7 +77,7 @@ boundary: local_design_contract_no_production_write_no_provider_call
 | 订单履约明细 | `fact_order_fulfillment_order_daily` | `erp_code` | 平台单号和系统单号同时保留 |
 | 订单履约分布 | `agg_order_distribution_daily` | `country_code + sku_code + order_status` | 订单状态大类、小类映射一致 |
 | 区域渠道妥投 | `agg_delivery_channel_daily` | `country_code + logistics_channel` | 签收时点只用 TMS |
-| 商品履约分布 | `agg_product_fulfillment_daily` | `sku_code` | 商品行数量分母不能用订单数替代 |
+| 商品履约分布 | `agg_product_fulfillment_daily` | `sku_code` | 商品件数 `item_qty` 分母不能用订单数或商品行数替代 |
 | 发货效能 | `agg_shipping_efficiency_daily` | `warehouse_code` | 仓型来自维表，不在订单事实中硬编码 |
 | 审核效能 | `agg_audit_efficiency_daily` | `audit_actor_type + audit_user` | 系统自动审核和人工审核先拆再汇总 |
 | 异常订单-问题件 | `agg_order_issue_daily` | `issue_type + owner_domain` | 问题件类型必须能落到责任域和动作 |
@@ -91,13 +91,13 @@ boundary: local_design_contract_no_production_write_no_provider_call
 
 | 指标域 | 分母 | 说明 |
 |---|---|---|
-| 原始总单量 | 平台单号 `ref_no` 去重 | 已付款后订单总量，包含已付款取消 |
-| 拆分总单量 | 系统自发货单号 `erp_code` | 拆单废弃不统计，其他废弃需纳入 |
+| 原始总单量 | 平台单号 `ref_no` 去重 | 同一有效自发货群体内的已付款订单，排除已付款取消与拆单废弃 |
+| 拆分总单量 | 系统自发货单号 `erp_code` | 与原始总单量使用同一有效自发货群体，排除已付款取消与拆单废弃 |
 | 审单及时率 | 有效自发货订单 | 多次审核用末次审核或 `is_latest_audit` 标记 |
 | 审核发货及时率 | 已审核订单 | 系统和人工审核可分开展示，但分母需一致 |
 | 付款发货及时率 | 拆分总单量 | 发货时间为空的订单不进入及时分子 |
-| 商品发货及时率 | 商品行数量或商品件数 | 按供应链 SKU，不用订单数替代 |
-| 妥投率 | 发货包裹数或跟踪号数 | 签收时间以 TMS 为准 |
+| 商品发货及时率 | 商品件数 `item_qty` | 以供应链 SKU 商品件数作为唯一分母；商品行数只做质量核对，不参与该比率 |
+| 妥投率 | 跟踪号 `track_order_code` 去重 | 以已发货跟踪号去重数作为唯一分母；签收时间以 TMS 为准 |
 | 未发货预警 | 拆分总单量 | `send_time` 为空且超过 SLA |
 | 缺货三分 | 订单、库存快照、预测周期分别建分母 | 三类缺货不共用一个分母 |
 | 跨区发货率 | 有发货仓和目的国家的订单 | 目的国家与发货仓国家不同计入跨区 |

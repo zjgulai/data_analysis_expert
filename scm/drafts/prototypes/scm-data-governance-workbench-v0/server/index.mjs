@@ -18,6 +18,7 @@ const port = Number(process.env.PORT || 5174);
 const host = process.env.HOST || "127.0.0.1";
 const launchedAt = new Date().toISOString();
 const deepSeekDefaultBaseUrl = "https://api.deepseek.com";
+let providerCallAttemptCount = 0;
 const deploymentMetadata = {
   releaseId: process.env.SCM_RELEASE_ID || "local-compose",
   gitSha: process.env.SCM_GIT_SHA || "unknown",
@@ -88,6 +89,7 @@ const requiredDatabaseTables = [
   "chatbi_contexts",
   "comments",
   "decision_logs",
+  "decision_subject_refs",
   "dimensions",
   "export_jobs",
   "governance_tasks",
@@ -371,6 +373,10 @@ function insert(table, record) {
   stmt.run(...keys.map((key) => record[key]));
 }
 
+function decisionReference(row) {
+  return String(row?.subject_ref || row?.linked_metric_id || "");
+}
+
 function normalizeObjectType(value) {
   return String(value || "").trim().toLowerCase().replace(/[\s-]+/g, "_");
 }
@@ -386,9 +392,25 @@ function hydrateSourceCoverage(row) {
 function sourceCoverageLineageRows() {
   return getSourceCoverage().map((row) => {
     const gateStatuses = row.gate_ids.map((gateId) => {
+      const seed = get(
+        "SELECT id, linked_metric_id, subject_ref FROM decision_logs_with_subject WHERE id = ?",
+        [gateId]
+      );
+      const gateReference = decisionReference(seed) || gateId;
       const decision = get(
-        "SELECT id, insight_title, status, review_note, action_boundary FROM decision_logs WHERE id = ? OR linked_metric_id = ? ORDER BY id DESC LIMIT 1",
-        [gateId, row.target_object_type]
+        `SELECT decisions.id, decisions.insight_title, decisions.status,
+                decisions.review_note, decisions.action_boundary
+         FROM decision_logs_with_subject decisions
+         LEFT JOIN (
+           SELECT target_id, MAX(created_at) AS recorded_at
+           FROM audit_events
+           WHERE event_type = 'owner_decision_recorded' AND target_type = 'decision_log'
+           GROUP BY target_id
+         ) audit ON audit.target_id = decisions.id
+         WHERE decisions.id = ? OR decisions.subject_ref = ? OR decisions.linked_metric_id = ?
+         ORDER BY COALESCE(audit.recorded_at, '') DESC, decisions.id DESC
+         LIMIT 1`,
+        [gateId, gateReference, gateReference]
       );
       return {
         gateId,
@@ -445,10 +467,10 @@ function getDecisionReceiptSummary() {
     { packetId: "RUNTIME-IMPORT-003", coverageGateId: null }
   ];
   const packetRows = receiptPackets.map(({ packetId, coverageGateId }) => {
-    const seed = get("SELECT * FROM decision_logs WHERE id = ?", [packetId]);
+    const seed = get("SELECT * FROM decision_logs_with_subject WHERE id = ?", [packetId]);
     const receipts = all(
-      "SELECT * FROM decision_logs WHERE id LIKE ? OR linked_metric_id = ? ORDER BY id DESC LIMIT 20",
-      [`decision_${packetId.toLowerCase()}_%`, seed?.linked_metric_id || packetId]
+      "SELECT * FROM decision_logs_with_subject WHERE id LIKE ? OR subject_ref = ? OR linked_metric_id = ? ORDER BY id DESC LIMIT 20",
+      [`decision_${packetId.toLowerCase()}_%`, decisionReference(seed) || packetId, decisionReference(seed) || packetId]
     );
     const latestReceipt = receipts.find((row) => row.id !== packetId) || null;
     const relatedCoverage = coverageGateId ? sourceRows.filter((row) => row.gate_ids.includes(coverageGateId)) : [];
@@ -475,7 +497,7 @@ function getDecisionReceiptSummary() {
     },
     packets: packetRows,
     recentReceipts: all(
-      "SELECT * FROM decision_logs WHERE id LIKE 'decision_omswms-%' OR id LIKE 'decision_runtime-import-%' ORDER BY id DESC LIMIT 16"
+      "SELECT * FROM decision_logs_with_subject WHERE id LIKE 'decision_omswms-%' OR id LIKE 'decision_runtime-import-%' ORDER BY id DESC LIMIT 16"
     )
   };
 }
@@ -625,8 +647,8 @@ function getOmsWmsOwnerUsagePolicy() {
   ];
   const reviewPackets = usagePackets.map((packet) => {
     const latestReceipt = all(
-      "SELECT * FROM decision_logs WHERE linked_metric_id = ? OR id LIKE ? ORDER BY id DESC LIMIT 20",
-      [packet.linkedMetricId, `decision_${packet.id.toLowerCase()}_%`]
+      "SELECT * FROM decision_logs_with_subject WHERE subject_ref = ? OR linked_metric_id = ? OR id LIKE ? ORDER BY id DESC LIMIT 20",
+      [packet.linkedMetricId, packet.linkedMetricId, `decision_${packet.id.toLowerCase()}_%`]
     ).find((row) => row.id !== packet.id) || null;
     const sourceEvidence = sourceRows.filter((row) => packet.sourceCoverageRefs.includes(row.id));
     const lineageEvidence = lineageRows.filter((row) => packet.sourceCoverageRefs.includes(row.source_coverage_id));
@@ -865,8 +887,8 @@ function getRuntimeBusinessRowDesignGate() {
   ];
   const reviewPackets = designPackets.map((packet) => {
     const latestReceipt = all(
-      "SELECT * FROM decision_logs WHERE linked_metric_id = ? OR id LIKE ? ORDER BY id DESC LIMIT 20",
-      [packet.linkedMetricId, `decision_${packet.id.toLowerCase()}_%`]
+      "SELECT * FROM decision_logs_with_subject WHERE subject_ref = ? OR linked_metric_id = ? OR id LIKE ? ORDER BY id DESC LIMIT 20",
+      [packet.linkedMetricId, packet.linkedMetricId, `decision_${packet.id.toLowerCase()}_%`]
     ).find((row) => row.id !== packet.id) || null;
     return {
       ...packet,
@@ -1180,6 +1202,21 @@ function ensureWorkflowSchema() {
       status TEXT NOT NULL,
       review_note TEXT NOT NULL
     );
+
+    CREATE TABLE IF NOT EXISTS decision_subject_refs (
+      decision_id TEXT PRIMARY KEY,
+      subject_ref TEXT NOT NULL,
+      subject_type TEXT NOT NULL,
+      FOREIGN KEY (decision_id) REFERENCES decision_logs(id) ON DELETE CASCADE
+    );
+
+    CREATE VIEW IF NOT EXISTS decision_logs_with_subject AS
+    SELECT
+      decision_logs.*,
+      coalesce(decision_subject_refs.subject_ref, '') AS subject_ref,
+      coalesce(decision_subject_refs.subject_type, '') AS subject_type
+    FROM decision_logs
+    LEFT JOIN decision_subject_refs ON decision_subject_refs.decision_id = decision_logs.id;
 
     CREATE TABLE IF NOT EXISTS action_tasks (
       id TEXT PRIMARY KEY,
@@ -1689,7 +1726,16 @@ function moduleHealth() {
   const totalMetrics = tableCount("metrics");
   const certifiedMetrics = get("SELECT COUNT(*) AS count FROM metrics WHERE certification_status = 'certified'").count;
   const p0Total = get("SELECT COUNT(*) AS count FROM governance_tasks WHERE priority = 'P0'").count;
-  const p0Done = get("SELECT COUNT(*) AS count FROM governance_tasks WHERE priority = 'P0' AND status IN ('已签字', 'certified', 'done')").count;
+  const p0Done = get(`
+    SELECT COUNT(*) AS count
+    FROM governance_tasks
+    WHERE priority = 'P0'
+      AND (
+        status IN ('certified', 'done')
+        OR (task_type = 'owner_signoff' AND status = '已签字')
+        OR (task_type = 'field_mapping' AND status = '已映射')
+      )
+  `).count;
   return [
     { module: "对象本体", score: 76, status: "mapped", note: "对象类型全覆盖，关键实例待补。" },
     { module: "标签工程", score: 48, status: "draft", note: "标签规则已种子化，阈值未冻结。" },
@@ -1710,7 +1756,16 @@ function getWorkbenchModules() {
   const l3Metrics = scalar("SELECT COUNT(*) AS count FROM metrics WHERE level = 'L3'");
   const certifiedMetrics = scalar("SELECT COUNT(*) AS count FROM metrics WHERE certification_status = 'certified'");
   const p0Total = scalar("SELECT COUNT(*) AS count FROM governance_tasks WHERE priority = 'P0'");
-  const p0Done = scalar("SELECT COUNT(*) AS count FROM governance_tasks WHERE priority = 'P0' AND status IN ('已签字', 'certified', 'done')");
+  const p0Done = scalar(`
+    SELECT COUNT(*) AS count
+    FROM governance_tasks
+    WHERE priority = 'P0'
+      AND (
+        status IN ('certified', 'done')
+        OR (task_type = 'owner_signoff' AND status = '已签字')
+        OR (task_type = 'field_mapping' AND status = '已映射')
+      )
+  `);
   const lineageMapped = scalar("SELECT COUNT(*) AS count FROM lineage_edges WHERE status IN ('mapped', 'certified')");
   const lineageTotal = tableCount("lineage_edges");
   return [
@@ -1956,7 +2011,7 @@ function getWorkbenchModule(id) {
     }),
     chatbi: () => ({ contexts: getChatbiContext() }),
     "decision-loop": () => ({
-      decisions: all("SELECT * FROM decision_logs ORDER BY status, id"),
+      decisions: all("SELECT * FROM decision_logs_with_subject ORDER BY status, id"),
       actions: all("SELECT * FROM action_tasks ORDER BY status, id"),
       runs: all("SELECT * FROM agent_runs ORDER BY started_at DESC LIMIT 200"),
       traceReviews: getTraceReviews(new URL("http://local/api/trace-reviews")),
@@ -2270,10 +2325,10 @@ function getRiskThresholdGovernance() {
     };
   });
   const thresholdValueReceipts = all(
-    "SELECT * FROM decision_logs WHERE linked_metric_id LIKE 'risk_threshold_value.%' ORDER BY id"
+    "SELECT * FROM decision_logs_with_subject WHERE subject_ref LIKE 'risk_threshold_value.%' ORDER BY id"
   );
   const valueReceiptByMetric = new Map(
-    thresholdValueReceipts.map((receipt) => [String(receipt.linked_metric_id || ""), receipt])
+    thresholdValueReceipts.map((receipt) => [decisionReference(receipt), receipt])
   );
   const valueReviewDecisions = thresholdValueReviewPackets.map((packet) => {
     const linkedMetricId = `risk_threshold_value.${packet.thresholdId}`;
@@ -2328,10 +2383,10 @@ function getRiskThresholdGovernance() {
     }
   };
   const thresholdOwnerReceipts = all(
-    "SELECT * FROM decision_logs WHERE linked_metric_id LIKE 'risk_threshold_owner.%' ORDER BY id"
+    "SELECT * FROM decision_logs_with_subject WHERE subject_ref LIKE 'risk_threshold_owner.%' ORDER BY id"
   );
   const receiptByMetric = new Map(
-    thresholdOwnerReceipts.map((receipt) => [String(receipt.linked_metric_id || ""), receipt])
+    thresholdOwnerReceipts.map((receipt) => [decisionReference(receipt), receipt])
   );
   const policyDecisions = ownerDecisionPackets.map((packet) => {
     const receipt = receiptByMetric.get(packet.linkedMetricId);
@@ -2415,7 +2470,7 @@ function getRiskThresholdGovernance() {
       autoActionTaskCreation: false,
       localReviewOnly: true
     },
-    latestThresholdReviews: all("SELECT * FROM decision_logs WHERE linked_metric_id = 'risk_threshold_pack' OR linked_metric_id LIKE 'risk_threshold.%' ORDER BY rowid DESC LIMIT 20")
+    latestThresholdReviews: all("SELECT * FROM decision_logs_with_subject WHERE subject_ref = 'risk_threshold_pack' OR subject_ref LIKE 'risk_threshold.%' ORDER BY id DESC LIMIT 20")
   };
 }
 
@@ -2444,7 +2499,7 @@ function getRoleWorkbenchPayload() {
       erpWriteback: false,
       localReviewOnly: true
     },
-    latestRoleReviews: all("SELECT * FROM decision_logs WHERE linked_metric_id LIKE 'role_workbench.%' ORDER BY rowid DESC LIMIT 20")
+    latestRoleReviews: all("SELECT * FROM decision_logs_with_subject WHERE subject_ref LIKE 'role_workbench.%' ORDER BY id DESC LIMIT 20")
   };
 }
 
@@ -2635,11 +2690,33 @@ function getFinanceCostGovernance() {
     }
   ];
   const formalOwnerReceipts = all(
-    "SELECT * FROM decision_logs WHERE id LIKE 'decision_fin-owner-%' ORDER BY id"
+    `SELECT decisions.*
+     FROM decision_logs_with_subject decisions
+     LEFT JOIN (
+       SELECT target_id, MAX(created_at) AS recorded_at
+       FROM audit_events
+       WHERE event_type = 'owner_decision_recorded' AND target_type = 'decision_log'
+       GROUP BY target_id
+     ) audit ON audit.target_id = decisions.id
+     WHERE decisions.subject_ref LIKE 'finance_owner.%'
+        OR decisions.id LIKE 'decision_fin-owner-%'
+     ORDER BY COALESCE(audit.recorded_at, ''), decisions.id`
   );
   const receiptByMetric = new Map(
-    formalOwnerReceipts.map((receipt) => [String(receipt.linked_metric_id || ""), receipt])
+    formalOwnerReceipts.map((receipt) => [decisionReference(receipt), receipt])
   );
+  const ownerPacketByMetric = new Map(
+    ownerDecisionPackets.map((packet) => [packet.linkedMetricId, packet])
+  );
+  const effectiveUseByStatus = new Map([
+    ["approved_cost_type_mapping", [
+      "费用类型口径可进入 CostEvent 治理视图",
+      "财务成本证据可用于风险解释和 owner review"
+    ]],
+    ["variance_register_only", ["费用类型差异清单可用于财务 owner review"]],
+    ["reconciliation_rule_draft_only", ["成本异常可生成治理视图候选解释"]],
+    ["reconciliation_exception_candidates", ["成本异常可生成治理视图候选解释"]]
+  ]);
   const policyDecisions = [
     {
       packetId: "FIN-OWNER-001",
@@ -2671,26 +2748,43 @@ function getFinanceCostGovernance() {
     }
   ].map((decision) => {
     const receipt = receiptByMetric.get(decision.linkedMetricId);
+    const packet = ownerPacketByMetric.get(decision.linkedMetricId);
+    const recordedChoice = receipt
+      ? packet?.choices.find((choice) => choice.status === receipt.status)
+      : undefined;
     return {
       ...decision,
-      selectedChoice: receipt ? "A" : "pending",
+      policy: receipt
+        ? (recordedChoice?.reviewNote || `未识别回执状态 ${receipt.status || "empty"}，禁止启用任何政策用途。`)
+        : decision.policy,
+      status: receipt?.status || decision.status,
+      selectedChoice: receipt ? (recordedChoice?.code || "unrecognized") : "pending",
       receiptId: receipt?.id || "",
       recordedStatus: receipt?.status || "owner_pending",
-      recorded: Boolean(receipt)
+      recorded: Boolean(receipt),
+      choiceRecognized: Boolean(recordedChoice),
+      permittedUses: recordedChoice ? (effectiveUseByStatus.get(recordedChoice.status) || []) : []
     };
   });
   const recordedPolicyCount = policyDecisions.filter((decision) => decision.recorded).length;
+  const resolvedPolicyCount = policyDecisions.filter((decision) => decision.choiceRecognized).length;
+  const ownerChoice = resolvedPolicyCount === policyDecisions.length
+    ? policyDecisions.map((decision) => decision.selectedChoice).join("-")
+    : "pending";
+  const policyStatus = recordedPolicyCount !== policyDecisions.length
+    ? "owner_receipts_incomplete"
+    : resolvedPolicyCount !== policyDecisions.length
+      ? "owner_receipts_invalid"
+      : ownerChoice === "A-A-A-A"
+        ? "recorded_local_governance_policy"
+        : "recorded_local_governance_policy_restricted";
   const policySummary = {
-    id: "FIN-COST-POLICY-A-A-A-A",
+    id: `FIN-COST-POLICY-${ownerChoice.toUpperCase()}`,
     title: "财务成本治理政策摘要",
-    ownerChoice: recordedPolicyCount === 4 ? "A-A-A-A" : "pending",
-    status: recordedPolicyCount === 4 ? "recorded_local_governance_policy" : "owner_receipts_incomplete",
+    ownerChoice,
+    status: policyStatus,
     scope: "governance_view_only",
-    effectiveUse: [
-      "费用类型口径可进入 CostEvent 治理视图",
-      "成本异常可生成治理视图候选解释",
-      "财务成本证据可用于风险解释和 owner review"
-    ],
+    effectiveUse: [...new Set(policyDecisions.flatMap((decision) => decision.permittedUses))],
     closedActions: [
       "bill drill-down closed",
       "transaction detail import closed",
@@ -2756,7 +2850,7 @@ function getFinanceCostGovernance() {
       transactionDetailImport: false,
       localReviewOnly: true
     },
-    latestFinanceReviews: all("SELECT * FROM decision_logs WHERE linked_metric_id = 'finance_cost_evidence' OR linked_metric_id LIKE 'finance_cost.%' OR linked_metric_id LIKE 'finance_owner.%' ORDER BY rowid DESC LIMIT 20")
+    latestFinanceReviews: all("SELECT * FROM decision_logs_with_subject WHERE subject_ref = 'finance_cost_evidence' OR subject_ref LIKE 'finance_cost.%' OR subject_ref LIKE 'finance_owner.%' ORDER BY id DESC LIMIT 20")
   };
 }
 
@@ -2795,6 +2889,7 @@ function getDeployHealth() {
       providerCalls: providerAvailable,
       providerCallAuthorized: deepSeekConfig.providerCallAuthorized,
       providerConfigured: Boolean(deepSeekConfig.apiKey),
+      providerCallAttemptCount,
       erpWriteback: false,
       chatbiPolicy: "certified_metric_only"
     }
@@ -3012,7 +3107,7 @@ const exportQueries = {
   metrics: "SELECT * FROM metrics ORDER BY CASE level WHEN 'L0' THEN 0 WHEN 'L1' THEN 1 WHEN 'L2' THEN 2 ELSE 3 END, id",
   lineage_edges: "SELECT * FROM lineage_edges ORDER BY status, edge_type",
   governance_tasks: "SELECT * FROM governance_tasks ORDER BY priority, status, id",
-  decision_logs: "SELECT * FROM decision_logs ORDER BY status, id",
+  decision_logs: "SELECT * FROM decision_logs_with_subject ORDER BY status, id",
   action_tasks: "SELECT * FROM action_tasks ORDER BY status, id",
   knowledge_domains: "SELECT * FROM knowledge_domains ORDER BY status, id",
   knowledge_cards: "SELECT * FROM knowledge_cards ORDER BY status, domain_id, topic, id",
@@ -3365,9 +3460,9 @@ function getAiKnowledgeEvidenceQualityReview() {
     };
   });
   const receipts = all(
-    "SELECT * FROM decision_logs WHERE linked_metric_id LIKE 'ai_kb_quality.%' ORDER BY id"
+    "SELECT * FROM decision_logs_with_subject WHERE subject_ref LIKE 'ai_kb_quality.%' ORDER BY id"
   );
-  const receiptByMetric = new Map(receipts.map((receipt) => [String(receipt.linked_metric_id || ""), receipt]));
+  const receiptByMetric = new Map(receipts.map((receipt) => [decisionReference(receipt), receipt]));
   const decisions = reviewPackets.map((reviewPacket) => {
     const linkedMetricId = `ai_kb_quality.${reviewPacket.domainId}`;
     const receipt = receiptByMetric.get(linkedMetricId);
@@ -3475,6 +3570,17 @@ function getRecommendationCards(url) {
 
 function createRecommendationCard(body) {
   const createdAt = nowIso();
+  const linkedKnowledgeCardIds = Array.isArray(body.linkedKnowledgeCardIds || body.linked_knowledge_card_ids)
+    ? uniqueValues(body.linkedKnowledgeCardIds || body.linked_knowledge_card_ids)
+    : parseJsonArray(body.linkedKnowledgeCardIds || body.linked_knowledge_card_ids);
+  const unresolvedKnowledgeCardIds = linkedKnowledgeCardIds.filter(
+    (cardId) => !get("SELECT id FROM knowledge_cards WHERE id = ?", [cardId])
+  );
+  if (unresolvedKnowledgeCardIds.length) {
+    const error = new Error(`Unknown knowledge card id: ${unresolvedKnowledgeCardIds.join(", ")}`);
+    error.statusCode = 400;
+    throw error;
+  }
   const record = {
     id: String(body.id || makeId("rec")),
     scenario: requireText(body.scenario || inferIntent(body.title || body.question || "")),
@@ -3482,7 +3588,7 @@ function createRecommendationCard(body) {
     target_object_type: requireText(body.targetObjectType || body.target_object_type || "object"),
     target_object_id: requireText(body.targetObjectId || body.target_object_id || "manual"),
     linked_metric_ids: jsonArray(body.linkedMetricIds || body.linked_metric_ids || []),
-    linked_knowledge_card_ids: jsonArray(body.linkedKnowledgeCardIds || body.linked_knowledge_card_ids || []),
+    linked_knowledge_card_ids: jsonArray(linkedKnowledgeCardIds),
     business_impact: requireText(body.businessImpact || body.business_impact || "待 owner 补充业务影响。"),
     confidence_level: String(body.confidenceLevel || body.confidence_level || "medium"),
     risk_level: String(body.riskLevel || body.risk_level || "P1"),
@@ -3601,18 +3707,41 @@ function convertRecommendationCardToAction(id, body) {
 }
 
 function insertDecisionLog(id, body) {
-  run(
-    "INSERT INTO decision_logs (id, insight_title, linked_metric_id, recommendation, action_boundary, status, review_note) VALUES (?, ?, ?, ?, ?, ?, ?)",
-    [
-      id,
-      body.insightTitle || body.insight_title || "Owner decision packet",
-      body.linkedMetricId || body.linked_metric_id || "manual_review",
-      body.recommendation || "record_owner_decision",
-      body.actionBoundary || body.action_boundary || "local_governance_decision_only_no_external_write",
-      body.status || "recorded",
-      body.reviewNote || body.review_note || ""
-    ]
-  );
+  const requestedMetricRef = String(body.linkedMetricId || body.linked_metric_id || "").trim();
+  const requestedSubjectRef = String(body.subjectRef || body.subject_ref || "").trim();
+  const matchedMetric = requestedMetricRef
+    ? get("SELECT id FROM metrics WHERE id = ? OR code = ? LIMIT 1", [requestedMetricRef, requestedMetricRef])
+    : null;
+  const linkedMetricId = matchedMetric?.id || "";
+  const subjectRef = requestedSubjectRef
+    || (!matchedMetric ? requestedMetricRef : "")
+    || (!linkedMetricId ? "manual_review" : "");
+  const subjectType = String(body.subjectType || body.subject_type || "governance_subject").trim() || "governance_subject";
+  db.exec("BEGIN");
+  try {
+    run(
+      "INSERT INTO decision_logs (id, insight_title, linked_metric_id, recommendation, action_boundary, status, review_note) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      [
+        id,
+        body.insightTitle || body.insight_title || "Owner decision packet",
+        linkedMetricId,
+        body.recommendation || "record_owner_decision",
+        body.actionBoundary || body.action_boundary || "local_governance_decision_only_no_external_write",
+        body.status || "recorded",
+        body.reviewNote || body.review_note || ""
+      ]
+    );
+    if (subjectRef) {
+      run(
+        "INSERT INTO decision_subject_refs (decision_id, subject_ref, subject_type) VALUES (?, ?, ?)",
+        [id, subjectRef, subjectType]
+      );
+    }
+    db.exec("COMMIT");
+  } catch (error) {
+    db.exec("ROLLBACK");
+    throw error;
+  }
 }
 
 function searchKnowledge(body) {
@@ -3792,6 +3921,7 @@ function getDeepSeekStatus() {
   return {
     configured: Boolean(config.apiKey),
     providerCallAuthorized: config.providerCallAuthorized,
+    providerCallAttemptCount,
     databaseWriteAuthorized,
     available: Boolean(config.apiKey) && config.providerCallAuthorized && databaseWriteAuthorized,
     provider: "deepseek",
@@ -3891,6 +4021,7 @@ async function fetchWithTimeout(url, init, timeoutMs) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
   try {
+    providerCallAttemptCount += 1;
     return await fetch(url, { ...init, signal: controller.signal });
   } finally {
     clearTimeout(timeout);
@@ -4528,7 +4659,7 @@ const server = createServer(async (req, res) => {
       if (req.method === "GET" && url.pathname === "/api/ai-chat/deepseek/status") return json(res, getDeepSeekStatus());
       if (req.method === "GET" && url.pathname === "/api/chatbi/context") return json(res, getChatbiContext());
       if (req.method === "GET" && url.pathname === "/api/decision/action-tasks") return json(res, all("SELECT * FROM action_tasks ORDER BY status, id"));
-      if (req.method === "GET" && url.pathname === "/api/decision/logs") return json(res, all("SELECT * FROM decision_logs ORDER BY status, id"));
+      if (req.method === "GET" && url.pathname === "/api/decision/logs") return json(res, all("SELECT * FROM decision_logs_with_subject ORDER BY status, id"));
       if (req.method === "GET" && url.pathname === "/api/decision/receipt-summary") return json(res, getDecisionReceiptSummary());
       if (req.method === "GET" && url.pathname === "/api/agent-traces") return json(res, getAgentTraces(url));
       if (req.method === "GET" && url.pathname === "/api/trace-reviews") return json(res, getTraceReviews(url));
@@ -4652,7 +4783,7 @@ const server = createServer(async (req, res) => {
         const id = body.id || makeId("decision");
         insertDecisionLog(id, body);
         recordAudit("owner_decision_recorded", "decision_log", id, body.actor || "供应链数据治理 Owner", body);
-        return json(res, { ok: true, decisionLog: get("SELECT * FROM decision_logs WHERE id = ?", [id]) }, 201);
+        return json(res, { ok: true, decisionLog: get("SELECT * FROM decision_logs_with_subject WHERE id = ?", [id]) }, 201);
       }
       const taskReview = url.pathname.match(/^\/api\/governance\/tasks\/([^/]+)\/review$/);
       if (req.method === "POST" && taskReview) {

@@ -1,9 +1,10 @@
 import { createHash } from "node:crypto";
-import { mkdirSync, readdirSync, readFileSync, statSync, existsSync, writeFileSync } from "node:fs";
+import { existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import { basename, dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { execFileSync } from "node:child_process";
 import { DatabaseSync } from "node:sqlite";
 import { countWorkstationHomePaths } from "./workstation-paths.mjs";
+import { manualGateCompletionStatuses } from "./manual-gate-status-contract.mjs";
 
 const root = process.cwd();
 const scanRoot = process.env.SCM_PREPROD_SCAN_ROOT || root;
@@ -55,14 +56,21 @@ function hasFile(path) {
 }
 
 function listFiles(dir) {
+  if (!existsSync(dir)) return [];
+  const scanBoundary = realpathSync(dir);
   const entries = [];
-  const stack = [dir];
+  const stack = [scanBoundary];
   while (stack.length) {
     const current = stack.pop();
     if (!current || !existsSync(current)) continue;
     for (const entry of readdirSync(current)) {
       const fullPath = join(current, entry);
-      const stat = statSync(fullPath);
+      const stat = lstatSync(fullPath);
+      if (stat.isSymbolicLink()) continue;
+      const relativePath = relative(scanBoundary, resolve(fullPath));
+      if (relativePath === ".." || relativePath.startsWith(`..${sep}`) || isAbsolute(relativePath)) {
+        continue;
+      }
       if (stat.isDirectory()) {
         if (["node_modules", "dist", ".git", ".codebase-memory"].includes(entry)) continue;
         stack.push(fullPath);
@@ -78,8 +86,8 @@ function qi(value) {
   return `"${String(value).replaceAll("\"", "\"\"")}"`;
 }
 
-function count(db, sql) {
-  const row = db.prepare(sql).get();
+function count(db, sql, parameters = []) {
+  const row = db.prepare(sql).get(...parameters);
   return Number(Object.values(row || { count: 0 })[0] || 0);
 }
 
@@ -92,10 +100,44 @@ function getGitDirtyCount() {
   }
 }
 
+function runBehaviorGate(checkName, scriptName) {
+  try {
+    const stdout = execFileSync(process.execPath, [join(root, "scripts", scriptName)], {
+      cwd: root,
+      encoding: "utf8",
+      timeout: 30000,
+      maxBuffer: 10 * 1024 * 1024,
+      env: {
+        ...process.env,
+        DEEPSEEK_API_KEY: "",
+        SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED: "",
+        SCM_DATABASE_WRITES_AUTHORIZED: "",
+        SCM_DATABASE_REBUILD_AUTHORIZED: "",
+        SCM_MUTATING_SMOKE_REMOTE_AUTHORIZED: ""
+      }
+    });
+    const payload = JSON.parse(stdout);
+    record(checkName, payload.ok === true, {
+      script: `scripts/${scriptName}`,
+      observed: payload.ok === true,
+      sourceDatabaseHashPreserved: payload.sourceDatabaseHashPreserved ?? null,
+      providerRequestCount: payload.providerRequestCount ?? null,
+      defaultMutationStatus: payload.defaultMutationStatus ?? null,
+      unauthorizedImportStatus: payload.unauthorizedImportStatus ?? null
+    });
+  } catch (error) {
+    record(checkName, false, {
+      script: `scripts/${scriptName}`,
+      observed: false,
+      exitStatus: Number.isInteger(error?.status) ? error.status : null,
+      error: String(error?.stderr || error?.message || error).slice(-1000)
+    });
+  }
+}
+
 const packageJson = JSON.parse(read("package.json"));
 const dockerfile = read("Dockerfile");
 const serverSource = read("server/index.mjs");
-const importSource = read("scripts/import-assets.mjs");
 const productionCompose = hasFile("docker-compose.production.yml") ? read("docker-compose.production.yml") : "";
 const requiredFiles = [
   "package-lock.json",
@@ -104,6 +146,7 @@ const requiredFiles = [
   "docker-compose.production.yml",
   "server/index.mjs",
   "data/governance_workbench.sqlite",
+  "data/knowledge-card-id-manifest.json",
   `runtime/evidence/${evidenceFileName}`,
   "dist/index.html",
   "dist/fulfillment-dashboard/index.html",
@@ -111,11 +154,17 @@ const requiredFiles = [
   "scripts/smoke-api.mjs",
   "scripts/audit-ui-baseline.mjs",
   "scripts/smoke-database-gate.mjs",
+  "scripts/smoke-fulfillment-contracts.mjs",
   "scripts/smoke-import-gate.mjs",
   "scripts/export-manual-gate-resolution-pack.mjs",
   "scripts/smoke-manual-gate-receipts.mjs",
+  "scripts/manual-gate-status-contract.mjs",
   "scripts/validate-manual-gate-receipts.mjs",
   "scripts/smoke-migration-gate.mjs",
+  "migrations/20260716_certification_gate_remediation.apply.sql",
+  "migrations/20260716_certification_gate_remediation.rollback.sql",
+  "migrations/20260716_decision_subject_reference.apply.sql",
+  "migrations/20260716_decision_subject_reference.rollback.sql",
   "scripts/smoke-path-contract.mjs",
   "scripts/smoke-provider-gate.mjs",
   "scripts/smoke-readonly.mjs",
@@ -133,7 +182,7 @@ for (const file of requiredFiles) {
   record(`required-file:${file}`, hasFile(file), file);
 }
 
-for (const scriptName of ["check", "build", "audit:ui-baseline", "smoke:api", "smoke:database-gate", "smoke:import-gate", "smoke:manual-gate-receipts", "smoke:migration-gate", "smoke:path-contract", "smoke:provider-gate", "smoke:readonly", "smoke:ui", "preprod:check"]) {
+for (const scriptName of ["check", "build", "audit:ui-baseline", "smoke:api", "smoke:database-gate", "smoke:fulfillment-contracts", "smoke:import-gate", "smoke:manual-gate-receipts", "smoke:migration-gate", "smoke:path-contract", "smoke:provider-gate", "smoke:readonly", "smoke:ui", "preprod:check"]) {
   record(`package-script:${scriptName}`, Boolean(packageJson.scripts?.[scriptName]), packageJson.scripts?.[scriptName] || "missing");
 }
 
@@ -144,6 +193,7 @@ let uiProofShaVerified = 0;
 try {
   const uiProof = JSON.parse(read(`${uiProofArtifactDir}/summary.json`));
   const artifactRoot = resolve(root, uiProofArtifactDir);
+  const screenshotRoot = resolve(artifactRoot, "screenshots");
   const digestEntries = Object.entries(uiProof.screenshotSha256 || {});
   const digestPaths = new Set(digestEntries.map(([screenshotPath]) => screenshotPath));
   const modules = Array.isArray(uiProof.modules) ? uiProof.modules : [];
@@ -155,9 +205,13 @@ try {
       continue;
     }
     const resolvedScreenshot = resolve(artifactRoot, screenshotPath);
-    const relativeScreenshot = relative(artifactRoot, resolvedScreenshot);
-    if (relativeScreenshot.startsWith("..") || isAbsolute(relativeScreenshot)) {
-      uiProofFailures.push(`${screenshotPath}:outside-artifact-root`);
+    const relativeScreenshot = relative(screenshotRoot, resolvedScreenshot);
+    if (
+      relativeScreenshot === ".."
+      || relativeScreenshot.startsWith(`..${sep}`)
+      || isAbsolute(relativeScreenshot)
+    ) {
+      uiProofFailures.push(`${screenshotPath}:outside-screenshot-root`);
       continue;
     }
     if (!existsSync(resolvedScreenshot)) {
@@ -226,29 +280,13 @@ record("dockerfile-healthcheck", dockerfile.includes("HEALTHCHECK"), "Docker ima
 record("dockerfile-runtime-data-copy", dockerfile.includes("data ./data"), "Docker image includes embedded data for standalone prototype");
 record("dockerfile-runtime-evidence-copy", dockerfile.includes("runtime ./runtime"), "Docker image keeps immutable evidence outside the mutable SQLite volume");
 record("dockerfile-non-root-runtime", dockerfile.includes("USER node"), "Docker runtime uses the non-root node user");
-record(
-  "server-provider-authorization-gate",
-  serverSource.includes("SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED") && serverSource.includes("error.statusCode = 403"),
-  "DeepSeek route has an explicit server-side authorization gate"
-);
+runBehaviorGate("behavior-provider-authorization-gate", "smoke-provider-gate.mjs");
+runBehaviorGate("behavior-database-authorization-gate", "smoke-database-gate.mjs");
+runBehaviorGate("behavior-import-authorization-and-atomic-replace", "smoke-import-gate.mjs");
 record(
   "server-evidence-path-contract",
   serverSource.includes("SCM_PROJECT_ROOT") && serverSource.includes("SCM_AI_KNOWLEDGE_EVIDENCE_PATH"),
   "Evidence path supports project-root and explicit path overrides"
-);
-record(
-  "server-database-authorization-gate",
-  serverSource.includes("SCM_DATABASE_WRITES_AUTHORIZED")
-    && serverSource.includes("readOnly: !databaseWriteAuthorized")
-    && serverSource.includes("validateDatabaseSchema()"),
-  "SQLite opens readonly by default, validates schema without repair, and gates mutation routes"
-);
-record(
-  "import-database-rebuild-authorization-and-atomic-replace",
-  importSource.includes("SCM_DATABASE_REBUILD_AUTHORIZED")
-    && importSource.includes("temporaryDbPath")
-    && importSource.includes("renameSync(temporaryDbPath, dbPath)"),
-  "Destructive import requires explicit authorization and replaces SQLite only after a successful temporary build"
 );
 record(
   "provider-call-authorization-default-closed",
@@ -291,13 +329,89 @@ record(
   "production override attaches to existing edge network"
 );
 
-const secretKeyFiles = listFiles(scanRoot).filter((file) => file.endsWith(".pem") || file.endsWith(".key"));
+const secretKeyFiles = listFiles(scanRoot).filter((file) => /\.(?:pem|key)$/i.test(file));
 record("secret-file-scan:pem-key", secretKeyFiles.length === 0, secretKeyFiles.map((file) => relative(scanRoot, file)).slice(0, 10));
 
 const db = new DatabaseSync(dbPath, { readOnly: true });
 const certifiedMetrics = count(db, "select count(*) as count from metrics where certification_status='certified'");
 const activeTags = count(db, "select count(*) as count from tags where lifecycle_status='active'");
 const certifiedLineageTargets = count(db, "select count(distinct target_ref) as count from lineage_edges where status='certified' and confidence>=0.8");
+const unresolvedCertifiedMetrics = count(db, `
+  select count(*) as count
+  from metrics m
+  where m.certification_status='certified'
+    and exists (
+      select 1 from governance_tasks g
+      where g.target_ref=m.id
+        and g.priority='P0'
+        and g.status not in ('已签字','certified','done')
+    )
+`);
+const unresolvedCertifiedLedgerRows = count(db, `
+  select count(distinct c.asset_ref) as count
+  from certifications c
+  join governance_tasks g on g.target_ref=c.asset_ref
+  where c.status='certified'
+    and g.priority='P0'
+    and g.status not in ('已签字','certified','done')
+`);
+const unresolvedChatbiContexts = count(db, `
+  select count(distinct ctx.metric_id) as count
+  from chatbi_contexts ctx
+  join governance_tasks g on g.target_ref=ctx.metric_id
+  where g.priority='P0'
+    and g.status not in ('已签字','certified','done')
+`);
+const certifiedLineageWithoutCertifiedMetric = count(db, `
+  select count(distinct edge.target_ref) as count
+  from lineage_edges edge
+  left join metrics m on m.id=edge.target_ref
+  where edge.status='certified'
+    and edge.confidence>=0.8
+    and coalesce(m.certification_status, 'missing') <> 'certified'
+`);
+const invalidDecisionMetricReferences = count(db, `
+  select count(*) as count
+  from decision_logs d
+  where d.linked_metric_id <> ''
+    and not exists (
+      select 1 from metrics m
+      where m.id=d.linked_metric_id or m.code=d.linked_metric_id
+    )
+`);
+const unresolvedGovernanceDecisionSubjects = count(db, `
+  select count(*) as count
+  from decision_logs_with_subject
+  where (id like 'OMSWMS-%' or id like 'RUNTIME-IMPORT-%')
+    and (linked_metric_id <> '' or subject_ref = '')
+`);
+const unresolvedKnowledgeCardReferences = count(db, `
+  with knowledge_references as (
+    select cast(ref.value as text) as card_id
+    from aip_scenarios as scenario, json_each(scenario.linked_knowledge_card_ids) as ref
+    union all
+    select cast(ref.value as text)
+    from recommendation_cards as recommendation, json_each(recommendation.linked_knowledge_card_ids) as ref
+    union all
+    select cast(ref.value as text)
+    from agent_traces as trace, json_each(trace.matched_knowledge_cards) as ref
+    union all
+    select substr(cast(ref.value as text), length('knowledge:') + 1)
+    from agent_runs as agent_run, json_each(agent_run.input_refs) as ref
+    where cast(ref.value as text) like 'knowledge:%'
+  )
+  select count(*) as count
+  from knowledge_references as reference
+  where reference.card_id = ''
+     or not exists (select 1 from knowledge_cards as card where card.id = reference.card_id)
+`);
+const decisionSubjectRows = count(db, "select count(*) as count from decision_subject_refs");
+const decisionViewRows = count(db, "select count(*) as count from decision_logs_with_subject");
+const decisionLogRows = count(db, "select count(*) as count from decision_logs");
+const decisionSubjectMigrationApplied = count(
+  db,
+  "select count(*) as count from schema_migrations where id='20260716_decision_subject_reference'"
+);
 const recommendationCards = count(db, "select count(*) as count from recommendation_cards");
 const suggestionReplayCards = count(db, "select count(*) as count from recommendation_cards where execution_status='suggestion_review_replay'");
 const agentTraces = count(db, "select count(*) as count from agent_traces");
@@ -306,21 +420,48 @@ const badBoundaryRows = count(
   db,
   "select count(*) as count from decision_logs where lower(action_boundary || ' ' || review_note || ' ' || recommendation) like '%productionwrites=true%' or lower(action_boundary || ' ' || review_note || ' ' || recommendation) like '%providercalls=true%' or lower(action_boundary || ' ' || review_note || ' ' || recommendation) like '%erpwriteback=true%'"
 );
-const p0OwnerSignoffs = count(
+const p0OwnerSignoffPopulation = count(
   db,
-  "select count(*) as count from governance_tasks where priority='P0' and task_type='owner_signoff' and status in ('未发起','待确认')"
+  "select count(*) as count from governance_tasks where priority='P0' and task_type='owner_signoff'"
 );
-const p0FieldMappings = count(
+const p0OwnerSignoffAccepted = count(
   db,
-  "select count(*) as count from governance_tasks where priority='P0' and task_type='field_mapping' and status in ('未发起','待确认')"
+  `select count(*) as count from governance_tasks where priority='P0' and task_type='owner_signoff' and status in (${manualGateCompletionStatuses.owner_signoff.map(() => "?").join(",")})`,
+  manualGateCompletionStatuses.owner_signoff
 );
-const sceiWeightGate = count(
+const p0FieldMappingPopulation = count(
   db,
-  "select count(*) as count from governance_tasks where id='aip_20260627_d_p1_05_scei_weight_source_required' and status='owner_decision_packet_ready'"
+  "select count(*) as count from governance_tasks where priority='P0' and task_type='field_mapping'"
 );
+const p0FieldMappingAccepted = count(
+  db,
+  `select count(*) as count from governance_tasks where priority='P0' and task_type='field_mapping' and status in (${manualGateCompletionStatuses.field_mapping.map(() => "?").join(",")})`,
+  manualGateCompletionStatuses.field_mapping
+);
+const sceiWeightGatePopulation = count(
+  db,
+  "select count(*) as count from governance_tasks where id='aip_20260627_d_p1_05_scei_weight_source_required'"
+);
+const sceiWeightGateAccepted = count(
+  db,
+  `select count(*) as count from governance_tasks where id='aip_20260627_d_p1_05_scei_weight_source_required' and status in (${manualGateCompletionStatuses.scei_weight_source.map(() => "?").join(",")})`,
+  manualGateCompletionStatuses.scei_weight_source
+);
+const p0OwnerSignoffs = p0OwnerSignoffPopulation - p0OwnerSignoffAccepted;
+const p0FieldMappings = p0FieldMappingPopulation - p0FieldMappingAccepted;
+const sceiWeightGate = sceiWeightGatePopulation - sceiWeightGateAccepted;
 
-record("db-certified-metrics-minimum", certifiedMetrics >= 20, { certifiedMetrics, minimum: 20 });
-record("db-certified-lineage-targets-minimum", certifiedLineageTargets >= 12, { certifiedLineageTargets, minimum: 12 });
+record("db-certified-metrics-eligible-baseline", certifiedMetrics >= 10, { certifiedMetrics, minimumEligibleBaseline: 10 });
+record("db-certified-lineage-targets-eligible-baseline", certifiedLineageTargets >= 10, { certifiedLineageTargets, minimumEligibleBaseline: 10 });
+record("db-no-unresolved-p0-certified-metrics", unresolvedCertifiedMetrics === 0, { unresolvedCertifiedMetrics });
+record("db-no-unresolved-p0-certified-ledger-rows", unresolvedCertifiedLedgerRows === 0, { unresolvedCertifiedLedgerRows });
+record("db-no-unresolved-p0-chatbi-contexts", unresolvedChatbiContexts === 0, { unresolvedChatbiContexts });
+record("db-certified-lineage-requires-certified-metric", certifiedLineageWithoutCertifiedMetric === 0, { certifiedLineageWithoutCertifiedMetric });
+record("db-decision-metric-references-resolve", invalidDecisionMetricReferences === 0, { invalidDecisionMetricReferences });
+record("db-governance-decisions-use-subject-references", unresolvedGovernanceDecisionSubjects === 0, { unresolvedGovernanceDecisionSubjects });
+record("db-knowledge-card-references-resolve", unresolvedKnowledgeCardReferences === 0, { unresolvedKnowledgeCardReferences });
+record("db-decision-subject-view-complete", decisionViewRows === decisionLogRows, { decisionViewRows, decisionLogRows });
+record("db-decision-subject-migration-applied", decisionSubjectMigrationApplied === 1, { decisionSubjectMigrationApplied, decisionSubjectRows });
 record("db-active-tags-minimum", activeTags >= 8, { activeTags, minimum: 8 });
 record("db-recommendation-cards-minimum", recommendationCards >= 15, { recommendationCards, minimum: 15 });
 record("db-agent-traces-minimum", agentTraces >= 61, { agentTraces, minimum: 61 });
@@ -375,9 +516,42 @@ record(
 );
 db.close();
 
-record("manual-p0-owner-signoffs", p0OwnerSignoffs === 0, { p0OwnerSignoffs }, "manual");
-record("manual-p0-field-mappings", p0FieldMappings === 0, { p0FieldMappings }, "manual");
-record("manual-scei-weight-source", sceiWeightGate === 0, { ownerDecisionPacketsReady: sceiWeightGate }, "manual");
+record(
+  "manual-p0-owner-signoffs",
+  p0OwnerSignoffPopulation === 30 && p0OwnerSignoffAccepted === 30,
+  {
+    population: p0OwnerSignoffPopulation,
+    expectedPopulation: 30,
+    accepted: p0OwnerSignoffAccepted,
+    unaccepted: p0OwnerSignoffs,
+    acceptedStatuses: manualGateCompletionStatuses.owner_signoff
+  },
+  "manual"
+);
+record(
+  "manual-p0-field-mappings",
+  p0FieldMappingPopulation === 18 && p0FieldMappingAccepted === 18,
+  {
+    population: p0FieldMappingPopulation,
+    expectedPopulation: 18,
+    accepted: p0FieldMappingAccepted,
+    unaccepted: p0FieldMappings,
+    acceptedStatuses: manualGateCompletionStatuses.field_mapping
+  },
+  "manual"
+);
+record(
+  "manual-scei-weight-source",
+  sceiWeightGatePopulation === 1 && sceiWeightGateAccepted === 1,
+  {
+    population: sceiWeightGatePopulation,
+    expectedPopulation: 1,
+    accepted: sceiWeightGateAccepted,
+    unaccepted: sceiWeightGate,
+    acceptedStatuses: manualGateCompletionStatuses.scei_weight_source
+  },
+  "manual"
+);
 
 const dirtyCount = getGitDirtyCount();
 record("worktree-clean-for-release-tag", dirtyCount === 0, { dirtyCount }, "warn");
@@ -397,6 +571,17 @@ const result = {
   counts: {
     certifiedMetrics,
     certifiedLineageTargets,
+    unresolvedCertifiedMetrics,
+    unresolvedCertifiedLedgerRows,
+    unresolvedChatbiContexts,
+    certifiedLineageWithoutCertifiedMetric,
+    invalidDecisionMetricReferences,
+    unresolvedGovernanceDecisionSubjects,
+    unresolvedKnowledgeCardReferences,
+    decisionSubjectRows,
+    decisionViewRows,
+    decisionLogRows,
+    decisionSubjectMigrationApplied,
     activeTags,
     recommendationCards,
     suggestionReplayCards,
@@ -405,6 +590,9 @@ const result = {
     evidenceReviewPackets,
     p0OwnerSignoffs,
     p0FieldMappings,
+    p0OwnerSignoffPopulation,
+    p0FieldMappingPopulation,
+    sceiWeightGatePopulation,
     dirtyCount
   },
   hardBlockers,

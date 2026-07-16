@@ -111,6 +111,7 @@ const deepSeekStatus = (await request("/api/ai-chat/deepseek/status")).payload;
 assert(deepSeekStatus.provider === "deepseek", "DeepSeek status endpoint must identify provider");
 assert(typeof deepSeekStatus.configured === "boolean", "DeepSeek status must expose configured flag");
 assert(typeof deepSeekStatus.providerCallAuthorized === "boolean", "DeepSeek status must expose provider authorization flag");
+assert(Number.isInteger(deepSeekStatus.providerCallAttemptCount), "DeepSeek status must expose an integer provider call attempt count");
 assert(typeof deepSeekStatus.available === "boolean", "DeepSeek status must expose provider availability");
 assert(deepSeekStatus.available === (deepSeekStatus.configured && deepSeekStatus.providerCallAuthorized), "DeepSeek availability must require both key and authorization");
 assert(health.boundary?.providerCalls === deepSeekStatus.available, "Deploy health provider boundary must match DeepSeek availability");
@@ -125,6 +126,7 @@ checked("deepseek-chat-status", {
   available: deepSeekStatus.available
 });
 if (!deepSeekStatus.configured) {
+  const providerCallAttemptCountBefore = deepSeekStatus.providerCallAttemptCount;
   const missingKeyProbe = await requestRaw("/api/ai-chat/deepseek", {
     method: "POST",
     body: JSON.stringify({
@@ -134,11 +136,16 @@ if (!deepSeekStatus.configured) {
   });
   assert(missingKeyProbe.response.status === 503, "DeepSeek chat must be gated when API key is absent");
   assert(String(missingKeyProbe.payload?.error || "").includes("DEEPSEEK_API_KEY"), "DeepSeek missing-key response must explain env configuration");
+  const providerCallAttemptCountAfter = (await request("/api/ai-chat/deepseek/status")).payload.providerCallAttemptCount;
+  assert(providerCallAttemptCountAfter === providerCallAttemptCountBefore, "DeepSeek missing-key gate must not increment the observed provider call attempt count");
   checked("deepseek-chat-missing-key-gate", {
     status: missingKeyProbe.response.status,
-    providerCallAttempted: false
+    providerCallAttempted: providerCallAttemptCountAfter > providerCallAttemptCountBefore,
+    providerCallAttemptCountBefore,
+    providerCallAttemptCountAfter
   });
 } else if (!deepSeekStatus.providerCallAuthorized) {
+  const providerCallAttemptCountBefore = deepSeekStatus.providerCallAttemptCount;
   const unauthorizedProbe = await requestRaw("/api/ai-chat/deepseek", {
     method: "POST",
     body: JSON.stringify({
@@ -148,9 +155,13 @@ if (!deepSeekStatus.configured) {
   });
   assert(unauthorizedProbe.response.status === 403, "DeepSeek chat must be gated when provider authorization is absent");
   assert(String(unauthorizedProbe.payload?.error || "").includes("SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED"), "DeepSeek authorization response must name the server-side flag");
+  const providerCallAttemptCountAfter = (await request("/api/ai-chat/deepseek/status")).payload.providerCallAttemptCount;
+  assert(providerCallAttemptCountAfter === providerCallAttemptCountBefore, "DeepSeek authorization gate must not increment the observed provider call attempt count");
   checked("deepseek-chat-authorization-gate", {
     status: unauthorizedProbe.response.status,
-    providerCallAttempted: false
+    providerCallAttempted: providerCallAttemptCountAfter > providerCallAttemptCountBefore,
+    providerCallAttemptCountBefore,
+    providerCallAttemptCountAfter
   });
 } else {
   checked("deepseek-chat-live-call-skipped", {
@@ -413,7 +424,7 @@ const createdRecommendation = (await request("/api/recommendation-cards", {
     targetObjectType: "InventoryBatch",
     targetObjectId: "batch_fba_negative_available",
     linkedMetricIds: ["metric.business_available_inventory", "metric.fba_available_inventory"],
-    linkedKnowledgeCardIds: ["knowledge.fba_available_negative"],
+    linkedKnowledgeCardIds: ["business-supply-chain-card-0144"],
     businessImpact: "Prove create, review, and convert are captured in the local governance ledger.",
     confidenceLevel: "smoke_checked",
     riskLevel: "P1",
@@ -500,6 +511,20 @@ const omsWmsDecisionLog = (await request("/api/decision/logs", {
 })).payload.decisionLog;
 assert(omsWmsDecisionLog?.id === omsWmsDecisionRecordId, "OMSWMS staged decision must be recorded");
 assert(omsWmsDecisionLog.status === "approved_for_governance_view", "OMSWMS staged decision must preserve status");
+const sourceCoverageLineageAfterReceipt = (await request("/api/source-coverage/lineage")).payload;
+const sourceCoverageGateStatuses = sourceCoverageLineageAfterReceipt.flatMap((row) => row.gate_statuses);
+const recordedCoverageGateStatuses = sourceCoverageGateStatuses.filter((gate) => gate.gateId === "OMSWMS-001");
+assert(recordedCoverageGateStatuses.length > 0, "OMSWMS-001 must be represented in source coverage lineage");
+assert(
+  recordedCoverageGateStatuses.every((gate) => gate.decisionRef === omsWmsDecisionRecordId && gate.status === omsWmsDecisionLog.status),
+  "OMSWMS-001 lineage rows must resolve the receipt through the seeded gate decision reference"
+);
+assert(
+  sourceCoverageGateStatuses
+    .filter((gate) => gate.gateId !== "OMSWMS-001")
+    .every((gate) => gate.decisionRef !== omsWmsDecisionRecordId),
+  "One OMS/WMS receipt must not leak into another lineage gate"
+);
 checked("omswms-owner-decision-gates", {
   seeded: omsWmsDecisionIds.length,
   recordedDecisionId: omsWmsDecisionRecordId,
@@ -643,6 +668,86 @@ const financeOwnerReview = (await request("/api/decision/logs", {
   })
 })).payload.decisionLog;
 assert(financeOwnerReview?.status === "approved_cost_type_mapping", "finance owner choice must write local receipt");
+const refreshedFinanceCostGovernance = (await request("/api/finance-cost-governance")).payload;
+const refreshedFinanceOwnerDecision = refreshedFinanceCostGovernance.policySummary?.decisions
+  ?.find((decision) => decision.packetId === financeOwnerChoice.id);
+assert(
+  refreshedFinanceOwnerDecision?.receiptId === financeOwnerDecisionId,
+  "Finance policy summary must include normal API-generated finance_owner subject receipts"
+);
+assert(refreshedFinanceOwnerDecision?.selectedChoice === "A", "Finance policy summary must derive choice A from its recorded status");
+const restoredFinanceOwnerDecisionId = `decision_finance_owner_api_smoke_zz_restore_a_${Date.now()}`;
+try {
+  const deferredFinanceOwnerChoice = financeOwnerChoice.choices.find((choice) => choice.code === "C");
+  const deferredFinanceOwnerDecisionId = `decision_finance_owner_api_smoke_deferred_${Date.now()}`;
+  await request("/api/decision/logs", {
+    method: "POST",
+    body: JSON.stringify({
+      id: deferredFinanceOwnerDecisionId,
+      insightTitle: "API smoke deferred finance owner choice",
+      linkedMetricId: financeOwnerChoice.linkedMetricId,
+      recommendation: "Record a deferred finance owner choice locally only.",
+      actionBoundary: financeOwnerChoice.actionBoundary,
+      status: deferredFinanceOwnerChoice.status,
+      reviewNote: deferredFinanceOwnerChoice.reviewNote,
+      actor: "api-smoke"
+    })
+  });
+  const restrictedFinanceCostGovernance = (await request("/api/finance-cost-governance")).payload;
+  const deferredFinanceOwnerDecision = restrictedFinanceCostGovernance.policySummary?.decisions
+    ?.find((decision) => decision.packetId === financeOwnerChoice.id);
+  assert(deferredFinanceOwnerDecision?.receiptId === deferredFinanceOwnerDecisionId, "Finance policy summary must use the latest deferred owner receipt");
+  assert(deferredFinanceOwnerDecision?.selectedChoice === "C", "Finance policy summary must preserve deferred choice C");
+  assert(deferredFinanceOwnerDecision?.recordedStatus === deferredFinanceOwnerChoice.status, "Finance policy summary must preserve the deferred receipt status");
+  assert(deferredFinanceOwnerDecision?.policy === deferredFinanceOwnerChoice.reviewNote, "Finance policy summary must derive policy text from the recorded choice");
+  assert(restrictedFinanceCostGovernance.policySummary?.ownerChoice === "C-A-A-A", "Finance policy summary must derive the complete choice sequence from receipts");
+  assert(
+    restrictedFinanceCostGovernance.policySummary?.effectiveUse?.includes("费用类型口径可进入 CostEvent 治理视图") === false,
+    "Deferred cost-type mapping must not retain the approved CostEvent effective-use claim"
+  );
+  const unknownFinanceOwnerDecisionId = `decision_finance_owner_api_smoke_unknown_${Date.now()}`;
+  await request("/api/decision/logs", {
+    method: "POST",
+    body: JSON.stringify({
+      id: unknownFinanceOwnerDecisionId,
+      insightTitle: "API smoke unknown finance owner status",
+      linkedMetricId: financeOwnerChoice.linkedMetricId,
+      recommendation: "Reject unrecognized finance owner policy status.",
+      actionBoundary: financeOwnerChoice.actionBoundary,
+      status: "unknown_finance_owner_policy_status",
+      reviewNote: "Unrecognized status fixture must fail closed.",
+      actor: "api-smoke"
+    })
+  });
+  const invalidFinanceCostGovernance = (await request("/api/finance-cost-governance")).payload;
+  const invalidFinanceOwnerDecision = invalidFinanceCostGovernance.policySummary?.decisions
+    ?.find((decision) => decision.packetId === financeOwnerChoice.id);
+  assert(invalidFinanceOwnerDecision?.receiptId === unknownFinanceOwnerDecisionId, "Finance policy summary must surface the latest unknown-status receipt");
+  assert(invalidFinanceOwnerDecision?.selectedChoice === "unrecognized", "Unknown finance owner status must not fall back to choice A");
+  assert(invalidFinanceOwnerDecision?.permittedUses?.length === 0, "Unknown finance owner status must authorize no policy uses");
+  assert(invalidFinanceCostGovernance.policySummary?.ownerChoice === "pending", "Unknown finance owner status must make the summary pending");
+  assert(invalidFinanceCostGovernance.policySummary?.status === "owner_receipts_invalid", "Unknown finance owner status must fail closed as invalid");
+  assert(invalidFinanceOwnerDecision?.policy.includes("禁止启用任何政策用途"), "Unknown finance owner status must replace the default A policy text");
+} finally {
+  await request("/api/decision/logs", {
+    method: "POST",
+    body: JSON.stringify({
+      id: restoredFinanceOwnerDecisionId,
+      insightTitle: "API smoke restore finance owner choice A",
+      linkedMetricId: financeOwnerChoice.linkedMetricId,
+      recommendation: "Restore the disposable finance policy fixture to choice A.",
+      actionBoundary: financeOwnerChoice.actionBoundary,
+      status: financeOwnerChoice.choices[0].status,
+      reviewNote: financeOwnerChoice.choices[0].reviewNote,
+      actor: "api-smoke"
+    })
+  });
+}
+const restoredFinanceCostGovernance = (await request("/api/finance-cost-governance")).payload;
+const restoredFinanceOwnerDecision = restoredFinanceCostGovernance.policySummary?.decisions
+  ?.find((decision) => decision.packetId === financeOwnerChoice.id);
+assert(restoredFinanceOwnerDecision?.receiptId === restoredFinanceOwnerDecisionId, "Finance API smoke must restore the final choice-A fixture");
+assert(restoredFinanceCostGovernance.policySummary?.ownerChoice === "A-A-A-A", "Finance API smoke must leave the shared UI fixture at A-A-A-A");
 checked("finance-cost-governance", {
   evidencePackets: financeCostGovernance.evidencePackets.length,
   financeCoverage: financeCostGovernance.financeCoverage.length,

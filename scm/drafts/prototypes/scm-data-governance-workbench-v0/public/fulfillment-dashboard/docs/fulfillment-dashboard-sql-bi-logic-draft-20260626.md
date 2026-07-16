@@ -22,7 +22,7 @@ boundary: local_logic_draft_no_production_write_no_provider_call
 默认约定：
 
 - `biz_date` 使用北京时间自然日。
-- `:start_date` 与 `:end_date` 为看板付款时间筛选区间。
+- `:start_date` 与 `:end_date` 为看板 `biz_date` 北京时间自然日分区日期区间；`pay_time` 只参与 SLA 计算，不改变本草稿的分区筛选语义。
 - 所有比率输出 `num`、`den`、`rate` 三列。
 - 妥投签收时间只使用 `tms_sign_time`。
 - 审核效能先按 `audit_actor_type` 拆分系统自动审核与人工审核。
@@ -40,11 +40,19 @@ with order_base as (
     erp_code,
     order_status,
     issue_type,
+    paid_flag,
+    valid_self_fulfillment_flag,
+    paid_cancelled_flag,
+    split_abandoned_flag,
     pay_time,
     os_auth_time,
     send_time
   from fact_order_fulfillment_order_daily
   where biz_date between :start_date and :end_date
+    and paid_flag = 1
+    and valid_self_fulfillment_flag = 1
+    and paid_cancelled_flag = 0
+    and split_abandoned_flag = 0
 ),
 item_base as (
   select
@@ -66,7 +74,8 @@ package_base as (
   from fact_order_package_delivery_daily
   where biz_date between :start_date and :end_date
   group by biz_date, erp_code
-)
+),
+daily_kpi as (
 select
   o.biz_date,
   count(distinct o.ref_no) as raw_order_count,
@@ -84,17 +93,27 @@ select
 from order_base o
 left join item_base i on o.biz_date = i.biz_date and o.erp_code = i.erp_code
 left join package_base p on o.biz_date = p.biz_date and o.erp_code = p.erp_code
-group by o.biz_date;
+group by o.biz_date
+)
+select
+  daily_kpi.*,
+  cast(audit_sla_24h_num as decimal(18, 6)) / nullif(audit_sla_24h_den, 0) as audit_sla_24h_rate,
+  cast(pay_ship_sla_48h_num as decimal(18, 6)) / nullif(pay_ship_sla_48h_den, 0) as pay_ship_sla_48h_rate,
+  cast(item_ship_sla_24h_num as decimal(18, 6)) / nullif(item_ship_sla_24h_den, 0) as item_ship_sla_24h_rate,
+  cast(delivery_10d_num as decimal(18, 6)) / nullif(delivery_10d_den, 0) as delivery_10d_rate
+from daily_kpi;
 ```
+
+`paid_flag`、`valid_self_fulfillment_flag`、`paid_cancelled_flag`、`split_abandoned_flag` 是源映射层归一化字段；`raw_order_count` 与 `split_order_count` 必须由上述同一有效订单群体计算，不能在聚合层使用不同状态过滤。
 
 BI 计算：
 
 | 指标 | 计算 |
 |---|---|
-| 24h 审单及时率 | `audit_sla_24h_num / audit_sla_24h_den` |
-| 48h 付款发货及时率 | `pay_ship_sla_48h_num / pay_ship_sla_48h_den` |
-| 24h 商品发货及时率 | `item_ship_sla_24h_num / item_ship_sla_24h_den` |
-| 10 天妥投率 | `delivery_10d_num / delivery_10d_den` |
+| 24h 审单及时率 | `audit_sla_24h_rate` |
+| 48h 付款发货及时率 | `pay_ship_sla_48h_rate` |
+| 24h 商品发货及时率 | `item_ship_sla_24h_rate` |
+| 10 天妥投率 | `delivery_10d_rate` |
 
 ## 3. 未发货预警
 
@@ -118,6 +137,7 @@ with unshipped as (
 )
 select
   biz_date,
+  erp_code,
   case
     when waiting_days >= 15 then '15天以上'
     when waiting_days >= 10 then '10-15天'
@@ -131,6 +151,7 @@ select
 from unshipped
 group by
   biz_date,
+  erp_code,
   case
     when waiting_days >= 15 then '15天以上'
     when waiting_days >= 10 then '10-15天'
@@ -253,7 +274,9 @@ select
   cast(null as decimal(18, 4)) as avg_shipping_cost_placeholder
 from fact_order_fulfillment_order_daily o
 left join dim_warehouse w on o.warehouse_code = w.warehouse_code
-left join fact_order_package_delivery_daily p on o.erp_code = p.erp_code
+left join fact_order_package_delivery_daily p
+  on o.erp_code = p.erp_code
+  and o.biz_date = p.biz_date
 where o.biz_date between :start_date and :end_date
 group by o.biz_date, o.country_code, w.country_code, o.warehouse_code;
 ```
@@ -273,6 +296,7 @@ select
   o.biz_date,
   coalesce(i.issue_type, '未分类') as issue_type,
   coalesce(i.owner_domain, '待分配') as owner_domain,
+  coalesce(i.default_action, '待制定') as next_action,
   count(distinct o.erp_code) as issue_orders,
   count(distinct case when s.stockout_type is not null then o.erp_code end) as linked_stockout_orders
 from fact_order_fulfillment_order_daily o
@@ -287,12 +311,16 @@ left join fact_stockout_signal_daily s
   and s.stockout_type in ('订单缺货', '库存缺货', '预测缺货')
 where o.biz_date between :start_date and :end_date
   and o.issue_type is not null
-group by o.biz_date, coalesce(i.issue_type, '未分类'), coalesce(i.owner_domain, '待分配');
+group by
+  o.biz_date,
+  coalesce(i.issue_type, '未分类'),
+  coalesce(i.owner_domain, '待分配'),
+  coalesce(i.default_action, '待制定');
 ```
 
 校验规则：
 
-- 问题件类型必须能映射到责任域。
+- 问题件类型必须能映射到责任域和 `next_action`；未配置动作时显式返回 `待制定`，不得静默缺列。
 - 与缺货相关的问题件必须先通过订单明细关联到同一 `sku_code`，再联动到三类 `stockout_type`；禁止仅按日期和仓库放大关联。
 - 不能只有数量排行而没有处理动作。
 

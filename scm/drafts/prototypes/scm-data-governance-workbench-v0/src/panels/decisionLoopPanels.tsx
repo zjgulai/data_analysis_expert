@@ -603,6 +603,7 @@ function RecommendationWorkflowReceipt({
 }) {
   if (!card) return null;
   const canConvert = ["approved", "reviewed"].includes(card.approval_status);
+  const canApprove = !["approved", "reviewed", "rejected"].includes(card.approval_status);
   return (
     <div className="workflowReceipt">
       <div>
@@ -628,7 +629,7 @@ function RecommendationWorkflowReceipt({
         </div>
       </div>
       <div className="recommendationActions">
-        <button disabled={Boolean(busy)} onClick={() => onApprove(card)}>批准最近建议卡</button>
+        <button disabled={Boolean(busy) || !canApprove} onClick={() => onApprove(card)}>批准最近建议卡</button>
         <button disabled={Boolean(busy) || !canConvert} onClick={() => onConvert(card)}>转最近 Action Task</button>
       </div>
     </div>
@@ -733,7 +734,7 @@ export function DecisionAuditPanel({
             <h3>洞察记录</h3>
             <Badge>{decisions.length} 条记录</Badge>
           </div>
-          <DataTable rows={decisions} columns={["id", "insight_title", "linked_metric_id", "recommendation", "status", "review_note"]} />
+          <DataTable rows={decisions} columns={["id", "insight_title", "linked_metric_id", "subject_ref", "recommendation", "status", "review_note"]} />
         </div>
         <div className="surface">
           <div className="surfaceHead">

@@ -201,6 +201,37 @@ const metricDictionary = [
   }
 ];
 
+function rateFromCounts(numerator, denominator) {
+  return denominator === 0 ? null : Number(((numerator / denominator) * 100).toFixed(1));
+}
+
+function displayRate(value) {
+  return value === null ? "—" : value.toFixed(1);
+}
+
+const auditSlaCounts = Object.freeze({
+  denominator: 135892,
+  within24h: 121777,
+  within48h: 126145
+});
+const payShipSlaCounts = Object.freeze({
+  denominator: 135892,
+  within24h: 115780
+});
+const auditSla24hRate = rateFromCounts(auditSlaCounts.within24h, auditSlaCounts.denominator);
+const auditSla48hRate = rateFromCounts(auditSlaCounts.within48h, auditSlaCounts.denominator);
+const payShipSla24hRate = rateFromCounts(payShipSlaCounts.within24h, payShipSlaCounts.denominator);
+const auditToShipGap = auditSla24hRate === null || payShipSla24hRate === null
+  ? null
+  : Number((auditSla24hRate - payShipSla24hRate).toFixed(1));
+const auditVolumeCounts = Object.freeze({
+  system: 58920,
+  manual: 76972
+});
+const auditVolumeTotal = auditVolumeCounts.system + auditVolumeCounts.manual;
+const systemAuditShare = rateFromCounts(auditVolumeCounts.system, auditVolumeTotal);
+const manualAuditShare = rateFromCounts(auditVolumeCounts.manual, auditVolumeTotal);
+
 const kpis = [
   ["volume", "原始总单量", "128,456", "单", "", "5.2%", false],
   ["volume", "拆分总单量", "135,892", "单", "", "6.1%", false],
@@ -210,8 +241,8 @@ const kpis = [
   ["volume", "拆单率", "5.8", "%", "7,436 / 128,456", "0.3%", false],
   ["volume", "异常订单率", "1.8", "%", "2,446 / 135,892", "0.3%", false],
   ["volume", "预售单比率", "6.2", "%", "7,964 / 128,456", "1.8%", false],
-  ["rate", "24小时审单及时率", "94.8", "%", "121,777 / 135,892", "2.1%", true],
-  ["rate", "48小时审单及时率", "98.2", "%", "126,145 / 135,892", "0.5%", true],
+  ["rate", "24小时审单及时率", displayRate(auditSla24hRate), "%", `${auditSlaCounts.within24h.toLocaleString("en-US")} / ${auditSlaCounts.denominator.toLocaleString("en-US")}`, "2.1%", true],
+  ["rate", "48小时审单及时率", displayRate(auditSla48hRate), "%", `${auditSlaCounts.within48h.toLocaleString("en-US")} / ${auditSlaCounts.denominator.toLocaleString("en-US")}`, "0.5%", true],
   ["rate", "24小时审核发货及时率", "89.5", "%", "109,220 / 121,900", "1.2%", true],
   ["rate", "48小时审核发货及时率", "96.3", "%", "117,390 / 121,900", "1.8%", true],
   ["rate", "24小时付款发货及时率", "85.2", "%", "115,780 / 135,892", "2.0%", true],
@@ -473,7 +504,7 @@ const pageInsights = {
     { label: "字段关键", value: "双单号 + 时点", note: "ref_no、erp_code、付款、审核、发货、TMS 签收是定位链路的最小闭环。", tone: "blue" }
   ],
   overview: [
-    { label: "核心判断", value: "履约风险集中在发货前", note: "24h 付款发货及时率 85.2%，低于审单及时率 9.6pct。", tone: "amber" },
+    { label: "核心判断", value: "履约风险集中在发货前", note: `24h 付款发货及时率 ${displayRate(payShipSla24hRate)}%，低于审单及时率 ${displayRate(auditToShipGap)}pct。`, tone: "amber" },
     { label: "首要风险", value: "5,028 单", note: "超期未发货订单需要进入独立预警闭环。", tone: "red" },
     { label: "结构信号", value: "商品行更慢", note: "24h 商品发货及时率 82.5%，提示部分发货、拆单或 SKU 备货问题。", tone: "blue" }
   ],
@@ -526,7 +557,7 @@ const pageInsights = {
 
 const detailFlow = [
   { label: "付款", value: "06-20~06-25", score: 100, note: "以北京时间付款时间作为筛选基准" },
-  { label: "审核", value: "待审/已审", score: 94.8, note: "系统自动审核和人工审核必须分开" },
+  { label: "审核", value: "待审/已审", score: auditSla24hRate, note: "系统自动审核和人工审核必须分开" },
   { label: "发货", value: "未发/已发", score: 85.2, note: "超期未发货和标发失败优先处理" },
   { label: "TMS 签收", value: "未签/已签", score: 76, note: "签收以 TMS 为准，物流商后台辅助核对" }
 ];
@@ -534,7 +565,7 @@ const detailFlow = [
 const overviewFunnel = [
   { label: "原始总单量", value: "128,456", score: 100, note: "平台已付款订单基准" },
   { label: "拆分总单量", value: "135,892", score: 106, note: "拆单后履约对象放大 5.8%" },
-  { label: "24h 审单达成", value: "121,777", score: 94.8, note: "审单环节基本可控" },
+  { label: "24h 审单达成", value: auditSlaCounts.within24h.toLocaleString("en-US"), score: auditSla24hRate, note: "审单环节需按分子/分母复核" },
   { label: "24h 付款发货达成", value: "115,780", score: 85.2, note: "发货前链路开始掉速" },
   { label: "24h 商品发货达成", value: "168,166", score: 82.5, note: "商品行慢于订单，提示 SKU 侧问题" }
 ];
@@ -611,8 +642,8 @@ const analysisBars = {
 };
 
 const auditSplit = [
-  { label: "系统自动审核", value: 58, note: "58,920 单，平均 1.1h", tone: "green" },
-  { label: "人工审核", value: 42, note: "55,560 单，需要看人员和班次", tone: "amber" }
+  { label: "系统自动审核", value: systemAuditShare, note: `${auditVolumeCounts.system.toLocaleString("en-US")} 单，平均 1.1h`, tone: "green" },
+  { label: "人工审核", value: manualAuditShare, note: `${auditVolumeCounts.manual.toLocaleString("en-US")} 单，需要看人员和班次`, tone: "amber" }
 ];
 
 const stockoutSplit = [

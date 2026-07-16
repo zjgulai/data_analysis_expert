@@ -39,7 +39,7 @@ async function reservePort() {
 
 async function waitForHealth(baseUrl, child, logs) {
   for (let attempt = 0; attempt < 50; attempt += 1) {
-    if (child.exitCode !== null) {
+    if (child.exitCode !== null || child.signalCode !== null) {
       throw new Error(`SCM server exited before health check.\n${logs.join("").slice(-2000)}`);
     }
     try {
@@ -64,7 +64,7 @@ function runProcess(command, args, options) {
       timedOut = true;
       childProcess.kill("SIGTERM");
       forceKillTimer = setTimeout(() => {
-        if (childProcess.exitCode === null) childProcess.kill("SIGKILL");
+        if (childProcess.exitCode === null && childProcess.signalCode === null) childProcess.kill("SIGKILL");
       }, 1000);
     }, childTimeoutMs);
     childProcess.stdout.on("data", (chunk) => { stdout += String(chunk); });
@@ -84,6 +84,30 @@ function runProcess(command, args, options) {
       resolveRun({ status, stdout, stderr });
     });
   });
+}
+
+function childHasExited(childProcess) {
+  return childProcess.exitCode !== null || childProcess.signalCode !== null;
+}
+
+async function waitForChildExit(childProcess, timeoutMs) {
+  if (childHasExited(childProcess)) return true;
+  return Promise.race([
+    new Promise((resolveExit) => childProcess.once("exit", () => resolveExit(true))),
+    delay(timeoutMs).then(() => false)
+  ]);
+}
+
+async function stopChildProcess(childProcess) {
+  if (!childProcess || childHasExited(childProcess)) return;
+  childProcess.kill("SIGTERM");
+  const exited = await waitForChildExit(childProcess, 2000);
+  if (exited || childHasExited(childProcess)) return;
+  childProcess.kill("SIGKILL");
+  const forceExited = await waitForChildExit(childProcess, 2000);
+  if (!forceExited && !childHasExited(childProcess)) {
+    throw new Error(`Child process ${childProcess.pid || "unknown"} remained alive after SIGKILL`);
+  }
 }
 
 let providerRequestCount = 0;
@@ -134,16 +158,23 @@ try {
     })
   });
   const chatPayload = await chatResponse.json();
+  const postProbeStatusResponse = await fetch(`${baseUrl}/api/ai-chat/deepseek/status`, { signal: AbortSignal.timeout(2000) });
+  const postProbeStatus = await postProbeStatusResponse.json();
+  await stopChildProcess(child);
+  child = null;
 
   const failures = [];
   if (chatResponse.status !== 403) failures.push(`expected HTTP 403, received ${chatResponse.status}`);
   if (!String(chatPayload.error || "").includes("SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED")) {
     failures.push("authorization error must name SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED");
   }
-  if (providerRequestCount !== 0) failures.push(`expected zero provider requests, received ${providerRequestCount}`);
   if (status.providerCallAuthorized !== false) failures.push("status must expose providerCallAuthorized=false");
   if (status.databaseWriteAuthorized !== true) failures.push("status must expose databaseWriteAuthorized=true for this disposable fixture");
   if (status.available !== false) failures.push("status must expose available=false");
+  if (!Number.isInteger(status.providerCallAttemptCount)) failures.push("status must expose an integer providerCallAttemptCount");
+  if (postProbeStatus.providerCallAttemptCount !== status.providerCallAttemptCount) {
+    failures.push(`blocked provider probe must preserve providerCallAttemptCount, got ${status.providerCallAttemptCount} -> ${postProbeStatus.providerCallAttemptCount}`);
+  }
   if (health.boundary?.providerCalls !== false) failures.push("health boundary must keep providerCalls=false");
 
   let databaseBlockedPostCount = 0;
@@ -205,6 +236,7 @@ try {
   }
 
   let liveClientPostCount = 0;
+  const quotedApiKeyFixture = "fixture-x-api-key-secret";
   const fakeWorkbench = createServer((request, response) => {
     if (request.method === "GET" && request.url === "/api/ai-chat/deepseek/status") {
       response.writeHead(200, { "Content-Type": "application/json" });
@@ -225,7 +257,10 @@ try {
       liveClientPostCount += 1;
       request.resume();
       response.writeHead(502, { "Content-Type": "application/json" });
-      response.end(JSON.stringify({ error: "fixture provider failure after request dispatch" }));
+      response.end(JSON.stringify({
+        error: "fixture provider failure after request dispatch",
+        headers: { "x-api-key": quotedApiKeyFixture }
+      }));
       return;
     }
     response.writeHead(404, { "Content-Type": "application/json" });
@@ -272,10 +307,18 @@ try {
     if (liveFailureEvidence.boundary?.productionBusinessWrites !== false) {
       failures.push("failed live provider evidence must preserve productionBusinessWrites=false");
     }
+    if (JSON.stringify(liveFailureEvidence).includes(quotedApiKeyFixture)) {
+      failures.push("failed live provider evidence must redact quoted x-api-key values");
+    }
+    if (`${liveResult.stdout}\n${liveResult.stderr}`.includes(quotedApiKeyFixture)) {
+      failures.push("failed live provider output must redact quoted x-api-key values");
+    }
   } finally {
     if (fakeWorkbench.listening) await close(fakeWorkbench);
   }
 
+  const finalProviderRequestCount = providerRequestCount;
+  if (finalProviderRequestCount !== 0) failures.push(`expected zero provider requests, received ${finalProviderRequestCount}`);
   if (failures.length) {
     throw new Error(`Provider authorization gate failed:\n- ${failures.join("\n- ")}`);
   }
@@ -284,7 +327,7 @@ try {
     ok: true,
     providerCallAuthorized: status.providerCallAuthorized,
     providerAvailable: status.available,
-    providerRequestCount,
+    providerRequestCount: finalProviderRequestCount,
     responseStatus: chatResponse.status,
     databaseBlockedPostCount,
     databaseBlockedStatus: databaseBlockedEvidence.status,
@@ -296,20 +339,7 @@ try {
     databaseWrite: false
   }, null, 2));
 } finally {
-  if (child && child.exitCode === null) {
-    child.kill("SIGTERM");
-    const exited = await Promise.race([
-      new Promise((resolveExit) => child.once("exit", () => resolveExit(true))),
-      delay(2000).then(() => false)
-    ]);
-    if (!exited && child.exitCode === null) {
-      child.kill("SIGKILL");
-      await Promise.race([
-        new Promise((resolveExit) => child.once("exit", resolveExit)),
-        delay(2000)
-      ]);
-    }
-  }
+  await stopChildProcess(child);
   if (fakeProvider.listening) await close(fakeProvider);
   rmSync(sandboxRoot, { recursive: true, force: true });
 }

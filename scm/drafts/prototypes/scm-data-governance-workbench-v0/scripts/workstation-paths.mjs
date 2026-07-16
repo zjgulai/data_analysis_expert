@@ -32,8 +32,8 @@ const profileProseWords = new Set([
   "are", "at", "check", "checked", "complete", "completed", "copy", "create",
   "delete", "for", "from", "had", "has", "have", "important", "in", "is",
   "local", "move", "next", "note", "notes", "on", "open", "read", "remote",
-  "remotely", "review", "reviewed", "run", "see", "then", "to", "update",
-  "use", "was", "were", "with", "working", "works"
+  "project", "remotely", "review", "reviewed", "run", "see", "status", "then",
+  "to", "update", "use", "was", "were", "with", "working", "works", "下一步"
 ]);
 const profileProseFollowers = new Set([
   "a", "an", "my", "our", "that", "the", "these", "this", "those", "your"
@@ -181,6 +181,28 @@ function localFileCandidate(text, span) {
   return null;
 }
 
+function embeddedUriCandidates(text, span) {
+  const spanText = text.slice(span.start, span.end);
+  const candidates = [];
+  for (const match of spanText.matchAll(freshWorkstationHomeRootPattern())) {
+    const relativeStart = match.index;
+    if (relativeStart === undefined) continue;
+    const rootStart = span.start + relativeStart;
+    const prefix = text.slice(span.start, rootStart);
+    const windowsAbsolutePath = /^[A-Za-z]:[\\/]+[Uu][Ss][Ee][Rr][Ss][\\/]+/.test(match[0]);
+    const queryOrFragmentValue = /[?&#][^#&]*=$/.test(prefix);
+    const editorFilePath = /^(?:vscode|vscode-insiders):\/\/file$/i.test(prefix);
+    if (!windowsAbsolutePath && !queryOrFragmentValue && !editorFilePath) continue;
+    candidates.push({
+      start: rootStart,
+      contextStart: rootStart,
+      profileStart: rootStart + match[0].length,
+      tokenLimit: span.end
+    });
+  }
+  return candidates;
+}
+
 function locateCandidates(text) {
   const uriSpans = locateUriSpans(text);
   const candidates = [];
@@ -189,9 +211,14 @@ function locateCandidates(text) {
     if (candidate) candidates.push(candidate);
   }
   for (const span of uriSpans) {
-    if (span.scheme !== "file") continue;
-    const candidate = localFileCandidate(text, span);
-    if (candidate && !followsRedactedHome(text, candidate.start)) candidates.push(candidate);
+    if (span.scheme === "file") {
+      const candidate = localFileCandidate(text, span);
+      if (candidate && !followsRedactedHome(text, candidate.start)) candidates.push(candidate);
+      continue;
+    }
+    for (const candidate of embeddedUriCandidates(text, span)) {
+      if (!followsRedactedHome(text, candidate.start)) candidates.push(candidate);
+    }
   }
   candidates.sort((left, right) => left.start - right.start || left.profileStart - right.profileStart);
   return candidates.filter((candidate, index) => {
@@ -238,6 +265,17 @@ function collectRootOnlyProfileTokens(text, start, limit) {
     tokens.push({ start: tokenStart, end: cursor, value: text.slice(tokenStart, cursor) });
   }
   return tokens;
+}
+
+function isPlausibleWrappedRootProfile(text, start, end) {
+  const value = text.slice(start, end);
+  if (!value.trim() || !isPlausibleDescendantProfile(value)) return false;
+  const tokens = collectRootOnlyProfileTokens(text, start, end);
+  if (!tokens.length || text.slice(tokens.at(-1).end, end).trim()) return false;
+  return tokens.every((token, index) => {
+    if (isProfileProseCue(tokens, index)) return false;
+    return /^[\p{L}\p{M}\p{N}._'’&+\-]+$/u.test(token.value);
+  });
 }
 
 function isNameLikeProfileToken(value) {
@@ -340,6 +378,10 @@ function findHomeEnd(text, candidate, nextCandidate) {
     if (isPlausibleDescendantProfile(profile)) {
       return profile.trim() ? separator : null;
     }
+  }
+
+  if (wrapperClose !== null && isPlausibleWrappedRootProfile(text, candidate.profileStart, wrapperClose)) {
+    return wrapperClose;
   }
 
   const end = findRootOnlyProfileEnd(text, candidate.profileStart, hardLimit);

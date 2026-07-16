@@ -1,8 +1,10 @@
 import { DatabaseSync } from "node:sqlite";
+import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { basename, dirname, isAbsolute, relative, resolve, sep } from "node:path";
+import { dirname, isAbsolute, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { redactWorkstationPaths } from "./workstation-paths.mjs";
+import { manualGateCompletionStatuses } from "./manual-gate-status-contract.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
@@ -14,16 +16,62 @@ const metricBlueprintFile = "supply-chain-metric-system-l0-l3-blueprint-mece-v2-
 const fieldMappingFile = "supply-chain-metric-stage2-field-mapping-template-20260618.csv";
 const p0SignoffFile = "supply-chain-metric-mece-v2-p0-owner-signoff-task-list-20260618.csv";
 const defaultSourceRoot = resolve(root, "../../analysis/business-supply-chain-knowledge-base-draft-20260616/metric-system-blueprint");
+const knowledgeCardIdManifestPath = resolve(root, "data/knowledge-card-id-manifest.json");
+const knowledgeDomainDefinitions = [
+  {
+    id: "jijia-scm-main",
+    name: "积加 SCM 主知识库",
+    theme: "scm-system-main",
+    envVar: "SCM_KNOWLEDGE_JIJIA_ROOT",
+    defaultRoot: resolve(root, "../../analysis/jijia-scm-knowledge-base-draft-20260604"),
+    status: "active",
+    evidence_level: "draft-source-visible",
+    description: "积加计划、采购、仓库、物流四模块的业务逻辑、字段、指标、血缘和实施设计。"
+  },
+  {
+    id: "stocking-rules",
+    name: "备货库存规则知识库",
+    theme: "stocking-inventory-rules",
+    envVar: "SCM_KNOWLEDGE_STOCKING_RULES_ROOT",
+    defaultRoot: resolve(root, "../../analysis/stocking-inventory-rules-knowledge-base-draft-20260604"),
+    status: "active",
+    evidence_level: "draft-rule-extract",
+    description: "备货库存规划规则、平台规则、数据来源、指标口径和与积加 SCM 的一致性映射。"
+  },
+  {
+    id: "business-supply-chain",
+    name: "跨境电商供应链业务知识库",
+    theme: "business-supply-chain",
+    envVar: "SCM_KNOWLEDGE_BUSINESS_SUPPLY_CHAIN_ROOT",
+    defaultRoot: resolve(root, "../../analysis/business-supply-chain-knowledge-base-draft-20260616"),
+    status: "active",
+    evidence_level: "draft-business-extraction",
+    description: "跨境电商供应链业务方法论、BI 字段、指标体系、书籍萃取和多源 crosswalk。"
+  },
+  {
+    id: "erp-supplement-draft",
+    name: "路特 ERP 说明书补充知识库",
+    theme: "erp-supplement",
+    envVar: "SCM_KNOWLEDGE_ERP_SUPPLEMENT_ROOT",
+    defaultRoot: resolve(root, "../../analysis/lute-erp-alidocs-knowledge-base-draft-20260620"),
+    status: "draft",
+    evidence_level: "browser-visible-draft",
+    description: "ERP/企业服务平台可见文档萃取，当前只作为候选证据，不进入 certified evidence。"
+  }
+];
 const importMigrationFiles = [
   "20260627_b3_t7_additive_schema.apply.sql",
   "20260627_b6_rbac_action_tiering.apply.sql",
-  "20260701_loop3_business_closed_loops.apply.sql"
+  "20260701_loop3_business_closed_loops.apply.sql",
+  "20260716_certification_gate_remediation.apply.sql",
+  "20260716_decision_subject_reference.apply.sql"
 ];
 const databaseRebuildAuthorized = ["1", "true", "yes", "on"].includes(
   String(process.env.SCM_DATABASE_REBUILD_AUTHORIZED || "").toLowerCase()
 );
+const preflightOnly = process.env.SCM_IMPORT_PREFLIGHT_ONLY === "1";
 
-if (!databaseRebuildAuthorized) {
+if (!preflightOnly && !databaseRebuildAuthorized) {
   throw new Error(
     "Database rebuild is not authorized. Set SCM_DATABASE_REBUILD_AUTHORIZED=1 only after backing up or explicitly approving replacement of the local SQLite ledger."
   );
@@ -49,21 +97,150 @@ function sourceCandidateStatus(sourceRoot, configuredBy) {
 }
 
 function resolveImportSource() {
-  const candidates = [
+  const explicitCandidates = [
     ["SCM_WORKBENCH_IMPORT_SOURCE_ROOT", process.env.SCM_WORKBENCH_IMPORT_SOURCE_ROOT],
-    ["SCM_IMPORT_SOURCE_ROOT", process.env.SCM_IMPORT_SOURCE_ROOT],
-    ["repository_default", defaultSourceRoot]
-  ];
+    ["SCM_IMPORT_SOURCE_ROOT", process.env.SCM_IMPORT_SOURCE_ROOT]
+  ].filter(([, configuredPath]) => String(configuredPath || "").trim() !== "");
+  const candidates = explicitCandidates.length
+    ? explicitCandidates
+    : [["repository_default", defaultSourceRoot]];
   const seen = new Set();
   const statuses = [];
   for (const [configuredBy, configuredPath] of candidates) {
-    if (!configuredPath) continue;
     const sourceRoot = resolve(configuredPath);
     if (seen.has(sourceRoot)) continue;
     seen.add(sourceRoot);
     statuses.push(sourceCandidateStatus(sourceRoot, configuredBy));
   }
-  return { selected: statuses.find((status) => status.ready), statuses };
+  return {
+    selected: statuses[0]?.ready ? statuses[0] : undefined,
+    statuses
+  };
+}
+
+function countMarkdownFiles(sourceRoot) {
+  let count = 0;
+  const stack = [sourceRoot];
+  while (stack.length) {
+    const current = stack.pop();
+    for (const entry of readdirSync(current, { withFileTypes: true })) {
+      if (entry.isSymbolicLink()) continue;
+      const fullPath = resolve(current, entry.name);
+      if (entry.isDirectory()) stack.push(fullPath);
+      else if (entry.isFile() && entry.name.endsWith(".md")) count += 1;
+    }
+  }
+  return count;
+}
+
+function resolveKnowledgeDomains() {
+  return knowledgeDomainDefinitions.map((definition) => {
+    const configuredPath = String(process.env[definition.envVar] || "").trim();
+    const sourceRoot = resolve(configuredPath || definition.defaultRoot);
+    let sourceRootExists = false;
+    let sourceRootIsDirectory = false;
+    let markdownFileCount = 0;
+    let validationError = "";
+    try {
+      sourceRootExists = existsSync(sourceRoot);
+      sourceRootIsDirectory = sourceRootExists && statSync(sourceRoot).isDirectory();
+      markdownFileCount = sourceRootIsDirectory ? countMarkdownFiles(sourceRoot) : 0;
+    } catch (error) {
+      validationError = error instanceof Error ? error.message : String(error);
+    }
+    return {
+      ...definition,
+      root: sourceRoot,
+      configuredBy: configuredPath ? definition.envVar : "repository_default",
+      sourceRootExists,
+      sourceRootIsDirectory,
+      markdownFileCount,
+      validationError,
+      ready: sourceRootExists && sourceRootIsDirectory && markdownFileCount > 0
+    };
+  });
+}
+
+function normalizeKnowledgeRelativePath(value) {
+  const normalized = String(value || "").replaceAll("\\", "/").replace(/^\.\/+/, "");
+  if (!normalized || normalized === ".." || normalized.startsWith("../") || normalized.startsWith("/")) {
+    throw new Error(`Invalid knowledge-card relative path: ${value}`);
+  }
+  return normalized;
+}
+
+function loadKnowledgeCardIdManifest() {
+  if (!existsSync(knowledgeCardIdManifestPath)) return { ready: false, error: "manifest_missing", entries: new Map() };
+  try {
+    const payload = JSON.parse(readFileSync(knowledgeCardIdManifestPath, "utf8"));
+    if (payload.version !== 1 || payload.identity !== "domain_relative_path" || !Array.isArray(payload.cards)) {
+      throw new Error("manifest_schema_invalid");
+    }
+    const validDomainIds = new Set(knowledgeDomainDefinitions.map((domain) => domain.id));
+    const entries = new Map();
+    const ids = new Set();
+    for (const card of payload.cards) {
+      if (!validDomainIds.has(card.domainId)) throw new Error(`manifest_domain_invalid:${card.domainId}`);
+      const relativePath = normalizeKnowledgeRelativePath(card.relativePath);
+      const id = String(card.id || "").trim();
+      if (!id) throw new Error(`manifest_id_blank:${card.domainId}:${relativePath}`);
+      const key = `${card.domainId}\u0000${relativePath}`;
+      if (entries.has(key)) throw new Error(`manifest_key_duplicate:${card.domainId}:${relativePath}`);
+      if (ids.has(id)) throw new Error(`manifest_id_duplicate:${id}`);
+      entries.set(key, id);
+      ids.add(id);
+    }
+    return { ready: true, error: "", entries };
+  } catch (error) {
+    return {
+      ready: false,
+      error: error instanceof Error ? error.message : String(error),
+      entries: new Map()
+    };
+  }
+}
+
+const knowledgeDomains = resolveKnowledgeDomains();
+const invalidKnowledgeDomains = knowledgeDomains.filter((domain) => !domain.ready);
+if (invalidKnowledgeDomains.length) {
+  console.error(JSON.stringify({
+    status: "blocked_knowledge_domain_required",
+    message: "Every configured knowledge domain must resolve to an existing directory before opening or rebuilding local SQLite.",
+    domains: knowledgeDomains.map(({ id, envVar, root: sourceRoot, configuredBy, sourceRootExists, sourceRootIsDirectory, markdownFileCount, validationError, ready }) => ({
+      id,
+      envVar,
+      sourceRoot,
+      configuredBy,
+      sourceRootExists,
+      sourceRootIsDirectory,
+      markdownFileCount,
+      validationError,
+      ready
+    }))
+  }, null, 2));
+  process.exit(2);
+}
+
+const knowledgeCardIdManifest = loadKnowledgeCardIdManifest();
+if (!knowledgeCardIdManifest.ready) {
+  console.error(JSON.stringify({
+    status: "blocked_knowledge_id_manifest_required",
+    message: "The domain-relative knowledge-card ID manifest is required before opening or rebuilding local SQLite.",
+    manifestPath: knowledgeCardIdManifestPath,
+    error: knowledgeCardIdManifest.error
+  }, null, 2));
+  process.exit(2);
+}
+
+function knowledgeCardIdForPath(domainId, relativePathValue) {
+  const relativePath = normalizeKnowledgeRelativePath(relativePathValue);
+  const manifestId = knowledgeCardIdManifest.entries.get(`${domainId}\u0000${relativePath}`);
+  if (manifestId) return manifestId;
+  const digest = createHash("sha256")
+    .update(`${domainId}\u0000${relativePath}`)
+    .digest("hex")
+    .slice(0, 16);
+  return `${domainId}-card-${digest}`;
 }
 
 const sourceResolution = resolveImportSource();
@@ -96,12 +273,25 @@ if (migrationStatuses.some((migration) => !migration.exists)) {
   process.exit(2);
 }
 
-if (process.env.SCM_IMPORT_PREFLIGHT_ONLY === "1") {
+if (preflightOnly) {
   console.log(JSON.stringify({
     status: "preflight_ok",
     sourceRoot,
     configuredBy: sourceResolution.selected.configuredBy,
     files: sourceResolution.selected,
+    knowledgeDomains: knowledgeDomains.map(({ id, envVar, root: sourceRoot, configuredBy, markdownFileCount, ready }) => ({
+      id,
+      envVar,
+      sourceRoot,
+      configuredBy,
+      markdownFileCount,
+      ready
+    })),
+    knowledgeCardIdManifest: {
+      path: knowledgeCardIdManifestPath,
+      entries: knowledgeCardIdManifest.entries.size,
+      ready: true
+    },
     migrations: migrationStatuses
   }, null, 2));
   process.exit(0);
@@ -170,14 +360,22 @@ function findRepositoryRoot(start) {
   }
 }
 
-function portableSourcePath(value) {
+function portableSourcePath(value, domain) {
   const absolutePath = resolve(value);
   const repositoryPath = relative(repositoryRoot, absolutePath);
   if (repositoryPath === "") return ".";
   if (!repositoryPath.startsWith(`..${sep}`) && repositoryPath !== ".." && !isAbsolute(repositoryPath)) {
     return repositoryPath.split(sep).join("/");
   }
-  return `external-source/${basename(absolutePath)}`;
+  if (!domain?.id || !domain?.root) {
+    throw new Error(`External source requires a domain namespace: ${absolutePath}`);
+  }
+  const domainPath = relative(resolve(domain.root), absolutePath);
+  if (domainPath === "") return `external-source/${domain.id}`;
+  if (domainPath === ".." || domainPath.startsWith(`..${sep}`) || isAbsolute(domainPath)) {
+    throw new Error(`Knowledge source escaped configured domain root: ${domain.id}`);
+  }
+  return `external-source/${domain.id}/${domainPath.split(sep).join("/")}`;
 }
 
 function execMany(sql) {
@@ -194,13 +392,13 @@ function insert(table, record, preSanitizedKeys = []) {
     : record[key]));
 }
 
-const lifecycle = ["draft", "mapped", "reviewed", "certified", "active", "deprecated"];
+const lifecycle = ["draft", "mapped", "reviewed", "seed_only", "certified", "active", "deprecated"];
 const metricPayload = JSON.parse(readFileSync(metricJsonPath, "utf8"));
 const metrics = metricPayload.metrics;
 const l3Metrics = metrics.filter((metric) => metric.level === "L3");
 const fieldMappings = existsSync(fieldMappingPath) ? parseCsv(readFileSync(fieldMappingPath, "utf8")) : [];
 const signoffRows = existsSync(p0SignoffPath) ? parseCsv(readFileSync(p0SignoffPath, "utf8")) : [];
-const certifiedCodes = new Set([
+const certificationSeedCodes = new Set([
   "business_available_qty",
   "sku_oos_rate",
   "stockout_loss_amount",
@@ -210,6 +408,32 @@ const certifiedCodes = new Set([
   "full_chain_turnover_days_amount",
   "inventory_sync_delay_minutes"
 ]);
+const completedSignoffStatuses = new Set(manualGateCompletionStatuses.owner_signoff);
+const completedMappingStatuses = new Set(manualGateCompletionStatuses.field_mapping);
+const signoffRowsByMetricId = new Map();
+for (const row of signoffRows) {
+  if (!row.metric_id) continue;
+  const rows = signoffRowsByMetricId.get(row.metric_id) || [];
+  rows.push(row);
+  signoffRowsByMetricId.set(row.metric_id, rows);
+}
+const fieldMappingsByMetricId = new Map();
+for (const row of fieldMappings) {
+  if (!row.metric_id) continue;
+  const rows = fieldMappingsByMetricId.get(row.metric_id) || [];
+  rows.push(row);
+  fieldMappingsByMetricId.set(row.metric_id, rows);
+}
+const certificationBlockedMetricIds = new Set();
+for (const metric of metrics.filter((item) => certificationSeedCodes.has(item.metric_code))) {
+  const metricSignoffRows = signoffRowsByMetricId.get(metric.metric_id) || [];
+  const mappingRows = fieldMappingsByMetricId.get(metric.metric_id) || [];
+  const signoffComplete = metricSignoffRows.length > 0
+    && metricSignoffRows.every((row) => completedSignoffStatuses.has(String(row.signoff_status || "").trim()));
+  const mappingComplete = mappingRows.length > 0
+    && mappingRows.every((row) => completedMappingStatuses.has(String(row.mapping_status || "").trim()));
+  if (!signoffComplete || !mappingComplete) certificationBlockedMetricIds.add(metric.metric_id);
+}
 
 execMany(`
 PRAGMA foreign_keys = OFF;
@@ -226,6 +450,8 @@ DROP TABLE IF EXISTS lineage_edges;
 DROP TABLE IF EXISTS governance_tasks;
 DROP TABLE IF EXISTS certifications;
 DROP TABLE IF EXISTS chatbi_contexts;
+DROP VIEW IF EXISTS decision_logs_with_subject;
+DROP TABLE IF EXISTS decision_subject_refs;
 DROP TABLE IF EXISTS decision_logs;
 DROP TABLE IF EXISTS action_tasks;
 DROP TABLE IF EXISTS annotations;
@@ -388,6 +614,21 @@ CREATE TABLE decision_logs (
   status TEXT NOT NULL,
   review_note TEXT NOT NULL
 );
+
+CREATE TABLE decision_subject_refs (
+  decision_id TEXT PRIMARY KEY,
+  subject_ref TEXT NOT NULL,
+  subject_type TEXT NOT NULL,
+  FOREIGN KEY (decision_id) REFERENCES decision_logs(id) ON DELETE CASCADE
+);
+
+CREATE VIEW decision_logs_with_subject AS
+SELECT
+  decision_logs.*,
+  coalesce(decision_subject_refs.subject_ref, '') AS subject_ref,
+  coalesce(decision_subject_refs.subject_type, '') AS subject_type
+FROM decision_logs
+LEFT JOIN decision_subject_refs ON decision_subject_refs.decision_id = decision_logs.id;
 
 CREATE TABLE action_tasks (
   id TEXT PRIMARY KEY,
@@ -824,7 +1065,9 @@ function ownerFor(metric) {
 
 function lifecycleFor(metric) {
   if (metric.level !== "L3") return "active";
-  if (certifiedCodes.has(metric.metric_code)) return "certified";
+  if (certificationSeedCodes.has(metric.metric_code)) {
+    return certificationBlockedMetricIds.has(metric.metric_id) ? "seed_only" : "certified";
+  }
   if (metric.source_status === "added_by_mece_audit") return "draft";
   return "mapped";
 }
@@ -954,7 +1197,7 @@ metrics.forEach((metric) => {
   });
 });
 
-metrics.filter((metric) => certifiedCodes.has(metric.metric_code)).forEach((metric) => {
+metrics.filter((metric) => lifecycleFor(metric) === "certified").forEach((metric) => {
   const dims = dimensionRules
     .filter(([dimensionId]) => fieldMappings.length >= 0 && metric.grain?.toLowerCase().includes(String(dimensionId).split("_")[0]))
     .map(([dimensionId]) => dimensionId);
@@ -973,18 +1216,29 @@ metrics.filter((metric) => certifiedCodes.has(metric.metric_code)).forEach((metr
 });
 
 [
-  ["decision_1", "断货风险治理建议", "SCM-MECE-L3-126", "对断货损失金额高且可售覆盖不足的 SKU 发起补货/调拨评审任务。", "suggestion_review_replay", "review_pending", "Action remains suggestion + approval + replay; no ERP write-back."],
-  ["decision_2", "库存资金效率治理建议", "SCM-MECE-L3-036", "对全链条库存资金周转天数恶化的品类发起库存结构复盘。", "suggestion_review_replay", "draft", "Requires finance owner confirmation."],
-  ["decision_3", "SKU 映射风险治理建议", "SCM-MECE-L3-137", "对未匹配计划库存数量创建主数据修复任务。", "suggestion_review_replay", "review_pending", "Requires data governance owner approval."],
-  ["OMSWMS-001", "OMS/WMS Source Coverage 对象入治理视图", "oms_wms_source_coverage_objects", "确认 SKU、InventoryBatch、SalesOrder、CostEvent 作为第一批 source coverage 对象进入工作台治理视图。", "source_coverage_governance_view_only_no_import", "owner_pending", "Recommended A: governance view only; field dictionary and runtime import remain gated."],
-  ["OMSWMS-002", "OMS/WMS Candidate Extension Object 建模", "oms_wms_candidate_extension_objects", "确认 WarehouseTask、SerialNumber、InventoryTransaction、InventoryPosition 作为候选扩展对象进入草稿建模。", "candidate_object_modeling_only_no_runtime_import", "owner_pending", "Recommended A: draft object extension; owner approval required before runtime import."],
-  ["OMSWMS-003", "OMS/WMS 字段类支撑风险雷达", "oms_wms_field_class_risk_radar", "确认 OMS/WMS 字段类可支撑风险雷达展示，同时暂缓真实业务行入库。", "field_class_only_no_business_rows_no_runtime_import", "owner_pending", "Recommended A: field-class only; no business detail rows."],
-  ["OMSWMS-004", "OMS/WMS Export/API Lineage 入库前置门禁", "oms_wms_export_api_lineage_gate", "确认每个字段类补齐 export/API lineage 后才允许进入正式 runtime import。", "export_api_lineage_required_before_runtime_import", "owner_pending", "Recommended A: lineage required before runtime import."],
-  ["RUNTIME-IMPORT-001", "Runtime Import Scope 授权", "runtime_import_scope", "确认第一阶段仅授权 88 个 runtime_projection 字段作为生产可见治理元数据；不包含业务明细行、源系统 API 调用或外部写回。", "metadata_runtime_projection_only_no_business_rows_no_external_write", "owner_pending", "Recommended A: metadata-only runtime projection; business row import remains gated."],
-  ["RUNTIME-IMPORT-002", "Sensitive Operational Identifier 策略", "runtime_import_sensitive_identifier_policy", "确认第一阶段排除 sensitive_operational_identifier 字段；敏感运营标识不进入本轮 runtime metadata projection。", "no_sensitive_identifiers_first_stage", "owner_pending", "Recommended A: exclude sensitive operational identifiers from first-stage runtime metadata projection."],
-  ["RUNTIME-IMPORT-003", "Risk Threshold Activation 策略", "runtime_import_threshold_activation_policy", "确认风险阈值继续保持 draft-only；仅在 owner 后续确认后再进入 operational scoring。", "thresholds_draft_only_no_operational_scoring", "owner_pending", "Recommended A: keep thresholds draft-only until owner-approved values exist."]
-].forEach(([id, insight_title, linked_metric_id, recommendation, action_boundary, status, review_note]) => {
-  insert("decision_logs", { id, insight_title, linked_metric_id, recommendation, action_boundary, status, review_note });
+  ["decision_1", "断货风险治理建议", "metric", "SCM-MECE-L3-126", "对断货损失金额高且可售覆盖不足的 SKU 发起补货/调拨评审任务。", "suggestion_review_replay", "review_pending", "Action remains suggestion + approval + replay; no ERP write-back."],
+  ["decision_2", "库存资金效率治理建议", "metric", "SCM-MECE-L3-036", "对全链条库存资金周转天数恶化的品类发起库存结构复盘。", "suggestion_review_replay", "draft", "Requires finance owner confirmation."],
+  ["decision_3", "SKU 映射风险治理建议", "metric", "SCM-MECE-L3-137", "对未匹配计划库存数量创建主数据修复任务。", "suggestion_review_replay", "review_pending", "Requires data governance owner approval."],
+  ["OMSWMS-001", "OMS/WMS Source Coverage 对象入治理视图", "governance_subject", "oms_wms_source_coverage_objects", "确认 SKU、InventoryBatch、SalesOrder、CostEvent 作为第一批 source coverage 对象进入工作台治理视图。", "source_coverage_governance_view_only_no_import", "owner_pending", "Recommended A: governance view only; field dictionary and runtime import remain gated."],
+  ["OMSWMS-002", "OMS/WMS Candidate Extension Object 建模", "governance_subject", "oms_wms_candidate_extension_objects", "确认 WarehouseTask、SerialNumber、InventoryTransaction、InventoryPosition 作为候选扩展对象进入草稿建模。", "candidate_object_modeling_only_no_runtime_import", "owner_pending", "Recommended A: draft object extension; owner approval required before runtime import."],
+  ["OMSWMS-003", "OMS/WMS 字段类支撑风险雷达", "governance_subject", "oms_wms_field_class_risk_radar", "确认 OMS/WMS 字段类可支撑风险雷达展示，同时暂缓真实业务行入库。", "field_class_only_no_business_rows_no_runtime_import", "owner_pending", "Recommended A: field-class only; no business detail rows."],
+  ["OMSWMS-004", "OMS/WMS Export/API Lineage 入库前置门禁", "governance_subject", "oms_wms_export_api_lineage_gate", "确认每个字段类补齐 export/API lineage 后才允许进入正式 runtime import。", "export_api_lineage_required_before_runtime_import", "owner_pending", "Recommended A: lineage required before runtime import."],
+  ["RUNTIME-IMPORT-001", "Runtime Import Scope 授权", "governance_subject", "runtime_import_scope", "确认第一阶段仅授权 88 个 runtime_projection 字段作为生产可见治理元数据；不包含业务明细行、源系统 API 调用或外部写回。", "metadata_runtime_projection_only_no_business_rows_no_external_write", "owner_pending", "Recommended A: metadata-only runtime projection; business row import remains gated."],
+  ["RUNTIME-IMPORT-002", "Sensitive Operational Identifier 策略", "governance_subject", "runtime_import_sensitive_identifier_policy", "确认第一阶段排除 sensitive_operational_identifier 字段；敏感运营标识不进入本轮 runtime metadata projection。", "no_sensitive_identifiers_first_stage", "owner_pending", "Recommended A: exclude sensitive operational identifiers from first-stage runtime metadata projection."],
+  ["RUNTIME-IMPORT-003", "Risk Threshold Activation 策略", "governance_subject", "runtime_import_threshold_activation_policy", "确认风险阈值继续保持 draft-only；仅在 owner 后续确认后再进入 operational scoring。", "thresholds_draft_only_no_operational_scoring", "owner_pending", "Recommended A: keep thresholds draft-only until owner-approved values exist."]
+].forEach(([id, insight_title, referenceType, referenceValue, recommendation, action_boundary, status, review_note]) => {
+  insert("decision_logs", {
+    id,
+    insight_title,
+    linked_metric_id: referenceType === "metric" ? referenceValue : "",
+    recommendation,
+    action_boundary,
+    status,
+    review_note
+  });
+  if (referenceType !== "metric") {
+    insert("decision_subject_refs", { decision_id: id, subject_ref: referenceValue, subject_type: referenceType });
+  }
 });
 
 [
@@ -1129,7 +1383,10 @@ const aipScenarios = [
     target_object_type: "inventory_batch",
     target_object_id: "batch_fba_negative_available",
     linked_metric_ids: ["business_available_qty", "inventory_sync_delay_minutes"],
-    linked_knowledge_card_ids: ["business-supply-chain-card-0144", "erp-supplement-draft-card-0004"],
+    linked_knowledge_card_ids: [
+      knowledgeCardIdForPath("business-supply-chain", "operations/scenario-cards/fba-negative-available-inventory-scenario-draft-20260618.md"),
+      knowledgeCardIdForPath("erp-supplement-draft", "erp-object-dictionary-draft-20260620.md")
+    ],
     linked_recommendation_card_ids: ["rec_fba_negative_available_seed"],
     diagnostic_question: "FBA 可用库存为负是否代表规则错误，还是业务预占/同步延迟/平台调整导致？",
     decision_boundary: "manual_review_required_no_erp_writeback",
@@ -1147,7 +1404,10 @@ const aipScenarios = [
     target_object_type: "inventory_batch",
     target_object_id: "batch_stockout_risk_s12",
     linked_metric_ids: ["sku_oos_rate", "stockout_loss_amount", "business_available_qty"],
-    linked_knowledge_card_ids: ["business-supply-chain-card-0001", "business-supply-chain-card-0002"],
+    linked_knowledge_card_ids: [
+      knowledgeCardIdForPath("business-supply-chain", "bi-field-extraction/classification/bi-field-to-business-kb-classification-register-draft-20260618.md"),
+      knowledgeCardIdForPath("business-supply-chain", "bi-field-extraction/metric-system-foundation/bi-field-dim-fact-candidate-model-draft-20260618.md")
+    ],
     linked_recommendation_card_ids: ["rec_stockout_risk_seed"],
     diagnostic_question: "核心 SKU 是否需要补货、调拨或活动节奏调整？",
     decision_boundary: "approval_required_before_action_task",
@@ -1165,7 +1425,10 @@ const aipScenarios = [
     target_object_type: "inventory_batch",
     target_object_id: "batch_aged_overstock_warmer",
     linked_metric_ids: ["full_chain_turnover_days_amount", "business_available_qty"],
-    linked_knowledge_card_ids: ["business-supply-chain-card-0144", "business-supply-chain-card-0145"],
+    linked_knowledge_card_ids: [
+      knowledgeCardIdForPath("business-supply-chain", "operations/scenario-cards/fba-negative-available-inventory-scenario-draft-20260618.md"),
+      knowledgeCardIdForPath("business-supply-chain", "operations/scenario-cards/last-mile-cost-rate-anomaly-scenario-draft-20260618.md")
+    ],
     linked_recommendation_card_ids: ["rec_aged_inventory_seed"],
     diagnostic_question: "库龄/超储风险是否需要清库、调拨、促销或冻结补货？",
     decision_boundary: "suggestion_review_replay_only_no_writeback",
@@ -1196,55 +1459,17 @@ aipScenarios.forEach((record) => {
   insert("audit_events", { id, event_type, target_type, target_id, actor, payload, created_at: new Date().toISOString() });
 });
 
-const knowledgeDomains = [
-  {
-    id: "jijia-scm-main",
-    name: "积加 SCM 主知识库",
-    theme: "scm-system-main",
-    root: resolve(root, "../../analysis/jijia-scm-knowledge-base-draft-20260604"),
-    status: "active",
-    evidence_level: "draft-source-visible",
-    description: "积加计划、采购、仓库、物流四模块的业务逻辑、字段、指标、血缘和实施设计。"
-  },
-  {
-    id: "stocking-rules",
-    name: "备货库存规则知识库",
-    theme: "stocking-inventory-rules",
-    root: resolve(root, "../../analysis/stocking-inventory-rules-knowledge-base-draft-20260604"),
-    status: "active",
-    evidence_level: "draft-rule-extract",
-    description: "备货库存规划规则、平台规则、数据来源、指标口径和与积加 SCM 的一致性映射。"
-  },
-  {
-    id: "business-supply-chain",
-    name: "跨境电商供应链业务知识库",
-    theme: "business-supply-chain",
-    root: resolve(root, "../../analysis/business-supply-chain-knowledge-base-draft-20260616"),
-    status: "active",
-    evidence_level: "draft-business-extraction",
-    description: "跨境电商供应链业务方法论、BI 字段、指标体系、书籍萃取和多源 crosswalk。"
-  },
-  {
-    id: "erp-supplement-draft",
-    name: "路特 ERP 说明书补充知识库",
-    theme: "erp-supplement",
-    root: resolve(root, "../../analysis/lute-erp-alidocs-knowledge-base-draft-20260620"),
-    status: "draft",
-    evidence_level: "browser-visible-draft",
-    description: "ERP/企业服务平台可见文档萃取，当前只作为候选证据，不进入 certified evidence。"
-  }
-];
-
 function walkMarkdownFiles(dir) {
   if (!existsSync(dir)) return [];
-  const entries = readdirSync(dir).sort();
+  const entries = readdirSync(dir, { withFileTypes: true })
+    .sort((left, right) => left.name.localeCompare(right.name));
   const files = [];
   entries.forEach((entry) => {
-    const fullPath = resolve(dir, entry);
-    const stat = statSync(fullPath);
-    if (stat.isDirectory()) {
+    if (entry.isSymbolicLink()) return;
+    const fullPath = resolve(dir, entry.name);
+    if (entry.isDirectory()) {
       files.push(...walkMarkdownFiles(fullPath));
-    } else if (stat.isFile() && fullPath.endsWith(".md")) {
+    } else if (entry.isFile() && entry.name.endsWith(".md")) {
       files.push(fullPath);
     }
   });
@@ -1317,10 +1542,10 @@ function extractTitle(text, filePath) {
 function inferTopic(filePath, text) {
   const source = `${filePath} ${text.slice(0, 1200)}`.toLowerCase();
   if (/warehouse|库存|仓库|库龄|inventory/.test(source)) return "inventory-and-warehouse";
-  if (/purchase|采购|供应商|supplier|po/.test(source)) return "procurement-and-supply";
+  if (/purchase|采购|供应商|supplier|\bpo\b/.test(source)) return "procurement-and-supply";
   if (/logistics|物流|shipment|头程|运输|carrier/.test(source)) return "logistics-and-fulfillment";
   if (/plan|备货|预测|forecast|补货/.test(source)) return "planning-and-replenishment";
-  if (/metric|指标|bi|字段|field|dimension|维度/.test(source)) return "metrics-and-data";
+  if (/metric|指标|\bbi\b|字段|field|dimension|维度/.test(source)) return "metrics-and-data";
   if (/rule|规则|审批|validation|qa|governance/.test(source)) return "rules-and-governance";
   return "general-supply-chain";
 }
@@ -1331,7 +1556,7 @@ function inferRefs(text) {
     ["sku", /sku|msku|fnsku|asin|商品/],
     ["listing", /listing|店铺|站点|销售/],
     ["supplier", /supplier|供应商/],
-    ["po", /po|采购订单/],
+    ["po", /\bpo\b|采购订单/],
     ["warehouse", /warehouse|仓库|库位/],
     ["inventory_batch", /batch|批次|库存|库龄/],
     ["shipment", /shipment|货件|头程|物流|运输/],
@@ -1360,11 +1585,11 @@ function inferRefs(text) {
   };
 }
 
-function chunkText(text, maxChunks = 4, chunkSize = 900) {
+function chunkText(text, chunkSize = 900) {
   const clean = redactWorkstationPaths(stripMarkdown(text));
   const chunks = [];
   let start = 0;
-  while (start < clean.length && chunks.length < maxChunks) {
+  while (start < clean.length) {
     while (start < clean.length && /\s/.test(clean[start])) start += 1;
     if (start >= clean.length) break;
     const target = Math.min(start + chunkSize, clean.length);
@@ -1389,6 +1614,7 @@ function chunkText(text, maxChunks = 4, chunkSize = 900) {
 let knowledgeCardCount = 0;
 let knowledgeChunkCount = 0;
 let knowledgeCrosswalkCount = 0;
+const importedKnowledgeCardIds = new Set();
 
 knowledgeDomains.forEach((domain) => {
   const files = walkMarkdownFiles(domain.root);
@@ -1396,7 +1622,7 @@ knowledgeDomains.forEach((domain) => {
     id: domain.id,
     name: domain.name,
     theme: domain.theme,
-    source_path: portableSourcePath(domain.root),
+    source_path: portableSourcePath(domain.root, domain),
     status: domain.status,
     evidence_level: domain.evidence_level,
     description: domain.description,
@@ -1407,19 +1633,24 @@ knowledgeDomains.forEach((domain) => {
   let domainCardCount = 0;
   let domainChunkCount = 0;
   let domainCrosswalkCount = 0;
-  files.forEach((filePath, fileIndex) => {
+  files.forEach((filePath) => {
     const raw = readFileSync(filePath, "utf8");
     const title = extractTitle(raw, filePath);
     const clean = redactWorkstationPaths(stripMarkdown(raw));
     const topic = inferTopic(filePath, raw);
     const refs = inferRefs(`${filePath} ${raw}`);
-    const cardId = `${domain.id}-card-${String(fileIndex + 1).padStart(4, "0")}`;
+    const domainRelativePath = normalizeKnowledgeRelativePath(relative(domain.root, filePath));
+    const cardId = knowledgeCardIdForPath(domain.id, domainRelativePath);
+    if (importedKnowledgeCardIds.has(cardId)) {
+      throw new Error(`Duplicate knowledge-card ID generated: ${cardId}`);
+    }
+    importedKnowledgeCardIds.add(cardId);
     insert("knowledge_cards", {
       id: cardId,
       domain_id: domain.id,
       title,
       topic,
-      source_path: portableSourcePath(filePath),
+      source_path: portableSourcePath(filePath, domain),
       source_section: title,
       summary: clean.slice(0, 360),
       object_refs: JSON.stringify(refs.objectRefs),
@@ -1440,7 +1671,7 @@ knowledgeDomains.forEach((domain) => {
         text: chunk,
         keywords: JSON.stringify([...refs.objectRefs, ...refs.metricRefs, topic]),
         evidence_level: domain.evidence_level,
-        source_path: portableSourcePath(filePath)
+        source_path: portableSourcePath(filePath, domain)
       }, ["text"]);
       knowledgeChunkCount += 1;
       domainChunkCount += 1;
@@ -1466,6 +1697,34 @@ knowledgeDomains.forEach((domain) => {
 
 for (const migration of importMigrations) {
   db.exec(migration.sql);
+}
+
+const unresolvedKnowledgeCardReferences = Number(db.prepare(`
+  WITH referenced_cards AS (
+    SELECT CAST(linked.value AS TEXT) AS card_id
+    FROM aip_scenarios AS scenario
+    JOIN json_each(scenario.linked_knowledge_card_ids) AS linked
+    UNION ALL
+    SELECT CAST(linked.value AS TEXT) AS card_id
+    FROM recommendation_cards AS recommendation
+    JOIN json_each(recommendation.linked_knowledge_card_ids) AS linked
+    UNION ALL
+    SELECT CAST(linked.value AS TEXT) AS card_id
+    FROM agent_traces AS trace
+    JOIN json_each(trace.matched_knowledge_cards) AS linked
+    UNION ALL
+    SELECT substr(CAST(linked.value AS TEXT), length('knowledge:') + 1) AS card_id
+    FROM agent_runs AS agent_run
+    JOIN json_each(agent_run.input_refs) AS linked
+    WHERE CAST(linked.value AS TEXT) LIKE 'knowledge:%'
+  )
+  SELECT COUNT(*) AS count
+  FROM referenced_cards AS referenced
+  LEFT JOIN knowledge_cards AS card ON card.id = referenced.card_id
+  WHERE referenced.card_id = '' OR card.id IS NULL
+`).get().count);
+if (unresolvedKnowledgeCardReferences !== 0) {
+  throw new Error(`Generated SQLite contains ${unresolvedKnowledgeCardReferences} unresolved knowledge-card references.`);
 }
 
 function tableRowCount(tableName) {

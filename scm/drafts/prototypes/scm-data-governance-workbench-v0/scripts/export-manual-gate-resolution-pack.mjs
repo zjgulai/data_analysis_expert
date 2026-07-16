@@ -15,6 +15,29 @@ const outputPaths = {
   receiptTemplateDir: process.env.SCM_MANUAL_GATE_RECEIPT_DIR || join(root, "tmp", "outputs", "manual-gate-receipt-templates-20260630")
 };
 
+function assertSafeOutputPaths() {
+  const sourceDatabase = resolve(dbPath);
+  const outputFiles = [
+    outputPaths.ownerSignoff,
+    outputPaths.fieldMapping,
+    outputPaths.sceiWeight,
+    outputPaths.receiptIntake,
+    outputPaths.summary
+  ].map((path) => resolve(path));
+
+  if (outputFiles.includes(sourceDatabase)) {
+    throw new Error("output_path_matches_source_database");
+  }
+  if (new Set(outputFiles).size !== outputFiles.length) {
+    throw new Error("duplicate_output_file_path");
+  }
+  if (resolve(outputPaths.ownerPacketDir) === resolve(outputPaths.receiptTemplateDir)) {
+    throw new Error("packet_and_receipt_directories_must_differ");
+  }
+}
+
+assertSafeOutputPaths();
+
 function portablePath(path) {
   const fromRoot = relative(root, resolve(path));
   if (fromRoot === "") return ".";
@@ -30,7 +53,10 @@ function ensureParent(path) {
 
 function csvEscape(value) {
   const text = value == null ? "" : String(value);
-  return /[",\n\r]/.test(text) ? `"${text.replaceAll("\"", "\"\"")}"` : text;
+  const safeText = /^[\t ]*[=+\-@]/.test(text) ? `'${text}` : text;
+  return /[",\n\r]/.test(safeText)
+    ? `"${safeText.replaceAll("\"", "\"\"")}"`
+    : safeText;
 }
 
 function toCsv(rows, columns) {
@@ -252,7 +278,10 @@ for (const [packetOwner, rows] of fieldMappingByOwner.entries()) {
   addPacketRows(packetOwner, "field_mapping", rows);
 }
 
-addPacketRows("供应链数据治理 Owner", "scei_weight_source", sceiWeightRows);
+const readySceiWeightRows = sceiTaskRows.length ? sceiWeightRows : [];
+if (readySceiWeightRows.length) {
+  addPacketRows("供应链数据治理 Owner", "scei_weight_source", readySceiWeightRows);
+}
 
 const ownerBuckets = all(
   db,
@@ -262,7 +291,10 @@ const ownerBuckets = all(
      AND (
        (task_type='owner_signoff' AND status IN ('未发起','待确认'))
        OR (task_type='field_mapping' AND status IN ('未发起','待确认'))
-       OR id='aip_20260627_d_p1_05_scei_weight_source_required'
+       OR (
+         id='aip_20260627_d_p1_05_scei_weight_source_required'
+         AND status='owner_decision_packet_ready'
+       )
      )
    GROUP BY owner, task_type, status
    ORDER BY owner, task_type, status`

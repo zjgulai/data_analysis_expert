@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, useId, useRef, type ReactNode } from "react";
 import { cellValue, columnLabels } from "../shared/ui";
 import { LedgerList } from "./detailPrimitives";
 
@@ -36,15 +36,78 @@ export function DetailDrawerFrame({
   onClose: () => void;
   children: ReactNode;
 }) {
+  const dialogRef = useRef<HTMLElement | null>(null);
+  const previousActiveElementRef = useRef<HTMLElement | null>(null);
+  const onCloseRef = useRef(onClose);
+  const titleId = useId();
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return undefined;
+    const dialogElement = dialog as HTMLElement;
+    previousActiveElementRef.current = document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null;
+    const focusableElements = () => Array.from(dialogElement.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )).filter((element) => !element.hasAttribute("hidden"));
+    const initialFocus = focusableElements()[0] || dialogElement;
+    initialFocus.focus();
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onCloseRef.current();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const elements = focusableElements();
+      if (!elements.length) {
+        event.preventDefault();
+        dialogElement.focus();
+        return;
+      }
+      const first = elements[0];
+      const last = elements[elements.length - 1];
+      const active = document.activeElement;
+      if (event.shiftKey && (active === first || !dialogElement.contains(active))) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (active === last || !dialogElement.contains(active))) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      const previous = previousActiveElementRef.current;
+      if (previous?.isConnected) previous.focus();
+    };
+  }, []);
+
   return (
     <div className="drawerOverlay" onClick={onClose}>
-      <aside className="detailDrawer" onClick={(event) => event.stopPropagation()}>
+      <aside
+        ref={dialogRef}
+        className="detailDrawer"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        tabIndex={-1}
+        onClick={(event) => event.stopPropagation()}
+      >
         <div className="drawerHead">
           <div>
             <p className="eyebrow">{targetType}</p>
-            <h2>{title}</h2>
+            <h2 id={titleId}>{title}</h2>
           </div>
-          <button className="ghostButton" onClick={onClose}>关闭</button>
+          <button type="button" className="ghostButton" onClick={onClose}>关闭</button>
         </div>
         {children}
       </aside>

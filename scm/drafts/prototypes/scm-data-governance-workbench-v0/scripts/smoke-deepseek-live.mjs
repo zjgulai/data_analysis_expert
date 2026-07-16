@@ -19,7 +19,10 @@ function redactSecretLike(value) {
   return String(value || "")
     .replace(/sk-[A-Za-z0-9_-]{8,}/g, "[REDACTED_SECRET]")
     .replace(/Bearer\s+[A-Za-z0-9._-]+/gi, "Bearer [REDACTED_SECRET]")
-    .replace(/x-api-key\s*[:=]\s*[A-Za-z0-9._-]+/gi, "x-api-key=[REDACTED_SECRET]");
+    .replace(
+      /(["']?x-api-key["']?\s*[:=]\s*["']?)[^"',\s}\]]+/gi,
+      "$1[REDACTED_SECRET]"
+    );
 }
 
 function redactObject(value) {
@@ -36,7 +39,10 @@ function assert(condition, message) {
 function assertNoSecretLeak(serializedEvidence) {
   assert(!/sk-[A-Za-z0-9_-]{8,}/.test(serializedEvidence), "evidence must not contain secret-like sk token");
   assert(!/Bearer\s+[A-Za-z0-9._-]+/i.test(serializedEvidence), "evidence must not contain bearer token");
-  assert(!/x-api-key\s*[:=]\s*[A-Za-z0-9._-]+/i.test(serializedEvidence), "evidence must not contain x-api-key value");
+  assert(
+    !/["']?x-api-key["']?\s*[:=]\s*["']?(?!\[REDACTED_SECRET\])[^"',\s}\]]+/i.test(serializedEvidence),
+    "evidence must not contain x-api-key value"
+  );
 }
 
 function buildStatusEndpointPayload(status, overrides = {}) {

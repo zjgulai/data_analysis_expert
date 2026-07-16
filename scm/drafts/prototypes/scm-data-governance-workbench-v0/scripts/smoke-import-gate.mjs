@@ -1,6 +1,6 @@
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -11,10 +11,25 @@ const scriptDir = dirname(fileURLToPath(import.meta.url));
 const sourceAppRoot = resolve(scriptDir, "..");
 const sourceDatabasePath = join(sourceAppRoot, "data", "governance_workbench.sqlite");
 const sandboxRepositoryRoot = mkdtempSync(join(tmpdir(), "scm-import-gate-"));
+const sandboxExternalRoot = mkdtempSync(join(tmpdir(), "scm-import-gate-external-"));
 const sandboxRoot = join(sandboxRepositoryRoot, "scm", "drafts", "prototypes", "scm-data-governance-workbench-v0");
 const sandboxScriptDir = join(sandboxRoot, "scripts");
 const sandboxDatabasePath = join(sandboxRoot, "data", "governance_workbench.sqlite");
 const metricBlueprintFile = "supply-chain-metric-system-l0-l3-blueprint-mece-v2-20260618.json";
+const fieldMappingFile = "supply-chain-metric-stage2-field-mapping-template-20260618.csv";
+const p0SignoffFile = "supply-chain-metric-mece-v2-p0-owner-signoff-task-list-20260618.csv";
+const knowledgeDomainFixtureRoots = {
+  jijia: join(sandboxExternalRoot, "jijia"),
+  stockingRules: join(sandboxExternalRoot, "stocking-rules"),
+  businessSupplyChain: join(sandboxExternalRoot, "business-supply-chain"),
+  erpSupplement: join(sandboxExternalRoot, "erp-supplement")
+};
+const knowledgeDomainEnv = {
+  SCM_KNOWLEDGE_JIJIA_ROOT: knowledgeDomainFixtureRoots.jijia,
+  SCM_KNOWLEDGE_STOCKING_RULES_ROOT: knowledgeDomainFixtureRoots.stockingRules,
+  SCM_KNOWLEDGE_BUSINESS_SUPPLY_CHAIN_ROOT: knowledgeDomainFixtureRoots.businessSupplyChain,
+  SCM_KNOWLEDGE_ERP_SUPPLEMENT_ROOT: knowledgeDomainFixtureRoots.erpSupplement
+};
 const loop3Rows = {
   action_tasks: ["action_loop3_20260701_finance_cost_tail_warehouse_return"],
   agent_traces: ["trace_loop3_20260701_finance_cost_tail_warehouse_return"],
@@ -31,6 +46,15 @@ const loop3Rows = {
 
 function hashFile(path) {
   return createHash("sha256").update(readFileSync(path)).digest("hex");
+}
+
+function importEnvironment(overrides = {}) {
+  return { ...process.env, ...knowledgeDomainEnv, ...overrides };
+}
+
+function writeMarkdown(path, title, body = "fixture knowledge") {
+  mkdirSync(dirname(path), { recursive: true });
+  writeFileSync(path, `# ${title}\n\n${body}\n`, "utf8");
 }
 
 function quoteIdentifier(value) {
@@ -61,16 +85,65 @@ let gateSummary;
 let rebuiltPersonalPathHits = null;
 let rebuiltRawPersonalPathHits = null;
 let rebuiltKnowledgePathFixtureVerified = false;
+let stableKnowledgeCardIdVerified = false;
+let stableKnowledgeCardIdBefore = null;
 try {
   mkdirSync(join(sandboxRepositoryRoot, ".git"), { recursive: true });
   cpSync(join(sourceAppRoot, "scripts"), sandboxScriptDir, { recursive: true });
   cpSync(join(sourceAppRoot, "data"), join(sandboxRoot, "data"), { recursive: true });
   cpSync(join(sourceAppRoot, "migrations"), join(sandboxRoot, "migrations"), { recursive: true });
 
+  writeMarkdown(join(knowledgeDomainFixtureRoots.jijia, "fixture.md"), "Jijia fixture");
+  writeMarkdown(join(knowledgeDomainFixtureRoots.stockingRules, "fixture.md"), "Stocking rules fixture");
+  writeMarkdown(
+    join(knowledgeDomainFixtureRoots.businessSupplyChain, "bi-field-extraction", "classification", "bi-field-to-business-kb-classification-register-draft-20260618.md"),
+    "BI 字段到业务知识库分类登记"
+  );
+  writeMarkdown(
+    join(knowledgeDomainFixtureRoots.businessSupplyChain, "bi-field-extraction", "metric-system-foundation", "bi-field-dim-fact-candidate-model-draft-20260618.md"),
+    "BI 字段维表事实表候选模型"
+  );
+  writeMarkdown(
+    join(knowledgeDomainFixtureRoots.businessSupplyChain, "operations", "scenario-cards", "fba-negative-available-inventory-scenario-draft-20260618.md"),
+    "FBA 可用库存为负场景诊断"
+  );
+  writeMarkdown(
+    join(knowledgeDomainFixtureRoots.businessSupplyChain, "operations", "scenario-cards", "last-mile-cost-rate-anomaly-scenario-draft-20260618.md"),
+    "尾程费率异常诊断场景"
+  );
+  writeMarkdown(
+    join(knowledgeDomainFixtureRoots.businessSupplyChain, "methodology", "framework-cards", "three-lines-forecast-inventory-execution-draft-20260617.md"),
+    "三道防线：预测-库存-执行"
+  );
+  writeMarkdown(
+    join(knowledgeDomainFixtureRoots.businessSupplyChain, "metrics-and-data", "algorithm-cards", "safety-stock-rop-algorithm-draft-20260617.md"),
+    "安全库存与 ROP 算法卡"
+  );
+  writeMarkdown(
+    join(knowledgeDomainFixtureRoots.businessSupplyChain, "metrics-and-data", "data-model-cards", "dwt-fulfillment-stability-data-model-draft-20260617.md"),
+    "dwt_fulfillment_stability 履约稳定主题宽表"
+  );
+  writeMarkdown(
+    join(knowledgeDomainFixtureRoots.businessSupplyChain, "operations", "workflow-node-cards", "last-mile-node-draft-20260617.md"),
+    "履约尾程节点"
+  );
+  writeMarkdown(
+    join(knowledgeDomainFixtureRoots.businessSupplyChain, "operations", "workflow-node-cards", "raw-book-012-new-commerce-logistics-network-node-draft-20260618.md"),
+    "RAW-BOOK-012 新商业物流履约网络节点卡"
+  );
+  writeMarkdown(
+    join(knowledgeDomainFixtureRoots.stockingRules, "validation-and-implementation-plan-draft-20260604.md"),
+    "备货库存规则核验与实施计划"
+  );
+  writeMarkdown(
+    join(knowledgeDomainFixtureRoots.erpSupplement, "erp-object-dictionary-draft-20260620.md"),
+    "路特 ERP 对象字典候选"
+  );
+
   const sandboxHashBefore = hashFile(sandboxDatabasePath);
   const result = spawnSync(process.execPath, [join(sandboxScriptDir, "import-assets.mjs")], {
     cwd: sandboxRoot,
-    env: { ...process.env, SCM_DATABASE_REBUILD_AUTHORIZED: "" },
+    env: importEnvironment({ SCM_DATABASE_REBUILD_AUTHORIZED: "" }),
     encoding: "utf8"
   });
   const output = `${result.stdout || ""}\n${result.stderr || ""}`;
@@ -84,12 +157,11 @@ try {
 
   const missingSourceResult = spawnSync(process.execPath, [join(sandboxScriptDir, "import-assets.mjs")], {
     cwd: sandboxRoot,
-    env: {
-      ...process.env,
+    env: importEnvironment({
       SCM_DATABASE_REBUILD_AUTHORIZED: "1",
       SCM_WORKBENCH_IMPORT_SOURCE_ROOT: join(sandboxRoot, "missing-primary-source"),
       SCM_IMPORT_SOURCE_ROOT: join(sandboxRoot, "missing-secondary-source")
-    },
+    }),
     encoding: "utf8"
   });
   const missingSourceOutput = `${missingSourceResult.stdout || ""}\n${missingSourceResult.stderr || ""}`;
@@ -108,15 +180,55 @@ try {
   mkdirSync(secondarySource, { recursive: true });
   writeFileSync(join(primarySource, metricBlueprintFile), "{}\n");
   writeFileSync(join(secondarySource, metricBlueprintFile), "{}\n");
+  const invalidOverrideSource = join(sandboxRoot, "invalid-explicit-source");
+  const invalidOverrideResult = spawnSync(process.execPath, [join(sandboxScriptDir, "import-assets.mjs")], {
+    cwd: sandboxRoot,
+    env: importEnvironment({
+      SCM_DATABASE_REBUILD_AUTHORIZED: "1",
+      SCM_IMPORT_PREFLIGHT_ONLY: "1",
+      SCM_WORKBENCH_IMPORT_SOURCE_ROOT: invalidOverrideSource,
+      SCM_IMPORT_SOURCE_ROOT: secondarySource
+    }),
+    encoding: "utf8"
+  });
+  const invalidOverrideOutput = `${invalidOverrideResult.stdout || ""}\n${invalidOverrideResult.stderr || ""}`;
+  if (invalidOverrideResult.status !== 2) {
+    failures.push(`invalid explicit source override must block instead of falling back, got ${invalidOverrideResult.status}`);
+  }
+  if (!invalidOverrideOutput.includes("blocked_source_required")) {
+    failures.push("invalid explicit source override must emit blocked_source_required");
+  }
+  if (!invalidOverrideOutput.includes(invalidOverrideSource)) {
+    failures.push("invalid explicit source override must report the rejected source");
+  }
+  const readOnlyPreflightResult = spawnSync(process.execPath, [join(sandboxScriptDir, "import-assets.mjs")], {
+    cwd: sandboxRoot,
+    env: importEnvironment({
+      SCM_DATABASE_REBUILD_AUTHORIZED: "",
+      SCM_IMPORT_PREFLIGHT_ONLY: "1",
+      SCM_WORKBENCH_IMPORT_SOURCE_ROOT: primarySource,
+      SCM_IMPORT_SOURCE_ROOT: ""
+    }),
+    encoding: "utf8"
+  });
+  const readOnlyPreflightOutput = `${readOnlyPreflightResult.stdout || ""}\n${readOnlyPreflightResult.stderr || ""}`;
+  if (readOnlyPreflightResult.status !== 0) {
+    failures.push(`read-only source preflight must not require rebuild authorization, got ${readOnlyPreflightResult.status}`);
+  }
+  if (!readOnlyPreflightOutput.includes("preflight_ok")) {
+    failures.push("read-only source preflight must emit preflight_ok without rebuild authorization");
+  }
+  if (sandboxHashBefore !== hashFile(sandboxDatabasePath)) {
+    failures.push("read-only source preflight without rebuild authorization must preserve the sandbox SQLite hash");
+  }
   const precedenceResult = spawnSync(process.execPath, [join(sandboxScriptDir, "import-assets.mjs")], {
     cwd: sandboxRoot,
-    env: {
-      ...process.env,
+    env: importEnvironment({
       SCM_DATABASE_REBUILD_AUTHORIZED: "1",
       SCM_IMPORT_PREFLIGHT_ONLY: "1",
       SCM_WORKBENCH_IMPORT_SOURCE_ROOT: primarySource,
       SCM_IMPORT_SOURCE_ROOT: secondarySource
-    },
+    }),
     encoding: "utf8"
   });
   const precedenceOutput = `${precedenceResult.stdout || ""}\n${precedenceResult.stderr || ""}`;
@@ -129,13 +241,132 @@ try {
   if (sandboxHashBefore !== hashFile(sandboxDatabasePath)) failures.push("source-only preflight must preserve the sandbox SQLite hash");
   if (!existsSync(join(primarySource, metricBlueprintFile))) failures.push("source-only preflight must not mutate source fixtures");
 
+  const missingKnowledgeRoot = join(sandboxExternalRoot, "missing-business-knowledge");
+  const missingKnowledgeResult = spawnSync(process.execPath, [join(sandboxScriptDir, "import-assets.mjs")], {
+    cwd: sandboxRoot,
+    env: importEnvironment({
+      SCM_IMPORT_PREFLIGHT_ONLY: "1",
+      SCM_WORKBENCH_IMPORT_SOURCE_ROOT: primarySource,
+      SCM_KNOWLEDGE_BUSINESS_SUPPLY_CHAIN_ROOT: missingKnowledgeRoot
+    }),
+    encoding: "utf8"
+  });
+  const missingKnowledgeOutput = `${missingKnowledgeResult.stdout || ""}\n${missingKnowledgeResult.stderr || ""}`;
+  if (missingKnowledgeResult.status !== 2) {
+    failures.push(`missing configured knowledge domain must block preflight, got ${missingKnowledgeResult.status}`);
+  }
+  if (!missingKnowledgeOutput.includes("blocked_knowledge_domain_required")) {
+    failures.push("missing configured knowledge domain must emit blocked_knowledge_domain_required");
+  }
+  if (sandboxHashBefore !== hashFile(sandboxDatabasePath)) {
+    failures.push("missing knowledge-domain preflight must preserve the sandbox SQLite hash");
+  }
+
+  const emptyKnowledgeRoot = join(sandboxExternalRoot, "empty-business-knowledge");
+  mkdirSync(emptyKnowledgeRoot, { recursive: true });
+  const emptyKnowledgeResult = spawnSync(process.execPath, [join(sandboxScriptDir, "import-assets.mjs")], {
+    cwd: sandboxRoot,
+    env: importEnvironment({
+      SCM_IMPORT_PREFLIGHT_ONLY: "1",
+      SCM_WORKBENCH_IMPORT_SOURCE_ROOT: primarySource,
+      SCM_KNOWLEDGE_BUSINESS_SUPPLY_CHAIN_ROOT: emptyKnowledgeRoot
+    }),
+    encoding: "utf8"
+  });
+  const emptyKnowledgeOutput = `${emptyKnowledgeResult.stdout || ""}\n${emptyKnowledgeResult.stderr || ""}`;
+  if (emptyKnowledgeResult.status !== 2) {
+    failures.push(`empty configured knowledge domain must block preflight, got ${emptyKnowledgeResult.status}`);
+  }
+  if (!emptyKnowledgeOutput.includes("blocked_knowledge_domain_required")) {
+    failures.push("empty configured knowledge domain must emit blocked_knowledge_domain_required");
+  }
+
   const rebuildSource = join(sandboxRoot, "authorized-rebuild-source");
   mkdirSync(rebuildSource, { recursive: true });
-  writeFileSync(join(rebuildSource, metricBlueprintFile), `${JSON.stringify({ metrics: [] }, null, 2)}\n`);
-  const knowledgeFixtureRoot = resolve(sandboxRoot, "../../analysis/jijia-scm-knowledge-base-draft-20260604");
+  writeFileSync(join(rebuildSource, metricBlueprintFile), `${JSON.stringify({
+    metrics: [{
+      metric_id: "SCM-MECE-L3-116",
+      metric_code: "stockout_loss_amount",
+      name: "断货损失金额",
+      level: "L3",
+      l1_domain: "库存风险",
+      l2_group: "缺货损失",
+      formula: "pending_owner_definition",
+      grain: "period + channel + country + category + sku",
+      direction: "lower_better",
+      source_status: "blueprint_node",
+      definition: "Owner and field mapping remain pending in this fixture."
+    }, {
+      metric_id: "SCM-MECE-L3-077",
+      metric_code: "supply_chain_total_cost_rate",
+      name: "供应链总成本率",
+      level: "L3",
+      l1_domain: "成本财务与资金效率",
+      l2_group: "总成本与节点成本",
+      formula: "total supply chain cost / sales amount",
+      grain: "period + channel + country + category + sku",
+      direction: "lower_better",
+      source_status: "migration_reference_fixture",
+      definition: "Loop 3 finance decision metric reference fixture."
+    }, {
+      metric_id: "SCM-MECE-L3-036",
+      metric_code: "full_chain_turnover_days_amount",
+      name: "全链条库存资金周转天数",
+      level: "L3",
+      l1_domain: "成本财务与资金效率",
+      l2_group: "库存资金效率",
+      formula: "inventory amount / daily cost",
+      grain: "channel + country + category + sku + period",
+      direction: "lower_better",
+      source_status: "decision_reference_fixture",
+      definition: "Seed decision metric reference fixture."
+    }, {
+      metric_id: "SCM-MECE-L3-126",
+      metric_code: "transfer_success_rate",
+      name: "调拨成功率",
+      level: "L3",
+      l1_domain: "物流运输与履约体验",
+      l2_group: "头程与调拨运输",
+      formula: "completed transfers / planned transfers",
+      grain: "source warehouse + target warehouse + sku + period",
+      direction: "higher_better",
+      source_status: "decision_reference_fixture",
+      definition: "Seed decision metric reference fixture."
+    }, {
+      metric_id: "SCM-MECE-L3-137",
+      metric_code: "unmatched_planned_inventory_qty",
+      name: "未匹配计划库存数量",
+      level: "L3",
+      l1_domain: "主数据指标治理与数据质量",
+      l2_group: "SKU 映射质量",
+      formula: "unmatched planned inventory quantity",
+      grain: "source sku key type + platform + period",
+      direction: "lower_better",
+      source_status: "decision_reference_fixture",
+      definition: "Seed decision metric reference fixture."
+    }]
+  }, null, 2)}\n`);
+  writeFileSync(
+    join(rebuildSource, fieldMappingFile),
+    "metric_id,metric_code,name,owner,mapping_status,priority,source_fields,source_system,source_table,notes\n"
+      + "SCM-MECE-L3-116,stockout_loss_amount,断货损失金额,库存运营 Owner,待确认,P0,,,,fixture_pending_mapping\n"
+  );
+  writeFileSync(
+    join(rebuildSource, p0SignoffFile),
+    "metric_id,metric_code,name,owner,signoff_status,target_date,confirm_focus,notes\n"
+      + "SCM-MECE-L3-116,stockout_loss_amount,断货损失金额,库存运营 Owner,未发起,,confirm_denominator,fixture_pending_signoff\n"
+  );
+  const knowledgeFixtureRoot = knowledgeDomainFixtureRoots.jijia;
   const knowledgeFixtureFile = join(knowledgeFixtureRoot, "portable-path-fixture.md");
   const chunkBoundaryUrlFixtureFile = join(knowledgeFixtureRoot, "chunk-boundary-url-fixture.md");
   const chunkBoundaryNestedFixtureFile = join(knowledgeFixtureRoot, "chunk-boundary-nested-fixture.md");
+  const keywordBoundaryFixtureFile = join(knowledgeFixtureRoot, "keyword-boundary-fixture.md");
+  const standaloneKeywordFixtureFile = join(knowledgeFixtureRoot, "standalone-keyword-fixture.md");
+  const longDocumentFixtureFile = join(knowledgeFixtureRoot, "long-document-fixture.md");
+  const duplicateBasenameFixtureA = join(knowledgeFixtureRoot, "duplicate-a", "same-name.md");
+  const duplicateBasenameFixtureB = join(knowledgeFixtureRoot, "duplicate-b", "same-name.md");
+  const escapedKnowledgeFixtureFile = join(sandboxExternalRoot, "outside-configured-domain.md");
+  const escapedKnowledgeFixtureLink = join(knowledgeFixtureRoot, "escaped-domain-link.md");
   const windowsSeparator = String.fromCharCode(92);
   const workstationPathFixtures = {
     mac: ["", "Users", "smoke-user", "private", "evidence.md"].join("/"),
@@ -167,6 +398,10 @@ try {
     nestedFileUri: `file://${["", "Users", "alice", "Users", "bob"].join("/")}`,
     localhostFileUri: "file://localhost/Users/alice/private",
     loopbackFileUri: "file://127.0.0.1/home/alice/private",
+    vscodeWindowsUri: "vscode://file/C:/Users/Alice/project",
+    queryLinuxUri: "https://example.com/view?path=/home/alice/private&mode=read",
+    wrappedLowercaseMultiTokenRoot: `"${["C:", "Users", "jane doe"].join(windowsSeparator)}"`,
+    wrappedLongTitleRoot: `"${["C:", "Users", "Mary Jane Watson Smith"].join(windowsSeparator)}"`,
     exclamationMacRoot: `${["", "Users", "alice"].join("/")}!`,
     questionLinuxRoot: `${["", "home", "alice"].join("/")}?`,
     chinesePunctuationMacRoot: `${["", "Users", "alice"].join("/")}，。！？；：`,
@@ -219,6 +454,10 @@ try {
     nestedFileUri: `file://${workstationHomeRedaction}/Users/bob`,
     localhostFileUri: `file://localhost${workstationHomeRedaction}/private`,
     loopbackFileUri: `file://127.0.0.1${workstationHomeRedaction}/private`,
+    vscodeWindowsUri: `vscode://file/${workstationHomeRedaction}/project`,
+    queryLinuxUri: `https://example.com/view?path=${workstationHomeRedaction}/private&mode=read`,
+    wrappedLowercaseMultiTokenRoot: `"${workstationHomeRedaction}"`,
+    wrappedLongTitleRoot: `"${workstationHomeRedaction}"`,
     exclamationMacRoot: `${workstationHomeRedaction}!`,
     questionLinuxRoot: `${workstationHomeRedaction}?`,
     chinesePunctuationMacRoot: `${workstationHomeRedaction}，。！？；：`,
@@ -413,15 +652,33 @@ try {
   const chunkBoundaryNestedPath = `/Users/alice/${nestedBoundaryFiller}/Users/bob`;
   const expectedChunkBoundaryNestedPath = `${workstationHomeRedaction}/${nestedBoundaryFiller}/Users/bob`;
   writeFileSync(chunkBoundaryNestedFixtureFile, `# ${nestedBoundaryTitle}\n\n${chunkBoundaryNestedPath}\n`);
+  writeFileSync(
+    keywordBoundaryFixtureFile,
+    "# Keyword boundary fixture\n\nimport support policy combined exhibit\n",
+    "utf8"
+  );
+  writeFileSync(
+    standaloneKeywordFixtureFile,
+    "# Standalone keyword fixture\n\nPO and BI\n",
+    "utf8"
+  );
+  writeMarkdown(
+    longDocumentFixtureFile,
+    "Long document fixture",
+    `${Array.from({ length: 900 }, (_, index) => `token-${index}`).join(" ")} TAILSENTINEL`
+  );
+  writeMarkdown(duplicateBasenameFixtureA, "Duplicate basename A", "first hierarchy");
+  writeMarkdown(duplicateBasenameFixtureB, "Duplicate basename B", "second hierarchy");
+  writeMarkdown(escapedKnowledgeFixtureFile, "Escaped domain fixture", "must not be imported through a symlink");
+  symlinkSync(escapedKnowledgeFixtureFile, escapedKnowledgeFixtureLink);
   const rebuildResult = spawnSync(process.execPath, [join(sandboxScriptDir, "import-assets.mjs")], {
     cwd: sandboxRoot,
-    env: {
-      ...process.env,
+    env: importEnvironment({
       SCM_DATABASE_REBUILD_AUTHORIZED: "1",
       SCM_IMPORT_PREFLIGHT_ONLY: "",
       SCM_WORKBENCH_IMPORT_SOURCE_ROOT: rebuildSource,
       SCM_IMPORT_SOURCE_ROOT: ""
-    },
+    }),
     encoding: "utf8"
   });
   const rebuildOutput = `${rebuildResult.stdout || ""}\n${rebuildResult.stderr || ""}`;
@@ -441,11 +698,59 @@ try {
       const migrationCount = Number(rebuiltDb.prepare(`
         SELECT COUNT(*) AS count
         FROM schema_migrations
-        WHERE id IN ('20260627_b3_t7_additive_schema', '20260627_b6_rbac_action_tiering')
+        WHERE id IN (
+          '20260627_b3_t7_additive_schema',
+          '20260627_b6_rbac_action_tiering',
+          '20260701_loop3_business_closed_loops',
+          '20260716_certification_gate_remediation',
+          '20260716_decision_subject_reference'
+        )
       `).get().count);
-      if (migrationCount !== 2) failures.push(`authorized rebuild must replay additive schema migrations, got ${migrationCount}`);
+      if (migrationCount !== 5) failures.push(`authorized rebuild must replay all allowlisted migrations, got ${migrationCount}`);
       if (rebuiltDb.prepare("PRAGMA integrity_check").get().integrity_check !== "ok") {
         failures.push("authorized rebuild SQLite integrity_check must be ok");
+      }
+      const pendingMetric = rebuiltDb.prepare(`
+        SELECT lifecycle_status, certification_status
+        FROM metrics
+        WHERE id = 'SCM-MECE-L3-116'
+      `).get();
+      if (pendingMetric?.lifecycle_status !== "seed_only" || pendingMetric?.certification_status !== "not_certified") {
+        failures.push(`pending P0 metric must remain seed_only/not_certified, got ${JSON.stringify(pendingMetric || null)}`);
+      }
+      const pendingCertificationCount = Number(rebuiltDb.prepare(`
+        SELECT COUNT(*) AS count
+        FROM certifications
+        WHERE asset_ref = 'SCM-MECE-L3-116' AND status = 'certified'
+      `).get().count);
+      if (pendingCertificationCount !== 0) failures.push("pending P0 metric must not receive a certified ledger row");
+      const pendingChatbiContextCount = Number(rebuiltDb.prepare(`
+        SELECT COUNT(*) AS count
+        FROM chatbi_contexts
+        WHERE metric_id = 'SCM-MECE-L3-116'
+      `).get().count);
+      if (pendingChatbiContextCount !== 0) failures.push("pending P0 metric must not enter certified ChatBI contexts");
+      const invalidDecisionMetricRefs = Number(rebuiltDb.prepare(`
+        SELECT COUNT(*) AS count
+        FROM decision_logs d
+        WHERE d.linked_metric_id <> ''
+          AND NOT EXISTS (
+            SELECT 1 FROM metrics m
+            WHERE m.id = d.linked_metric_id OR m.code = d.linked_metric_id
+          )
+      `).get().count);
+      if (invalidDecisionMetricRefs !== 0) {
+        failures.push(`authorized rebuild must keep non-metric subjects out of linked_metric_id, got ${invalidDecisionMetricRefs}`);
+      }
+      const governanceSubjectCount = Number(rebuiltDb.prepare(`
+        SELECT COUNT(*) AS count
+        FROM decision_logs_with_subject
+        WHERE (id LIKE 'OMSWMS-%' OR id LIKE 'RUNTIME-IMPORT-%')
+          AND linked_metric_id = ''
+          AND subject_ref <> ''
+      `).get().count);
+      if (governanceSubjectCount !== 7) {
+        failures.push(`authorized rebuild must retain seven governance subject references, got ${governanceSubjectCount}`);
       }
       rebuiltPersonalPathHits = countDatabasePersonalPaths(rebuiltDb);
       if (rebuiltPersonalPathHits !== 0) {
@@ -457,11 +762,54 @@ try {
       }
       const domainFixture = rebuiltDb.prepare("SELECT source_path FROM knowledge_domains WHERE id = ?").get("jijia-scm-main");
       const cardFixture = rebuiltDb.prepare("SELECT id, source_path, summary FROM knowledge_cards WHERE title = ?").get("Portable path fixture");
+      stableKnowledgeCardIdBefore = cardFixture?.id || null;
+      const keywordBoundaryCard = rebuiltDb.prepare(
+        "SELECT topic, object_refs FROM knowledge_cards WHERE title = ?"
+      ).get("Keyword boundary fixture");
+      const standaloneKeywordCard = rebuiltDb.prepare(
+        "SELECT topic, object_refs FROM knowledge_cards WHERE title = ?"
+      ).get("Standalone keyword fixture");
+      const longDocumentCard = rebuiltDb.prepare(
+        "SELECT id FROM knowledge_cards WHERE title = ?"
+      ).get("Long document fixture");
+      const longDocumentChunks = longDocumentCard
+        ? rebuiltDb.prepare("SELECT chunk_index, text FROM knowledge_chunks WHERE card_id = ? ORDER BY chunk_index").all(longDocumentCard.id)
+        : [];
+      const duplicateBasenamePaths = rebuiltDb.prepare(
+        "SELECT source_path FROM knowledge_cards WHERE title IN (?, ?) ORDER BY source_path"
+      ).all("Duplicate basename A", "Duplicate basename B").map((row) => String(row.source_path));
+      const escapedDomainCardCount = Number(rebuiltDb.prepare(
+        "SELECT COUNT(*) AS count FROM knowledge_cards WHERE title = ?"
+      ).get("Escaped domain fixture").count);
+      const unresolvedKnowledgeReferences = Number(rebuiltDb.prepare(`
+        WITH knowledge_references AS (
+          SELECT CAST(linked.value AS TEXT) AS card_id
+          FROM aip_scenarios AS scenario, json_each(scenario.linked_knowledge_card_ids) AS linked
+          UNION ALL
+          SELECT CAST(linked.value AS TEXT)
+          FROM recommendation_cards AS recommendation, json_each(recommendation.linked_knowledge_card_ids) AS linked
+          UNION ALL
+          SELECT CAST(linked.value AS TEXT)
+          FROM agent_traces AS trace, json_each(trace.matched_knowledge_cards) AS linked
+          UNION ALL
+          SELECT substr(CAST(linked.value AS TEXT), length('knowledge:') + 1)
+          FROM agent_runs AS agent_run, json_each(agent_run.input_refs) AS linked
+          WHERE CAST(linked.value AS TEXT) LIKE 'knowledge:%'
+        )
+        SELECT COUNT(*) AS count
+        FROM knowledge_references AS reference
+        WHERE reference.card_id = ''
+           OR NOT EXISTS (SELECT 1 FROM knowledge_cards AS card WHERE card.id = reference.card_id)
+      `).get().count);
       const chunkFixtures = cardFixture
         ? rebuiltDb.prepare("SELECT text FROM knowledge_chunks WHERE card_id = ? ORDER BY chunk_index").all(cardFixture.id)
         : [];
-      const expectedDomainPath = "scm/drafts/analysis/jijia-scm-knowledge-base-draft-20260604";
+      const expectedDomainPath = "external-source/jijia-scm-main";
       const expectedCardPath = `${expectedDomainPath}/portable-path-fixture.md`;
+      const expectedDuplicatePaths = [
+        `${expectedDomainPath}/duplicate-a/same-name.md`,
+        `${expectedDomainPath}/duplicate-b/same-name.md`
+      ];
       const summaryFixture = String(cardFixture?.summary || "");
       const chunkTextFixture = chunkFixtures.map((chunk) => String(chunk.text || "")).join(" ");
       const actualImportedRedactions = (chunkTextFixture.match(/<workstation-home>/g) || []).length;
@@ -495,7 +843,28 @@ try {
         [boundaryCards.length === 2, "authorized rebuild must import both chunk-boundary fixtures"],
         [boundaryChunksPortable, "authorized rebuild must not split a benign URL or redacted nested path into a new workstation-home candidate"],
         [reconstructedUrlBoundary.includes(chunkBoundaryBenignUrl), "authorized rebuild must preserve the boundary-spanning benign URL"],
-        [reconstructedNestedBoundary.includes(expectedChunkBoundaryNestedPath), "authorized rebuild must preserve one idempotently redacted nested path across chunk boundaries"]
+        [reconstructedNestedBoundary.includes(expectedChunkBoundaryNestedPath), "authorized rebuild must preserve one idempotently redacted nested path across chunk boundaries"],
+        [longDocumentChunks.length > 4, `authorized rebuild must persist all long-document chunks, got ${longDocumentChunks.length}`],
+        [
+          longDocumentChunks.some((chunk) => String(chunk.text).includes("TAILSENTINEL")),
+          "authorized rebuild must retain content after the former four-chunk boundary"
+        ],
+        [
+          JSON.stringify(duplicateBasenamePaths) === JSON.stringify(expectedDuplicatePaths),
+          `external knowledge paths must preserve domain namespace and hierarchy, got ${JSON.stringify(duplicateBasenamePaths)}`
+        ],
+        [escapedDomainCardCount === 0, "knowledge import must skip Markdown symlinks that escape the configured domain"],
+        [unresolvedKnowledgeReferences === 0, `all active knowledge references must resolve, got ${unresolvedKnowledgeReferences}`],
+        [keywordBoundaryCard?.topic === "general-supply-chain", "short po/bi keywords must not match substrings in ordinary English words"],
+        [
+          !JSON.parse(keywordBoundaryCard?.object_refs || "[]").includes("po"),
+          "po object reference must require a standalone token"
+        ],
+        [
+          standaloneKeywordCard?.topic === "procurement-and-supply"
+            && JSON.parse(standaloneKeywordCard?.object_refs || "[]").includes("po"),
+          "standalone po keyword must retain procurement topic and object reference"
+        ]
       ];
       for (const [ok, message] of fixtureChecks) {
         if (!ok) failures.push(message);
@@ -503,6 +872,37 @@ try {
       rebuiltKnowledgePathFixtureVerified = fixtureChecks.every(([ok]) => ok);
     } finally {
       rebuiltDb.close();
+    }
+  }
+
+  const earlierKnowledgeFixtureFile = join(knowledgeFixtureRoot, "0000-earlier-fixture.md");
+  writeMarkdown(earlierKnowledgeFixtureFile, "Earlier fixture", "lexically earlier insertion");
+  const stableIdRebuildResult = spawnSync(process.execPath, [join(sandboxScriptDir, "import-assets.mjs")], {
+    cwd: sandboxRoot,
+    env: importEnvironment({
+      SCM_DATABASE_REBUILD_AUTHORIZED: "1",
+      SCM_IMPORT_PREFLIGHT_ONLY: "",
+      SCM_WORKBENCH_IMPORT_SOURCE_ROOT: rebuildSource,
+      SCM_IMPORT_SOURCE_ROOT: ""
+    }),
+    encoding: "utf8"
+  });
+  const stableIdRebuildOutput = `${stableIdRebuildResult.stdout || ""}\n${stableIdRebuildResult.stderr || ""}`;
+  if (stableIdRebuildResult.status !== 0) {
+    failures.push(`stable-id rebuild fixture must pass, got ${stableIdRebuildResult.status}: ${stableIdRebuildOutput.slice(-800)}`);
+  } else {
+    const stableIdDb = new DatabaseSync(sandboxDatabasePath, { readOnly: true });
+    try {
+      const stableKnowledgeCardIdAfter = stableIdDb.prepare(
+        "SELECT id FROM knowledge_cards WHERE title = ?"
+      ).get("Portable path fixture")?.id || null;
+      stableKnowledgeCardIdVerified = Boolean(stableKnowledgeCardIdBefore)
+        && stableKnowledgeCardIdAfter === stableKnowledgeCardIdBefore;
+      if (!stableKnowledgeCardIdVerified) {
+        failures.push(`knowledge card ID changed after earlier-file insertion: ${stableKnowledgeCardIdBefore} -> ${stableKnowledgeCardIdAfter}`);
+      }
+    } finally {
+      stableIdDb.close();
     }
   }
 
@@ -521,6 +921,7 @@ try {
     rebuiltPersonalPathHits,
     rebuiltRawPersonalPathHits,
     rebuiltKnowledgePathFixtureVerified,
+    stableKnowledgeCardIdVerified,
     sourceDatabaseHashPreserved: sourceHashBefore === hashFile(sourceDatabasePath),
     databaseRebuild: "disposable_fixture_only",
     sourceDatabaseRebuild: false,
@@ -533,6 +934,7 @@ try {
 let cleanupError;
 try {
   rmSync(sandboxRepositoryRoot, { recursive: true, force: true });
+  rmSync(sandboxExternalRoot, { recursive: true, force: true });
 } catch (error) {
   cleanupError = error instanceof Error ? error : new Error(String(error));
 }

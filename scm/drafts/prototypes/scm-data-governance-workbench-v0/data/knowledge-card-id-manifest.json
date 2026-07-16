@@ -1,0 +1,1647 @@
+{
+  "version": 1,
+  "identity": "domain_relative_path",
+  "fallback": "sha256_domain_relative_path_16",
+  "cards": [
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "bi-field-extraction/classification/bi-field-to-business-kb-classification-register-draft-20260618.md",
+      "id": "business-supply-chain-card-0001"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "bi-field-extraction/metric-system-foundation/bi-field-dim-fact-candidate-model-draft-20260618.md",
+      "id": "business-supply-chain-card-0002"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "bi-field-extraction/metric-system-foundation/bi-field-indicator-candidate-dictionary-draft-20260618.md",
+      "id": "business-supply-chain-card-0003"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "bi-field-extraction/qa/bi-field-extraction-qa-report-draft-20260618.md",
+      "id": "business-supply-chain-card-0004"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "bi-field-extraction/retrieval-index/bi-field-ai-retrieval-index-draft-20260618.md",
+      "id": "business-supply-chain-card-0005"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "bi-field-extraction/sheet-extractions/logistics-field-detail-sheet-extraction-draft-20260618.md",
+      "id": "business-supply-chain-card-0006"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "bi-field-extraction/sheet-extractions/overview-sheet-extraction-draft-20260618.md",
+      "id": "business-supply-chain-card-0007"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "bi-field-extraction/sheet-extractions/page-detail-sheet-extraction-draft-20260618.md",
+      "id": "business-supply-chain-card-0008"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "bi-field-extraction/sheet-extractions/plan-field-detail-sheet-extraction-draft-20260618.md",
+      "id": "business-supply-chain-card-0009"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "bi-field-extraction/sheet-extractions/procurement-field-detail-sheet-extraction-draft-20260618.md",
+      "id": "business-supply-chain-card-0010"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "bi-field-extraction/sheet-extractions/warehouse-field-detail-sheet-extraction-draft-20260618.md",
+      "id": "business-supply-chain-card-0011"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "bi-field-extraction/source-register/bi-field-source-register-draft-20260618.md",
+      "id": "business-supply-chain-card-0012"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "book-full-chain-management/book-metadata-draft-20260616.md",
+      "id": "business-supply-chain-card-0013"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "book-full-chain-management/case-library/case-card-template-draft-20260616.md",
+      "id": "business-supply-chain-card-0014"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "book-full-chain-management/chapter-synthesis/chapter-synthesis-template-draft-20260616.md",
+      "id": "business-supply-chain-card-0015"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "book-full-chain-management/concept-dictionary/concept-dictionary-draft-20260616.md",
+      "id": "business-supply-chain-card-0016"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "book-full-chain-management/metric-dictionary/metric-dictionary-draft-20260616.md",
+      "id": "business-supply-chain-card-0017"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "book-full-chain-management/page-extractions/page-extraction-template-draft-20260616.md",
+      "id": "business-supply-chain-card-0018"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "book-full-chain-management/process-models/process-model-template-draft-20260616.md",
+      "id": "business-supply-chain-card-0019"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "book-full-chain-management/qa/qa-checklist-draft-20260616.md",
+      "id": "business-supply-chain-card-0020"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "book-full-chain-management/scm-crosswalk/crosswalk-register-draft-20260616.md",
+      "id": "business-supply-chain-card-0021"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "crosswalk/jijia-scm-crosswalk/business-kb-to-jijia-scm-crosswalk-draft-20260617.md",
+      "id": "business-supply-chain-card-0022"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "crosswalk/stocking-inventory-crosswalk/business-kb-to-stocking-rules-crosswalk-draft-20260617.md",
+      "id": "business-supply-chain-card-0023"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "crosswalk/system-data-crosswalk/business-kb-to-system-data-crosswalk-draft-20260617.md",
+      "id": "business-supply-chain-card-0024"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "external-bi-index-system-extraction/analysis/bi-index-system-supply-chain-value-extraction-draft-20260618.md",
+      "id": "business-supply-chain-card-0025"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "external-bi-index-system-extraction/classification/bi-index-system-to-business-kb-classification-register-draft-20260618.md",
+      "id": "business-supply-chain-card-0026"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "external-bi-index-system-extraction/classification/bi-index-system-to-current-evidence-crosswalk-draft-20260618.md",
+      "id": "business-supply-chain-card-0027"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "external-bi-index-system-extraction/data-source-evidence/bi-index-system-supply-chain-data-resource-register-draft-20260618.md",
+      "id": "business-supply-chain-card-0028"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "external-bi-index-system-extraction/metric-dictionary/bi-index-system-supply-chain-normalized-metric-dictionary-draft-20260618.md",
+      "id": "business-supply-chain-card-0029"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "external-bi-index-system-extraction/metric-system-foundation/bi-index-system-core-supply-chain-indicator-blueprint-draft-20260618.md",
+      "id": "business-supply-chain-card-0030"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "external-bi-index-system-extraction/qa/bi-index-system-supply-chain-extraction-qa-report-draft-20260618.md",
+      "id": "business-supply-chain-card-0031"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "external-bi-index-system-extraction/raw-extraction/bi-index-system-supply-chain-source-summary-draft-20260618.md",
+      "id": "business-supply-chain-card-0032"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "external-bi-index-system-extraction/retrieval-index/bi-index-system-supply-chain-ai-retrieval-index-draft-20260618.md",
+      "id": "business-supply-chain-card-0033"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "external-bi-index-system-extraction/source-register/bi-index-system-supply-chain-source-register-draft-20260618.md",
+      "id": "business-supply-chain-card-0034"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "extraction-plan-draft-20260616.md",
+      "id": "business-supply-chain-card-0035"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "governance/agent-routing/agent-routing-map-draft-20260617.md",
+      "id": "business-supply-chain-card-0036"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "governance/cross-audit/supply-chain-kb-blueprint-repair-notes-draft-20260618.md",
+      "id": "business-supply-chain-card-0037"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "governance/cross-audit/supply-chain-kb-canonical-metric-rules-draft-20260618.md",
+      "id": "business-supply-chain-card-0038"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "governance/cross-audit/supply-chain-kb-cross-audit-ai-retrieval-index-draft-20260618.md",
+      "id": "business-supply-chain-card-0039"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "governance/cross-audit/supply-chain-kb-cross-audit-conflict-register-draft-20260618.md",
+      "id": "business-supply-chain-card-0040"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "governance/cross-audit/supply-chain-kb-cross-audit-qa-report-draft-20260618.md",
+      "id": "business-supply-chain-card-0041"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "governance/evidence-register/scenario-card-data-evidence-register-draft-20260618.md",
+      "id": "business-supply-chain-card-0042"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "governance/qa-reports/ref-books-kb-qa-report-draft-20260617.md",
+      "id": "business-supply-chain-card-0043"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "governance/qa-reports/scenario-cards-qa-report-draft-20260618.md",
+      "id": "business-supply-chain-card-0044"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "governance/retrieval-index/scenario-card-ai-retrieval-index-draft-20260618.md",
+      "id": "business-supply-chain-card-0045"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "governance/retrieval-index/scenario-card-ai-retrieval-smoke-report-draft-20260618.md",
+      "id": "business-supply-chain-card-0046"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "governance/source-manifest/ref-books-source-manifest-draft-20260617.md",
+      "id": "business-supply-chain-card-0047"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "index-draft-20260616.md",
+      "id": "business-supply-chain-card-0048"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "isolation-policy-draft-20260616.md",
+      "id": "business-supply-chain-card-0049"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "legacy-indicator-system-v1/analysis/legacy-indicator-system-v1-value-gap-assessment-draft-20260618.md",
+      "id": "business-supply-chain-card-0050"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "legacy-indicator-system-v1/classification/legacy-indicator-to-business-kb-classification-register-draft-20260618.md",
+      "id": "business-supply-chain-card-0051"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "legacy-indicator-system-v1/classification/legacy-indicator-to-current-evidence-crosswalk-draft-20260618.md",
+      "id": "business-supply-chain-card-0052"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "legacy-indicator-system-v1/experience-cards/legacy-indicator-system-v1-experience-extraction-draft-20260618.md",
+      "id": "business-supply-chain-card-0053"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "legacy-indicator-system-v1/metric-dictionary/legacy-indicator-system-v1-normalized-metric-dictionary-draft-20260618.md",
+      "id": "business-supply-chain-card-0054"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "legacy-indicator-system-v1/qa/legacy-indicator-system-v1-extraction-qa-report-draft-20260618.md",
+      "id": "business-supply-chain-card-0055"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "legacy-indicator-system-v1/raw-extraction/legacy-indicator-system-v1-topic-tree-draft-20260618.md",
+      "id": "business-supply-chain-card-0056"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "legacy-indicator-system-v1/retrieval-index/legacy-indicator-system-v1-ai-retrieval-index-draft-20260618.md",
+      "id": "business-supply-chain-card-0057"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "legacy-indicator-system-v1/source-register/legacy-indicator-system-v1-source-register-draft-20260618.md",
+      "id": "business-supply-chain-card-0058"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "methodology/framework-cards/complexity-light-asset-plan-control-draft-20260617.md",
+      "id": "business-supply-chain-card-0059"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "methodology/framework-cards/full-chain-total-cost-accounting-draft-20260617.md",
+      "id": "business-supply-chain-card-0060"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "methodology/framework-cards/raw-book-006-demand-inventory-execution-loop-draft-20260618.md",
+      "id": "business-supply-chain-card-0061"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "methodology/framework-cards/raw-book-007-practitioner-capability-framework-draft-20260618.md",
+      "id": "business-supply-chain-card-0062"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "methodology/framework-cards/raw-book-008-theory-difficulty-case-framework-draft-20260618.md",
+      "id": "business-supply-chain-card-0063"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "methodology/framework-cards/raw-book-009-cost-inventory-asset-diagnosis-draft-20260618.md",
+      "id": "business-supply-chain-card-0064"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "methodology/framework-cards/raw-book-013-supplier-lifecycle-framework-draft-20260618.md",
+      "id": "business-supply-chain-card-0065"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "methodology/framework-cards/raw-book-014-supplier-management-control-framework-draft-20260618.md",
+      "id": "business-supply-chain-card-0066"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "methodology/framework-cards/raw-book-demand-inventory-execution-framework-draft-20260618.md",
+      "id": "business-supply-chain-card-0067"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "methodology/framework-cards/raw-book-total-cost-inventory-asset-framework-draft-20260618.md",
+      "id": "business-supply-chain-card-0068"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "methodology/framework-cards/supplier-management-lifecycle-draft-20260617.md",
+      "id": "business-supply-chain-card-0069"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "methodology/framework-cards/supply-chain-big-data-theory-method-application-draft-20260617.md",
+      "id": "business-supply-chain-card-0070"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "methodology/framework-cards/supply-chain-overseas-nine-modules-draft-20260617.md",
+      "id": "business-supply-chain-card-0071"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "methodology/framework-cards/three-lines-forecast-inventory-execution-draft-20260617.md",
+      "id": "business-supply-chain-card-0072"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "methodology/framework-cards/warehouse-inventory-transport-three-problems-draft-20260617.md",
+      "id": "business-supply-chain-card-0073"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "methodology/principle-cards/cross-book-principles-draft-20260617.md",
+      "id": "business-supply-chain-card-0074"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "methodology/source-book-cards/book-20-to-33-summary-draft-20260617.md",
+      "id": "business-supply-chain-card-0075"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metric-system-blueprint/supply-chain-metric-blueprint-ai-retrieval-index-draft-20260618.md",
+      "id": "business-supply-chain-card-0076"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metric-system-blueprint/supply-chain-metric-blueprint-data-model-governance-map-draft-20260618.md",
+      "id": "business-supply-chain-card-0077"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metric-system-blueprint/supply-chain-metric-blueprint-mece-audit-report-draft-20260618.md",
+      "id": "business-supply-chain-card-0078"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metric-system-blueprint/supply-chain-metric-blueprint-mece-v2-ai-retrieval-index-draft-20260618.md",
+      "id": "business-supply-chain-card-0079"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metric-system-blueprint/supply-chain-metric-blueprint-mece-v2-changelog-draft-20260618.md",
+      "id": "business-supply-chain-card-0080"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metric-system-blueprint/supply-chain-metric-blueprint-mece-v2-implementation-roadmap-20260618.md",
+      "id": "business-supply-chain-card-0081"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metric-system-blueprint/supply-chain-metric-blueprint-mece-v2-qa-report-draft-20260618.md",
+      "id": "business-supply-chain-card-0082"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metric-system-blueprint/supply-chain-metric-blueprint-qa-report-draft-20260618.md",
+      "id": "business-supply-chain-card-0083"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metric-system-blueprint/supply-chain-metric-blueprint-source-crosswalk-draft-20260618.md",
+      "id": "business-supply-chain-card-0084"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metric-system-blueprint/supply-chain-metric-mece-v2-cross-domain-alignment-runbook-20260618.md",
+      "id": "business-supply-chain-card-0085"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metric-system-blueprint/supply-chain-metric-mece-v2-cross-domain-alignment-template-20260618.md",
+      "id": "business-supply-chain-card-0086"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metric-system-blueprint/supply-chain-metric-mece-v2-p0-owner-signoff-task-list-20260618.md",
+      "id": "business-supply-chain-card-0087"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metric-system-blueprint/supply-chain-metric-mece-v2-pre-production-checklist-20260618.md",
+      "id": "business-supply-chain-card-0088"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metric-system-blueprint/supply-chain-metric-stage2-field-mapping-template-20260618.md",
+      "id": "business-supply-chain-card-0089"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metric-system-blueprint/supply-chain-metric-system-l0-l3-blueprint-draft-20260618.md",
+      "id": "business-supply-chain-card-0090"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metric-system-blueprint/supply-chain-metric-system-l0-l3-blueprint-mece-v2-draft-20260618.md",
+      "id": "business-supply-chain-card-0091"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/algorithm-cards/demand-forecast-algorithm-draft-20260617.md",
+      "id": "business-supply-chain-card-0092"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/algorithm-cards/raw-book-001-uncertain-supply-chain-optimization-problem-draft-20260618.md",
+      "id": "business-supply-chain-card-0093"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/algorithm-cards/raw-book-002-integrated-logistics-planning-optimization-model-draft-20260618.md",
+      "id": "business-supply-chain-card-0094"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/algorithm-cards/raw-book-003-uncertain-procurement-optimization-model-draft-20260618.md",
+      "id": "business-supply-chain-card-0095"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/algorithm-cards/raw-book-004-distribution-delivery-optimization-model-draft-20260618.md",
+      "id": "business-supply-chain-card-0096"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/algorithm-cards/raw-book-005-supply-chain-data-mining-application-draft-20260618.md",
+      "id": "business-supply-chain-card-0097"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/algorithm-cards/raw-book-011-demand-forecast-feature-engineering-draft-20260618.md",
+      "id": "business-supply-chain-card-0098"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/algorithm-cards/raw-book-forecast-optimization-algorithm-card-draft-20260618.md",
+      "id": "business-supply-chain-card-0099"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/algorithm-cards/return-voc-warning-skills-algorithm-draft-20260617.md",
+      "id": "business-supply-chain-card-0100"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/algorithm-cards/safety-stock-rop-algorithm-draft-20260617.md",
+      "id": "business-supply-chain-card-0101"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/algorithm-cards/supplier-score-tco-algorithm-draft-20260617.md",
+      "id": "business-supply-chain-card-0102"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/algorithm-cards/transfer-optimization-algorithm-draft-20260617.md",
+      "id": "business-supply-chain-card-0103"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/dashboard-cards/inventory-health-dashboard-draft-20260617.md",
+      "id": "business-supply-chain-card-0104"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/dashboard-cards/reverse-logistics-dashboard-draft-20260617.md",
+      "id": "business-supply-chain-card-0105"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/dashboard-cards/supply-chain-cost-overview-dashboard-draft-20260617.md",
+      "id": "business-supply-chain-card-0106"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/data-model-cards/dwt-fulfillment-stability-data-model-draft-20260617.md",
+      "id": "business-supply-chain-card-0107"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/data-model-cards/dwt-inventory-health-data-model-draft-20260617.md",
+      "id": "business-supply-chain-card-0108"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/data-model-cards/dwt-reverse-logistics-data-model-draft-20260617.md",
+      "id": "business-supply-chain-card-0109"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/data-model-cards/dwt-supplier-performance-data-model-draft-20260617.md",
+      "id": "business-supply-chain-card-0110"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/data-model-cards/dwt-supply-chain-cost-data-model-draft-20260617.md",
+      "id": "business-supply-chain-card-0111"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/data-model-cards/raw-book-001-uncertain-optimization-data-requirement-draft-20260618.md",
+      "id": "business-supply-chain-card-0112"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/data-model-cards/raw-book-002-logistics-network-data-model-draft-20260618.md",
+      "id": "business-supply-chain-card-0113"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/data-model-cards/raw-book-004-distribution-network-data-model-draft-20260618.md",
+      "id": "business-supply-chain-card-0114"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/data-model-cards/raw-book-005-supply-chain-big-data-domain-model-draft-20260618.md",
+      "id": "business-supply-chain-card-0115"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/data-model-cards/raw-book-010-rolling-planning-data-model-draft-20260618.md",
+      "id": "business-supply-chain-card-0116"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/data-model-cards/raw-book-supply-chain-big-data-model-card-draft-20260618.md",
+      "id": "business-supply-chain-card-0117"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/formula-cards/first-mile-cost-formula-draft-20260617.md",
+      "id": "business-supply-chain-card-0118"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/formula-cards/full-chain-cost-offset-analysis-formula-draft-20260617.md",
+      "id": "business-supply-chain-card-0119"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/formula-cards/last-mile-cost-formula-draft-20260617.md",
+      "id": "business-supply-chain-card-0120"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/formula-cards/logistics-cost-l0-l3-formula-tree-draft-20260617.md",
+      "id": "business-supply-chain-card-0121"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/formula-cards/warehousing-cost-formula-draft-20260617.md",
+      "id": "business-supply-chain-card-0122"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/metric-cards/aged-inventory-ratio-metric-draft-20260617.md",
+      "id": "business-supply-chain-card-0123"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/metric-cards/first-mile-cost-rate-metric-draft-20260617.md",
+      "id": "business-supply-chain-card-0124"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/metric-cards/full-chain-turnover-days-metric-draft-20260617.md",
+      "id": "business-supply-chain-card-0125"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/metric-cards/last-mile-cost-rate-metric-draft-20260617.md",
+      "id": "business-supply-chain-card-0126"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/metric-cards/procurement-cost-reduction-rate-metric-draft-20260617.md",
+      "id": "business-supply-chain-card-0127"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/metric-cards/raw-book-001-uncertain-optimization-input-output-metrics-draft-20260618.md",
+      "id": "business-supply-chain-card-0128"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/metric-cards/raw-book-002-logistics-planning-input-constraint-metrics-draft-20260618.md",
+      "id": "business-supply-chain-card-0129"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/metric-cards/raw-book-003-procurement-risk-metric-card-draft-20260618.md",
+      "id": "business-supply-chain-card-0130"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/metric-cards/raw-book-004-distribution-delivery-input-output-metrics-draft-20260618.md",
+      "id": "business-supply-chain-card-0131"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/metric-cards/raw-book-006-inventory-planning-metric-card-draft-20260618.md",
+      "id": "business-supply-chain-card-0132"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/metric-cards/raw-book-007-supply-chain-maturity-metric-card-draft-20260618.md",
+      "id": "business-supply-chain-card-0133"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/metric-cards/raw-book-009-total-cost-metric-tree-draft-20260618.md",
+      "id": "business-supply-chain-card-0134"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/metric-cards/raw-book-011-forecast-backtest-metrics-draft-20260618.md",
+      "id": "business-supply-chain-card-0135"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/metric-cards/raw-book-012-warehouse-distribution-service-metric-card-draft-20260618.md",
+      "id": "business-supply-chain-card-0136"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/metric-cards/raw-book-013-procurement-tco-metric-card-draft-20260618.md",
+      "id": "business-supply-chain-card-0137"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/metric-cards/raw-book-014-procurement-cost-control-metric-card-draft-20260618.md",
+      "id": "business-supply-chain-card-0138"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/metric-cards/raw-book-inventory-procurement-logistics-metric-card-draft-20260618.md",
+      "id": "business-supply-chain-card-0139"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/metric-cards/return-sellable-recovery-rate-metric-draft-20260617.md",
+      "id": "business-supply-chain-card-0140"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/metric-cards/reverse-cost-rate-metric-draft-20260617.md",
+      "id": "business-supply-chain-card-0141"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "metrics-and-data/metric-cards/supply-chain-total-cost-rate-metric-draft-20260617.md",
+      "id": "business-supply-chain-card-0142"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/scenario-cards/aged-inventory-clearance-scenario-draft-20260618.md",
+      "id": "business-supply-chain-card-0143"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/scenario-cards/fba-negative-available-inventory-scenario-draft-20260618.md",
+      "id": "business-supply-chain-card-0144"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/scenario-cards/last-mile-cost-rate-anomaly-scenario-draft-20260618.md",
+      "id": "business-supply-chain-card-0145"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/scenario-cards/raw-book-008-supply-chain-difficulty-case-card-draft-20260618.md",
+      "id": "business-supply-chain-card-0146"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/scenario-cards/reverse-logistics-cost-attribution-scenario-draft-20260618.md",
+      "id": "business-supply-chain-card-0147"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/scenario-cards/total-supply-chain-cost-rate-anomaly-scenario-draft-20260618.md",
+      "id": "business-supply-chain-card-0148"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/scenario-cards/transfer-roi-candidate-scenario-draft-20260618.md",
+      "id": "business-supply-chain-card-0149"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/scenario-cards/zero-sales-with-cost-scenario-draft-20260618.md",
+      "id": "business-supply-chain-card-0150"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/sop-cards/forecast-backtest-calibration-sop-draft-20260617.md",
+      "id": "business-supply-chain-card-0151"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/sop-cards/inventory-aging-governance-sop-draft-20260617.md",
+      "id": "business-supply-chain-card-0152"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/sop-cards/metric-definition-change-sop-draft-20260617.md",
+      "id": "business-supply-chain-card-0153"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/sop-cards/raw-book-003-uncertain-procurement-scenario-sop-draft-20260618.md",
+      "id": "business-supply-chain-card-0154"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/sop-cards/raw-book-005-data-governance-metric-definition-sop-draft-20260618.md",
+      "id": "business-supply-chain-card-0155"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/sop-cards/raw-book-006-execution-feedback-sop-draft-20260618.md",
+      "id": "business-supply-chain-card-0156"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/sop-cards/raw-book-007-end-to-end-process-diagnosis-sop-draft-20260618.md",
+      "id": "business-supply-chain-card-0157"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/sop-cards/raw-book-008-theory-to-process-sop-draft-20260618.md",
+      "id": "business-supply-chain-card-0158"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/sop-cards/raw-book-009-complexity-light-asset-sop-draft-20260618.md",
+      "id": "business-supply-chain-card-0159"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/sop-cards/raw-book-010-planning-exception-escalation-sop-draft-20260618.md",
+      "id": "business-supply-chain-card-0160"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/sop-cards/raw-book-012-logistics-exception-response-sop-draft-20260618.md",
+      "id": "business-supply-chain-card-0161"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/sop-cards/raw-book-013-leadtime-moq-inventory-risk-sop-draft-20260618.md",
+      "id": "business-supply-chain-card-0162"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/sop-cards/raw-book-procurement-supplier-control-sop-draft-20260618.md",
+      "id": "business-supply-chain-card-0163"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/sop-cards/return-reason-attribution-sop-draft-20260617.md",
+      "id": "business-supply-chain-card-0164"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/sop-cards/transfer-candidate-pool-sop-draft-20260617.md",
+      "id": "business-supply-chain-card-0165"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/workflow-node-cards/demand-forecast-node-draft-20260617.md",
+      "id": "business-supply-chain-card-0166"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/workflow-node-cards/first-mile-node-draft-20260617.md",
+      "id": "business-supply-chain-card-0167"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/workflow-node-cards/last-mile-node-draft-20260617.md",
+      "id": "business-supply-chain-card-0168"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/workflow-node-cards/raw-book-001-robust-replenishment-decision-workflow-draft-20260618.md",
+      "id": "business-supply-chain-card-0169"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/workflow-node-cards/raw-book-002-integrated-logistics-planning-workflow-draft-20260618.md",
+      "id": "business-supply-chain-card-0170"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/workflow-node-cards/raw-book-004-distribution-routing-decision-workflow-draft-20260618.md",
+      "id": "business-supply-chain-card-0171"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/workflow-node-cards/raw-book-010-sop-cadence-workflow-draft-20260618.md",
+      "id": "business-supply-chain-card-0172"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/workflow-node-cards/raw-book-011-intelligent-forecast-deployment-workflow-draft-20260618.md",
+      "id": "business-supply-chain-card-0173"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/workflow-node-cards/raw-book-012-new-commerce-logistics-network-node-draft-20260618.md",
+      "id": "business-supply-chain-card-0174"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/workflow-node-cards/raw-book-014-procurement-process-control-workflow-draft-20260618.md",
+      "id": "business-supply-chain-card-0175"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/workflow-node-cards/raw-book-integrated-logistics-distribution-node-draft-20260618.md",
+      "id": "business-supply-chain-card-0176"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/workflow-node-cards/reverse-node-draft-20260617.md",
+      "id": "business-supply-chain-card-0177"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/workflow-node-cards/supply-planning-node-draft-20260617.md",
+      "id": "business-supply-chain-card-0178"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/workflow-node-cards/transfer-node-draft-20260617.md",
+      "id": "business-supply-chain-card-0179"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/workflow-node-cards/warehouse-network-node-draft-20260617.md",
+      "id": "business-supply-chain-card-0180"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "operations/workflow-node-cards/warehousing-node-draft-20260617.md",
+      "id": "business-supply-chain-card-0181"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-auth-gated-extraction-classification-plan-draft-20260618.md",
+      "id": "business-supply-chain-card-0182"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-authorized-full-extraction-implementation-plan-draft-20260618.md",
+      "id": "business-supply-chain-card-0183"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/book-outlines/RAW-BOOK-001-outline-draft-20260618.md",
+      "id": "business-supply-chain-card-0184"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/book-outlines/RAW-BOOK-002-outline-draft-20260618.md",
+      "id": "business-supply-chain-card-0185"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/book-outlines/RAW-BOOK-003-outline-draft-20260618.md",
+      "id": "business-supply-chain-card-0186"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/book-outlines/RAW-BOOK-004-outline-draft-20260618.md",
+      "id": "business-supply-chain-card-0187"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/book-outlines/RAW-BOOK-005-outline-draft-20260618.md",
+      "id": "business-supply-chain-card-0188"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/book-outlines/RAW-BOOK-006-outline-draft-20260618.md",
+      "id": "business-supply-chain-card-0189"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/book-outlines/RAW-BOOK-007-outline-draft-20260618.md",
+      "id": "business-supply-chain-card-0190"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/book-outlines/RAW-BOOK-008-outline-draft-20260618.md",
+      "id": "business-supply-chain-card-0191"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/book-outlines/RAW-BOOK-009-outline-draft-20260618.md",
+      "id": "business-supply-chain-card-0192"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/book-outlines/RAW-BOOK-010-outline-draft-20260618.md",
+      "id": "business-supply-chain-card-0193"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/book-outlines/RAW-BOOK-011-outline-draft-20260618.md",
+      "id": "business-supply-chain-card-0194"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/book-outlines/RAW-BOOK-012-outline-draft-20260618.md",
+      "id": "business-supply-chain-card-0195"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/book-outlines/RAW-BOOK-013-outline-draft-20260618.md",
+      "id": "business-supply-chain-card-0196"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/book-outlines/RAW-BOOK-014-outline-draft-20260618.md",
+      "id": "business-supply-chain-card-0197"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/chapter-synthesis/RAW-BOOK-001-chapter-synthesis-draft-20260618.md",
+      "id": "business-supply-chain-card-0198"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/chapter-synthesis/RAW-BOOK-002-chapter-synthesis-draft-20260618.md",
+      "id": "business-supply-chain-card-0199"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/chapter-synthesis/RAW-BOOK-003-chapter-synthesis-draft-20260618.md",
+      "id": "business-supply-chain-card-0200"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/chapter-synthesis/RAW-BOOK-004-chapter-synthesis-draft-20260618.md",
+      "id": "business-supply-chain-card-0201"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/chapter-synthesis/RAW-BOOK-005-chapter-synthesis-draft-20260618.md",
+      "id": "business-supply-chain-card-0202"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/chapter-synthesis/RAW-BOOK-006-chapter-synthesis-draft-20260618.md",
+      "id": "business-supply-chain-card-0203"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/chapter-synthesis/RAW-BOOK-007-chapter-synthesis-draft-20260618.md",
+      "id": "business-supply-chain-card-0204"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/chapter-synthesis/RAW-BOOK-008-chapter-synthesis-draft-20260618.md",
+      "id": "business-supply-chain-card-0205"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/chapter-synthesis/RAW-BOOK-009-chapter-synthesis-draft-20260618.md",
+      "id": "business-supply-chain-card-0206"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/chapter-synthesis/RAW-BOOK-010-chapter-synthesis-draft-20260618.md",
+      "id": "business-supply-chain-card-0207"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/chapter-synthesis/RAW-BOOK-011-chapter-synthesis-draft-20260618.md",
+      "id": "business-supply-chain-card-0208"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/chapter-synthesis/RAW-BOOK-012-chapter-synthesis-draft-20260618.md",
+      "id": "business-supply-chain-card-0209"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/chapter-synthesis/RAW-BOOK-013-chapter-synthesis-draft-20260618.md",
+      "id": "business-supply-chain-card-0210"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/chapter-synthesis/RAW-BOOK-014-chapter-synthesis-draft-20260618.md",
+      "id": "business-supply-chain-card-0211"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/crosswalk/raw-book-p0-granular-card-classification-register-draft-20260618.md",
+      "id": "business-supply-chain-card-0212"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/crosswalk/raw-book-p1-granular-card-classification-register-draft-20260618.md",
+      "id": "business-supply-chain-card-0213"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/crosswalk/raw-book-p2-algorithm-translation-classification-register-draft-20260618.md",
+      "id": "business-supply-chain-card-0214"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/crosswalk/raw-book-to-business-kb-classification-crosswalk-draft-20260618.md",
+      "id": "business-supply-chain-card-0215"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/crosswalk/raw-book-to-existing-knowledge-bases-crosswalk-draft-20260618.md",
+      "id": "business-supply-chain-card-0216"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/crosswalk/raw-book-to-jijia-scm-field-crosswalk-draft-20260618.md",
+      "id": "business-supply-chain-card-0217"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/crosswalk/raw-book-to-stocking-rules-field-crosswalk-draft-20260618.md",
+      "id": "business-supply-chain-card-0218"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/crosswalk/raw-book-to-system-data-field-crosswalk-draft-20260618.md",
+      "id": "business-supply-chain-card-0219"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/qa/raw-book-batch-0-qa-report-draft-20260618.md",
+      "id": "business-supply-chain-card-0220"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/qa/raw-book-field-level-crosswalk-qa-report-draft-20260618.md",
+      "id": "business-supply-chain-card-0221"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/qa/raw-book-kb-extraction-qa-report-draft-20260618.md",
+      "id": "business-supply-chain-card-0222"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/qa/raw-book-outline-parse-qa-report-draft-20260618.md",
+      "id": "business-supply-chain-card-0223"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/qa/raw-book-p0-granular-card-qa-report-draft-20260618.md",
+      "id": "business-supply-chain-card-0224"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/qa/raw-book-p1-granular-card-qa-report-draft-20260618.md",
+      "id": "business-supply-chain-card-0225"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/qa/raw-book-p2-algorithm-translation-qa-report-draft-20260618.md",
+      "id": "business-supply-chain-card-0226"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/qa/raw-book-unified-ai-retrieval-index-qa-report-draft-20260618.md",
+      "id": "business-supply-chain-card-0227"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/qa/raw-book-unified-ai-retrieval-smoke-qa-report-draft-20260618.md",
+      "id": "business-supply-chain-card-0228"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/retrieval-index/raw-book-classified-card-ai-retrieval-index-draft-20260618.md",
+      "id": "business-supply-chain-card-0229"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/retrieval-index/raw-book-field-crosswalk-ai-retrieval-index-draft-20260618.md",
+      "id": "business-supply-chain-card-0230"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/retrieval-index/raw-book-p0-granular-card-ai-retrieval-index-draft-20260618.md",
+      "id": "business-supply-chain-card-0231"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/retrieval-index/raw-book-p1-granular-card-ai-retrieval-index-draft-20260618.md",
+      "id": "business-supply-chain-card-0232"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/retrieval-index/raw-book-p2-algorithm-translation-ai-retrieval-index-draft-20260618.md",
+      "id": "business-supply-chain-card-0233"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/retrieval-index/raw-book-unified-ai-retrieval-index-draft-20260618.md",
+      "id": "business-supply-chain-card-0234"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/retrieval-index/raw-book-unified-ai-retrieval-smoke-report-draft-20260618.md",
+      "id": "business-supply-chain-card-0235"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/source-auth/raw-book-source-register-approved-draft-20260618.md",
+      "id": "business-supply-chain-card-0236"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/source-auth/raw-book-user-authorization-statement-draft-20260618.md",
+      "id": "business-supply-chain-card-0237"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/technical-profile/raw-book-parser-readiness-report-draft-20260618.md",
+      "id": "business-supply-chain-card-0238"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "raw-book-extraction/technical-profile/raw-book-technical-profile-draft-20260618.md",
+      "id": "business-supply-chain-card-0239"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "ref-books-extraction-classification-plan-draft-20260617.md",
+      "id": "business-supply-chain-card-0240"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "source-acquisition-research-draft-20260617.md",
+      "id": "business-supply-chain-card-0241"
+    },
+    {
+      "domainId": "business-supply-chain",
+      "relativePath": "source-register-draft-20260616.md",
+      "id": "business-supply-chain-card-0242"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "erp-business-process-dictionary-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0001"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "erp-field-candidate-dictionary-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0002"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "erp-metric-candidate-dictionary-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0003"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "erp-object-dictionary-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0004"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "erp-rule-candidate-dictionary-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0005"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "index-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0006"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "jijia-scm-crosswalk-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0007"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "logistics-channel-deep-extraction-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0008"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "logistics-channel-field-dictionary-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0009"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "logistics-channel-lineage-crosswalk-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0010"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "logistics-channel-metric-candidates-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0011"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "logistics-channel-rule-dictionary-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0012"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "promotion-gate-and-evidence-boundary-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0013"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/01-头程货件管理-087e703a-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0014"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/02-erp用户操作手册-基础资料与配置-99335603-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0015"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/03-erp用户使用操作手册-库存稽查-463c915c-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0016"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/04-设计中心-abe0e166-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0017"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/05-用研需求管理系统-如何提需求与查看报告-c45b9e89-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0018"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/06-品牌需求管理系统-540d3cd6-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0019"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/07-物流头程对账-5fb071dc-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0020"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/08-报关管理-5ef0d5c8-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0021"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/09-箱托工具-ff9011b4-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0022"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/10-自发货物流订单-493addf8-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0023"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/11-物流方式-9e85aa29-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0024"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/12-物流商管理-c154410d-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0025"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/13-物流渠道-1ee25a92-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0026"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/14-敏感品类型-7f318434-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0027"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/15-物流配置表-a4bd7863-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0028"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/16-头程物流跟踪-ad2c695e-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0029"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/17-fba发货单管理-546e05c6-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0030"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/18-海外仓货件管理-d88bcdfc-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0031"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/19-fba货件管理-dbff4da8-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0032"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/20-erp用户使用操作手册-shopify库存同步-79e59570-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0033"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/21-fba货件监控-c79fcc04-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0034"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/22-erp用户使用操作手册-库存概览与查询-f5d088bc-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0035"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/23-路特erp-采购板块-操作指引-fab22060-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0036"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/24-erp用户使用操作手册-财务-规则管理中心-3d3c80d4-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0037"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/25-erp用户使用操作手册-财务-业务单据及规则管理-78e9bf3a-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0038"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/26-推单监控平台操作指引-2f91f528-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0039"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/27-erp用户使用操作手册-财务-业务单据-oa付款单-75d47b4f-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0040"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/28-预算系统操作指引-1679e83d-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0041"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/29-销售-促销计划-7c9aee8d-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0042"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/30-销售-msrp管理-5415a9ba-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0043"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/31-erp用户使用操作手册-销售-渠道管理-1b1f15ff-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0044"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/32-erp用户使用操作手册-销售-内购订单-8b9c0d4a-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0045"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/33-erp用户使用操作手册-销售-领用管理-8817c508-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0046"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/34-erp用户使用操作手册-销售-红人订单-352258f2-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0047"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/35-kol系统用户使用操作手册-747fc689-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0048"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/36-erp用户使用操作手册-销售-b2b订单-e5f46a38-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0049"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/37-erp用户使用操作手册-客服-绩效和售后管理-bi看板-b4707f72-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0050"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/38-舆情系统说明-d6ff8935-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0051"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/39-erp用户使用操作手册-营销-营销活动-77a80126-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0052"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/40-erp用户使用操作手册-营销-内容运营-cc7161a9-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0053"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/41-erp用户使用操作手册-广告-1442f5ed-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0054"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/42-erp用户使用操作手册-营销-用户运营-23bf7612-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0055"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/43-新品机会在线使用手册-38d9315e-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0056"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "raw-visible-extracts/44-erp用户使用操作手册-路小特-3b96fc19-raw-visible-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0057"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "source-register-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0058"
+    },
+    {
+      "domainId": "erp-supplement-draft",
+      "relativePath": "stocking-rules-crosswalk-draft-20260620.md",
+      "id": "erp-supplement-draft-card-0059"
+    },
+    {
+      "domainId": "jijia-scm-main",
+      "relativePath": "alidocs-stocking-inventory-planning-raw-extract-draft-20260604.md",
+      "id": "jijia-scm-main-card-0001"
+    },
+    {
+      "domainId": "jijia-scm-main",
+      "relativePath": "alidocs-vs-jijia-scm-inventory-planning-difference-analysis-draft-20260604.md",
+      "id": "jijia-scm-main-card-0002"
+    },
+    {
+      "domainId": "jijia-scm-main",
+      "relativePath": "cross-module-lineage-draft-20260604.md",
+      "id": "jijia-scm-main-card-0003"
+    },
+    {
+      "domainId": "jijia-scm-main",
+      "relativePath": "database-and-knowledge-base-design-draft-20260604.md",
+      "id": "jijia-scm-main-card-0004"
+    },
+    {
+      "domainId": "jijia-scm-main",
+      "relativePath": "erp-field-validation-checklist-draft-20260604.md",
+      "id": "jijia-scm-main-card-0005"
+    },
+    {
+      "domainId": "jijia-scm-main",
+      "relativePath": "implementation-plan-draft-20260604.md",
+      "id": "jijia-scm-main-card-0006"
+    },
+    {
+      "domainId": "jijia-scm-main",
+      "relativePath": "index-draft-20260604.md",
+      "id": "jijia-scm-main-card-0007"
+    },
+    {
+      "domainId": "jijia-scm-main",
+      "relativePath": "metric-dictionary-draft-20260604.md",
+      "id": "jijia-scm-main-card-0008"
+    },
+    {
+      "domainId": "jijia-scm-main",
+      "relativePath": "module-logistics-draft-20260604.md",
+      "id": "jijia-scm-main-card-0009"
+    },
+    {
+      "domainId": "jijia-scm-main",
+      "relativePath": "module-plan-draft-20260604.md",
+      "id": "jijia-scm-main-card-0010"
+    },
+    {
+      "domainId": "jijia-scm-main",
+      "relativePath": "module-purchase-draft-20260604.md",
+      "id": "jijia-scm-main-card-0011"
+    },
+    {
+      "domainId": "jijia-scm-main",
+      "relativePath": "module-warehouse-draft-20260604.md",
+      "id": "jijia-scm-main-card-0012"
+    },
+    {
+      "domainId": "jijia-scm-main",
+      "relativePath": "source-map-draft-20260604.md",
+      "id": "jijia-scm-main-card-0013"
+    },
+    {
+      "domainId": "jijia-scm-main",
+      "relativePath": "warehouse-live-lineage-knowledge-base-plan-draft-20260604.md",
+      "id": "jijia-scm-main-card-0014"
+    },
+    {
+      "domainId": "jijia-scm-main",
+      "relativePath": "warehouse-live-metric-dictionary-draft-20260604.md",
+      "id": "jijia-scm-main-card-0015"
+    },
+    {
+      "domainId": "jijia-scm-main",
+      "relativePath": "warehouse-live-page-data-dictionary-draft-20260604.md",
+      "id": "jijia-scm-main-card-0016"
+    },
+    {
+      "domainId": "jijia-scm-main",
+      "relativePath": "warehouse-live-rerun-evidence-draft-20260604.md",
+      "id": "jijia-scm-main-card-0017"
+    },
+    {
+      "domainId": "stocking-rules",
+      "relativePath": "alidocs-stocking-inventory-planning-raw-extract-draft-20260604.md",
+      "id": "stocking-rules-card-0001"
+    },
+    {
+      "domainId": "stocking-rules",
+      "relativePath": "business-rules-overview-draft-20260604.md",
+      "id": "stocking-rules-card-0002"
+    },
+    {
+      "domainId": "stocking-rules",
+      "relativePath": "data-lineage-and-model-draft-20260604.md",
+      "id": "stocking-rules-card-0003"
+    },
+    {
+      "domainId": "stocking-rules",
+      "relativePath": "data-source-map-draft-20260604.md",
+      "id": "stocking-rules-card-0004"
+    },
+    {
+      "domainId": "stocking-rules",
+      "relativePath": "index-draft-20260604.md",
+      "id": "stocking-rules-card-0005"
+    },
+    {
+      "domainId": "stocking-rules",
+      "relativePath": "jijia-consistency-map-draft-20260604.md",
+      "id": "stocking-rules-card-0006"
+    },
+    {
+      "domainId": "stocking-rules",
+      "relativePath": "metric-dictionary-draft-20260604.md",
+      "id": "stocking-rules-card-0007"
+    },
+    {
+      "domainId": "stocking-rules",
+      "relativePath": "platform-rule-dictionary-draft-20260604.md",
+      "id": "stocking-rules-card-0008"
+    },
+    {
+      "domainId": "stocking-rules",
+      "relativePath": "source-evidence-boundary-draft-20260604.md",
+      "id": "stocking-rules-card-0009"
+    },
+    {
+      "domainId": "stocking-rules",
+      "relativePath": "validation-and-implementation-plan-draft-20260604.md",
+      "id": "stocking-rules-card-0010"
+    }
+  ]
+}

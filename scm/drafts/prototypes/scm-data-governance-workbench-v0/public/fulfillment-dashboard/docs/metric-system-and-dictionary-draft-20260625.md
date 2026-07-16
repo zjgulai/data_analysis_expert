@@ -57,8 +57,8 @@ boundary: local_analysis_only_no_production_write_no_provider_call
 
 | 指标 | 定义 | 分母/粒度 | 来源/字段 | 当前状态 |
 |---|---|---|---|---|
-| 原始总单量 | 平台订单量，已付款状态后的订单总量，包含已付款取消 | 平台单号去重 | `lute_os.t_erp_order.ref_no` | 可进入 V0 |
-| 拆分总单量 | 已付款有效自发货订单量，自发货异常状态也包括 | 系统自发货单号 | `lute_os.t_erp_order.erp_code` | 可进入 V0 |
+| 原始总单量 | 同一拆单分析群体内的拆分前有效平台订单量：已付款、进入有效自发货范围，排除已付款取消与拆单废弃 | 平台单号 `ref_no` 去重 | `lute_os.t_erp_order.ref_no` + `paid_flag`, `valid_self_fulfillment_flag`, `paid_cancelled_flag`, `split_abandoned_flag` | 可进入 V0 |
+| 拆分总单量 | 与原始总单量同一群体的拆分后有效自发货订单量；排除拆单废弃和已付款取消 | 系统自发货单号 `erp_code` 去重 | `lute_os.t_erp_order.erp_code` + 与分母相同的归一化状态标记 | 可进入 V0 |
 | 未审核单量 | 已付款未审核订单数量，异常状态订单也要展示 | 拆分总单量 | `order_status` + 审核状态 | 待确认状态码 |
 | 异常订单量 | 订单异常小状态数量 | 拆分总单量 | `order_status` 小状态映射 | 可进入 V0 |
 | 24h/48h 审单及时率 | 末次审核时间 - 付款时间小于阈值的单量 / 总有效订单 | 拆分总单量 | `pay_time`, `os_auth_time` | 多次审核日志待优化 |
@@ -70,7 +70,7 @@ boundary: local_analysis_only_no_production_write_no_provider_call
 | 3/5/10 天妥投率 | TMS 签收时间 - 发货时间小于阈值的包裹数 / 总发货包裹数 | 包裹/跟踪号 | `track_order_code`, `tms_sign_time` | TMS 为准 |
 | 累计妥投率 | 累计签收订单包裹数 / 总发货包裹数 | 包裹/跟踪号 | TMS `package_status`, `tms_sign_time` | TMS 为准 |
 | 超期未妥投率 | 发货时间大于 12 天仍未签收包裹数 / 总发货包裹数 | 包裹/跟踪号 | `send_time`, `tms_sign_time` | TMS 为准 |
-| 拆单率 | 有效自发货订单量 / 原始订单量 - 1 | 原始单号与拆分单号映射 | `ref_no`, `erp_code` | 可进入 V0 |
+| 拆单率 | `拆分后有效自发货订单量 / NULLIF(拆分前有效平台订单量, 0) - 1`；两端使用同一订单群体，分母为 0 时返回 `null` | 原始单号与拆分单号映射 | `ref_no`, `erp_code` + 同群体状态过滤 | 可进入 V0 |
 | 未发货率 | 未发货订单 / 总单量 | 拆分总单量 | `order_status`, `send_time` | 可进入 V0 |
 | 异常订单率 | 异常订单量 / 总单量 | 拆分总单量 | `order_status` 小状态 | 可进入 V0 |
 | 跨区发货率 | 目的国家/地区与实际发货仓所在国家/地区不一致 | 订单 + 发货仓 | `order_receive.country`, `warehouse.country_code` | 可进入 V0 |

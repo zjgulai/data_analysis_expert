@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { AnyRow } from "../shared/ui";
 import {
   AssetDetailSection,
@@ -145,63 +145,96 @@ export function DetailDrawer({
   const [assetDetail, setAssetDetail] = useState<AnyRow | null>(null);
   const [knowledgeDetail, setKnowledgeDetail] = useState<KnowledgeCardDetailPayload | null>(null);
   const [knowledgeSupport, setKnowledgeSupport] = useState<KnowledgeSupportPayload | null>(null);
+  const [writeError, setWriteError] = useState("");
+  const targetKey = `${targetType}:${targetId}`;
+  const selectionIdentity = row ? targetKey : "";
+  const activeSelectionRef = useRef({ identity: selectionIdentity, epoch: 0 });
+  const mountedRef = useRef(false);
 
-  async function refreshLedger() {
-    if (!targetId) return;
-    setLedger(await api<Ledger>(`/api/ledger/${encodeURIComponent(targetType)}/${encodeURIComponent(targetId)}`));
-  }
+  useLayoutEffect(() => {
+    activeSelectionRef.current = {
+      identity: selectionIdentity,
+      epoch: activeSelectionRef.current.epoch + 1
+    };
+  }, [selectionIdentity]);
 
   useEffect(() => {
-    if (!row || !targetId) return;
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+    setLedger(emptyLedger);
+    setObject360(null);
     setAssetDetail(null);
     setKnowledgeDetail(null);
     setKnowledgeSupport(null);
     setObjectInstance360(null);
-    refreshLedger().catch(() => setLedger(emptyLedger));
+    setWriteError("");
+    setSaving("");
+    if (!row || !targetId) return () => { active = false; };
+    api<Ledger>(`/api/ledger/${encodeURIComponent(targetType)}/${encodeURIComponent(targetId)}`)
+      .then((value) => { if (active) setLedger(value); })
+      .catch(() => { if (active) setLedger(emptyLedger); });
     if (targetType === "ontology_object") {
       api<Object360Payload>(`/api/ontology/object-360/${encodeURIComponent(targetId)}`)
-        .then(setObject360)
-        .catch(() => setObject360(null));
-    } else {
-      setObject360(null);
+        .then((value) => { if (active) setObject360(value); })
+        .catch(() => { if (active) setObject360(null); });
     }
     if (targetType === "object_instance") {
       api<ObjectInstance360Payload>(`/api/ontology/instances/${encodeURIComponent(targetId)}`)
-        .then(setObjectInstance360)
-        .catch(() => setObjectInstance360(null));
+        .then((value) => { if (active) setObjectInstance360(value); })
+        .catch(() => { if (active) setObjectInstance360(null); });
     }
     if (targetType === "metric") {
       api<AnyRow>(`/api/metrics/${encodeURIComponent(targetId)}`)
-        .then(setAssetDetail)
-        .catch(() => setAssetDetail(null));
+        .then((value) => { if (active) setAssetDetail(value); })
+        .catch(() => { if (active) setAssetDetail(null); });
     }
     if (targetType === "knowledge_card") {
       api<KnowledgeCardDetailPayload>(`/api/knowledge/cards/${encodeURIComponent(targetId)}`)
-        .then(setKnowledgeDetail)
-        .catch(() => setKnowledgeDetail(null));
+        .then((value) => { if (active) setKnowledgeDetail(value); })
+        .catch(() => { if (active) setKnowledgeDetail(null); });
     }
     if (targetType === "ontology_object" || targetType === "metric") {
       api<KnowledgeSupportPayload>(
         `/api/knowledge/support?targetType=${encodeURIComponent(targetType)}&targetId=${encodeURIComponent(targetId)}`
       )
-        .then(setKnowledgeSupport)
-        .catch(() => setKnowledgeSupport(null));
+        .then((value) => { if (active) setKnowledgeSupport(value); })
+        .catch(() => { if (active) setKnowledgeSupport(null); });
     }
-  }, [row, targetType, targetId]);
+    return () => {
+      active = false;
+    };
+  }, [row, targetType, targetId, api]);
 
   if (!row) return null;
 
   async function submit(path: string, payload: Record<string, unknown>, clear: () => void, mode: string) {
+    const requestTargetKey = targetKey;
+    const requestSelectionEpoch = activeSelectionRef.current.epoch;
+    const submissionIsCurrent = () => mountedRef.current
+      && activeSelectionRef.current.identity === requestTargetKey
+      && activeSelectionRef.current.epoch === requestSelectionEpoch;
+    setWriteError("");
     setSaving(mode);
     try {
       const result = await api<{ ledger: Ledger }>(path, {
         method: "POST",
         body: JSON.stringify({ targetType, targetId, ...payload })
       });
+      if (!submissionIsCurrent()) return;
       setLedger(result.ledger);
       clear();
+    } catch (error) {
+      if (!submissionIsCurrent()) return;
+      const detail = error instanceof Error ? error.message : String(error || "unknown error");
+      setWriteError(`保存失败：${detail.slice(0, 300)}`);
     } finally {
-      setSaving("");
+      if (submissionIsCurrent()) setSaving("");
     }
   }
 
@@ -219,8 +252,9 @@ export function DetailDrawer({
         knowledgeSupport={knowledgeSupport}
         onOpenLinkedAsset={onOpenLinkedAsset}
       />
-      <DetailLedgerWriteBoundary saving={saving} onSubmit={submit} />
-      <DetailRevisionProposalBoundary saving={saving} onSubmit={submit} />
+      {writeError ? <div className="drawerWriteError" role="alert">{writeError}</div> : null}
+      <DetailLedgerWriteBoundary key={`ledger:${targetKey}`} saving={saving} onSubmit={submit} />
+      <DetailRevisionProposalBoundary key={`revision:${targetKey}`} saving={saving} onSubmit={submit} />
       <LedgerHistorySection ledger={ledger} />
     </DetailDrawerFrame>
   );

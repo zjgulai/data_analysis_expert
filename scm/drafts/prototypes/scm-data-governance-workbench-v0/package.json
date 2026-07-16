@@ -15,15 +15,18 @@
     "check": "tsc --noEmit",
     "smoke:api": "node scripts/smoke-api.mjs",
     "smoke:database-gate": "node scripts/smoke-database-gate.mjs",
+    "smoke:fulfillment-contracts": "node scripts/smoke-fulfillment-contracts.mjs",
     "smoke:import-gate": "node scripts/smoke-import-gate.mjs",
     "smoke:manual-gate-receipts": "node scripts/smoke-manual-gate-receipts.mjs",
     "smoke:migration-gate": "node scripts/smoke-migration-gate.mjs",
     "smoke:path-contract": "node scripts/smoke-path-contract.mjs",
+    "smoke:preprod-boundaries": "node scripts/smoke-preprod-boundaries.mjs",
     "smoke:provider-gate": "node scripts/smoke-provider-gate.mjs",
     "smoke:deepseek-live": "node scripts/smoke-deepseek-live.mjs",
     "smoke:ui": "node scripts/smoke-ui.mjs",
     "smoke:readonly": "node scripts/smoke-readonly.mjs",
     "audit:ui-baseline": "node scripts/audit-ui-baseline.mjs",
+    "smoke:ui-target-boundary": "node scripts/smoke-ui-target-boundary.mjs",
     "preprod:check": "node scripts/preprod-check.mjs"
   },
   "dependencies": {

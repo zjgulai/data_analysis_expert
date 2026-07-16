@@ -3077,7 +3077,7 @@ function RoleWorkbenchesPanel({ module, onSelect }: { module: WorkbenchModule; o
   const latestRoleReviews = rolePayload.data.payload?.latestRoleReviews || [];
   const reviewedRoleIds = new Set(
     latestRoleReviews
-      .map((item: AnyRow) => String(item.linked_metric_id || "").replace("role_workbench.", ""))
+      .map((item: AnyRow) => String(item.subject_ref || item.linked_metric_id || "").replace("role_workbench.", ""))
       .filter(Boolean)
   );
   const liveModule = {
@@ -3266,7 +3266,7 @@ function RoleWorkbenchesPanel({ module, onSelect }: { module: WorkbenchModule; o
             </div>
             <Badge>{latestRoleReviews.length} 条记录</Badge>
           </div>
-          <DataTable rows={latestRoleReviews} columns={["id", "insight_title", "linked_metric_id", "status", "review_note"]} />
+          <DataTable rows={latestRoleReviews} columns={["id", "insight_title", "subject_ref", "status", "review_note"]} />
         </section>
       </div>
     </section>
@@ -3318,7 +3318,7 @@ function DecisionPanel({ module }: { module: WorkbenchModule }) {
           targetObjectType: "InventoryBatch",
           targetObjectId: "inventory_batch_fba_negative",
           linkedMetricIds: ["metric.business_available_inventory", "metric.fba_available_inventory"],
-          linkedKnowledgeCardIds: ["knowledge.fba_available_negative"],
+          linkedKnowledgeCardIds: ["business-supply-chain-card-0144"],
           businessImpact: "把负可用库存先作为异常样本进入治理闭环，复核平台预占、同步延迟、批次状态和数据质量缺口。",
           confidenceLevel: "sample_supported",
           riskLevel: "P0",

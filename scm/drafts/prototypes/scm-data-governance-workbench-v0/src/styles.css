@@ -2083,6 +2083,18 @@ tbody tr:hover td {
   margin-bottom: 12px;
 }
 
+.drawerWriteError {
+  margin-top: 16px;
+  padding: 10px 12px;
+  border: 1px solid var(--rose);
+  border-radius: 8px;
+  color: #8f2435;
+  background: var(--rose-soft);
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
 .detailGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

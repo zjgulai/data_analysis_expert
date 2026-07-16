@@ -252,7 +252,7 @@ export function RiskThresholdGovernancePanel({
               <p>{humanizeOperationalLabel(receipt.status)} · {humanizeBoundary(receipt.action_boundary)}</p>
             </div>
           ) : null}
-          <DataTable rows={data.latestThresholdReviews.slice(0, 5)} columns={["id", "linked_metric_id", "status", "review_note"]} />
+          <DataTable rows={data.latestThresholdReviews.slice(0, 5)} columns={["id", "subject_ref", "status", "review_note"]} />
         </section>
       </div>
     </section>
@@ -335,7 +335,9 @@ export function FinanceCostGovernancePanel({
           <div>
             <p className="eyebrow">Finance Cost Policy Summary</p>
             <h3>{policy.title || "财务成本治理政策摘要"}</h3>
-            <p>把已授权的 A-A-A-A 转成可读规则：费用口径进入治理视图，账单钻取、交易明细、会计写入和生产同步保持关闭。</p>
+            <p>{policy.ownerChoice === "A-A-A-A"
+              ? "把已授权的 A-A-A-A 转成可读规则：费用口径进入治理视图，账单钻取、交易明细、会计写入和生产同步保持关闭。"
+              : "按实际责任人回执呈现受限政策；未获批准或未识别的用途不生效，写入与外部副作用继续关闭。"}</p>
           </div>
           <div className="inlineBadges">
             <Badge tone={policy.ownerChoice === "A-A-A-A" ? "good" : "warn"}>{policy.ownerChoice}</Badge>
@@ -456,12 +458,12 @@ export function FinanceCostGovernancePanel({
           </div>
           {receipt ? (
             <div className="decisionReceipt financeReceipt">
-              <span>{String(receipt.linked_metric_id || "").startsWith("finance_owner.") ? "财务责任人选择回执" : "财务成本回执"}</span>
+              <span>{String(receipt.subject_ref || receipt.linked_metric_id || "").startsWith("finance_owner.") ? "财务责任人选择回执" : "财务成本回执"}</span>
               <strong>{String(receipt.insight_title || "")}</strong>
               <p>{humanizeOperationalLabel(receipt.status)} · {humanizeBoundary(receipt.action_boundary)}</p>
             </div>
           ) : null}
-          <DataTable rows={data.latestFinanceReviews.slice(0, 5)} columns={["id", "linked_metric_id", "status", "review_note"]} />
+          <DataTable rows={data.latestFinanceReviews.slice(0, 5)} columns={["id", "subject_ref", "status", "review_note"]} />
         </section>
       </div>
     </section>

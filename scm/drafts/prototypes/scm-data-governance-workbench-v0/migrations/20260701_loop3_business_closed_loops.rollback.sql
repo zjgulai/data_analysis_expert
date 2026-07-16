@@ -2,6 +2,15 @@
 -- Boundary: disposable/local SQLite only; no provider or external writeback.
 PRAGMA foreign_keys = ON;
 
+CREATE TABLE IF NOT EXISTS schema_migrations (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  applied_at TEXT NOT NULL,
+  boundary TEXT NOT NULL,
+  rollback_script TEXT NOT NULL,
+  verification_note TEXT NOT NULL
+);
+
 BEGIN;
 
 DELETE FROM action_tasks
@@ -28,5 +37,8 @@ WHERE id IN (
 
 DELETE FROM ontology_object_instances
 WHERE id = 'cost_event_loop3_tail_warehouse_return_20260701';
+
+DELETE FROM schema_migrations
+WHERE id = '20260701_loop3_business_closed_loops';
 
 COMMIT;

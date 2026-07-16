@@ -16,15 +16,32 @@ function envFlag(name) {
   return ["1", "true", "yes", "on"].includes(String(process.env[name] || "").toLowerCase());
 }
 
-function assertMutatingSmokeTarget() {
-  const hostname = new URL(baseUrl).hostname;
+function assertMutatingSmokeTarget(targetUrl, finalDestination = false) {
+  const hostname = new URL(targetUrl).hostname;
   const loopback = ["127.0.0.1", "localhost", "::1", "[::1]"].includes(hostname);
   if (!loopback && !envFlag("SCM_MUTATING_SMOKE_REMOTE_AUTHORIZED")) {
+    if (finalDestination) {
+      throw new Error("Mutating UI smoke final destination is restricted to loopback. Redirected remote targets require SCM_MUTATING_SMOKE_REMOTE_AUTHORIZED=1 and explicit disposable-target approval.");
+    }
     throw new Error("Mutating UI smoke is restricted to loopback. Set SCM_MUTATING_SMOKE_REMOTE_AUTHORIZED=1 only for an explicitly approved disposable remote target.");
   }
 }
 
-assertMutatingSmokeTarget();
+async function waitForFixture(promise, label, timeoutMs = requestTimeoutMs) {
+  let timeout;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise((_, reject) => {
+        timeout = setTimeout(() => reject(new Error(`${label} timed out after ${timeoutMs}ms`)), timeoutMs);
+      })
+    ]);
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+assertMutatingSmokeTarget(baseUrl);
 
 const viewports = [
   { name: "desktop-1366", width: 1366, height: 768 },
@@ -155,6 +172,119 @@ const interactiveChecks = [
       await page.getByText("本地知识对话证据链").waitFor({ timeout: 10000 });
     },
     expect: ["Answer Quality Review", "A-A-A-A", "AI 知识库质量回执", "本地知识对话证据链"]
+  },
+  {
+    id: "detail-drawer-accessibility-and-write-boundaries",
+    run: async (page) => {
+      await goToScreen(page, screenById("ai-knowledge"));
+      const cardTable = page.locator(".assetSurface").filter({ hasText: "知识卡片台账" }).first();
+      const sourceRow = cardTable.getByRole("row").filter({ hasText: "BI 字段到业务知识库分类登记" }).first();
+      await sourceRow.focus();
+      await sourceRow.click();
+      const dialog = page.getByRole("dialog");
+      await dialog.waitFor({ timeout: 10000 });
+      assert(await dialog.getAttribute("aria-modal") === "true", "Detail drawer must expose aria-modal=true");
+      const labelledTitleExists = await dialog.evaluate((element) => {
+        const titleId = element.getAttribute("aria-labelledby");
+        return Boolean(titleId && document.getElementById(titleId)?.textContent?.trim());
+      });
+      assert(labelledTitleExists, "Detail drawer must reference a non-empty labelled title");
+      assert(await dialog.evaluate((element) => element.contains(document.activeElement)), "Initial drawer focus must move inside the dialog");
+      for (let index = 0; index < 12; index += 1) {
+        await page.keyboard.press("Tab");
+        assert(await dialog.evaluate((element) => element.contains(document.activeElement)), "Tab focus must remain trapped inside the drawer");
+      }
+
+      let releaseDelayedWrite;
+      let resolveDelayedWriteStarted;
+      let resolveDelayedWriteCompleted;
+      const delayedWriteStarted = new Promise((resolveStarted) => { resolveDelayedWriteStarted = resolveStarted; });
+      const delayedWriteRelease = new Promise((resolveRelease) => { releaseDelayedWrite = resolveRelease; });
+      const delayedWriteCompleted = new Promise((resolveCompleted) => { resolveDelayedWriteCompleted = resolveCompleted; });
+      await page.evaluate(() => {
+        window.__scmOriginalFetch = window.fetch;
+        window.__scmAnnotationResponsesProcessed = 0;
+        const originalFetch = window.fetch.bind(window);
+        window.fetch = async (...args) => {
+          const response = await originalFetch(...args);
+          const requestUrl = String(args[0] instanceof Request ? args[0].url : args[0]);
+          if (requestUrl.includes("/api/annotations")) {
+            const originalJson = response.json.bind(response);
+            response.json = async () => {
+              const payload = await originalJson();
+              setTimeout(() => { window.__scmAnnotationResponsesProcessed += 1; }, 0);
+              return payload;
+            };
+          }
+          return response;
+        };
+      });
+      await page.route("**/api/annotations", async (route) => {
+        resolveDelayedWriteStarted();
+        await delayedWriteRelease;
+        await route.fulfill({
+          status: 201,
+          contentType: "application/json",
+          body: JSON.stringify({
+            ledger: {
+              annotations: [{ id: "stale-fixture", body: "stale-target-response", created_at: new Date().toISOString() }],
+              comments: [],
+              revisionProposals: [],
+              auditEvents: []
+            }
+          })
+        });
+        resolveDelayedWriteCompleted();
+      });
+      const sourceDraft = dialog.getByPlaceholder("写入治理注解，例如口径边界、样本异常或 owner 判断...");
+      await sourceDraft.fill("source-target-draft");
+      await dialog.getByRole("button", { name: "保存注解" }).click();
+      await waitForFixture(delayedWriteStarted, "delayed annotation request start");
+      await dialog.getByRole("button", { name: /打开对象|打开指标/ }).first().click();
+      const currentDraft = dialog.getByPlaceholder("写入治理注解，例如口径边界、样本异常或 owner 判断...");
+      await currentDraft.waitFor({ timeout: 10000 });
+      assert(await currentDraft.inputValue() === "", "Drawer write drafts must reset when the selected target changes");
+      await currentDraft.fill("intermediate-target-draft");
+      const sourceSupportCard = dialog.locator(".supportCard")
+        .filter({ hasText: "BI 字段到业务知识库分类登记" })
+        .first();
+      await sourceSupportCard.getByRole("button", { name: "打开知识卡" }).click();
+      await dialog.getByText("BI 字段到业务知识库分类登记").first().waitFor({ timeout: 10000 });
+      assert(await currentDraft.inputValue() === "", "Drawer write drafts must reset when returning to the original target");
+      await currentDraft.fill("current-target-draft");
+      releaseDelayedWrite();
+      await waitForFixture(delayedWriteCompleted, "delayed annotation route completion");
+      await page.waitForFunction(
+        () => window.__scmAnnotationResponsesProcessed >= 1,
+        undefined,
+        { timeout: requestTimeoutMs }
+      );
+      assert(await currentDraft.inputValue() === "current-target-draft", "An A-to-B-to-A stale submit completion must not clear the returned target draft");
+      assert((await dialog.innerText()).includes("stale-target-response") === false, "An A-to-B-to-A stale submit completion must not replace the returned target ledger");
+      await page.unroute("**/api/annotations");
+      await page.evaluate(() => {
+        window.fetch = window.__scmOriginalFetch;
+        delete window.__scmOriginalFetch;
+        delete window.__scmAnnotationResponsesProcessed;
+      });
+
+      await page.route("**/api/annotations", (route) => route.fulfill({
+        status: 500,
+        contentType: "application/json",
+        body: JSON.stringify({ error: "fixture write rejected" })
+      }));
+      await dialog.getByRole("button", { name: "保存注解" }).click();
+      const writeAlert = dialog.getByRole("alert");
+      await writeAlert.waitFor({ timeout: 10000 });
+      assert((await writeAlert.innerText()).includes("保存失败"), "Failed drawer writes must surface an error message");
+      assert(await currentDraft.inputValue() === "current-target-draft", "Failed drawer writes must retain the current draft");
+      await page.unroute("**/api/annotations");
+
+      await page.keyboard.press("Escape");
+      await dialog.waitFor({ state: "detached", timeout: 10000 });
+      assert(await sourceRow.evaluate((element) => document.activeElement === element), "Closing the drawer must restore focus to its trigger");
+    },
+    expect: ["知识卡片台账"]
   },
   {
     id: "chatbi-dry-run-trace",
@@ -298,8 +428,10 @@ const interactiveChecks = [
       await page.getByRole("button", { name: "创建异常诊断卡" }).click();
       await page.getByText("推荐闭环回执").waitFor({ timeout: 10000 });
       const receipt = page.locator(".workflowReceipt").filter({ hasText: "推荐闭环回执" }).first();
-      await receipt.getByRole("button", { name: "批准最近建议卡" }).click();
+      const approveButton = receipt.getByRole("button", { name: "批准最近建议卡" });
+      await approveButton.click();
       await receipt.getByText("已批准").waitFor({ timeout: 10000 });
+      assert(await approveButton.isDisabled(), "Approved recommendation must not remain approvable");
       await receipt.getByRole("button", { name: "转最近 Action Task" }).click();
       await receipt.getByText("行动任务已创建").first().waitFor({ timeout: 10000 });
     },
@@ -434,6 +566,7 @@ async function runViewportSmoke(browser, viewport) {
 
   try {
     await page.goto(baseUrl, { waitUntil: "networkidle" });
+    assertMutatingSmokeTarget(page.url(), true);
     await page.getByText("供应链数据开发治理工作台").first().waitFor({ timeout: 10000 });
 
     for (const screen of screens) {
@@ -458,6 +591,7 @@ async function runInteractiveSmoke(browser) {
   const page = await browser.newPage({ viewport: { width: 1366, height: 768 } });
   try {
     await page.goto(baseUrl, { waitUntil: "networkidle" });
+    assertMutatingSmokeTarget(page.url(), true);
     for (const check of interactiveChecks) {
       await check.run(page);
       await assertTexts(page, check.expect);
@@ -475,6 +609,7 @@ await mkdir(outputDir, { recursive: true });
 const healthResponse = await fetch(`${baseUrl}/api/deploy/health`, {
   signal: AbortSignal.timeout(requestTimeoutMs)
 });
+assertMutatingSmokeTarget(healthResponse.url, true);
 const health = await healthResponse.json();
 assert(healthResponse.ok && health.ok === true, "UI smoke target must be healthy");
 assert(health.boundary?.databaseWriteAuthorized === true, "UI smoke requires SCM_DATABASE_WRITES_AUTHORIZED=1 on a disposable target");
