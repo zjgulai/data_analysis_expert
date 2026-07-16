@@ -1,0 +1,78 @@
+{
+  "generatedAt": "2026-07-01T02:23:42.302Z",
+  "root": "<repo-root>",
+  "boundary": {
+    "productionWrites": false,
+    "providerCalls": false,
+    "erpWriteback": false,
+    "omsWmsWriteback": false,
+    "gitIndexModified": false,
+    "commitCreated": false,
+    "pushCreated": false,
+    "productionDeploy": false,
+    "actionCeiling": "release_boundary_packet_only"
+  },
+  "dirtyEntries": 34,
+  "counts": {
+    "hold_out": 19,
+    "release_critical": 8,
+    "support_evidence": 2,
+    "provider_gated_release_support": 1,
+    "release_evidence": 4
+  },
+  "coreAllowlistEntries": 13,
+  "optionalSupportEntries": 2,
+  "releaseManifestFiles": 36,
+  "holdOutEntries": 19,
+  "tempIndexPreview": {
+    "addOk": true,
+    "cachedCheckOk": true,
+    "stagedPathCount": 33,
+    "blockedStagedPathCount": 0
+  },
+  "verification": {
+    "status": "passed_after_smoke_assertion_update",
+    "check": "passed",
+    "build": "passed_46_modules",
+    "preprod": {
+      "hardBlockers": 0,
+      "manualGates": 3,
+      "dirtyCount": 34
+    },
+    "diffCheck": "passed",
+    "pemScanHits": 0,
+    "dockerComposeConfigLines": 45,
+    "smoke": {
+      "readonlyBeforeWrites": "passed",
+      "api": "passed_provider_call_attempted_false",
+      "ui": "passed_after_dynamic_scenario_count_assertion",
+      "readonlyAfterRestore": "passed"
+    },
+    "sqliteRestore": {
+      "restoredToBeforeSmokeHash": true,
+      "sha256": "cb91dd0d63dad2d62d73f7da5c7058254b08ac36feb139921a38121dcf61cc99",
+      "beforeSmokeSnapshot": "<external-file-history>/ecom_ana_overview_scm/20260701T101900-loop5-smoke/governance_workbench.before-loop5-smoke.sqlite",
+      "afterSmokeSnapshots": [
+        "<external-file-history>/ecom_ana_overview_scm/20260701T101900-loop5-smoke/governance_workbench.after-loop5-smoke-before-restore.sqlite",
+        "<external-file-history>/ecom_ana_overview_scm/20260701T101900-loop5-smoke/governance_workbench.after-loop5-ui-rerun-before-restore.sqlite"
+      ]
+    },
+    "tempIndexPreview": {
+      "addOk": true,
+      "cachedCheckOk": true,
+      "stagedPathCount": 33,
+      "blockedStagedPathCount": 0
+    },
+    "candidateLessonAppended": true
+  },
+  "artifactFiles": [
+    "loop5-dirty-worktree-classification-20260701.csv",
+    "loop5-release-file-set-manifest-20260701.csv",
+    "loop5-core-allowlist-paths-20260701.txt",
+    "loop5-optional-support-paths-20260701.txt",
+    "loop5-atomic-staging-plan-20260701.csv",
+    "loop5-approval-options-20260701.csv",
+    "loop5-evidence-summary-20260701.json",
+    "loop5-temp-index-preview-20260701.json"
+  ]
+}

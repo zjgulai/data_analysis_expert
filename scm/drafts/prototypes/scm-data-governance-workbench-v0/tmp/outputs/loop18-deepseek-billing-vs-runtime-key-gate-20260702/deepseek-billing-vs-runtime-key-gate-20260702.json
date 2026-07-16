@@ -1,0 +1,120 @@
+{
+  "createdAt": "2026-07-02T09:22:36Z",
+  "loop": 18,
+  "project": "ecom_ana_overview/scm",
+  "topic": "deepseek-billing-vs-runtime-key-gate",
+  "status": "blocked_runtime_key_absent_billing_user_reported_unverified",
+  "legacyStatus": "blocked_billing_confirmed_runtime_key_absent",
+  "baseUrl": "https://scm.lute-tlz-dddd.top",
+  "authorization": {
+    "userApprovedNextStep": true,
+    "userConfirmedDeepSeekBillingToppedUp": true,
+    "providerAccountBillingVerified": false,
+    "billingConfirmationEvidenceLevel": "conversation_unverified_by_provider_account",
+    "providerCallAuthorizationInterpretedAsConditional": "requires a fresh explicit live-call approval after configured=true plus independent target-workbench SQLite trace/run write approval",
+    "databaseWriteAuthorization": "not_granted"
+  },
+  "boundary": {
+    "productionBusinessWrites": false,
+    "productionConfigMutation": false,
+    "providerCalls": false,
+    "erpWriteback": false,
+    "omsWmsWriteback": false,
+    "localSqliteWrites": false,
+    "sourceSystemRead": false,
+    "businessRowImport": false,
+    "deepseekApiKeyPersisted": false,
+    "providerLiveAcceptanceExecuted": false,
+    "remoteShellExecuted": true,
+    "remoteShellMode": "read_only_presence_recheck",
+    "envMutationExecuted": false,
+    "containerRestartExecuted": false
+  },
+  "publicStatus": {
+    "configured": false,
+    "providerCallAuthorized": null,
+    "databaseWriteAuthorized": null,
+    "available": null,
+    "provider": "deepseek",
+    "baseUrlHost": "api.deepseek.com",
+    "model": "deepseek-v4-flash",
+    "webModel": "deepseek-v4-pro",
+    "webSearchEnabled": true,
+    "secretPolicy": "server_side_env_only_key_never_returned_to_browser",
+    "historicalFieldCoverage": "providerCallAuthorized, databaseWriteAuthorized, and available were not recorded in the original evidence"
+  },
+  "publicHealth": {
+    "ok": true,
+    "releaseId": "scm-workbench-ui-polish-20260627003850",
+    "gitSha": "c1633fe-ui-polish-20260627",
+    "staticBuild": true,
+    "database": {
+      "metrics": 178,
+      "lineageEdges": 278,
+      "governanceTasks": 110,
+      "agentTraces": 4,
+      "traceReviews": 0,
+      "recommendationCards": 3,
+      "agentRuns": 6,
+      "aipScenarios": 3
+    },
+    "boundary": {
+      "productionWrites": false,
+      "providerCalls": false,
+      "erpWriteback": false,
+      "chatbiPolicy": "certified_metric_only"
+    }
+  },
+  "remoteDiagnostics": {
+    "containerStatus": "scm-governance-workbench Up 5 days (healthy)",
+    "nodeRuntimePresence": {
+      "keyPresent": false,
+      "model": null,
+      "baseUrlPresent": false,
+      "webSearchEnvPresent": false
+    },
+    "containerEnvFiles": {
+      "/app/.env": "absent",
+      "/app/.env.local": "absent"
+    },
+    "hostEnvCandidateFiles": {
+      ".env": "present_without_key",
+      ".env.local": "absent",
+      ".env.production.local": "absent",
+      "docker-compose.override.yml": "absent"
+    },
+    "sshShellEnvPresence": {
+      "DEEPSEEK_API_KEY": "absent",
+      "DEEPSEEK_MODEL": "absent",
+      "DEEPSEEK_BASE_URL": "absent",
+      "DEEPSEEK_ENABLE_WEB_SEARCH": "absent"
+    }
+  },
+  "localEnvPresence": {
+    "DEEPSEEK_API_KEY_PRESENT": false,
+    "DEEPSEEK_MODEL_PRESENT": false,
+    "DEEPSEEK_BASE_URL_PRESENT": false,
+    "SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED_PRESENT": false
+  },
+  "decision": {
+    "providerLiveSmokeAttempted": false,
+    "reason": "The user's billing/top-up report is not provider-account verification and does not make the server runtime configured. The public status endpoint remains configured=false and the current production runtime still has no visible DEEPSEEK_API_KEY source.",
+    "nextGate": "Inject the real DEEPSEEK_API_KEY and obtain fresh explicit provider-call plus target-workbench SQLite trace/run write approvals; require providerCallAuthorized=true, configured=true, databaseWriteAuthorized=true, and available=true before any live smoke."
+  },
+  "providerGate": {
+    "currentRequiredOrder": [
+      "explicit live-call approval and one-shot client flag",
+      "server status providerCallAuthorized=true",
+      "server status configured=true",
+      "independent target-workbench SQLite trace/run write approval",
+      "server status databaseWriteAuthorized=true",
+      "server status available=true"
+    ],
+    "historicalProviderCallAttempted": false
+  },
+  "secretHandling": {
+    "rawSecretPrinted": false,
+    "rawSecretPersisted": false,
+    "outputMode": "boolean_or_redacted_only"
+  }
+}

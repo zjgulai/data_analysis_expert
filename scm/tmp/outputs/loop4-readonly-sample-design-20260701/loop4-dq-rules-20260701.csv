@@ -1,0 +1,20 @@
+rule_id,sample_domain,rule_name,check_description,on_violation,owner_review_required
+DQ-COM-001,all,required_key_present,sample key/token/grain fields must be present,reject_row_for_design_review,true
+DQ-COM-002,all,no_raw_sensitive_identifier,column names and values must not contain excluded raw identifiers,reject_package_for_security_review,true
+DQ-COM-003,all,duplicate_grain_check,one row per declared grain unless aggregation_rule is declared,reject_duplicate_or_require_aggregation_note,true
+DQ-COM-004,all,evidence_ref_required,each row must cite export/screenshot/schema evidence ref,hold_for_owner_review,true
+DQ-INV-001,inventory,available_qty_numeric,available/sellable/reserved/frozen/in_transit quantities must parse as numbers,reject_row_for_design_review,true
+DQ-INV-002,inventory,negative_qty_policy,negative available_qty is allowed only with exception_reason; other stock quantities need owner-approved rule,hold_for_inventory_owner,true
+DQ-INV-003,inventory,stock_equation_check,available_qty should reconcile with sellable/reserved/frozen/in_transit when source formula exists,hold_for_formula_review,true
+DQ-INV-004,inventory,snapshot_time_grain,snapshot_time must align to approved refresh_cycle and not mix day/hour grains,reject_package_for_grain_review,true
+DQ-INV-005,inventory,sku_warehouse_token_stability,sku_token and warehouse_token must be stable within one package and non-reversible outside token map,hold_for_security_review,true
+DQ-COST-001,cost,currency_required,currency is required for every cost row,reject_row_for_design_review,true
+DQ-COST-002,cost,amount_bucket_policy,cost_amount should be bucketed for external review unless finance owner approves exact value,hold_for_finance_owner,true
+DQ-COST-003,cost,cost_type_enum,cost_type must map to approved finance owner cost type list,hold_for_cost_type_mapping,true
+DQ-COST-004,cost,cost_rate_denominator,cost_rate_calc requires declared sales or denominator source and period grain,hold_for_denominator_review,true
+DQ-COST-005,cost,fx_period_policy,multi-currency sample must declare fx period and conversion policy before comparison,hold_for_finance_owner,true
+DQ-FUL-001,fulfillment,task_status_enum,task_status and priority must map to approved WMS enums,hold_for_logistics_owner,true
+DQ-FUL-002,fulfillment,timestamp_order,release_close_time and ETA-derived fields must preserve chronological order,reject_row_for_design_review,true
+DQ-FUL-003,fulfillment,eta_metric_caveat,ETA/review-time metrics remain caveated until metric certification is completed,hold_for_metric_certification,true
+DQ-FUL-004,fulfillment,no_tracking_or_order_id,tracking_no and sales_order_no remain excluded in Loop 4 sample template,reject_package_for_security_review,true
+DQ-FUL-005,fulfillment,warehouse_task_grain,"warehouse task rows must not mix task_no, wave_no, and warehouse aggregate grains without aggregation_note",hold_for_grain_review,true

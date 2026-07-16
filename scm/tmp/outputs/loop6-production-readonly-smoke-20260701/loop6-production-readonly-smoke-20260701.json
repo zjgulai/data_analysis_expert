@@ -1,0 +1,109 @@
+{
+  "generatedAt": "2026-07-01T02:32:36.476Z",
+  "baseUrl": "https://scm.lute-tlz-dddd.top",
+  "boundary": {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "productionWrites": false,
+    "providerCalls": false,
+    "erpWriteback": false,
+    "omsWmsWriteback": false,
+    "deployExecuted": false,
+    "serverShellAccess": false
+  },
+  "probes": {
+    "health": {
+      "ok": true,
+      "method": "GET",
+      "url": "https://scm.lute-tlz-dddd.top/api/deploy/health",
+      "status": 200,
+      "statusText": "OK",
+      "contentType": "application/json; charset=utf-8",
+      "location": "",
+      "contentLength": "",
+      "elapsedMs": 241,
+      "json": {
+        "ok": true,
+        "service": "scm-data-governance-workbench",
+        "runtime": "v22.23.0",
+        "host": "0.0.0.0",
+        "port": 5174,
+        "launchedAt": "2026-06-26T16:47:32.187Z",
+        "deployment": {
+          "releaseId": "scm-workbench-ui-polish-20260627003850",
+          "gitSha": "c1633fe-ui-polish-20260627",
+          "dataMountType": "docker_external_volume",
+          "dataVolumeName": "scm_governance_workbench_scm-governance-data",
+          "dataMountPath": "/app/data/governance_workbench.sqlite"
+        },
+        "staticBuild": true,
+        "database": {
+          "path": "/app/data/governance_workbench.sqlite",
+          "ontologyObjects": 14,
+          "ontologyObjectInstances": 10,
+          "metrics": 178,
+          "lineageEdges": 278,
+          "governanceTasks": 110,
+          "agentTraces": 1,
+          "traceReviews": 0,
+          "recommendationCards": 3,
+          "agentRuns": 3,
+          "aipScenarios": 3
+        },
+        "boundary": {
+          "productionWrites": false,
+          "providerCalls": false,
+          "erpWriteback": false,
+          "chatbiPolicy": "certified_metric_only"
+        }
+      },
+      "bodyPreview": "{\"ok\":true,\"service\":\"scm-data-governance-workbench\",\"runtime\":\"v22.23.0\",\"host\":\"0.0.0.0\",\"port\":5174,\"launchedAt\":\"2026-06-26T16:47:32.187Z\",\"deployment\":{\"releaseId\":\"scm-workbench-ui-polish-20260627003850\",\"gitSha\":\"c1633fe-ui-polish-20260627\",\"dataMountType\":\"docker_external_volume\",\"dataVolumeName\":\"scm_governance_workbench_scm-governance-data\",\"dataMountPath\":\"/app/data/governance_workbench.sqlite\"},\"staticBuild\":true,\"database\":{\"path\":\"/app/data/governance_workbench.sqlite\",\"ontologyObjects\":14,\"ontologyObjectInstances\":10,\"metrics\":178,\"lineageEdges\":278,\"governanceTasks\":110,\"agentTraces\":1,\"traceReviews\":0,\"recommendationCards\":3,\"agentRuns\":3,\"aipScenarios\":3},\"boundary\":{\"productionWrites\":false,\"providerCalls\":false,\"erpWriteback\":false,\"chatbiPolicy\":\"certified_metric_only\"}}"
+    },
+    "csvHead": {
+      "ok": true,
+      "method": "HEAD",
+      "url": "https://scm.lute-tlz-dddd.top/fulfillment-dashboard/data/fulfillment_chart_data_binding_20260626.csv",
+      "status": 200,
+      "statusText": "OK",
+      "contentType": "text/csv; charset=utf-8",
+      "location": "",
+      "contentLength": "",
+      "elapsedMs": 144,
+      "json": null,
+      "bodyPreview": ""
+    },
+    "appHead": {
+      "ok": true,
+      "method": "HEAD",
+      "url": "https://scm.lute-tlz-dddd.top/",
+      "status": 200,
+      "statusText": "OK",
+      "contentType": "text/html; charset=utf-8",
+      "location": "",
+      "contentLength": "",
+      "elapsedMs": 149,
+      "json": null,
+      "bodyPreview": ""
+    }
+  },
+  "smokeReadonly": {
+    "ok": true,
+    "exitCode": 0,
+    "stdout": "\n> scm-data-governance-workbench-v0@0.1.0 smoke:readonly\n> node scripts/smoke-readonly.mjs\n\n{\n  \"baseUrl\": \"https://scm.lute-tlz-dddd.top\",\n  \"boundary\": {\n    \"productionWrites\": false,\n    \"providerCalls\": false,\n    \"erpWriteback\": false,\n    \"localSqliteWrites\": false,\n    \"methods\": [\n      \"GET\",\n      \"HEAD\"\n    ]\n  },\n  \"checks\": [\n    {\n      \"name\": \"deploy-health-readonly\",\n      \"staticBuild\": true,\n      \"metrics\": 178,\n      \"aipScenarios\": 3,\n      \"boundary\": {\n        \"productionWrites\": false,\n        \"providerCalls\": false,\n        \"erpWriteback\": false,\n        \"chatbiPolicy\": \"certified_metric_only\"\n      }\n    },\n    {\n      \"name\": \"modules-readonly\",\n      \"count\": 15\n    },\n    {\n      \"name\": \"overview-readonly\",\n      \"metrics\": 178,\n      \"riskQueue\": 3,\n      \"recommendations\": 3\n    },\n    {\n      \"name\": \"ai-knowledge-quality-review-readonly\",\n      \"reviewPackets\": 4,\n      \"recommendedPath\": \"A-A-A-A\",\n      \"activeAnswerableProbes\": 9,\n      \"candidateOnlyProbes\": 3,\n      \"providerCalls\": false,\n      \"draftDomainPromoted\": false\n    },\n    {\n      \"name\": \"strategy-panorama-readonly\",\n      \"metrics\": 178,\n      \"scenarios\": 3\n    },\n    {\n      \"name\": \"current-risk-radar-readonly\",\n      \"instances\": 10,\n      \"recommendations\": 3,\n      \"sourceCoverage\": 12,\n      \"thresholdVersions\": 5,\n      \"thresholdValueReviewPackets\": 5\n    },\n    {\n      \"name\": \"risk-threshold-governance-readonly\",\n      \"thresholdVersions\": 5,\n      \"scenarioBindings\": 3,\n      \"ownerDecisionPackets\": 3,\n      \"valueReviewPackets\": 5,\n      \"recommendedPath\": \"A-A-A\",\n      \"valueReviewRecommendedPath\": \"A-A-A-A-A\",\n      \"operationalScoring\": false,\n      \"thresholdValuesApproved\": false\n    },\n    {\n      \"name\": \"finance-cost-governance-readonly\",\n      \"evidencePackets\": 4,\n      \"ownerDecisionPackets\": 4,\n      \"ownerChoice\": \"A-A-A-A\",\n      \"policyReceiptCount\": 4,\n      \"financeCoverage\": 1,\n      \"costThresholds\": 3,\n      \"billDrilldown\": false\n    },\n    {\n      \"name\": \"source-coverage-readonly\",\n      \"rows\": 12,\n      \"runtimeStatus\": \"not_authorized_for_import\"\n    },\n    {\n      \"name\": \"source-coverage-lineage-readonly\",\n      \"rows\": 12,\n      \"omsRows\": 6,\n      \"wmsRows\": 6\n    },\n    {\n      \"name\": \"omswms-owner-usage-policy-readonly\",\n      \"reviewPackets\": 4,\n      \"recommendedPath\": \"A-A-A-A\",\n      \"sourceCoverageRows\": 12,\n      \"lineageRows\": 12,\n      \"businessRowsImported\": false\n    },\n    {\n      \"name\": \"decision-receipt-summary-readonly\",\n      \"packetCount\": 7,\n      \"receiptCount\": 7,\n      \"runtimeClosedRows\": 12\n    },\n    {\n      \"name\": \"runtime-metadata-projection-readonly\",\n      \"ownerChoice\": \"A-A-A\",\n      \"candidateFields\": 88,\n      \"allowlistFields\": 62,\n      \"excludedSensitiveFields\": 26\n    },\n    {\n      \"name\": \"runtime-business-row-design-readonly\",\n      \"gateId\": \"RUNTIME-BUSINESS-ROW-DESIGN-GATE-A5\",\n      \"reviewPackets\": 5,\n      \"recommendedPath\": \"A-A-A-A-A\",\n      \"sourceSystemReads\": false,\n      \"businessRowsImported\": false\n    },\n    {\n      \"name\": \"aip-scenarios-readonly\",\n      \"count\": 3\n    },\n    {\n      \"name\": \"recommendations-readonly\",\n      \"count\": 3\n    },\n    {\n      \"name\": \"app-shell-readonly\",\n      \"contentType\": \"text/html; charset=utf-8\"\n    }\n  ]\n}\n",
+    "stderr": ""
+  },
+  "interpretation": {
+    "productionReachable": true,
+    "healthOk": true,
+    "staticCsvHeadOk": true,
+    "smokeReadonlyOk": true,
+    "doesNotProve": [
+      "does_not_prove_new_release_deployed",
+      "does_not_prove_owner_gates_complete",
+      "does_not_prove_provider_enabled",
+      "does_not_prove_production_write_enabled"
+    ]
+  }
+}

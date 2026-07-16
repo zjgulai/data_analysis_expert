@@ -1,0 +1,104 @@
+{
+  "generatedAt": "2026-07-02T02:30:25.976Z",
+  "check": "loop15-runtime-key-visibility-diagnostic",
+  "status": "runtime_key_not_visible_to_production_status_endpoint",
+  "baseUrl": "https://scm.lute-tlz-dddd.top",
+  "pathBase": "prototype_root",
+  "evidencePath": "tmp/outputs/loop15-runtime-key-visibility-diagnostic-20260702/runtime-key-visibility-diagnostic-20260702.json",
+  "boundary": {
+    "productionReadOnly": true,
+    "providerCalls": false,
+    "providerModeCalled": "not_called",
+    "webModeCalled": false,
+    "productionWrites": false,
+    "erpWriteback": false,
+    "omsWriteback": false,
+    "wmsWriteback": false,
+    "sourceSystemRead": false,
+    "businessRowImport": false,
+    "localSqliteWrites": false,
+    "deepseekApiKeyPersisted": false,
+    "remoteShellExecuted": false,
+    "containerRestartExecuted": false,
+    "envMutationExecuted": false
+  },
+  "productionHealth": {
+    "ok": true,
+    "httpStatus": 200,
+    "releaseId": "scm-workbench-ui-polish-20260627003850",
+    "gitSha": "c1633fe-ui-polish-20260627",
+    "dataMountType": "docker_external_volume",
+    "dataVolumeName": "scm_governance_workbench_scm-governance-data",
+    "boundary": {
+      "productionWrites": false,
+      "providerCalls": false,
+      "erpWriteback": false,
+      "chatbiPolicy": "certified_metric_only"
+    }
+  },
+  "productionProviderStatus": {
+    "ok": true,
+    "httpStatus": 200,
+    "provider": "deepseek",
+    "configured": false,
+    "model": "deepseek-v4-flash",
+    "webModel": "deepseek-v4-pro",
+    "webSearchEnabled": true,
+    "secretPolicy": "server_side_env_only_key_never_returned_to_browser"
+  },
+  "localConfigFacts": [
+    {
+      "file": "docker-compose.yml",
+      "mentionsDeepseekApiKey": false,
+      "mentionsDeepseekEnvFile": false,
+      "loadsDotEnvInApp": false,
+      "readsProcessEnvDeepseekApiKey": false,
+      "hasComposeEnvironmentBlock": true
+    },
+    {
+      "file": "docker-compose.production.yml",
+      "mentionsDeepseekApiKey": false,
+      "mentionsDeepseekEnvFile": false,
+      "loadsDotEnvInApp": false,
+      "readsProcessEnvDeepseekApiKey": false,
+      "hasComposeEnvironmentBlock": true
+    },
+    {
+      "file": "Dockerfile",
+      "mentionsDeepseekApiKey": false,
+      "mentionsDeepseekEnvFile": false,
+      "loadsDotEnvInApp": false,
+      "readsProcessEnvDeepseekApiKey": false,
+      "hasComposeEnvironmentBlock": false
+    },
+    {
+      "file": "server/index.mjs",
+      "mentionsDeepseekApiKey": true,
+      "mentionsDeepseekEnvFile": false,
+      "loadsDotEnvInApp": true,
+      "readsProcessEnvDeepseekApiKey": true,
+      "hasComposeEnvironmentBlock": false
+    }
+  ],
+  "hypothesis": {
+    "rootCauseCandidate": "production runtime does not currently expose DEEPSEEK_API_KEY to the Node process serving scm.lute-tlz-dddd.top",
+    "basis": [
+      "status endpoint returns configured=false",
+      "server reads process.env.DEEPSEEK_API_KEY and app-local .env/.env.local only",
+      "tracked compose files do not inject DEEPSEEK_API_KEY or env_file",
+      "no remote shell, env mutation, or container restart was executed in this loop"
+    ]
+  },
+  "opsReadOnlyCommands": [
+    "if ! docker compose -p scm_governance_workbench -f docker-compose.yml -f docker-compose.production.yml config --quiet >/dev/null 2>&1; then echo compose_config=unknown >&2; exit 1; fi; if grep -Eq 'DEEPSEEK_|env_file' docker-compose.yml docker-compose.production.yml; then echo deepseek_or_env_file_declared=true; else echo deepseek_or_env_file_declared=false; fi",
+    "docker inspect scm-governance-workbench --format \"{{range .Config.Env}}{{println .}}{{end}}\" | grep -E \"^DEEPSEEK_(API_KEY|MODEL|BASE_URL|ENABLE_WEB_SEARCH)=\" | sed \"s/=.*/=<redacted>/\" || true",
+    "docker exec scm-governance-workbench node -e \"console.log(JSON.stringify({keyPresent:Boolean(process.env.DEEPSEEK_API_KEY), model:process.env.DEEPSEEK_MODEL||null, baseUrlPresent:Boolean(process.env.DEEPSEEK_BASE_URL)}))\"",
+    "docker exec scm-governance-workbench sh -lc \"test -f /app/.env && echo app_env_present || echo app_env_absent; test -f /app/.env.local && echo app_env_local_present || echo app_env_local_absent\"",
+    "curl -fsS https://scm.lute-tlz-dddd.top/api/ai-chat/deepseek/status"
+  ],
+  "opsMutationRequiresSeparateAuthorization": [
+    "injecting DEEPSEEK_API_KEY into compose env or an ignored env file",
+    "recreating or restarting scm-governance-workbench container",
+    "running provider live smoke after status becomes configured=true"
+  ]
+}

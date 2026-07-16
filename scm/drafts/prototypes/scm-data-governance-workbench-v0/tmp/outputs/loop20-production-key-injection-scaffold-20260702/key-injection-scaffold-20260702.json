@@ -1,0 +1,83 @@
+{
+  "createdAt": "2026-07-02T11:05:59Z",
+  "loop": 20,
+  "project": "ecom_ana_overview/scm",
+  "topic": "production-key-injection-scaffold",
+  "status": "scaffold_ready_manual_secret_file_required",
+  "baseUrl": "https://scm.lute-tlz-dddd.top",
+  "remote": {
+    "sshAlias": "<restricted-operator-alias>",
+    "workdir": "<production-app-root>",
+    "composeOverride": "docker-compose.deepseek-runtime.yml",
+    "secretDirectory": "<production-secret-dir>",
+    "secretFile": "<production-secret-file>",
+    "topologyRedacted": true
+  },
+  "authorization": {
+    "historicalAuthorizationClaim": "execution log states user continued authorization for the no-secret scaffold",
+    "historicalAuthorizationEvidence": "not_attached",
+    "currentPrReverifiedHistoricalAuthorization": false,
+    "currentPrPerformedProductionAction": false
+  },
+  "boundary": {
+    "productionBusinessWrites": false,
+    "productionConfigMutation": true,
+    "productionNoOp": false,
+    "currentPrProductionConfigMutation": false,
+    "providerCalls": false,
+    "erpWriteback": false,
+    "omsWmsWriteback": false,
+    "localSqliteWrites": false,
+    "sourceSystemRead": false,
+    "businessRowImport": false,
+    "deepseekApiKeyPersisted": false,
+    "providerLiveAcceptanceExecuted": false,
+    "remoteShellExecuted": true,
+    "envMutationExecuted": false,
+    "containerRestartExecuted": false
+  },
+  "actionsExecuted": [
+    "created restricted production secret directory with mode 700 if absent",
+    "created docker-compose.deepseek-runtime.yml under the production app root",
+    "did not create the production secret file",
+    "did not run docker compose up",
+    "did not restart or recreate scm-governance-workbench",
+    "did not call DeepSeek provider"
+  ],
+  "remoteVerification": {
+    "historicalAt": "2026-07-02T11:05:59Z",
+    "currentRemoteStateReverified": false,
+    "overrideFile": "present",
+    "secretDirectory": "present",
+    "secretFile": "absent",
+    "containerStatus": "scm-governance-workbench Up 5 days (healthy)"
+  },
+  "publicStatus": {
+    "configured": false,
+    "providerCallAuthorized": null,
+    "databaseWriteAuthorized": null,
+    "available": null,
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "webModel": "deepseek-v4-pro",
+    "secretPolicy": "server_side_env_only_key_never_returned_to_browser",
+    "historicalFieldCoverage": "authorization and availability fields were not recorded in the original evidence"
+  },
+  "decision": {
+    "providerLiveSmokeAttempted": false,
+    "reason": "The no-secret scaffold is ready, but the actual server-side secret file is still absent and the running container has not been recreated.",
+    "nextGate": "Ops writes the real secret file and verifies configured=true; before any live smoke, separately authorize the provider call and target-workbench SQLite trace/run writes, then require providerCallAuthorized=true, databaseWriteAuthorized=true, and available=true."
+  },
+  "rollback": {
+    "authorizationRequired": "explicit owner or ops approval",
+    "proposedProcedure": "disable or remove the Compose override, remove the secret directory only if it is empty and unused, then verify health and provider status",
+    "historicalRollbackExecuted": "not_recorded",
+    "currentRemoteStateReverified": false,
+    "executedInCurrentPr": false
+  },
+  "secretHandling": {
+    "rawSecretPrinted": false,
+    "rawSecretPersisted": false,
+    "outputMode": "no_secret_scaffold_only"
+  }
+}

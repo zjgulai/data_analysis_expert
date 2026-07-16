@@ -6,8 +6,11 @@ const port = process.env.PORT || "5174";
 const baseUrl = process.env.SCM_WORKBENCH_BASE_URL || `http://127.0.0.1:${port}`;
 const chromeExecutablePath = process.env.CHROME_EXECUTABLE_PATH || "";
 const requestTimeoutMs = Number(process.env.SCM_SMOKE_REQUEST_TIMEOUT_MS || 10000);
+const expectedScenarioCount = Number(process.env.SCM_UI_SMOKE_EXPECTED_SCENARIOS || 6);
 const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 const outputDir = process.env.SCM_UI_SMOKE_OUTPUT_DIR || path.join("tmp", `ui-smoke-${timestamp}`);
+
+assert(Number.isInteger(expectedScenarioCount) && expectedScenarioCount > 0, "SCM_UI_SMOKE_EXPECTED_SCENARIOS must be a positive integer");
 
 function envFlag(name) {
   return ["1", "true", "yes", "on"].includes(String(process.env[name] || "").toLowerCase());
@@ -273,7 +276,17 @@ const interactiveChecks = [
       await page.getByRole("tab", { name: /场景诊断/ }).click();
       await page.getByRole("button", { name: "运行全部场景诊断" }).click();
       await page.getByText("场景矩阵诊断回执").waitFor({ timeout: 15000 });
-      await page.getByText(/3 \/ 3 个场景/).waitFor({ timeout: 10000 });
+      const matrixReceiptText = await page
+        .locator(".scenarioMatrixReceipt")
+        .getByText(/\d+ \/ \d+ 个场景已进入本地运行记录复盘/)
+        .textContent({ timeout: 10000 });
+      const matrixReceiptMatch = matrixReceiptText?.match(/(\d+)\s*\/\s*(\d+)\s*个场景/);
+      assert(
+        matrixReceiptMatch
+          && Number(matrixReceiptMatch[1]) === Number(matrixReceiptMatch[2])
+          && Number(matrixReceiptMatch[2]) === expectedScenarioCount,
+        `Scenario matrix receipt should complete exactly ${expectedScenarioCount} scenarios, got: ${matrixReceiptText || "empty"}`
+      );
     },
     expect: ["Scenario Matrix Receipt", "场景矩阵诊断回执"]
   },
@@ -344,6 +357,7 @@ const interactiveChecks = [
 const summary = {
   baseUrl,
   outputDir,
+  expectedScenarioCount,
   chromeExecutablePath: chromeExecutablePath || "playwright-bundled-chromium",
   boundary: {
     productionWrites: false,
@@ -464,6 +478,10 @@ const healthResponse = await fetch(`${baseUrl}/api/deploy/health`, {
 const health = await healthResponse.json();
 assert(healthResponse.ok && health.ok === true, "UI smoke target must be healthy");
 assert(health.boundary?.databaseWriteAuthorized === true, "UI smoke requires SCM_DATABASE_WRITES_AUTHORIZED=1 on a disposable target");
+assert(
+  health.database?.aipScenarios === expectedScenarioCount,
+  `UI smoke requires exactly ${expectedScenarioCount} scenarios, got ${health.database?.aipScenarios ?? "unknown"}`
+);
 
 const launchOptions = {
   headless: true,

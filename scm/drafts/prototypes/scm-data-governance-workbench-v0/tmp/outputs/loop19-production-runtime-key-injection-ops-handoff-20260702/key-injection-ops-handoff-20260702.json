@@ -1,0 +1,64 @@
+{
+  "createdAt": "2026-07-02T10:10:27Z",
+  "loop": 19,
+  "project": "ecom_ana_overview/scm",
+  "topic": "production-runtime-key-injection-ops-handoff",
+  "status": "handoff_ready_manual_secret_input_required",
+  "baseUrl": "https://scm.lute-tlz-dddd.top",
+  "currentPublicStatus": {
+    "configured": false,
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "webModel": "deepseek-v4-pro",
+    "secretPolicy": "server_side_env_only_key_never_returned_to_browser"
+  },
+  "handoff": {
+    "targetHostAlias": "<restricted-operator-alias>",
+    "targetDirectory": "<production-app-root>",
+    "secretFile": "<production-secret-file>",
+    "composeOverride": "<production-app-root>/docker-compose.deepseek-runtime.yml",
+    "topologyRedacted": true,
+    "requiredHumanAction": "Ops pastes the real DEEPSEEK_API_KEY in an interactive server shell; do not paste it into chat, docs, git, or command history.",
+    "executionBoundary": "manual production config mutation and container recreate, not executed in this loop"
+  },
+  "boundary": {
+    "productionBusinessWrites": false,
+    "productionConfigMutation": false,
+    "providerCalls": false,
+    "erpWriteback": false,
+    "omsWmsWriteback": false,
+    "localSqliteWrites": false,
+    "sourceSystemRead": false,
+    "businessRowImport": false,
+    "deepseekApiKeyPersisted": false,
+    "providerLiveAcceptanceExecuted": false,
+    "remoteShellExecuted": false,
+    "envMutationExecuted": false,
+    "containerRestartExecuted": false
+  },
+  "runbookSections": [
+    "preflight",
+    "secret-file-create",
+    "compose-override-create",
+    "container-recreate",
+    "acceptance",
+    "rollback",
+    "next-provider-live-smoke-gate"
+  ],
+  "acceptanceCriteria": {
+    "statusConfigured": true,
+    "containerNodeKeyPresent": true,
+    "healthOk": true,
+    "providerCallsBeforeLiveSmoke": false
+  },
+  "decision": {
+    "providerLiveSmokeAttempted": false,
+    "reason": "The actionable next step is manual server-side secret injection. Without the real key value, automated mutation would create an invalid runtime state.",
+    "nextGate": "After key injection and configured=true proof, separately authorize one knowledge-mode provider call and target-workbench SQLite trace/run writes; require providerCallAuthorized=true, databaseWriteAuthorized=true, and available=true."
+  },
+  "secretHandling": {
+    "rawSecretPrinted": false,
+    "rawSecretPersisted": false,
+    "outputMode": "runbook_with_placeholders_only"
+  }
+}

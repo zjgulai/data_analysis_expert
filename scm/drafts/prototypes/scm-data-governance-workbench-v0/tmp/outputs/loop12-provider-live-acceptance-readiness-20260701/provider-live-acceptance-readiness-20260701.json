@@ -1,0 +1,57 @@
+{
+  "generatedAt": "2026-07-01T11:07:52.213Z",
+  "check": "provider-live-acceptance-readiness-gate",
+  "status": "blocked_server_side_runtime_key_missing",
+  "baseUrl": "https://scm.lute-tlz-dddd.top",
+  "evidencePath": "tmp/outputs/loop12-provider-live-acceptance-readiness-20260701/provider-live-acceptance-readiness-20260701.json",
+  "boundary": {
+    "productionReadOnly": true,
+    "providerCalls": false,
+    "providerModeCalled": "not_called",
+    "webModeCalled": false,
+    "productionWrites": false,
+    "erpWriteback": false,
+    "omsWriteback": false,
+    "wmsWriteback": false,
+    "sourceSystemRead": false,
+    "businessRowImport": false,
+    "localSqliteWrites": false,
+    "deepseekApiKeyPersisted": false,
+    "liveAcceptanceExecuted": false
+  },
+  "localEnvPresence": {
+    "DEEPSEEK_API_KEY_PRESENT": false,
+    "SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED_PRESENT": false
+  },
+  "productionHealth": {
+    "ok": true,
+    "httpStatus": 200,
+    "releaseId": "",
+    "gitSha": "",
+    "boundaries": null,
+    "counts": null
+  },
+  "productionProviderStatus": {
+    "ok": true,
+    "httpStatus": 200,
+    "provider": "deepseek",
+    "configured": false,
+    "model": "deepseek-v4-flash",
+    "webModel": "deepseek-v4-pro",
+    "webSearchEnabled": true,
+    "secretPolicy": "server_side_env_only_key_never_returned_to_browser"
+  },
+  "nextGateRequirements": [
+    "Ops configures DEEPSEEK_API_KEY in production/server-side runtime only",
+    "User explicitly authorizes one knowledge-mode provider live smoke",
+    "Command sets SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED=1 for that single run",
+    "Web mode stays closed",
+    "Evidence records only redacted traceId/runId/usage/answerLength and doesNotProve"
+  ],
+  "doesNotProve": [
+    "Does not prove DeepSeek answer quality",
+    "Does not prove provider latency or usage accounting",
+    "Does not prove trace/run creation in live path",
+    "Does not authorize production writes or ERP/OMS/WMS writeback"
+  ]
+}

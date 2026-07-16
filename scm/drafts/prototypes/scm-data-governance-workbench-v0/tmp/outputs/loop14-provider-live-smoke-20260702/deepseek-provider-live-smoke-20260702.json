@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-07-02T01:09:53.557Z",
+  "evidenceSchemaMigratedAt": "2026-07-16",
+  "evidenceSchemaMigrationNote": "Historical generatedAt and outcome preserved; current boundary fields added without replaying the provider gate.",
+  "rerunExecuted": false,
+  "check": "deepseek-live-provider-acceptance",
+  "status": "blocked_runtime_key_missing",
+  "baseUrl": "https://scm.lute-tlz-dddd.top",
+  "evidencePath": "tmp/outputs/loop14-provider-live-smoke-20260702/deepseek-provider-live-smoke-20260702.json",
+  "boundary": {
+    "providerCalls": false,
+    "providerCallAttempted": false,
+    "providerCallCompleted": false,
+    "providerCallOutcome": "not_attempted",
+    "providerCallScope": "none",
+    "providerModeCalled": "not_called",
+    "webModeCalled": false,
+    "localSqliteWrites": false,
+    "localSqliteWritePossibleButUnconfirmed": false,
+    "workbenchSqliteWrites": false,
+    "workbenchSqliteWritePossibleButUnconfirmed": false,
+    "productionWrites": false,
+    "productionBusinessWrites": false,
+    "erpWriteback": false,
+    "omsWriteback": false,
+    "wmsWriteback": false,
+    "sourceSystemRead": false,
+    "businessRowImport": false,
+    "deepseekApiKeyPersisted": false
+  },
+  "statusEndpoint": {
+    "configured": false,
+    "providerCallAuthorized": null,
+    "databaseWriteAuthorized": null,
+    "available": null,
+    "model": "deepseek-v4-flash",
+    "webModel": "deepseek-v4-pro",
+    "webSearchEnabled": true,
+    "secretPolicy": "server_side_env_only_key_never_returned_to_browser",
+    "historicalFieldCoverage": "providerCallAuthorized, databaseWriteAuthorized, and available were not recorded in the original evidence"
+  },
+  "requiredRuntimeEnv": "DEEPSEEK_API_KEY"
+}

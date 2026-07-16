@@ -1,0 +1,116 @@
+{
+  "createdAt": "2026-07-02T03:12:43Z",
+  "loop": 16,
+  "project": "ecom_ana_overview/scm",
+  "topic": "production-runtime-key-injection",
+  "status": "blocked_no_production_key_source_available",
+  "baseUrl": "https://<production-scm-host>",
+  "remote": {
+    "sshAlias": "<restricted-operator-alias>",
+    "host": "<restricted-production-host>",
+    "user": "<restricted-operator-user>",
+    "workdir": "<production-app-root>",
+    "sudoNonInteractive": "not_disclosed",
+    "topologyRedacted": true
+  },
+  "authorization": {
+    "userAuthorizedLoop16": true,
+    "authorizationEvidence": "not_attached_to_repository_artifact",
+    "currentPrReverifiedHistoricalAuthorization": false,
+    "authorizedOperations": [
+      "remote read-only key visibility diagnostic",
+      "production runtime env injection if an existing server-side key source is available",
+      "container recreate or restart if env injection is possible"
+    ]
+  },
+  "boundary": {
+    "productionBusinessWrites": false,
+    "productionConfigMutation": false,
+    "providerCalls": false,
+    "erpWriteback": false,
+    "omsWmsWriteback": false,
+    "localSqliteWrites": false,
+    "sourceSystemRead": false,
+    "businessRowImport": false,
+    "deepseekApiKeyPersisted": false,
+    "providerLiveAcceptanceExecuted": false,
+    "remoteShellExecuted": true,
+    "remoteShellMode": "read_only_presence_diagnostic",
+    "envMutationExecuted": false,
+    "containerRestartExecuted": false
+  },
+  "publicStatus": {
+    "configured": false,
+    "provider": "deepseek",
+    "baseUrlHost": "api.deepseek.com",
+    "model": "deepseek-v4-flash",
+    "webModel": "deepseek-v4-pro",
+    "webSearchEnabled": true,
+    "secretPolicy": "server_side_env_only_key_never_returned_to_browser"
+  },
+  "remoteDiagnostics": {
+    "containerStatus": "scm-governance-workbench Up 5 days (healthy)",
+    "composeDeepseekOrEnvFileEntries": [],
+    "containerDeepseekEnvEntries": [],
+    "nodeRuntimePresence": {
+      "keyPresent": false,
+      "model": null,
+      "baseUrlPresent": false,
+      "webSearchEnvPresent": false
+    },
+    "containerEnvFiles": {
+      "<container-app-root>/.env": "absent",
+      "<container-app-root>/.env.local": "absent"
+    },
+    "hostEnvCandidateFiles": {
+      ".env": "present_without_key",
+      ".env.local": "absent",
+      ".env.production.local": "absent",
+      "docker-compose.override.yml": "absent"
+    },
+    "sshShellEnvPresence": {
+      "DEEPSEEK_API_KEY": "absent",
+      "DEEPSEEK_MODEL": "absent",
+      "DEEPSEEK_BASE_URL": "absent",
+      "DEEPSEEK_ENABLE_WEB_SEARCH": "absent"
+    },
+    "sudoRootSystemKeyReferencePaths": [],
+    "sudoEnvPresence": [],
+    "referenceOnlyPathsFound": [
+      "<production-app-root>/.env.example",
+      "<production-app-root>/src/main.tsx",
+      "<production-app-root>/scripts/smoke-api.mjs",
+      "<production-app-root>/scripts/smoke-deepseek-live.mjs",
+      "<production-app-root>/server/index.mjs"
+    ]
+  },
+  "localEnvPresence": {
+    "DEEPSEEK_API_KEY_PRESENT": false,
+    "DEEPSEEK_MODEL_PRESENT": false,
+    "DEEPSEEK_BASE_URL_PRESENT": false,
+    "SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED_PRESENT": false
+  },
+  "decision": {
+    "envInjectionAttempted": false,
+    "containerRecreateAttempted": false,
+    "reason": "No actual server-side DEEPSEEK_API_KEY source was visible in the accessible production runtime, host candidate env files, sudo/root/systemd common locations, SSH shell env, or local env. Creating a placeholder key or blank env file would be unsafe and would not satisfy the provider gate.",
+    "nextGate": "Ops must provide or configure the actual DEEPSEEK_API_KEY in a restricted server-side secret location, then rerun the env injection gate or directly verify configured=true."
+  },
+  "currentRemoteStateReverified": false,
+  "commandsExecuted": [
+    "public provider status GET (target redacted)",
+    "public health GET (target redacted)",
+    "restricted operator SSH read-only app-root existence check",
+    "restricted operator SSH read-only Compose declaration check",
+    "restricted operator SSH read-only container env presence check",
+    "restricted operator SSH read-only Node runtime presence check",
+    "restricted operator SSH read-only host candidate env-file presence check",
+    "restricted operator SSH privileged key-reference path search without values",
+    "local Node env presence check without values"
+  ],
+  "secretHandling": {
+    "rawSecretPrinted": false,
+    "rawSecretPersisted": false,
+    "outputMode": "boolean_or_redacted_only"
+  }
+}

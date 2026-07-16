@@ -1,0 +1,76 @@
+{
+  "generatedAt": "2026-07-01T03:48:17.564Z",
+  "check": "provider-live-readiness-readonly",
+  "baseUrl": "https://scm.lute-tlz-dddd.top",
+  "methods": [
+    "GET"
+  ],
+  "localEnvPresence": {
+    "DEEPSEEK_API_KEY_PRESENT": false,
+    "SCM_DEEPSEEK_PROVIDER_CALL_AUTHORIZED_PRESENT": false
+  },
+  "productionHealth": {
+    "ok": true,
+    "status": 200,
+    "releaseId": "scm-workbench-ui-polish-20260627003850",
+    "gitSha": "c1633fe-ui-polish-20260627",
+    "boundary": {
+      "productionWrites": false,
+      "providerCalls": false,
+      "erpWriteback": false,
+      "chatbiPolicy": "certified_metric_only"
+    },
+    "database": {
+      "path": "/app/data/governance_workbench.sqlite",
+      "ontologyObjects": 14,
+      "ontologyObjectInstances": 10,
+      "metrics": 178,
+      "lineageEdges": 278,
+      "governanceTasks": 110,
+      "agentTraces": 1,
+      "traceReviews": 0,
+      "recommendationCards": 3,
+      "agentRuns": 3,
+      "aipScenarios": 3
+    },
+    "launchedAt": "2026-06-26T16:47:32.187Z",
+    "staticBuild": true
+  },
+  "productionProviderStatus": {
+    "ok": true,
+    "status": 200,
+    "configured": false,
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "webModel": "deepseek-v4-pro",
+    "webSearchEnabled": true,
+    "secretPolicy": "server_side_env_only_key_never_returned_to_browser",
+    "modes": [
+      {
+        "id": "knowledge",
+        "policy": "deepseek_knowledge_rag_provider_call_no_web_no_external_write"
+      },
+      {
+        "id": "web",
+        "policy": "deepseek_web_search_provider_call_no_external_write"
+      }
+    ]
+  },
+  "boundary": {
+    "providerCalls": false,
+    "productionWrites": false,
+    "erpWriteback": false,
+    "omsWriteback": false,
+    "wmsWriteback": false,
+    "sourceSystemRead": false,
+    "businessRowImport": false,
+    "deepseekApiKeyPersisted": false,
+    "providerLiveAcceptanceExecuted": false
+  },
+  "nextGate": {
+    "requiresServerSideKey": true,
+    "requiresExplicitLiveCallAuthorization": true,
+    "allowedModeWhenAuthorized": "knowledge",
+    "webModeAllowed": false
+  }
+}

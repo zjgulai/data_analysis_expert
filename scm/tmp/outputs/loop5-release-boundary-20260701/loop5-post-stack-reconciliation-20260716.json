@@ -1,0 +1,410 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-16T00:10:11.825Z",
+  "repository": "zjgulai/data_analysis_expert",
+  "branch": "codex/scm-post-stack-loop-assets-20260716",
+  "baseCommit": "71017000f25b38b539abd2ba3e002ebc89ae5c71",
+  "treeScope": "candidate_worktree_relative_to_base",
+  "selfHashPolicy": {
+    "path": "scm/tmp/outputs/loop5-release-boundary-20260701/loop5-post-stack-reconciliation-20260716.json",
+    "includedInFiles": false,
+    "reason": "A manifest cannot provide a stable hash for itself."
+  },
+  "aggregateHashPolicy": {
+    "algorithm": "sha256",
+    "fileOrder": "path_ascending_utf8",
+    "recordEncoding": "path + NUL + decimal_sizeBytes + NUL + lowercase_file_sha256",
+    "recordSeparator": "LF",
+    "finalInputEncoding": "UTF-8",
+    "terminalSeparator": false
+  },
+  "historicalManifest": {
+    "path": "scm/tmp/outputs/loop5-release-boundary-20260701/loop5-release-file-set-manifest-20260701.csv",
+    "classification": "historical_pre_integration_snapshot",
+    "currentTreeHashProof": false,
+    "reason": "Document renumbering and post-stack hardening changed paths and content after the 2026-07-01 snapshot."
+  },
+  "boundaries": {
+    "providerCall": false,
+    "providerAttemptMade": false,
+    "productionWrites": false,
+    "productionUnchanged": true,
+    "databaseWriteScope": "local_disposable_or_versioned_fixture_only"
+  },
+  "explicitHoldouts": [
+    "parent-branch deletions and Baidu markers",
+    "scm/system_data/**",
+    "scm/skills-lock.json",
+    "old tmp deletions",
+    ".agents/**",
+    ".codegraph/**",
+    ".playwright-mcp/**",
+    "scm/.cbmignore",
+    "Amazon refund, reship, and SOP drafts",
+    "secrets and unlisted files"
+  ],
+  "fileCount": 72,
+  "aggregateSha256": "b25c802be21ef67ec8addd7b8ad00bef744d2c8a3cd2b4d546962c92d457248b",
+  "files": [
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/00-index-draft-20260627.md",
+      "sizeBytes": 20577,
+      "sha256": "c820b0c41b0872803235549e53d1a7e4ff7518a134d9454b2eeba2b1acaaa5fc"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/71-scm-business-value-and-investment-case-draft-20260630.md",
+      "sizeBytes": 11575,
+      "sha256": "c721e4e2cd31f247137a45ffbd68786e0b97cdbd036fbbbbc4e547e39b2904b2"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/72-loop-engineering-execution-plan-draft-20260701.md",
+      "sizeBytes": 54671,
+      "sha256": "f78fae1bab412f377578e9a9f21eb510b97d58969ca954b56176c454535b5569"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/73-loop2-manual-gates-owner-packet-execution-draft-20260701.md",
+      "sizeBytes": 4835,
+      "sha256": "e1a972b49562367a65e41da923a3b193a55f0886b6c19ae878f8d2ccdcff3b08"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/74-loop3-business-closed-loops-execution-draft-20260701.md",
+      "sizeBytes": 5219,
+      "sha256": "bf1cd9d81d7a3506db7f2415a989176b7726a12d9eed6b8e50edb2a76ea91bde"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/75-loop4-readonly-sample-design-execution-draft-20260701.md",
+      "sizeBytes": 5923,
+      "sha256": "878cc5905b52136f5aa49c3becd5d779198292119a58c287b676a506c3a34a22"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/76-loop5-release-boundary-execution-draft-20260701.md",
+      "sizeBytes": 6712,
+      "sha256": "26613050465e4558d6b6b231e81eb5afe9b72f43623450bb57d8777a7f72c225"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/77-loop6-production-readonly-smoke-execution-draft-20260701.md",
+      "sizeBytes": 3291,
+      "sha256": "e3045cb7b1a458f58a488ff9b7a76e87aa9fd0bd5264406ee5f9289df7f4840a"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/78-loop7-provider-gate-preflight-execution-draft-20260701.md",
+      "sizeBytes": 3941,
+      "sha256": "cef43798be197c696f4655a63bf5fa0ff78fdc582f3a7dc56655509fefc1dad1"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/79-loop8-provider-runtime-key-gate-execution-draft-20260701.md",
+      "sizeBytes": 4944,
+      "sha256": "1e4ddfe8b936489eead343721c1923610ee3495ac261a597e26b4bef5f478540"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/80-loop9-provider-live-readiness-execution-draft-20260701.md",
+      "sizeBytes": 3959,
+      "sha256": "186a1724288946b385a918c07b85eac42d08d6947914c0b53bf5bd84d4829810"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/81-loop10-production-provider-authorization-gate-execution-draft-20260701.md",
+      "sizeBytes": 3900,
+      "sha256": "ef56f682f817e8a26455c3603c1336fdb8046294375c51e801feca766dc6f447"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/82-loop11-production-provider-runtime-key-gate-execution-draft-20260701.md",
+      "sizeBytes": 5222,
+      "sha256": "7ba4e61e2109a21e7f4f03f9d290a9f01b04dd5ee22b18c2ae1f6b5c249f9f1b"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/83-loop12-provider-live-acceptance-readiness-gate-execution-draft-20260701.md",
+      "sizeBytes": 4936,
+      "sha256": "0129102f750668f4b3ed0bd1cca9a19e451ff2460944e4fca95274c818e27f3c"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/84-loop13-provider-live-authorization-hold-gate-execution-draft-20260702.md",
+      "sizeBytes": 4381,
+      "sha256": "edab3d3563bc8548444b36ef8646f61201ac6baa42f3a265662e961095b6153f"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/85-loop14-provider-live-smoke-runtime-key-mismatch-execution-draft-20260702.md",
+      "sizeBytes": 5094,
+      "sha256": "c19bfac2ac7c34b3a752b44f46b720259abd1ce92554a23432ba7e9a77de3040"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/86-loop15-runtime-key-visibility-diagnostic-execution-draft-20260702.md",
+      "sizeBytes": 5187,
+      "sha256": "2c97a2ff953c980be5e71c640c1698687f2f8c6f5781eed3484bda14bc13fcef"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/87-loop16-production-runtime-key-injection-execution-draft-20260702.md",
+      "sizeBytes": 5915,
+      "sha256": "b3255192d369b4f4b433f946b11de1b98ed9a0f6658087aab83ed1e85cef56c3"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/88-loop17-provider-live-smoke-gate-recheck-execution-draft-20260702.md",
+      "sizeBytes": 4773,
+      "sha256": "004fd9df2786a408844fd87231b399027269bc6f9eb1ca4e69ab59fdbd88d9b0"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/89-loop18-deepseek-billing-vs-runtime-key-gate-execution-draft-20260702.md",
+      "sizeBytes": 5152,
+      "sha256": "0f805cb292bf4bc00c59a3e4210b0c16dc876f7277946ee92644354dccba1be6"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/90-loop19-production-runtime-key-injection-ops-handoff-draft-20260702.md",
+      "sizeBytes": 11400,
+      "sha256": "88b278decb9773bd2a38ddab229f4faa314ea910327c27f1d7b82cc633d82a66"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/91-loop20-production-key-injection-scaffold-execution-draft-20260702.md",
+      "sizeBytes": 6219,
+      "sha256": "5f628be0c8104530b4ce29624808eaa621570391077c35896f9b33589571b5a2"
+    },
+    {
+      "path": "scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/92-current-branch-consolidation-and-merge-execution-plan-draft-20260716.md",
+      "sizeBytes": 27196,
+      "sha256": "fbb03694ba37433f2a05f2edffb8b42d0277b3dbe4212fa9d81debd7d77b2c64"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite",
+      "sizeBytes": 35053568,
+      "sha256": "cb91dd0d63dad2d62d73f7da5c7058254b08ac36feb139921a38121dcf61cc99"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/migrations/20260701_loop3_business_closed_loops.apply.sql",
+      "sizeBytes": 10126,
+      "sha256": "5e10fd2af68e216b91cd567196cb929ea126f80487ab7427b54756bb7a090571"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/migrations/20260701_loop3_business_closed_loops.rollback.sql",
+      "sizeBytes": 1009,
+      "sha256": "fbf358dd456d1766d36e3778b0227c25add31af764a2c5686cffecd1059ea605"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/import-assets.mjs",
+      "sizeBytes": 59750,
+      "sha256": "560e83422c336641f3dbbb05a0981ec2a15202f2b437868117753098d71d2958"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/smoke-deepseek-live.mjs",
+      "sizeBytes": 10089,
+      "sha256": "2f20ab8fee4141cbbc58db2752d965ee5b9cc954390c3535002b5383939532ef"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/smoke-import-gate.mjs",
+      "sizeBytes": 9371,
+      "sha256": "b43e0e753406b688e3d31a4bc3e6bff748ace8976dcf8e837511df87d07fa76c"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/smoke-migration-gate.mjs",
+      "sizeBytes": 9636,
+      "sha256": "09f8ec67006b29040d09421c266d4a12c7073f0ecf5198dfbc938a8479caba0e"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/smoke-provider-gate.mjs",
+      "sizeBytes": 13511,
+      "sha256": "bbe95a9742efefabecb65e0fd363f4f2ffeb38221767beb12aef3f133de1fa0f"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/scripts/smoke-ui.mjs",
+      "sizeBytes": 24313,
+      "sha256": "ca8c23931c1812c98121d06705b3f4af824543e32cc56ff980b8c7010d101902"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/src/styles.css",
+      "sizeBytes": 94698,
+      "sha256": "fc5505b055a9fdec48acf285ae65696d812b4b1173b5ad8172ba6be8a6176a78"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/loop10-production-provider-authorization-gate-20260701/deepseek-live-production-authorization-gate-20260701.json",
+      "sizeBytes": 1016,
+      "sha256": "320fcf3ff06dc23c715a26d5e8ec062d729ecc5f18757a2d42fade392acac648"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/loop11-production-provider-runtime-key-gate-20260701/deepseek-live-production-runtime-key-gate-20260701.json",
+      "sizeBytes": 989,
+      "sha256": "5fbdba92662f2029cb5308f426ac11366e7be40bb626bf56817dd3872bf8202c"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/loop12-provider-live-acceptance-readiness-20260701/provider-live-acceptance-readiness-20260701.json",
+      "sizeBytes": 1976,
+      "sha256": "263e437538d0318e0c536f5a88c07215693368af258708af305d48d776be0751"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/loop13-provider-live-authorization-hold-20260702/provider-live-authorization-hold-20260702.json",
+      "sizeBytes": 2254,
+      "sha256": "89ce5be04277358592131ff4023172d2e7a7308bae28da819411a0c634850258"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/loop14-provider-live-smoke-20260702/deepseek-provider-live-smoke-20260702.json",
+      "sizeBytes": 1715,
+      "sha256": "88557a14fb5315ddc23cf9ef01b9c1f42d8d47cddc2d9ebf84ce05ca367dbf58"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/loop15-runtime-key-visibility-diagnostic-20260702/runtime-key-visibility-diagnostic-20260702.json",
+      "sizeBytes": 4517,
+      "sha256": "52ceb74793a7c00c676b39593a0eaa30bec69693a36e869bf825231e8cb8492f"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/loop16-production-runtime-key-injection-20260702/runtime-key-injection-20260702.json",
+      "sizeBytes": 4542,
+      "sha256": "fb9490666083c32a40eaee2080e9509ee03b2f915aaf9e267352669487f4f3bf"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/loop17-provider-live-smoke-gate-recheck-20260702/provider-live-smoke-gate-recheck-20260702.json",
+      "sizeBytes": 3458,
+      "sha256": "a326270f9e0f455a847b83efc08da36113b9612ee4602c9b85ee3ab2d6e020fd"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/loop18-deepseek-billing-vs-runtime-key-gate-20260702/deepseek-billing-vs-runtime-key-gate-20260702.json",
+      "sizeBytes": 4511,
+      "sha256": "863da181a0819649df99a3a88912be93b46f0e53e6622f9d0aed4a0fbb7de258"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/loop19-production-runtime-key-injection-ops-handoff-20260702/key-injection-ops-handoff-20260702.json",
+      "sizeBytes": 2486,
+      "sha256": "1a7e1e360462f1f708941d925b655ee324b1d7a405eb94059e06d38ea8812cb8"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/loop20-production-key-injection-scaffold-20260702/key-injection-scaffold-20260702.json",
+      "sizeBytes": 3475,
+      "sha256": "7c71fafbe2aa4b4eef845c5edcdcf6c59c1887a4c503d1936033b2dac2cb18b8"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/loop7-provider-gate-preflight-20260701/deepseek-live-gate-preflight-20260701.json",
+      "sizeBytes": 977,
+      "sha256": "454e3ba33f14e6715186f4ee0ac191aabe3d1fa3d1261342e501504732771b67"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/loop8-provider-runtime-key-gate-20260701/deepseek-live-runtime-key-gate-20260701.json",
+      "sizeBytes": 958,
+      "sha256": "499241ea86bdc8eae4b2a0e45d776d7203c48dd7046d2d150d39cf86c228bbe0"
+    },
+    {
+      "path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/tmp/outputs/loop9-provider-live-readiness-20260701/provider-live-readiness-20260701.json",
+      "sizeBytes": 2091,
+      "sha256": "c2382075dcbe73e0f5a066e54e5377a7ab390e7fb2e11f2d5eebe132e2a2fae7"
+    },
+    {
+      "path": "scm/tmp/outputs/loop2-manual-gates-owner-packet-20260701/loop2-evidence-summary-20260701.json",
+      "sizeBytes": 1280,
+      "sha256": "e14bead43ca62b2d47956faa96c7fd36cb7e4e413c7b73c0487acf1c1def6d20"
+    },
+    {
+      "path": "scm/tmp/outputs/loop2-manual-gates-owner-packet-20260701/loop2-field-mapping-intake-20260701.csv",
+      "sizeBytes": 8050,
+      "sha256": "3910f1faeeab8973f582571e75c0ee858c1d0cdc8afe6ae43595227f6bcff089"
+    },
+    {
+      "path": "scm/tmp/outputs/loop2-manual-gates-owner-packet-20260701/loop2-manual-gate-ledger-20260701.csv",
+      "sizeBytes": 22207,
+      "sha256": "f53a4de991bd2d72c0af06617694927a37ae02e61eb9e6570c686415fa4bcdd7"
+    },
+    {
+      "path": "scm/tmp/outputs/loop2-manual-gates-owner-packet-20260701/loop2-owner-signoff-intake-20260701.csv",
+      "sizeBytes": 14351,
+      "sha256": "c72d06761d761965933d3f620c2eb56c4fada666bb5220055ff832545d2fc750"
+    },
+    {
+      "path": "scm/tmp/outputs/loop2-manual-gates-owner-packet-20260701/loop2-owner-status-rollup-20260701.csv",
+      "sizeBytes": 1322,
+      "sha256": "41dac6e30841919cbf68da8f4aa15be2c84d0c70ec542c5e1cfa10ec75e84518"
+    },
+    {
+      "path": "scm/tmp/outputs/loop2-manual-gates-owner-packet-20260701/loop2-scei-weight-intake-20260701.csv",
+      "sizeBytes": 2269,
+      "sha256": "c9f79a2ee3c8ef1285082b56390956b874955103850f079a29d270a61415661a"
+    },
+    {
+      "path": "scm/tmp/outputs/loop3-business-closed-loops-20260701/loop3-business-closed-loop-evidence-20260701.json",
+      "sizeBytes": 7445,
+      "sha256": "060b4d9cbadb8bc6f182eded5ae6836f8b7757abe729afd09a72bb56366d70dd"
+    },
+    {
+      "path": "scm/tmp/outputs/loop3-business-closed-loops-20260701/loop3-business-closed-loop-ledger-20260701.csv",
+      "sizeBytes": 3734,
+      "sha256": "386774bc9e6adcc860273a4e5a397dc235219ad66623d6af2aa34b6b9d0dfcbc"
+    },
+    {
+      "path": "scm/tmp/outputs/loop4-readonly-sample-design-20260701/loop4-cost-event-template-20260701.csv",
+      "sizeBytes": 189,
+      "sha256": "a1ba422df90517995e21178923114d989d771e097fa98372111c583ed45bb33e"
+    },
+    {
+      "path": "scm/tmp/outputs/loop4-readonly-sample-design-20260701/loop4-dq-rules-20260701.csv",
+      "sizeBytes": 2927,
+      "sha256": "58dcff1b36dcf68c31f403098dbc85d4b241b1c34ff1e7eeae65e4f790fd8e1e"
+    },
+    {
+      "path": "scm/tmp/outputs/loop4-readonly-sample-design-20260701/loop4-evidence-summary-20260701.json",
+      "sizeBytes": 6313,
+      "sha256": "0c3e9f60677cacde686eba918e8a97dcc813060c7d8a5add3783f6165bb81253"
+    },
+    {
+      "path": "scm/tmp/outputs/loop4-readonly-sample-design-20260701/loop4-excluded-sensitive-fields-20260701.csv",
+      "sizeBytes": 8407,
+      "sha256": "4ecd845edc0ddccb894278feee97dca071398e834667e9dfb12b67e7cc3baaec"
+    },
+    {
+      "path": "scm/tmp/outputs/loop4-readonly-sample-design-20260701/loop4-field-policy-20260701.csv",
+      "sizeBytes": 24865,
+      "sha256": "0b562091713ce1d73b72c83d4f69e5f1a5c82008045a2284542d7383f5287d5e"
+    },
+    {
+      "path": "scm/tmp/outputs/loop4-readonly-sample-design-20260701/loop4-fulfillment-task-template-20260701.csv",
+      "sizeBytes": 181,
+      "sha256": "3f7df65808d56ef1e70b0169dff663f8f75df1fdacbfa160d4617906e27a2b7f"
+    },
+    {
+      "path": "scm/tmp/outputs/loop4-readonly-sample-design-20260701/loop4-inventory-snapshot-template-20260701.csv",
+      "sizeBytes": 213,
+      "sha256": "5a510ba7e5f90850366e9856e1bd15de29f3002194b0dbe91025c4cf30c0bfa9"
+    },
+    {
+      "path": "scm/tmp/outputs/loop4-readonly-sample-design-20260701/loop4-runtime-import-gate-checklist-20260701.csv",
+      "sizeBytes": 1661,
+      "sha256": "c13c10fbb834fb4d2d7dd3f4e530c6c198f34f4103103b473321576dbfc3dc7d"
+    },
+    {
+      "path": "scm/tmp/outputs/loop5-release-boundary-20260701/loop5-approval-options-20260701.csv",
+      "sizeBytes": 519,
+      "sha256": "09042d676ab915adab13b971b54d3e696c4bab99ba9bc7e9b7ffe4c97f1c17ad"
+    },
+    {
+      "path": "scm/tmp/outputs/loop5-release-boundary-20260701/loop5-atomic-staging-plan-20260701.csv",
+      "sizeBytes": 1822,
+      "sha256": "6997bdfdb3f4a1b94c4096bd87d3e1852154167f048bc03d393f883e12117f9b"
+    },
+    {
+      "path": "scm/tmp/outputs/loop5-release-boundary-20260701/loop5-core-allowlist-paths-20260701.txt",
+      "sizeBytes": 1187,
+      "sha256": "c748e5445d645acd1b83749696afe8dcb3593692d0f7b6c2a8a92ddeaafafb03"
+    },
+    {
+      "path": "scm/tmp/outputs/loop5-release-boundary-20260701/loop5-dirty-worktree-classification-20260701.csv",
+      "sizeBytes": 7225,
+      "sha256": "6d03b8802abba02db09629200fefb559a05c9c2ecfdb4e6e2772c0af95ffd6d1"
+    },
+    {
+      "path": "scm/tmp/outputs/loop5-release-boundary-20260701/loop5-evidence-summary-20260701.json",
+      "sizeBytes": 2571,
+      "sha256": "f7f4b1e11d5634f4086fe362f31bc6783784f50e0f63a763fb3b0c609d210601"
+    },
+    {
+      "path": "scm/tmp/outputs/loop5-release-boundary-20260701/loop5-optional-support-paths-20260701.txt",
+      "sizeBytes": 145,
+      "sha256": "5230ac77067865ff5387ec95131b2e5dae912ea9fb816849173f82c8a04e5380"
+    },
+    {
+      "path": "scm/tmp/outputs/loop5-release-boundary-20260701/loop5-release-file-set-manifest-20260701.csv",
+      "sizeBytes": 9548,
+      "sha256": "a30df5ce4cb4b9d20674ed4250249d3e37b569727b0b4d3075fae43eaf746440"
+    },
+    {
+      "path": "scm/tmp/outputs/loop5-release-boundary-20260701/loop5-temp-index-preview-20260701.json",
+      "sizeBytes": 4015,
+      "sha256": "00906840335ce7a2f6b0542ab1c722d05ea55083dd3a8bbf6681f42c1288513b"
+    },
+    {
+      "path": "scm/tmp/outputs/loop6-production-readonly-smoke-20260701/loop6-production-readonly-smoke-20260701.json",
+      "sizeBytes": 7613,
+      "sha256": "8dcabd5dafcec62f98b539bb0de50a6a826197f09b3f907665f4c1d3f9399aa2"
+    }
+  ]
+}
