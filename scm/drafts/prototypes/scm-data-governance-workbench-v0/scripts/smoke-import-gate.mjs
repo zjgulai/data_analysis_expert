@@ -282,6 +282,16 @@ try {
       expectedCount: 1,
       expectedRedaction: `file://${workstationHomeRedaction} Read This Important Note`
     },
+    unknownTitleProseAfterSpacedProfile: {
+      value: "/Users/Alice Smith Project Status",
+      expectedCount: 1,
+      expectedRedaction: `${workstationHomeRedaction} Project Status`
+    },
+    threePartRootProfile: {
+      value: "/Users/Alice Mary Smith",
+      expectedCount: 1,
+      expectedRedaction: workstationHomeRedaction
+    },
     spacedProfileFollowedByProse: {
       value: "/Users/Alice Smith reviewed evidence.",
       expectedCount: 1,

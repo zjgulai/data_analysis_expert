@@ -294,7 +294,25 @@ function findRootOnlyProfileEnd(text, start, limit) {
       && !lowercaseNameParticles.has(nextNormalized)
       && !wordNameConnectors.has(nextNormalized)
       && !isProfileProseCue(tokens, index + 1);
-    if (ambiguousTitleRun) break;
+    if (ambiguousTitleRun) {
+      let runEnd = index;
+      while (
+        runEnd < tokens.length
+        && isNameLikeProfileToken(tokens[runEnd].value)
+        && !lowercaseNameParticles.has(tokens[runEnd].value.toLowerCase())
+        && !wordNameConnectors.has(tokens[runEnd].value.toLowerCase())
+        && !isProfileProseCue(tokens, runEnd)
+      ) runEnd += 1;
+      // Root-only Title Case is ambiguous with prose: support up to three name tokens;
+      // for longer runs redact the common two-token profile and preserve the remainder.
+      if (runEnd - index <= 2) {
+        end = tokens[runEnd - 1].end;
+        index = runEnd;
+        continue;
+      }
+      end = tokens[index].end;
+      break;
+    }
     end = tokens[index].end;
     index += 1;
   }
