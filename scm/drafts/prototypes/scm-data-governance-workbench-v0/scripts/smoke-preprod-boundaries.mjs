@@ -157,6 +157,35 @@ try {
     UPDATE governance_tasks SET status='done' WHERE priority='P0' AND task_type='owner_signoff';
     UPDATE governance_tasks SET status='已映射' WHERE priority='P0' AND task_type='field_mapping';
     UPDATE governance_tasks SET status='certified' WHERE id='aip_20260627_d_p1_05_scei_weight_source_required';
+    UPDATE metrics
+    SET lifecycle_status='active', certification_status='certified'
+    WHERE id=(
+      SELECT target_ref FROM governance_tasks
+      WHERE priority='P0' AND task_type='field_mapping'
+      ORDER BY id LIMIT 1
+    );
+    INSERT INTO certifications (id, asset_type, asset_ref, status, certified_by, evidence)
+    SELECT
+      'preprod-boundary-field-mapping-certification',
+      'metric',
+      target_ref,
+      'certified',
+      'preprod boundary fixture',
+      'field_mapping 已映射 must satisfy the hard-gate status contract'
+    FROM governance_tasks
+    WHERE priority='P0' AND task_type='field_mapping'
+    ORDER BY id LIMIT 1;
+    INSERT INTO chatbi_contexts (id, metric_id, question_sample, allowed_dimensions, evidence_chain, answer_policy)
+    SELECT
+      'preprod-boundary-field-mapping-context',
+      target_ref,
+      'field mapping completion contract fixture',
+      '[]',
+      '[]',
+      'certified_metric_only'
+    FROM governance_tasks
+    WHERE priority='P0' AND task_type='field_mapping'
+    ORDER BY id LIMIT 1;
   `);
   const { report: acceptedStatusReport, status: acceptedStatus } = runPreprod(
     screenshotSandboxRoot,
@@ -175,6 +204,32 @@ try {
     assert(check, `accepted-governance-statuses:${checkName}:missing-check`);
     assert(check.ok === true, `accepted-governance-statuses:${checkName}:formal-completion-status-rejected`);
     assert(check.detail.accepted === expectedAccepted, `accepted-governance-statuses:${checkName}:accepted-count-mismatch`);
+  }
+
+  execDatabaseSql(governanceDatabasePath, `
+    UPDATE governance_tasks
+    SET status='已签字'
+    WHERE id=(
+      SELECT id FROM governance_tasks
+      WHERE priority='P0' AND task_type='field_mapping'
+      ORDER BY id LIMIT 1
+    );
+  `);
+  const { report: mismatchedStatusReport, status: mismatchedStatus } = runPreprod(
+    screenshotSandboxRoot,
+    "mismatched-governance-status",
+    screenshotSandboxRoot,
+    join(screenshotSandboxRoot, "scripts", "preprod-check.mjs")
+  );
+  assert(mismatchedStatus === 1, "mismatched-governance-status:field-mapping-已签字-must-fail-hard-gates");
+  for (const checkName of [
+    "db-no-unresolved-p0-certified-metrics",
+    "db-no-unresolved-p0-certified-ledger-rows",
+    "db-no-unresolved-p0-chatbi-contexts"
+  ]) {
+    const check = mismatchedStatusReport.checks.find((entry) => entry.name === checkName);
+    assert(check, `mismatched-governance-status:${checkName}:missing-check`);
+    assert(check.ok === false, `mismatched-governance-status:${checkName}:mismatched-status-accepted`);
   }
 
   execDatabaseSql(governanceDatabasePath, `
@@ -207,6 +262,7 @@ try {
     missingGovernancePopulationsRejected: true,
     unacceptedGovernanceStatusesRejected: true,
     acceptedGovernanceStatusesRecognized: true,
+    mismatchedGovernanceStatusesRejected: true,
     authorizationBehaviorGatesExecuted: true,
     productionWrites: false,
     providerCalls: false

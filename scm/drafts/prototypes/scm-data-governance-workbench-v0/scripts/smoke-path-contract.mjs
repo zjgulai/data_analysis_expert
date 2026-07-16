@@ -48,6 +48,26 @@ function removeEmbeddedEvidence(targetRoot) {
   rmSync(join(targetRoot, "data", evidenceFileName), { force: true });
 }
 
+function hasChildExited(child) {
+  return child.exitCode !== null || child.signalCode !== null;
+}
+
+async function waitForChildExit(child, timeoutMs) {
+  if (hasChildExited(child)) return true;
+  return new Promise((resolveExit) => {
+    let timer;
+    const finish = (exited) => {
+      clearTimeout(timer);
+      child.off("exit", onExit);
+      resolveExit(exited);
+    };
+    const onExit = () => finish(true);
+    child.once("exit", onExit);
+    timer = setTimeout(() => finish(hasChildExited(child)), timeoutMs);
+    if (hasChildExited(child)) finish(true);
+  });
+}
+
 async function startApp(appRoot, extraEnv = {}) {
   const port = await reservePort();
   const logs = [];
@@ -71,8 +91,8 @@ async function startApp(appRoot, extraEnv = {}) {
   const app = { child, baseUrl, logs };
   runningApps.push(app);
   try {
-    for (let attempt = 0; attempt < 50; attempt += 1) {
-      if (child.exitCode !== null) {
+    for (let attempt = 0; attempt < 100; attempt += 1) {
+      if (hasChildExited(child)) {
         throw new Error(`SCM server exited before health check.\n${logs.join("").slice(-2000)}`);
       }
       try {
@@ -93,18 +113,15 @@ async function startApp(appRoot, extraEnv = {}) {
 }
 
 async function stopApp(app) {
-  if (app?.child && app.child.exitCode === null) {
+  if (app?.child && !hasChildExited(app.child)) {
     app.child.kill("SIGTERM");
-    const exited = await Promise.race([
-      new Promise((resolveExit) => app.child.once("exit", () => resolveExit(true))),
-      delay(2000).then(() => false)
-    ]);
-    if (!exited && app.child.exitCode === null) {
+    const exited = await waitForChildExit(app.child, 2000);
+    if (!exited && !hasChildExited(app.child)) {
       app.child.kill("SIGKILL");
-      await Promise.race([
-      new Promise((resolveExit) => app.child.once("exit", resolveExit)),
-      delay(2000)
-      ]);
+      const killed = await waitForChildExit(app.child, 2000);
+      if (!killed && !hasChildExited(app.child)) {
+        throw new Error(`SCM server child ${app.child.pid || "unknown"} did not exit after SIGKILL`);
+      }
     }
   }
 }
@@ -157,6 +174,23 @@ try {
     failures.push(`failed startup must surface the health timeout, got: ${failedStartupError || "no error"}`);
   }
   if (failedStartupLeaked) failures.push("failed startup must not leak a child that ignores SIGTERM");
+
+  const signalExitRoot = join(sandboxRoot, "signal-exit");
+  mkdirSync(join(signalExitRoot, "server"), { recursive: true });
+  writeFileSync(
+    join(signalExitRoot, "server", "index.mjs"),
+    `setTimeout(() => process.kill(process.pid, "SIGTERM"), 25);`,
+    "utf8"
+  );
+  let signalExitError = "";
+  try {
+    await startApp(signalExitRoot);
+  } catch (error) {
+    signalExitError = String(error?.message || error);
+  }
+  if (!signalExitError.includes("exited before health check")) {
+    failures.push(`signal-driven startup exit must be detected immediately, got: ${signalExitError || "no error"}`);
+  }
 
   const monorepoRoot = join(sandboxRoot, "monorepo", "scm");
   const monorepoAppRoot = join(monorepoRoot, "drafts", "prototypes", "scm-data-governance-workbench-v0");
