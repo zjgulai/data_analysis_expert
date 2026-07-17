@@ -107,6 +107,9 @@ async function startApp(appRoot, extraEnv = {}, { startupTimeoutMs = 10_000 } = 
         if (response.ok) return app;
       } catch {
         // The child may still be binding its local port.
+        if (hasChildExited(child)) {
+          throw new Error(`SCM server exited before health check.\n${logs.join("").slice(-2000)}`);
+        }
       }
       const delayMs = Math.min(100, Math.max(0, startupDeadline - Date.now()));
       if (delayMs > 0) await delay(delayMs);
@@ -176,6 +179,30 @@ try {
     if (stalledStartupElapsedMs > 750) {
       failures.push(`stalled health endpoint exceeded the bounded startup deadline: ${stalledStartupElapsedMs}ms`);
     }
+  }
+
+  const exitDuringProbeRoot = join(sandboxRoot, "exit-during-probe");
+  mkdirSync(join(exitDuringProbeRoot, "server"), { recursive: true });
+  writeFileSync(
+    join(exitDuringProbeRoot, "server", "index.mjs"),
+    `setTimeout(() => process.kill(process.pid, "SIGTERM"), 20);`,
+    "utf8"
+  );
+  const originalFetch = globalThis.fetch;
+  let exitDuringProbeError = "";
+  try {
+    globalThis.fetch = async () => {
+      await delay(150);
+      throw new Error("synthetic health probe failure");
+    };
+    await startApp(exitDuringProbeRoot, {}, { startupTimeoutMs: 100 });
+  } catch (error) {
+    exitDuringProbeError = String(error?.message || error);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+  if (!exitDuringProbeError.includes("exited before health check")) {
+    failures.push(`child exit during health probe must surface immediately, got: ${exitDuringProbeError || "no error"}`);
   }
 
   const failedStartupRoot = join(sandboxRoot, "failed-startup");
