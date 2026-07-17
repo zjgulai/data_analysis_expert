@@ -91,6 +91,16 @@ function count(db, sql, parameters = []) {
   return Number(Object.values(row || { count: 0 })[0] || 0);
 }
 
+function manualGateCompletionPredicate(alias) {
+  const clauses = [];
+  const parameters = [];
+  for (const [taskType, statuses] of Object.entries(manualGateCompletionStatuses)) {
+    clauses.push(`(${alias}.task_type = ? AND ${alias}.status IN (${statuses.map(() => "?").join(",")}))`);
+    parameters.push(taskType, ...statuses);
+  }
+  return { sql: clauses.join(" OR "), parameters };
+}
+
 function getGitDirtyCount() {
   try {
     const output = execFileSync("git", ["status", "--short"], { cwd: root, encoding: "utf8" });
@@ -336,6 +346,7 @@ const db = new DatabaseSync(dbPath, { readOnly: true });
 const certifiedMetrics = count(db, "select count(*) as count from metrics where certification_status='certified'");
 const activeTags = count(db, "select count(*) as count from tags where lifecycle_status='active'");
 const certifiedLineageTargets = count(db, "select count(distinct target_ref) as count from lineage_edges where status='certified' and confidence>=0.8");
+const acceptedManualGateCompletion = manualGateCompletionPredicate("g");
 const unresolvedCertifiedMetrics = count(db, `
   select count(*) as count
   from metrics m
@@ -344,24 +355,24 @@ const unresolvedCertifiedMetrics = count(db, `
       select 1 from governance_tasks g
       where g.target_ref=m.id
         and g.priority='P0'
-        and g.status not in ('已签字','certified','done')
+        and not (${acceptedManualGateCompletion.sql})
     )
-`);
+`, acceptedManualGateCompletion.parameters);
 const unresolvedCertifiedLedgerRows = count(db, `
   select count(distinct c.asset_ref) as count
   from certifications c
   join governance_tasks g on g.target_ref=c.asset_ref
   where c.status='certified'
     and g.priority='P0'
-    and g.status not in ('已签字','certified','done')
-`);
+    and not (${acceptedManualGateCompletion.sql})
+`, acceptedManualGateCompletion.parameters);
 const unresolvedChatbiContexts = count(db, `
   select count(distinct ctx.metric_id) as count
   from chatbi_contexts ctx
   join governance_tasks g on g.target_ref=ctx.metric_id
   where g.priority='P0'
-    and g.status not in ('已签字','certified','done')
-`);
+    and not (${acceptedManualGateCompletion.sql})
+`, acceptedManualGateCompletion.parameters);
 const certifiedLineageWithoutCertifiedMetric = count(db, `
   select count(distinct edge.target_ref) as count
   from lineage_edges edge

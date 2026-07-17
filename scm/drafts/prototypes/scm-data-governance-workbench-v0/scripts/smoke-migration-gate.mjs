@@ -282,6 +282,30 @@ function certificationGateSnapshots(db) {
   ]));
 }
 
+function certificationGateMigrationSnapshots(db) {
+  return {
+    schema_migrations: db.prepare(
+      "SELECT * FROM schema_migrations WHERE id = ? ORDER BY id"
+    ).all(certificationGateMigrationId),
+    metric_snapshot: db.prepare(`
+      SELECT * FROM migration_20260716_cert_metric_snapshot
+      ORDER BY migration_id, metric_id
+    `).all(),
+    ledger_snapshot: db.prepare(`
+      SELECT * FROM migration_20260716_cert_ledger_snapshot
+      ORDER BY migration_id, id
+    `).all(),
+    chatbi_snapshot: db.prepare(`
+      SELECT * FROM migration_20260716_cert_chatbi_snapshot
+      ORDER BY migration_id, id
+    `).all(),
+    lineage_snapshot: db.prepare(`
+      SELECT * FROM migration_20260716_cert_lineage_snapshot
+      ORDER BY migration_id, id
+    `).all()
+  };
+}
+
 function unresolvedCertifiedCount(db) {
   return count(db, `
     SELECT COUNT(*)
@@ -383,10 +407,13 @@ function verifyCertificationGateApplyRollback() {
       throw new Error("Certification gate must not mutate a non-metric certification sharing a metric asset_ref");
     }
     const applied = certificationGateSnapshots(db);
+    const appliedMigrationState = certificationGateMigrationSnapshots(db);
 
     db.exec(certificationGateApplySql);
     const reapplied = certificationGateSnapshots(db);
-    if (JSON.stringify(applied) !== JSON.stringify(reapplied)) {
+    const reappliedMigrationState = certificationGateMigrationSnapshots(db);
+    if (JSON.stringify(applied) !== JSON.stringify(reapplied)
+      || JSON.stringify(appliedMigrationState) !== JSON.stringify(reappliedMigrationState)) {
       throw new Error("Certification gate apply must be idempotent");
     }
 
@@ -417,6 +444,7 @@ function verifyCertificationGateApplyRollback() {
     return {
       downgradedMetrics: baselineViolationCount,
       chatbiContextsRemoved: baseline.chatbi_contexts.length - applied.chatbi_contexts.length,
+      migrationStateIdempotent: true,
       rollback: "complete_baseline_restored"
     };
   } finally {
@@ -496,6 +524,33 @@ function verifyDecisionSubjectApplyRollback() {
     if (subjectCount !== invalidBefore) {
       throw new Error(`Decision subject apply count mismatch: ${subjectCount}/${invalidBefore}`);
     }
+    const metricRefs = new Set(db.prepare("SELECT id, code FROM metrics").all().flatMap((metric) => [metric.id, metric.code]));
+    const compareDecisionRows = (left, right) => left.decision_id === right.decision_id
+      ? 0
+      : (left.decision_id < right.decision_id ? -1 : 1);
+    const expectedSubjectRows = baseline
+      .filter((decision) => decision.linked_metric_id && !metricRefs.has(decision.linked_metric_id))
+      .map((decision) => ({
+        decision_id: decision.id,
+        subject_ref: decision.linked_metric_id,
+        subject_type: "governance_subject"
+      }))
+      .sort(compareDecisionRows);
+    const actualSubjectRows = db.prepare(`
+      SELECT decision_id, subject_ref, subject_type
+      FROM decision_subject_refs
+    `).all().sort(compareDecisionRows);
+    if (JSON.stringify(expectedSubjectRows) !== JSON.stringify(actualSubjectRows)) {
+      throw new Error("Decision subject apply produced incorrect decision-to-subject mappings");
+    }
+    const viewSubjectRows = db.prepare(`
+      SELECT id AS decision_id, subject_ref, subject_type
+      FROM decision_logs_with_subject
+      WHERE subject_ref <> ''
+    `).all().sort(compareDecisionRows);
+    if (JSON.stringify(expectedSubjectRows) !== JSON.stringify(viewSubjectRows)) {
+      throw new Error("decision_logs_with_subject does not preserve the migrated decision-to-subject mappings");
+    }
     const appliedDecisionRows = db.prepare("SELECT * FROM decision_logs ORDER BY id").all();
     const appliedSubjectRows = db.prepare("SELECT * FROM decision_subject_refs ORDER BY decision_id").all();
 
@@ -507,6 +562,36 @@ function verifyDecisionSubjectApplyRollback() {
       || JSON.stringify(appliedSubjectRows) !== JSON.stringify(db.prepare("SELECT * FROM decision_subject_refs ORDER BY decision_id").all())) {
       throw new Error("Decision subject apply must be idempotent");
     }
+
+    const dualReferenceFixture = appliedSubjectRows[0];
+    const validMetricId = db.prepare("SELECT id FROM metrics ORDER BY id LIMIT 1").get().id;
+    db.prepare("UPDATE decision_logs SET linked_metric_id = ? WHERE id = ?")
+      .run(validMetricId, dualReferenceFixture.decision_id);
+    let dualReferenceRollbackError = "";
+    try {
+      db.exec(decisionSubjectRollbackSql);
+    } catch (error) {
+      dualReferenceRollbackError = String(error.message || error);
+      try {
+        db.exec("ROLLBACK");
+      } catch {
+        // The rollback guard may already have closed its transaction.
+      }
+    }
+    if (!dualReferenceRollbackError.includes("CHECK constraint failed")) {
+      throw new Error(`Decision subject rollback did not fail closed on a dual reference: ${dualReferenceRollbackError || "no error"}`);
+    }
+    if (!tableExists(db, "decision_subject_refs") || !viewExists(db, "decision_logs_with_subject")) {
+      throw new Error("Rejected decision subject rollback removed its table or view");
+    }
+    if (db.prepare("SELECT linked_metric_id FROM decision_logs WHERE id = ?").get(dualReferenceFixture.decision_id).linked_metric_id !== validMetricId) {
+      throw new Error("Rejected decision subject rollback changed the metric side of a dual reference");
+    }
+    if (db.prepare("SELECT subject_ref FROM decision_subject_refs WHERE decision_id = ?").get(dualReferenceFixture.decision_id).subject_ref !== dualReferenceFixture.subject_ref) {
+      throw new Error("Rejected decision subject rollback changed the subject side of a dual reference");
+    }
+    db.prepare("UPDATE decision_logs SET linked_metric_id = '' WHERE id = ?")
+      .run(dualReferenceFixture.decision_id);
 
     db.exec(decisionSubjectRollbackSql);
     if (tableExists(db, "decision_subject_refs") || viewExists(db, "decision_logs_with_subject")) {
@@ -529,6 +614,8 @@ function verifyDecisionSubjectApplyRollback() {
     return {
       migratedSubjects: invalidBefore,
       invalidMetricReferences: 0,
+      mappingVerified: true,
+      dualReferenceRollback: "rejected_before_drop",
       rollback: "complete_baseline_restored"
     };
   } finally {

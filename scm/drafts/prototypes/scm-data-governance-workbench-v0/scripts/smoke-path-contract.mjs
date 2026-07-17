@@ -48,7 +48,30 @@ function removeEmbeddedEvidence(targetRoot) {
   rmSync(join(targetRoot, "data", evidenceFileName), { force: true });
 }
 
-async function startApp(appRoot, extraEnv = {}) {
+function hasChildExited(child) {
+  return child.exitCode !== null || child.signalCode !== null;
+}
+
+async function waitForChildExit(child, timeoutMs) {
+  if (hasChildExited(child)) return true;
+  return new Promise((resolveExit) => {
+    let timer;
+    const finish = (exited) => {
+      clearTimeout(timer);
+      child.off("exit", onExit);
+      resolveExit(exited);
+    };
+    const onExit = () => finish(true);
+    child.once("exit", onExit);
+    timer = setTimeout(() => finish(hasChildExited(child)), timeoutMs);
+    if (hasChildExited(child)) finish(true);
+  });
+}
+
+async function startApp(appRoot, extraEnv = {}, { startupTimeoutMs = 10_000 } = {}) {
+  if (!Number.isInteger(startupTimeoutMs) || startupTimeoutMs <= 0) {
+    throw new Error("startupTimeoutMs must be a positive integer");
+  }
   const port = await reservePort();
   const logs = [];
   const child = spawn(process.execPath, [join(appRoot, "server", "index.mjs")], {
@@ -71,17 +94,25 @@ async function startApp(appRoot, extraEnv = {}) {
   const app = { child, baseUrl, logs };
   runningApps.push(app);
   try {
-    for (let attempt = 0; attempt < 50; attempt += 1) {
-      if (child.exitCode !== null) {
+    const startupDeadline = Date.now() + startupTimeoutMs;
+    while (Date.now() < startupDeadline) {
+      if (hasChildExited(child)) {
         throw new Error(`SCM server exited before health check.\n${logs.join("").slice(-2000)}`);
       }
       try {
-        const response = await fetch(`${baseUrl}/api/deploy/health`, { signal: AbortSignal.timeout(2000) });
+        const remainingMs = Math.max(1, startupDeadline - Date.now());
+        const response = await fetch(`${baseUrl}/api/deploy/health`, {
+          signal: AbortSignal.timeout(Math.min(2000, remainingMs))
+        });
         if (response.ok) return app;
       } catch {
         // The child may still be binding its local port.
+        if (hasChildExited(child)) {
+          throw new Error(`SCM server exited before health check.\n${logs.join("").slice(-2000)}`);
+        }
       }
-      await delay(100);
+      const delayMs = Math.min(100, Math.max(0, startupDeadline - Date.now()));
+      if (delayMs > 0) await delay(delayMs);
     }
     throw new Error(`SCM server did not become healthy.\n${logs.join("").slice(-2000)}`);
   } catch (error) {
@@ -93,18 +124,15 @@ async function startApp(appRoot, extraEnv = {}) {
 }
 
 async function stopApp(app) {
-  if (app?.child && app.child.exitCode === null) {
+  if (app?.child && !hasChildExited(app.child)) {
     app.child.kill("SIGTERM");
-    const exited = await Promise.race([
-      new Promise((resolveExit) => app.child.once("exit", () => resolveExit(true))),
-      delay(2000).then(() => false)
-    ]);
-    if (!exited && app.child.exitCode === null) {
+    const exited = await waitForChildExit(app.child, 2000);
+    if (!exited && !hasChildExited(app.child)) {
       app.child.kill("SIGKILL");
-      await Promise.race([
-      new Promise((resolveExit) => app.child.once("exit", resolveExit)),
-      delay(2000)
-      ]);
+      const killed = await waitForChildExit(app.child, 2000);
+      if (!killed && !hasChildExited(app.child)) {
+        throw new Error(`SCM server child ${app.child.pid || "unknown"} did not exit after SIGKILL`);
+      }
     }
   }
 }
@@ -119,6 +147,64 @@ const results = [];
 const runningApps = [];
 
 try {
+  const stalledStartupRoot = join(sandboxRoot, "stalled-startup");
+  mkdirSync(join(stalledStartupRoot, "server"), { recursive: true });
+  writeFileSync(
+    join(stalledStartupRoot, "server", "index.mjs"),
+    `import { createServer } from "node:http";
+     createServer(() => {}).listen(Number(process.env.PORT), "127.0.0.1");
+    `,
+    "utf8"
+  );
+  const stalledStartupIndex = runningApps.length;
+  const stalledStartupStartedAt = Date.now();
+  const stalledStartupPromise = startApp(stalledStartupRoot, {}, { startupTimeoutMs: 250 }).then(
+    () => ({ ok: true, error: "" }),
+    (error) => ({ ok: false, error: String(error?.message || error) })
+  );
+  const stalledStartupOutcome = await Promise.race([
+    stalledStartupPromise,
+    delay(1000).then(() => ({ watchdogExpired: true }))
+  ]);
+  const stalledStartupElapsedMs = Date.now() - stalledStartupStartedAt;
+  if (stalledStartupOutcome.watchdogExpired) {
+    const stalledApp = runningApps[stalledStartupIndex];
+    if (stalledApp) await stopApp(stalledApp);
+    await stalledStartupPromise;
+    failures.push("stalled health endpoint must respect one overall startup deadline");
+  } else {
+    if (stalledStartupOutcome.ok || !stalledStartupOutcome.error.includes("did not become healthy")) {
+      failures.push(`stalled health endpoint must surface the startup deadline, got: ${stalledStartupOutcome.error || "no error"}`);
+    }
+    if (stalledStartupElapsedMs > 750) {
+      failures.push(`stalled health endpoint exceeded the bounded startup deadline: ${stalledStartupElapsedMs}ms`);
+    }
+  }
+
+  const exitDuringProbeRoot = join(sandboxRoot, "exit-during-probe");
+  mkdirSync(join(exitDuringProbeRoot, "server"), { recursive: true });
+  writeFileSync(
+    join(exitDuringProbeRoot, "server", "index.mjs"),
+    `setTimeout(() => process.kill(process.pid, "SIGTERM"), 20);`,
+    "utf8"
+  );
+  const originalFetch = globalThis.fetch;
+  let exitDuringProbeError = "";
+  try {
+    globalThis.fetch = async () => {
+      await delay(150);
+      throw new Error("synthetic health probe failure");
+    };
+    await startApp(exitDuringProbeRoot, {}, { startupTimeoutMs: 100 });
+  } catch (error) {
+    exitDuringProbeError = String(error?.message || error);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+  if (!exitDuringProbeError.includes("exited before health check")) {
+    failures.push(`child exit during health probe must surface immediately, got: ${exitDuringProbeError || "no error"}`);
+  }
+
   const failedStartupRoot = join(sandboxRoot, "failed-startup");
   const failedStartupPidPath = join(failedStartupRoot, "server.pid");
   mkdirSync(join(failedStartupRoot, "server"), { recursive: true });
@@ -157,6 +243,23 @@ try {
     failures.push(`failed startup must surface the health timeout, got: ${failedStartupError || "no error"}`);
   }
   if (failedStartupLeaked) failures.push("failed startup must not leak a child that ignores SIGTERM");
+
+  const signalExitRoot = join(sandboxRoot, "signal-exit");
+  mkdirSync(join(signalExitRoot, "server"), { recursive: true });
+  writeFileSync(
+    join(signalExitRoot, "server", "index.mjs"),
+    `setTimeout(() => process.kill(process.pid, "SIGTERM"), 25);`,
+    "utf8"
+  );
+  let signalExitError = "";
+  try {
+    await startApp(signalExitRoot);
+  } catch (error) {
+    signalExitError = String(error?.message || error);
+  }
+  if (!signalExitError.includes("exited before health check")) {
+    failures.push(`signal-driven startup exit must be detected immediately, got: ${signalExitError || "no error"}`);
+  }
 
   const monorepoRoot = join(sandboxRoot, "monorepo", "scm");
   const monorepoAppRoot = join(monorepoRoot, "drafts", "prototypes", "scm-data-governance-workbench-v0");
