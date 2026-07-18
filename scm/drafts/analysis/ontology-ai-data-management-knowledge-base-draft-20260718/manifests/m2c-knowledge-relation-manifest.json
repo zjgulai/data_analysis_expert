@@ -1,0 +1,533 @@
+{
+  "schema_version": "1.0.0",
+  "document_id": "book-ontology-ai-data-management-2026",
+  "domain_id": "ontology-ai-data-management-draft",
+  "batch_id": "m2c-engineering-method-ch06",
+  "allowed_predicates": [
+    "DEFINES",
+    "PART_OF",
+    "REQUIRES",
+    "PRODUCES",
+    "CONSUMES",
+    "GOVERNS",
+    "CONSTRAINS",
+    "TRIGGERS",
+    "OWNED_BY",
+    "EVIDENCED_BY",
+    "APPLICABLE_TO",
+    "CANDIDATE_CROSSWALK",
+    "CONTRADICTS",
+    "SUPERSEDES"
+  ],
+  "relation_count": 24,
+  "relations": [
+    {
+      "relation_id": "oadm-rel-b5a572c4ba38",
+      "subject_id": "oadm-knowledge-preprocessing-29-sentences-20eba05512",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:engineering:knowledge-preprocessing-29-sentences",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-seven-plus-one-framework-4e7856904e",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:semantic-framework:seven-plus-one",
+      "source_span_ids": [
+        "oadm-span-s6-1-1-p096-p097",
+        "oadm-span-s6-1-2-p098-p099"
+      ],
+      "section_ids": [
+        "6.1.1",
+        "6.1.2"
+      ],
+      "rationale": "29 句话是作者对 7+1 维度的自然语言细化。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "79bde193e6aeb50e36b6bff42b56f6a5b72bd18a4cf46b1ec5eb6b3c760bc7a0"
+    },
+    {
+      "relation_id": "oadm-rel-2eed7b1f5112",
+      "subject_id": "oadm-knowledge-preprocessing-29-sentences-20eba05512",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:engineering:knowledge-preprocessing-29-sentences",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-twenty-nine-sentences-70406ecd",
+      "object_type": "Term",
+      "object_key": "oadm:term:twenty-nine-sentences",
+      "source_span_ids": [
+        "oadm-span-s6-1-1-p096-p097",
+        "oadm-span-s6-1-2-p098-p099"
+      ],
+      "section_ids": [
+        "6.1.1",
+        "6.1.2"
+      ],
+      "rationale": "预处理方法定义了 29 句话的用途和输入方式。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "a84e470f4905cc614cddb189ced4d4b8376242fdf1083bdbc223cc6acc29ea87"
+    },
+    {
+      "relation_id": "oadm-rel-7e213a9a3cd1",
+      "subject_id": "oadm-modeling-admission-review-fd13d2a7bf",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:engineering:modeling-admission-review",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-knowledge-preprocessing-29-sentences-20eba05512",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:engineering:knowledge-preprocessing-29-sentences",
+      "source_span_ids": [
+        "oadm-span-s6-1-3-p100-p101"
+      ],
+      "section_ids": [
+        "6.1.3"
+      ],
+      "rationale": "准入审核作用于显性与隐性知识对齐后的描述集。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "94f2797a814d6ecc9570c0da075b2710e7623e16452fcd7f107acbc9853cbf28"
+    },
+    {
+      "relation_id": "oadm-rel-1458f627cf1e",
+      "subject_id": "oadm-modeling-admission-review-fd13d2a7bf",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:engineering:modeling-admission-review",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-modeling-admission-67d86c9b",
+      "object_type": "Term",
+      "object_key": "oadm:term:modeling-admission",
+      "source_span_ids": [
+        "oadm-span-s6-1-3-p100-p101"
+      ],
+      "section_ids": [
+        "6.1.3"
+      ],
+      "rationale": "该质量关口定义了建模前的准入条件。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "b24fa85bbed59352e51805deb02d5bd8db54131283f158a3ef5df678753fdbcb"
+    },
+    {
+      "relation_id": "oadm-rel-fb3904562f61",
+      "subject_id": "oadm-controlled-ai-ontology-modeling-db667058ad",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:engineering:controlled-ai-ontology-modeling",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-w3c-semantic-stack-bc94d749c7",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:semantic-standard:w3c-stack",
+      "source_span_ids": [
+        "oadm-span-s6-2-1-p102-p103"
+      ],
+      "section_ids": [
+        "6.2.1"
+      ],
+      "rationale": "受控建模以作者列举的语义标准栈作为输出约束。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "30a301cb8c731a835e4e6c3c39cc9184454cfb5fcebced01b3d79a5740ef7bb1"
+    },
+    {
+      "relation_id": "oadm-rel-83f5a665bcfa",
+      "subject_id": "oadm-dual-model-validation-eff49bdf82",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:engineering:dual-model-validation",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-controlled-ai-ontology-modeling-db667058ad",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:engineering:controlled-ai-ontology-modeling",
+      "source_span_ids": [
+        "oadm-span-s6-2-2-p103-p106"
+      ],
+      "section_ids": [
+        "6.2.2"
+      ],
+      "rationale": "双模型审核接收生成模型产生的本体初稿。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "e334530c710eb8f1d0807e9e38bf89ac756d7eb990d3f521c2a19eaf14074af5"
+    },
+    {
+      "relation_id": "oadm-rel-43a46f660cef",
+      "subject_id": "oadm-dual-model-validation-eff49bdf82",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:engineering:dual-model-validation",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-dual-model-collaboration-0d7693da",
+      "object_type": "Term",
+      "object_key": "oadm:term:dual-model-collaboration",
+      "source_span_ids": [
+        "oadm-span-s6-2-2-p103-p106"
+      ],
+      "section_ids": [
+        "6.2.2"
+      ],
+      "rationale": "该方法明确生成者与审计者的协同闭环。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "6f0a31c81e34d993014f7bdff396dab9f370632f130319bfdb1f85e16cacc51d"
+    },
+    {
+      "relation_id": "oadm-rel-3e35620d122b",
+      "subject_id": "oadm-scenario-validation-loop-65cbb0ff79",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:engineering:scenario-validation-loop",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-dual-model-validation-eff49bdf82",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:engineering:dual-model-validation",
+      "source_span_ids": [
+        "oadm-span-s6-2-3-p106-p109",
+        "oadm-span-s6-2-4-p109-p110"
+      ],
+      "section_ids": [
+        "6.2.3",
+        "6.2.4"
+      ],
+      "rationale": "专家可视化与场景测试承接模型协同校验结果。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "37477da9c81688af70525ec83f3d73a7378d39e25545eead56e01df729893860"
+    },
+    {
+      "relation_id": "oadm-rel-ce5b2e17dd8f",
+      "subject_id": "oadm-scenario-validation-loop-65cbb0ff79",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:engineering:scenario-validation-loop",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-golden-test-case-6bd84b45",
+      "object_type": "Term",
+      "object_key": "oadm:term:golden-test-case",
+      "source_span_ids": [
+        "oadm-span-s6-2-4-p109-p110"
+      ],
+      "section_ids": [
+        "6.2.4"
+      ],
+      "rationale": "场景验证由专家黄金用例建立关键路径预期。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "71521a056d94ed5b15509c6070adc1ac54e0def268bf528fb91a2c91d19c8037"
+    },
+    {
+      "relation_id": "oadm-rel-41bac7551268",
+      "subject_id": "oadm-ontology-asset-registration-5b7e350efb",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:engineering:ontology-asset-registration",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-scenario-validation-loop-65cbb0ff79",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:engineering:scenario-validation-loop",
+      "source_span_ids": [
+        "oadm-span-s6-3-1-p111-p111"
+      ],
+      "section_ids": [
+        "6.3.1"
+      ],
+      "rationale": "作者要求完成建模、校验和测试后再注册入库。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "88c2f6535e0a0b7fe6b1c09359f39db76298d543e64b9d8d8d34d01cf70d8e98"
+    },
+    {
+      "relation_id": "oadm-rel-616d54247adb",
+      "subject_id": "oadm-ontology-asset-registration-5b7e350efb",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:engineering:ontology-asset-registration",
+      "predicate": "CONSUMES",
+      "object_id": "oadm-term-semantic-database-157b8c4c",
+      "object_type": "Term",
+      "object_key": "oadm:term:semantic-database",
+      "source_span_ids": [
+        "oadm-span-s6-3-1-p111-p111"
+      ],
+      "section_ids": [
+        "6.3.1"
+      ],
+      "rationale": "通过审查的本体资产进入专用语义数据库。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "6ff897f3f10bb03dba489727981864a6e6c596e85fbafe3883cc45d5d82f856a"
+    },
+    {
+      "relation_id": "oadm-rel-f2801b71cd0b",
+      "subject_id": "oadm-ontology-lifecycle-operations-968c388b34",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:engineering:ontology-lifecycle-operations",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-ontology-asset-registration-5b7e350efb",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:engineering:ontology-asset-registration",
+      "source_span_ids": [
+        "oadm-span-s6-3-2-p111-p113",
+        "oadm-span-s6-3-3-p113-p115"
+      ],
+      "section_ids": [
+        "6.3.2",
+        "6.3.3"
+      ],
+      "rationale": "双重运维与运营管理作用于已注册发布的资产。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "78d5aee286a2da822b2624d064da704994e49b3aaef73f650a857489396f6657"
+    },
+    {
+      "relation_id": "oadm-rel-d6a83a5e5d86",
+      "subject_id": "oadm-ontology-lifecycle-operations-968c388b34",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:engineering:ontology-lifecycle-operations",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-dual-layer-operations-b1bb8cf0",
+      "object_type": "Term",
+      "object_key": "oadm:term:dual-layer-operations",
+      "source_span_ids": [
+        "oadm-span-s6-3-2-p111-p113"
+      ],
+      "section_ids": [
+        "6.3.2"
+      ],
+      "rationale": "生命周期运维同时覆盖数据层和语义层。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "933ad19a441a971cee97f43143d513121ad362d01501ab0e81b21530a6729e30"
+    },
+    {
+      "relation_id": "oadm-rel-de0976d5804d",
+      "subject_id": "oadm-ontology-lifecycle-operations-968c388b34",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:engineering:ontology-lifecycle-operations",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-build-use-optimize-reuse-e5bafd1e",
+      "object_type": "Term",
+      "object_key": "oadm:term:build-use-optimize-reuse",
+      "source_span_ids": [
+        "oadm-span-s6-3-3-p113-p115"
+      ],
+      "section_ids": [
+        "6.3.3"
+      ],
+      "rationale": "建用优复描述作者的资产运营循环。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "7271397ccb54f41f208e5c4faecff271a429c1c409120a0786e31988ca3ccfd8"
+    },
+    {
+      "relation_id": "oadm-rel-20fc063415a4",
+      "subject_id": "oadm-ontology-tooling-platform-34aa02435d",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:engineering:ontology-tooling-platform",
+      "predicate": "APPLICABLE_TO",
+      "object_id": "oadm-five-loop-method-ca9bb22b58",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:engineering:five-loop-method",
+      "source_span_ids": [
+        "oadm-span-s6-4-1-p115-p117",
+        "oadm-span-s6-4-2-p117-p119",
+        "oadm-span-s6-4-3-p119-p121",
+        "oadm-span-s6-6-p127-p127"
+      ],
+      "section_ids": [
+        "6.4.1",
+        "6.4.2",
+        "6.4.3",
+        "6.6"
+      ],
+      "rationale": "平台能力承载五环中的建模、审核、入库和服务环节。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "21db77f79aa0993513f4d768b9f536ea34f8201f0ea9865823a9acc51669c9cc"
+    },
+    {
+      "relation_id": "oadm-rel-1145f4cd1178",
+      "subject_id": "oadm-ontology-tooling-platform-34aa02435d",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:engineering:ontology-tooling-platform",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-ontology-tooling-platform-d6cb0e01",
+      "object_type": "Term",
+      "object_key": "oadm:term:ontology-tooling-platform",
+      "source_span_ids": [
+        "oadm-span-s6-4-1-p115-p117",
+        "oadm-span-s6-4-2-p117-p119",
+        "oadm-span-s6-4-3-p119-p121"
+      ],
+      "section_ids": [
+        "6.4.1",
+        "6.4.2",
+        "6.4.3"
+      ],
+      "rationale": "三个小节共同定义平台能力边界。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "593e774bf59d34079dc50656780dd5a158c8449ccf9023ac0f908ee8927b1cee"
+    },
+    {
+      "relation_id": "oadm-rel-d7eec1ebc524",
+      "subject_id": "oadm-point-line-surface-08ab3b75c8",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:implementation:point-line-surface",
+      "predicate": "PART_OF",
+      "object_id": "oadm-five-loop-method-ca9bb22b58",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:engineering:five-loop-method",
+      "source_span_ids": [
+        "oadm-span-s6-5-1-p121-p122",
+        "oadm-span-s6-5-2-p122-p124",
+        "oadm-span-s6-5-3-p124-p126",
+        "oadm-span-s6-6-p127-p127"
+      ],
+      "section_ids": [
+        "6.5.1",
+        "6.5.2",
+        "6.5.3",
+        "6.6"
+      ],
+      "rationale": "点线面是五环方法的实施扩展环节。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "03b3dfb9fc2328898600ab3afa141f92e5612e1dea5edac7ffab67120d4dd1b8"
+    },
+    {
+      "relation_id": "oadm-rel-e031a1e71562",
+      "subject_id": "oadm-point-line-surface-08ab3b75c8",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:implementation:point-line-surface",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-point-line-surface-e24ea436",
+      "object_type": "Term",
+      "object_key": "oadm:term:point-line-surface",
+      "source_span_ids": [
+        "oadm-span-s6-5-1-p121-p122",
+        "oadm-span-s6-5-2-p122-p124",
+        "oadm-span-s6-5-3-p124-p126"
+      ],
+      "section_ids": [
+        "6.5.1",
+        "6.5.2",
+        "6.5.3"
+      ],
+      "rationale": "三个阶段共同定义点线面路径。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "00897c9117d8882dc401eebee7fb0b675b011960b2defb1197970bb3218a2ae9"
+    },
+    {
+      "relation_id": "oadm-rel-69894e9f1aa5",
+      "subject_id": "oadm-federated-cross-domain-integration-c97fddf870",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:implementation:federated-cross-domain-integration",
+      "predicate": "PART_OF",
+      "object_id": "oadm-point-line-surface-08ab3b75c8",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:implementation:point-line-surface",
+      "source_span_ids": [
+        "oadm-span-s6-5-3-p124-p126"
+      ],
+      "section_ids": [
+        "6.5.3"
+      ],
+      "rationale": "联邦跨域整合是“面”阶段的实现机制。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "904bdd40c322fe19f46682b1cccb4f7575c99e76522fbf5b77c578bebe64c0eb"
+    },
+    {
+      "relation_id": "oadm-rel-b969b06df51f",
+      "subject_id": "oadm-federated-cross-domain-integration-c97fddf870",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:implementation:federated-cross-domain-integration",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-term-bridge-ontology-a1fa11b2",
+      "object_type": "Term",
+      "object_key": "oadm:term:bridge-ontology",
+      "source_span_ids": [
+        "oadm-span-s6-5-3-p124-p126"
+      ],
+      "section_ids": [
+        "6.5.3"
+      ],
+      "rationale": "桥接本体承载跨域核心概念和映射。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "76733b5c8df03fd42bda374223d46c54be45e715447db391046fa69b756cf91f"
+    },
+    {
+      "relation_id": "oadm-rel-b2f3ddca08b6",
+      "subject_id": "oadm-federated-cross-domain-integration-c97fddf870",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:implementation:federated-cross-domain-integration",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-term-federated-query-5b4d5476",
+      "object_type": "Term",
+      "object_key": "oadm:term:federated-query",
+      "source_span_ids": [
+        "oadm-span-s6-5-3-p124-p126"
+      ],
+      "section_ids": [
+        "6.5.3"
+      ],
+      "rationale": "联邦查询负责拆分并合并跨域问题。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "e283fb6f08429ef4335ec3ab95fde07ef1e2a79af08f51e7370da971d742bf62"
+    },
+    {
+      "relation_id": "oadm-rel-39557ce00f49",
+      "subject_id": "oadm-federated-cross-domain-integration-c97fddf870",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:implementation:federated-cross-domain-integration",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-enterprise-architecture-semantic-layer-559e5b63a7",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:enterprise-architecture:semantic-layer",
+      "source_span_ids": [
+        "oadm-span-s6-5-3-p124-p126"
+      ],
+      "section_ids": [
+        "6.5.3"
+      ],
+      "rationale": "跨域映射依赖统一的企业级语义对齐基准。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "4ff03268ab8d835435e7cd71f2d2c902610600a910f69c1d727955525656bd22"
+    },
+    {
+      "relation_id": "oadm-rel-d117ada8fce8",
+      "subject_id": "oadm-legacy-asset-evolution-8cfff4942d",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:implementation:legacy-asset-evolution",
+      "predicate": "APPLICABLE_TO",
+      "object_id": "oadm-lake-kb-ontology-triad-d5e33d6b69",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:knowledge-platform:lake-kb-ontology-triad",
+      "source_span_ids": [
+        "oadm-span-s6-5-4-p126-p127"
+      ],
+      "section_ids": [
+        "6.5.4"
+      ],
+      "rationale": "三阶段演进用于连接存量数据湖、知识图谱和本体体系。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "913890fe45305a9cf4d17c26daac3374b1a19b0048adf448ad458599cf35d7a5"
+    },
+    {
+      "relation_id": "oadm-rel-ee9dfb45c5df",
+      "subject_id": "oadm-legacy-asset-evolution-8cfff4942d",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:implementation:legacy-asset-evolution",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-point-line-surface-08ab3b75c8",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:implementation:point-line-surface",
+      "source_span_ids": [
+        "oadm-span-s6-5-4-p126-p127"
+      ],
+      "section_ids": [
+        "6.5.4"
+      ],
+      "rationale": "存量资产连接贯穿点线面增量扩展。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "cdbfe70b5724ad0c1270b070dd6aa60e9bab1bc471fd3f13548e5d9ad98be1de"
+    }
+  ]
+}

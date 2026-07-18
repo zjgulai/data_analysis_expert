@@ -1,0 +1,2025 @@
+{
+  "schema_version": "1.0.0",
+  "document_id": "book-ontology-ai-data-management-2026",
+  "domain_id": "ontology-ai-data-management-draft",
+  "manifest_scope": "aggregate-through-m2e",
+  "batch_counts": {
+    "m2a-strategic-cognition-ch01-ch03": 12,
+    "m2b-core-theory-ch04-ch05": 24,
+    "m2c-engineering-method-ch06": 12,
+    "m2d-agent-engineering-applications-ch07-ch08": 23,
+    "m2e-agent-governance-future-enterprise-ch09-ch10": 18
+  },
+  "card_count": 89,
+  "cards": [
+    {
+      "card_id": "oadm-execution-event-bus-24482106d6",
+      "semantic_key": "oadm:agent-action:execution-event-bus",
+      "title": "本体定义的多 Agent 执行事件总线",
+      "card_type": "architecture",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-execution-event-bus-24482106d6.md",
+      "content_hash": "4a3739dbf48871fae2c28a5c3ef011f59ad65626446154bfcf839667bf6f1e85",
+      "file_hash": "88c8bed7bd75ff7247b0bc1cd2cdd007cbf9749fa61862611849cf42356467bd",
+      "source_span_ids": [
+        "oadm-span-s7-3-3-p143-p144"
+      ],
+      "section_ids": [
+        "7.3.3"
+      ],
+      "pdf_page_start": 143,
+      "pdf_page_end": 144,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-risk-routed-execution-5fd5f72377",
+      "semantic_key": "oadm:agent-action:risk-routed-execution",
+      "title": "按风险路由的三类决策—行动方式",
+      "card_type": "action-pattern",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-risk-routed-execution-5fd5f72377.md",
+      "content_hash": "15657e58dbb58e4283d364f10f6b08bddd330c3f3b3952ba1795df1132198f78",
+      "file_hash": "1cc985f7a83a9c87657bfc7863dc5206cf2ebd3dbf967cee2eec139b74fa4e28",
+      "source_span_ids": [
+        "oadm-span-s7-3-1-p141-p141",
+        "oadm-span-s7-3-2-p141-p143",
+        "oadm-span-s7-3-3-p143-p144"
+      ],
+      "section_ids": [
+        "7.3.1",
+        "7.3.2",
+        "7.3.3"
+      ],
+      "pdf_page_start": 141,
+      "pdf_page_end": 144,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-safe-dynamic-action-loop-e794577c2f",
+      "semantic_key": "oadm:agent-action:safe-dynamic-action-loop",
+      "title": "动态 Action 的执行前校验与反馈闭环",
+      "card_type": "quality-gate",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-safe-dynamic-action-loop-e794577c2f.md",
+      "content_hash": "fb2dff85d8cd24f122183fe2d995e9d182ec6b79f610ad7b4819ad6dec9d0dc7",
+      "file_hash": "b7365a82e10beb2e5651fa3317dc7e62b725cb461da20a271a7ef58cf854c9e8",
+      "source_span_ids": [
+        "oadm-span-s7-4-2-p146-p147"
+      ],
+      "section_ids": [
+        "7.4.2"
+      ],
+      "pdf_page_start": 146,
+      "pdf_page_end": 147,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-five-component-stack-018338d550",
+      "semantic_key": "oadm:agent-architecture:five-component-stack",
+      "title": "本体增强 Agent 的五组件能力栈",
+      "card_type": "architecture",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-five-component-stack-018338d550.md",
+      "content_hash": "94236b8f30cf3253021ed65e3458e297eed5836e52278cd6c9e16b6739c7b71d",
+      "file_hash": "028cec1538f0c204a1336b57070ea76910bd07a8c1f5140e5d4fb826d159c4e1",
+      "source_span_ids": [
+        "oadm-span-s7-4-1-p144-p146",
+        "oadm-span-s7-4-2-p146-p147",
+        "oadm-span-s7-4-3-p147-p147",
+        "oadm-span-s7-4-4-p147-p148",
+        "oadm-span-s7-4-5-p148-p149"
+      ],
+      "section_ids": [
+        "7.4.1",
+        "7.4.2",
+        "7.4.3",
+        "7.4.4",
+        "7.4.5"
+      ],
+      "pdf_page_start": 144,
+      "pdf_page_end": 149,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-ontology-runtime-service-8328263439",
+      "semantic_key": "oadm:agent-architecture:ontology-runtime-service",
+      "title": "按意图加载、可版本化的本体运行时服务",
+      "card_type": "platform",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-ontology-runtime-service-8328263439.md",
+      "content_hash": "5a5bc29a494626e1fafd16a657b4da7501006c482b35dbd83c218cf54dd003e2",
+      "file_hash": "ffb3bb94a24050e0a3f2996966d4fa4b9e1bc28734dedd82e66a2a0ef5196044",
+      "source_span_ids": [
+        "oadm-span-s7-4-3-p147-p147"
+      ],
+      "section_ids": [
+        "7.4.3"
+      ],
+      "pdf_page_start": 147,
+      "pdf_page_end": 147,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-human-multi-agent-modes-2d191ac219",
+      "semantic_key": "oadm:agent-decision:human-multi-agent-modes",
+      "title": "人机协同与多 Agent 联合决策模式",
+      "card_type": "decision-pattern",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-human-multi-agent-modes-2d191ac219.md",
+      "content_hash": "d13aa8466b0e19ad788e6451835e620570ab7efc818eee8b7ab578a5a2b1493b",
+      "file_hash": "6bd98de7e1d0260ada2e7804a9fd3226071867fcbfa1b1ad434d6bf4fd998c96",
+      "source_span_ids": [
+        "oadm-span-s7-2-3-p138-p140"
+      ],
+      "section_ids": [
+        "7.2.3"
+      ],
+      "pdf_page_start": 138,
+      "pdf_page_end": 140,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-explicit-ontology-embedding-cc9cf156e5",
+      "semantic_key": "oadm:agent-engineering:explicit-ontology-embedding",
+      "title": "保留显式逻辑结构的本体嵌入策略",
+      "card_type": "method",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-explicit-ontology-embedding-cc9cf156e5.md",
+      "content_hash": "b7df2f8a406d3505019478f79ce447d0e83c7d599f7b7bff4183a8523d0552b3",
+      "file_hash": "9bba509033ca1b3094b5cd220b4ee0f8d64ba609165d97d8c8bfc1f3b18e8613",
+      "source_span_ids": [
+        "oadm-span-s7-1-4-p133-p134"
+      ],
+      "section_ids": [
+        "7.1.4"
+      ],
+      "pdf_page_start": 133,
+      "pdf_page_end": 134,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-intent-ontology-activation-42d6a2b68d",
+      "semantic_key": "oadm:agent-engineering:intent-ontology-activation",
+      "title": "意图—本体—模型的动态激活链",
+      "card_type": "method",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-intent-ontology-activation-42d6a2b68d.md",
+      "content_hash": "51901891bd8dddcd74cf6153ab5bca9e769a7a04e8b19b3b882618f998d92e18",
+      "file_hash": "3e0d37e9fe9b5e7d2e8b09edd710399740041da93b1ab877994de4d94e8fe1a5",
+      "source_span_ids": [
+        "oadm-span-s7-1-1-p128-p130",
+        "oadm-span-s7-1-2-p130-p131"
+      ],
+      "section_ids": [
+        "7.1.1",
+        "7.1.2"
+      ],
+      "pdf_page_start": 128,
+      "pdf_page_end": 131,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-minimal-ontology-retrieval-bc8ea50e30",
+      "semantic_key": "oadm:agent-engineering:minimal-ontology-retrieval",
+      "title": "最小必要本体与混合检索调用",
+      "card_type": "method",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-minimal-ontology-retrieval-bc8ea50e30.md",
+      "content_hash": "95750b652ff37dfb1c281df0b0c43bd43a7973a51e46ef3711191e6bb67df145",
+      "file_hash": "970b1c3014240144b9871ec62e078649087ef817c5254955c979102016341fb8",
+      "source_span_ids": [
+        "oadm-span-s7-1-3-p131-p133"
+      ],
+      "section_ids": [
+        "7.1.3"
+      ],
+      "pdf_page_start": 131,
+      "pdf_page_end": 133,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-ontology-blockchain-layered-governance-d1edf7ae3a",
+      "semantic_key": "oadm:agent-governance:ontology-blockchain-layered-governance",
+      "title": "本体约束、候选可信底座与分层治理框架",
+      "card_type": "governance-framework",
+      "relative_path": "06-agent-governance-future-enterprise/cards/oadm-ontology-blockchain-layered-governance-d1edf7ae3a.md",
+      "content_hash": "7cbbe4a9d9cbbd28c06270de6818a3cc559451fefe20fbd9390a755bacf40663",
+      "file_hash": "1746475398a4e6a6a69c7e27182743e38d8f2daafd73591342a33533223afff3",
+      "source_span_ids": [
+        "oadm-span-s9-1-1-p181-p182",
+        "oadm-span-s9-1-2-p182-p182",
+        "oadm-span-s9-1-3-p182-p183",
+        "oadm-span-s9-1-4-p184-p184"
+      ],
+      "section_ids": [
+        "9.1.1",
+        "9.1.2",
+        "9.1.3",
+        "9.1.4"
+      ],
+      "pdf_page_start": 181,
+      "pdf_page_end": 184,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "card_id": "oadm-tri-pillar-risk-governance-a3ee65e56e",
+      "semantic_key": "oadm:agent-governance:tri-pillar-risk-governance",
+      "title": "本体约束、AI 智能与人类监督三支柱治理",
+      "card_type": "governance-framework",
+      "relative_path": "06-agent-governance-future-enterprise/cards/oadm-tri-pillar-risk-governance-a3ee65e56e.md",
+      "content_hash": "f545f8146fe2ff01826c773da039b9e75ee0e860360cd7b9a722336c727dcc67",
+      "file_hash": "6855a8997f78fbb321eefb1c5cedd32e25744af95f8726b8ebc49f69cb85b5df",
+      "source_span_ids": [
+        "oadm-span-s9-3-1-p191-p192"
+      ],
+      "section_ids": [
+        "9.3.1"
+      ],
+      "pdf_page_start": 191,
+      "pdf_page_end": 192,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "card_id": "oadm-four-module-implementation-5ef6abe282",
+      "semantic_key": "oadm:agent-platform:four-module-implementation",
+      "title": "四模块加平台集成的能力建设路径",
+      "card_type": "implementation-path",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-four-module-implementation-5ef6abe282.md",
+      "content_hash": "73c4664ef72c298253d8cefe6c9adf741d9e108ef2a83eaf4a27b8b71c1027d3",
+      "file_hash": "86846a050540552df9c737a7e80c25020a687b18d322eda33782ad1784cfd583",
+      "source_span_ids": [
+        "oadm-span-s7-5-1-p149-p150",
+        "oadm-span-s7-5-2-p150-p151",
+        "oadm-span-s7-5-3-p151-p152",
+        "oadm-span-s7-5-4-p152-p153",
+        "oadm-span-s7-5-5-p153-p154"
+      ],
+      "section_ids": [
+        "7.5.1",
+        "7.5.2",
+        "7.5.3",
+        "7.5.4",
+        "7.5.5"
+      ],
+      "pdf_page_start": 149,
+      "pdf_page_end": 154,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-constraint-strength-traceability-778b4ec0f4",
+      "semantic_key": "oadm:agent-reasoning:constraint-strength-traceability",
+      "title": "可配置约束强度与逐步推理溯源",
+      "card_type": "governance",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-constraint-strength-traceability-778b4ec0f4.md",
+      "content_hash": "b6951438faf09b0907aa4c624eaca89f8080492276f6f26aef176748b530f623",
+      "file_hash": "4f52b4847ac9ba771846beeb83b39fa408b8e919aa2aa3047662b5ccd125f1b2",
+      "source_span_ids": [
+        "oadm-span-s7-2-2-p136-p138"
+      ],
+      "section_ids": [
+        "7.2.2"
+      ],
+      "pdf_page_start": 136,
+      "pdf_page_end": 138,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-fact-mechanism-goal-1b4a142306",
+      "semantic_key": "oadm:agent-reasoning:fact-mechanism-goal",
+      "title": "事实—事理—目标三位一体的增强推理",
+      "card_type": "framework",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-fact-mechanism-goal-1b4a142306.md",
+      "content_hash": "04cfe9d23ba44fb78521d65e7eb2a10acc4f5e68d24dcb20c70853917d3bf006",
+      "file_hash": "8d64e1562d27eb68780fd73da45301a19e46b1adfcdae609185086767bdda8ee",
+      "source_span_ids": [
+        "oadm-span-s7-2-1-p135-p136",
+        "oadm-span-s7-2-2-p136-p138",
+        "oadm-span-s7-2-3-p138-p140"
+      ],
+      "section_ids": [
+        "7.2.1",
+        "7.2.2",
+        "7.2.3"
+      ],
+      "pdf_page_start": 135,
+      "pdf_page_end": 140,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-dynamic-authorization-contract-control-3d407cd756",
+      "semantic_key": "oadm:agent-trust:dynamic-authorization-contract-control",
+      "title": "动态权限凭证与智能合约执行控制",
+      "card_type": "control-pattern",
+      "relative_path": "06-agent-governance-future-enterprise/cards/oadm-dynamic-authorization-contract-control-3d407cd756.md",
+      "content_hash": "da3dcb10c0552c7a7a96a0b2ba02196ed71bdc6a3613e6d86e27f0c51cd41f5f",
+      "file_hash": "d5277e0d0327633f2a6c92a48796b63e48f980c253a305d4c0c3e36dd7e2fe28",
+      "source_span_ids": [
+        "oadm-span-s9-2-3-p186-p187",
+        "oadm-span-s9-2-4-p187-p188"
+      ],
+      "section_ids": [
+        "9.2.3",
+        "9.2.4"
+      ],
+      "pdf_page_start": 186,
+      "pdf_page_end": 188,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "card_id": "oadm-hybrid-identity-asset-provenance-056bb03eec",
+      "semantic_key": "oadm:agent-trust:hybrid-identity-asset-provenance",
+      "title": "碳硅混合身份与数字资产来源链",
+      "card_type": "trust-pattern",
+      "relative_path": "06-agent-governance-future-enterprise/cards/oadm-hybrid-identity-asset-provenance-056bb03eec.md",
+      "content_hash": "a131093e892939551887aa0eeaa5f849caafa788d72103b4b3bff231997b9027",
+      "file_hash": "ff5fbf935e7467fc59d8cec66b7d3883f29f96ad0ac252bc75d654dbccceb20a",
+      "source_span_ids": [
+        "oadm-span-s9-2-1-p185-p185",
+        "oadm-span-s9-2-2-p185-p186"
+      ],
+      "section_ids": [
+        "9.2.1",
+        "9.2.2"
+      ],
+      "pdf_page_start": 185,
+      "pdf_page_end": 186,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "card_id": "oadm-industry-exploration-evidence-boundary-ec30c7d9bf",
+      "semantic_key": "oadm:agent-trust:industry-exploration-evidence-boundary",
+      "title": "区块链加 AI 业界探索的证据边界",
+      "card_type": "evidence-boundary",
+      "relative_path": "06-agent-governance-future-enterprise/cards/oadm-industry-exploration-evidence-boundary-ec30c7d9bf.md",
+      "content_hash": "182dbeb65f41c07ebee782dfb280863c4e9b9fbd5167d22ae5caee146a7d0de9",
+      "file_hash": "b0fc757c59b6f93ba83ab1d248aef2168ea66d075d36165b0d675eb1cdfeb1ae",
+      "source_span_ids": [
+        "oadm-span-s9-2-7-p190-p190"
+      ],
+      "section_ids": [
+        "9.2.7"
+      ],
+      "pdf_page_start": 190,
+      "pdf_page_end": 190,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "card_id": "oadm-six-proof-accountability-system-392f0d445c",
+      "semantic_key": "oadm:agent-trust:six-proof-accountability-system",
+      "title": "身份、资产、授权、合约、追溯、贡献六类证明",
+      "card_type": "trust-model",
+      "relative_path": "06-agent-governance-future-enterprise/cards/oadm-six-proof-accountability-system-392f0d445c.md",
+      "content_hash": "9adba060ac068e9f770807e9e375afb4e62b09cb7d0b134d4db9048e2fea909a",
+      "file_hash": "94ac1117d73f3f39c162ac50f80ec6b38cbb2ea1ca8f512848e2d645f5376e5c",
+      "source_span_ids": [
+        "oadm-span-s9-2-1-p185-p185",
+        "oadm-span-s9-2-2-p185-p186",
+        "oadm-span-s9-2-3-p186-p187",
+        "oadm-span-s9-2-4-p187-p188",
+        "oadm-span-s9-2-5-p188-p189",
+        "oadm-span-s9-2-6-p188-p189"
+      ],
+      "section_ids": [
+        "9.2.1",
+        "9.2.2",
+        "9.2.3",
+        "9.2.4",
+        "9.2.5",
+        "9.2.6"
+      ],
+      "pdf_page_start": 185,
+      "pdf_page_end": 189,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "card_id": "oadm-traceability-contribution-accountability-8d512e3160",
+      "semantic_key": "oadm:agent-trust:traceability-contribution-accountability",
+      "title": "操作哈希链与贡献计量的责任闭环",
+      "card_type": "accountability-pattern",
+      "relative_path": "06-agent-governance-future-enterprise/cards/oadm-traceability-contribution-accountability-8d512e3160.md",
+      "content_hash": "98d1c13355afb1471b8f34b0feee7f39cec7eafa9af4178728a1582b3b126e15",
+      "file_hash": "b63a0b6c745a5c89ed7cb3a69dea56b5103e0ad4b35ff9f3da8b7c492ae67f45",
+      "source_span_ids": [
+        "oadm-span-s9-2-5-p188-p189",
+        "oadm-span-s9-2-6-p188-p189"
+      ],
+      "section_ids": [
+        "9.2.5",
+        "9.2.6"
+      ],
+      "pdf_page_start": 188,
+      "pdf_page_end": 189,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "card_id": "oadm-fact-mechanism-action-landing-d10e3b9509",
+      "semantic_key": "oadm:agent:fact-mechanism-action-landing",
+      "title": "Agent 从明事实、懂事理到会行动的落地链",
+      "card_type": "method",
+      "relative_path": "03-core-theory/cards/oadm-fact-mechanism-action-landing-d10e3b9509.md",
+      "content_hash": "765c7ee7b59064262d0adc208372a7556fbafee8b9d37352c67674fe7f7b5877",
+      "file_hash": "7b93b12695fa794b2a902c7ba956ad2514ff871b7ded84ea09bc1749d00544e4",
+      "source_span_ids": [
+        "oadm-span-s5-5-1-p093-p094",
+        "oadm-span-s5-5-2-p094-p094",
+        "oadm-span-s5-5-3-p094-p095"
+      ],
+      "section_ids": [
+        "5.5.1",
+        "5.5.2",
+        "5.5.3"
+      ],
+      "pdf_page_start": 93,
+      "pdf_page_end": 95,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-understand-decide-act-07d64e037b",
+      "semantic_key": "oadm:agentic-ai:understand-decide-act",
+      "title": "Agentic AI 的理解—决策—行动闭环",
+      "card_type": "concept",
+      "relative_path": "02-strategic-cognition/cards/oadm-understand-decide-act-07d64e037b.md",
+      "content_hash": "f3c4cc2a9325fa0b727dda475158c9806f871d0bf00c5f08e0c442ea1d94e2b9",
+      "file_hash": "f3d34140aa0bd8f7f5b9471039e69de6c4dc5af9c34132afa6f1f0d7ff3d79fd",
+      "source_span_ids": [
+        "oadm-span-s1-1-3-p010-p011"
+      ],
+      "section_ids": [
+        "1.1.3"
+      ],
+      "pdf_page_start": 10,
+      "pdf_page_end": 11,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2a-strategic-cognition-ch01-ch03"
+    },
+    {
+      "card_id": "oadm-reasoning-memory-action-c613d2da56",
+      "semantic_key": "oadm:ai-capability:reasoning-memory-action",
+      "title": "大模型能力跃升的推理—记忆—行动三要素",
+      "card_type": "concept",
+      "relative_path": "02-strategic-cognition/cards/oadm-reasoning-memory-action-c613d2da56.md",
+      "content_hash": "392bd52cb8b72c5aeb39724aa483644d08e33e958955b10082e130634802bddc",
+      "file_hash": "eaebeb22281f2ec9fbeeccf4af8b98e0b834f1b1ec8af85de6ced1113fe6ff6e",
+      "source_span_ids": [
+        "oadm-span-s1-1-2-p009-p010"
+      ],
+      "section_ids": [
+        "1.1.2"
+      ],
+      "pdf_page_start": 9,
+      "pdf_page_end": 10,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2a-strategic-cognition-ch01-ch03"
+    },
+    {
+      "card_id": "oadm-ai-dataset-admission-construction-2b03e1149f",
+      "semantic_key": "oadm:ai-dataset:admission-construction",
+      "title": "AI 数据集准入与构建原则",
+      "card_type": "governance-rule",
+      "relative_path": "03-core-theory/cards/oadm-ai-dataset-admission-construction-2b03e1149f.md",
+      "content_hash": "3f29ebde69c59806bc214287dbf691513fd5d74b09dee026adfb0b820fb1c63e",
+      "file_hash": "73b18e8dd19155af54d5a274115f0b2397a37d84d07414a61665349caab8af7a",
+      "source_span_ids": [
+        "oadm-span-s5-2-1-p080-p081",
+        "oadm-span-s5-2-2-p081-p082"
+      ],
+      "section_ids": [
+        "5.2.1",
+        "5.2.2"
+      ],
+      "pdf_page_start": 80,
+      "pdf_page_end": 82,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-ai-dataset-classification-versioning-97124ce95e",
+      "semantic_key": "oadm:ai-dataset:classification-versioning",
+      "title": "AI 数据集多维分类、统一 ID 与版本",
+      "card_type": "governance-rule",
+      "relative_path": "03-core-theory/cards/oadm-ai-dataset-classification-versioning-97124ce95e.md",
+      "content_hash": "f3ba20497a5d3cd647914f5e7c70780dd0a0dfe2b024210dba1669f727f6cbd3",
+      "file_hash": "36065a4ab6382a83009b2592e8998edfeb850368b9d0161f68d10151b4b8b538",
+      "source_span_ids": [
+        "oadm-span-s5-2-4-p084-p086",
+        "oadm-span-s5-2-5-p086-p087"
+      ],
+      "section_ids": [
+        "5.2.4",
+        "5.2.5"
+      ],
+      "pdf_page_start": 84,
+      "pdf_page_end": 87,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-ai-dataset-responsibility-triad-02ef1387b5",
+      "semantic_key": "oadm:ai-dataset:responsibility-triad",
+      "title": "数据 Owner—数据集责任人—使用责任人三方边界",
+      "card_type": "governance-rule",
+      "relative_path": "03-core-theory/cards/oadm-ai-dataset-responsibility-triad-02ef1387b5.md",
+      "content_hash": "c5aa5abf562934e4b3b0b9eee09a5297244be998b845c40c61e160e1556dc9a1",
+      "file_hash": "dcd5bfe8eb89aa1fa0555efb32f5141bb56a7acdf9866ef01e420eb8e0630de8",
+      "source_span_ids": [
+        "oadm-span-s5-2-3-p082-p084"
+      ],
+      "section_ids": [
+        "5.2.3"
+      ],
+      "pdf_page_start": 82,
+      "pdf_page_end": 84,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-symbolic-connectionist-hybrid-bb37b876d0",
+      "semantic_key": "oadm:ai-paradigm:symbolic-connectionist-hybrid",
+      "title": "符号主义与联结主义融合的混合智能",
+      "card_type": "principle",
+      "relative_path": "03-core-theory/cards/oadm-symbolic-connectionist-hybrid-bb37b876d0.md",
+      "content_hash": "bd382062c28ed3d3f4649985d35fcfa0eac4481c8023b00613fe77958d1df823",
+      "file_hash": "7c1846236cd70667ae1f17271aa9ee7a611faa8151e068478c52275168e7a987",
+      "source_span_ids": [
+        "oadm-span-s4-1-4-p059-p060"
+      ],
+      "section_ids": [
+        "4.1.4"
+      ],
+      "pdf_page_start": 59,
+      "pdf_page_end": 60,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-autonomous-operations-86671e6b03",
+      "semantic_key": "oadm:application:autonomous-operations",
+      "title": "数据规则驱动的自主运营模式",
+      "card_type": "application-pattern",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-autonomous-operations-86671e6b03.md",
+      "content_hash": "e4792e4b3945e59fa97cd7e346b516a84e1408dc46b104be47384c627b55e4b9",
+      "file_hash": "c8092162392f00dafc4aba0d36904107384c05b3ecbb7dc973184246e9caca5c",
+      "source_span_ids": [
+        "oadm-span-s8-2-2-p161-p162"
+      ],
+      "section_ids": [
+        "8.2.2"
+      ],
+      "pdf_page_start": 161,
+      "pdf_page_end": 162,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-cross-domain-dynamic-collaboration-7e1ec3cc54",
+      "semantic_key": "oadm:application:cross-domain-dynamic-collaboration",
+      "title": "跨领域动态智能协同模式",
+      "card_type": "application-pattern",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-cross-domain-dynamic-collaboration-7e1ec3cc54.md",
+      "content_hash": "fdb488dcc144511c59dfda89910478ab54b9f5c5d8dea8496e28d611a271ddfb",
+      "file_hash": "0a1009b69b55dcd77bb5072306cb89e7cb253fa56b000e8634549ea05b1d9579",
+      "source_span_ids": [
+        "oadm-span-s8-2-4-p164-p166"
+      ],
+      "section_ids": [
+        "8.2.4"
+      ],
+      "pdf_page_start": 164,
+      "pdf_page_end": 166,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-integrated-multidimensional-decision-3b85562879",
+      "semantic_key": "oadm:application:integrated-multidimensional-decision",
+      "title": "多维度一体化智能决策模式",
+      "card_type": "application-pattern",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-integrated-multidimensional-decision-3b85562879.md",
+      "content_hash": "1b5d5cb2396ff3976897f4da770f98ed22054056983398b39c2262781f1bf62b",
+      "file_hash": "f3e93b5ffab1ec8a0de6f6c37fe8fdf812826b9a9d37c0052cd290753055e81e",
+      "source_span_ids": [
+        "oadm-span-s8-2-3-p162-p164"
+      ],
+      "section_ids": [
+        "8.2.3"
+      ],
+      "pdf_page_start": 162,
+      "pdf_page_end": 164,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-intelligent-workflow-automation-daaab69b1f",
+      "semantic_key": "oadm:application:intelligent-workflow-automation",
+      "title": "本体驱动的智能流程自动化模式",
+      "card_type": "application-pattern",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-intelligent-workflow-automation-daaab69b1f.md",
+      "content_hash": "e4791f39568679efcc1c2ecb4b1153a524d482929508aba77901082e97782418",
+      "file_hash": "95a59de43363f8183dce82191309e5f7a087fcb7eca20455c53db143af29689d",
+      "source_span_ids": [
+        "oadm-span-s8-2-1-p158-p161"
+      ],
+      "section_ids": [
+        "8.2.1"
+      ],
+      "pdf_page_start": 158,
+      "pdf_page_end": 161,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-knowledge-parsing-autonomous-reasoning-ed0de008fc",
+      "semantic_key": "oadm:application:knowledge-parsing-autonomous-reasoning",
+      "title": "知识解析与多模态纠偏的自主推理模式",
+      "card_type": "application-pattern",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-knowledge-parsing-autonomous-reasoning-ed0de008fc.md",
+      "content_hash": "70c0faecd0ad20037b4b4cd76d46ef31171ed857616696d206d2fb9a458ba03b",
+      "file_hash": "f698c0a4917bc9f4d161184cd3c6e04f6b081f7fe867e73fb160a82ffd8b70e6",
+      "source_span_ids": [
+        "oadm-span-s8-2-5-p166-p169"
+      ],
+      "section_ids": [
+        "8.2.5"
+      ],
+      "pdf_page_start": 166,
+      "pdf_page_end": 169,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-legacy-knowledge-ai-translation-6927accaa2",
+      "semantic_key": "oadm:application:legacy-knowledge-ai-translation",
+      "title": "存量知识资产的 AI 转译与语义连接",
+      "card_type": "migration-path",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-legacy-knowledge-ai-translation-6927accaa2.md",
+      "content_hash": "7c510f323c55be95680296059f40faf828c89c629b3134100007836aeeda684d",
+      "file_hash": "ed7d7206788e4e43d5d3cdff89d19c63777397ec6022e8284221d34b3df999f9",
+      "source_span_ids": [
+        "oadm-span-s8-3-3-p175-p177",
+        "oadm-span-s8-3-4-p177-p178"
+      ],
+      "section_ids": [
+        "8.3.3",
+        "8.3.4"
+      ],
+      "pdf_page_start": 175,
+      "pdf_page_end": 178,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-multi-scene-pdca-fec4de2912",
+      "semantic_key": "oadm:application:multi-scene-pdca",
+      "title": "多场景综合统筹的多 Agent PDCA 模式",
+      "card_type": "application-pattern",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-multi-scene-pdca-fec4de2912.md",
+      "content_hash": "7eec7cda8be84b148e40c67269439e9cf9f72f43e78322eb785ef2be152b3d5f",
+      "file_hash": "43652808556fd6f55a36b2d26be14d59eb57b96de1afd2a510e40bf28780d28b",
+      "source_span_ids": [
+        "oadm-span-s8-2-6-p169-p172"
+      ],
+      "section_ids": [
+        "8.2.6"
+      ],
+      "pdf_page_start": 169,
+      "pdf_page_end": 172,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-one-plus-four-operating-model-8d8a61fe06",
+      "semantic_key": "oadm:application:one-plus-four-operating-model",
+      "title": "总体组加四专业小队的 1+4 协同模式",
+      "card_type": "operating-model",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-one-plus-four-operating-model-8d8a61fe06.md",
+      "content_hash": "9383c8504a3c61cf547f18309de11e47afecdb4483dd6d8d96d79256b2c01fdf",
+      "file_hash": "14622eed7133c090f3cd8aa715562b22b71de21f6b09576d28dcd4750b42faf8",
+      "source_span_ids": [
+        "oadm-span-s8-3-2-p174-p175"
+      ],
+      "section_ids": [
+        "8.3.2"
+      ],
+      "pdf_page_start": 174,
+      "pdf_page_end": 175,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-penetration-validation-strategy-a17f83fa24",
+      "semantic_key": "oadm:application:penetration-validation-strategy",
+      "title": "Bootcamps 小队的穿刺式技术验证",
+      "card_type": "implementation-path",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-penetration-validation-strategy-a17f83fa24.md",
+      "content_hash": "f19a22aaa522bd49d31c5cbc2ff050df8cef8d1b49c8dbd506340c731e28d0ce",
+      "file_hash": "8c587f68b30f39767ff452c1d8a5b8a29f989f4f5bb8979539bd71477c97204c",
+      "source_span_ids": [
+        "oadm-span-s8-3-1-p173-p174"
+      ],
+      "section_ids": [
+        "8.3.1"
+      ],
+      "pdf_page_start": 173,
+      "pdf_page_end": 174,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-scenario-portfolio-selection-39626e3606",
+      "semantic_key": "oadm:application:scenario-portfolio-selection",
+      "title": "以痛点、价值和结构化适配度选择场景",
+      "card_type": "decision-framework",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-scenario-portfolio-selection-39626e3606.md",
+      "content_hash": "10301906b4fdb33d1ada36eb7dd27c5325c779e73338b28312c6b7ab2b998d1d",
+      "file_hash": "b957fd378ea314a5bd5f3b319b5a6c8a4e67e8024a64fa697ad3c3be4dca4c40",
+      "source_span_ids": [
+        "oadm-span-s8-1-1-p154-p155",
+        "oadm-span-s8-1-2-p155-p157",
+        "oadm-span-s8-1-3-p157-p158"
+      ],
+      "section_ids": [
+        "8.1.1",
+        "8.1.2",
+        "8.1.3"
+      ],
+      "pdf_page_start": 154,
+      "pdf_page_end": 158,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-three-stage-landing-strategy-e8681d951c",
+      "semantic_key": "oadm:application:three-stage-landing-strategy",
+      "title": "穿刺验证—小切口价值—存量转译三阶段策略",
+      "card_type": "implementation-path",
+      "relative_path": "05-agent-engineering-applications/cards/oadm-three-stage-landing-strategy-e8681d951c.md",
+      "content_hash": "0236b6d1f6a3491e55b4d620aae93786dbaa6224a44656f54f43fc46da1069a0",
+      "file_hash": "dd761650e9b32ef1cd5b5b09cdb37bfbe1c20c81939bdee27c0eaa8297789ee8",
+      "source_span_ids": [
+        "oadm-span-s8-3-1-p173-p174",
+        "oadm-span-s8-3-2-p174-p175",
+        "oadm-span-s8-3-3-p175-p177"
+      ],
+      "section_ids": [
+        "8.3.1",
+        "8.3.2",
+        "8.3.3"
+      ],
+      "pdf_page_start": 173,
+      "pdf_page_end": 177,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "card_id": "oadm-dikw-dual-loop-910e77a245",
+      "semantic_key": "oadm:collaboration:dikw-dual-loop",
+      "title": "人与 AI 的 DIKW 双循环",
+      "card_type": "model",
+      "relative_path": "02-strategic-cognition/cards/oadm-dikw-dual-loop-910e77a245.md",
+      "content_hash": "c9964d1403cc2f482a2f795aefca9d9d36021cd17a42e1f7302aba9ec2fa01cc",
+      "file_hash": "133af71533d6365ca591c67b5b3d8bb24b9a0599d82ec85503eab2d5dd6c10d2",
+      "source_span_ids": [
+        "oadm-span-s3-3-3-p050-p052"
+      ],
+      "section_ids": [
+        "3.3.3"
+      ],
+      "pdf_page_start": 50,
+      "pdf_page_end": 52,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2a-strategic-cognition-ch01-ch03"
+    },
+    {
+      "card_id": "oadm-ai-directory-hierarchy-5252a8be5d",
+      "semantic_key": "oadm:data-asset:ai-directory-hierarchy",
+      "title": "面向 AI 的数据资产目录层级",
+      "card_type": "model",
+      "relative_path": "03-core-theory/cards/oadm-ai-directory-hierarchy-5252a8be5d.md",
+      "content_hash": "3d8968e3c4c36a099da69148ab7a21d6fff618da5d054117109e78a594273011",
+      "file_hash": "9f65b4bba230973056f06c1282f37a3f7e753cdb63e6dda71bcb2105c9d0a292",
+      "source_span_ids": [
+        "oadm-span-s5-1-3-p076-p080"
+      ],
+      "section_ids": [
+        "5.1.3"
+      ],
+      "pdf_page_start": 76,
+      "pdf_page_end": 80,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-three-data-asset-catalogs-f1116db4e9",
+      "semantic_key": "oadm:data-asset:three-catalogs",
+      "title": "作业—分析—AI 三类数据资产目录",
+      "card_type": "framework",
+      "relative_path": "03-core-theory/cards/oadm-three-data-asset-catalogs-f1116db4e9.md",
+      "content_hash": "f7ee5bb069708481ce07fd8fd5dbc1f17a0a3c2f9a40eb240edff64a22d25720",
+      "file_hash": "4ae03e280c603c5fafee369358ed208c1ad4ed37d0cdcf4c2b20a9a9fbf56d20",
+      "source_span_ids": [
+        "oadm-span-s5-1-1-p074-p076",
+        "oadm-span-s5-1-2-p076-p076",
+        "oadm-span-s5-1-3-p076-p080"
+      ],
+      "section_ids": [
+        "5.1.1",
+        "5.1.2",
+        "5.1.3"
+      ],
+      "pdf_page_start": 74,
+      "pdf_page_end": 80,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-fact-and-mechanism-carrier-8339594ba8",
+      "semantic_key": "oadm:data-role:fact-and-mechanism-carrier",
+      "title": "数据应同时承载业务事实与事理",
+      "card_type": "principle",
+      "relative_path": "02-strategic-cognition/cards/oadm-fact-and-mechanism-carrier-8339594ba8.md",
+      "content_hash": "3b5abd0dd3707ffcb0275b705713f28c92547b511eb2a7e65c99869521f8dbf7",
+      "file_hash": "3e768e812d3479d33bfa54f3cf0b87727a54240fe64a63ae19ebf92c094171a4",
+      "source_span_ids": [
+        "oadm-span-s1-3-3-p018-p020"
+      ],
+      "section_ids": [
+        "1.3.3"
+      ],
+      "pdf_page_start": 18,
+      "pdf_page_end": 20,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2a-strategic-cognition-ch01-ch03"
+    },
+    {
+      "card_id": "oadm-controlled-ai-ontology-modeling-db667058ad",
+      "semantic_key": "oadm:engineering:controlled-ai-ontology-modeling",
+      "title": "受控输入驱动的 AI 本体建模",
+      "card_type": "method",
+      "relative_path": "04-engineering-methods/cards/oadm-controlled-ai-ontology-modeling-db667058ad.md",
+      "content_hash": "230a111401c7470700a423dc4e08d97cd74e345f665d230546076c862d272a8e",
+      "file_hash": "21ea8a83ede73859d4e2cdeb2d370b9596115f0f8cf7b28beb8c5f7ecc646f64",
+      "source_span_ids": [
+        "oadm-span-s6-2-1-p102-p103"
+      ],
+      "section_ids": [
+        "6.2.1"
+      ],
+      "pdf_page_start": 102,
+      "pdf_page_end": 103,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "card_id": "oadm-dual-model-validation-eff49bdf82",
+      "semantic_key": "oadm:engineering:dual-model-validation",
+      "title": "生成—审核—仲裁的双大模型校验",
+      "card_type": "quality-gate",
+      "relative_path": "04-engineering-methods/cards/oadm-dual-model-validation-eff49bdf82.md",
+      "content_hash": "f8396f7fadf73ea3bf044498e3e03ffccce0f1059fee7353f85b2c41286c83b6",
+      "file_hash": "04443ce314cbe7c3f209e86c17d2e353e175810740f93c3f06707706a433a99d",
+      "source_span_ids": [
+        "oadm-span-s6-2-2-p103-p106"
+      ],
+      "section_ids": [
+        "6.2.2"
+      ],
+      "pdf_page_start": 103,
+      "pdf_page_end": 106,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "card_id": "oadm-five-loop-method-ca9bb22b58",
+      "semantic_key": "oadm:engineering:five-loop-method",
+      "title": "预处理—建模—入库—平台—实施五环工程闭环",
+      "card_type": "framework",
+      "relative_path": "04-engineering-methods/cards/oadm-five-loop-method-ca9bb22b58.md",
+      "content_hash": "0250a8b1e944db78f33b823b06b798ce0638833335e97da700acaf96a21fc785",
+      "file_hash": "b9dbe10742ae495f5baad357712cd13bcc04b0788a7cc4fbaaa8881ff5082b20",
+      "source_span_ids": [
+        "oadm-span-s6-6-p127-p127"
+      ],
+      "section_ids": [
+        "6.6"
+      ],
+      "pdf_page_start": 127,
+      "pdf_page_end": 127,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "card_id": "oadm-knowledge-preprocessing-29-sentences-20eba05512",
+      "semantic_key": "oadm:engineering:knowledge-preprocessing-29-sentences",
+      "title": "用“29 句话”统一显性与隐性知识预处理",
+      "card_type": "method",
+      "relative_path": "04-engineering-methods/cards/oadm-knowledge-preprocessing-29-sentences-20eba05512.md",
+      "content_hash": "55c40eb93ebf52c2bce3bd2c7afe633a847da104437722695b7685239b49fea9",
+      "file_hash": "47d06fa28ad4636cc3b2a51854e44f074142b384f00efe480bb3ed88d8ea5aaf",
+      "source_span_ids": [
+        "oadm-span-s6-1-1-p096-p097",
+        "oadm-span-s6-1-2-p098-p099"
+      ],
+      "section_ids": [
+        "6.1.1",
+        "6.1.2"
+      ],
+      "pdf_page_start": 96,
+      "pdf_page_end": 99,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "card_id": "oadm-modeling-admission-review-fd13d2a7bf",
+      "semantic_key": "oadm:engineering:modeling-admission-review",
+      "title": "形式化建模前的准入审核与测试增强循环",
+      "card_type": "quality-gate",
+      "relative_path": "04-engineering-methods/cards/oadm-modeling-admission-review-fd13d2a7bf.md",
+      "content_hash": "85aefccb832c1b8598190e2097e5f760dfa0883cfaca428755b94fe7dc153349",
+      "file_hash": "9681858ea0cf91ed675e1cd8a2a73b98408fe6ce7283ab53e28b5cb9f0433e4e",
+      "source_span_ids": [
+        "oadm-span-s6-1-3-p100-p101"
+      ],
+      "section_ids": [
+        "6.1.3"
+      ],
+      "pdf_page_start": 100,
+      "pdf_page_end": 101,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "card_id": "oadm-ontology-asset-registration-5b7e350efb",
+      "semantic_key": "oadm:engineering:ontology-asset-registration",
+      "title": "本体模型从验证态到资产服务态的注册入库",
+      "card_type": "governance",
+      "relative_path": "04-engineering-methods/cards/oadm-ontology-asset-registration-5b7e350efb.md",
+      "content_hash": "4e4c12f4462fecd84da96bb4f91fa8ff6f0cd6a87dfcac86f6f4d4e42d9686cf",
+      "file_hash": "8e13c4270bbbd754a810d1247972e89413d6b45a5fe8d8c9680a3ce93b5144a9",
+      "source_span_ids": [
+        "oadm-span-s6-3-1-p111-p111"
+      ],
+      "section_ids": [
+        "6.3.1"
+      ],
+      "pdf_page_start": 111,
+      "pdf_page_end": 111,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "card_id": "oadm-ontology-lifecycle-operations-968c388b34",
+      "semantic_key": "oadm:engineering:ontology-lifecycle-operations",
+      "title": "数据—语义双重运维与“建用优复”运营",
+      "card_type": "governance",
+      "relative_path": "04-engineering-methods/cards/oadm-ontology-lifecycle-operations-968c388b34.md",
+      "content_hash": "ee41b3494cc4cbbb94e7e88e56fd1b7598c5a24f58aac4bd37a727ce1b70c17a",
+      "file_hash": "24476fb22f8b588e0cd3e56f9fcb4d69eb7ac0937bd79e50f45cb7ace5f6f7e6",
+      "source_span_ids": [
+        "oadm-span-s6-3-2-p111-p113",
+        "oadm-span-s6-3-3-p113-p115"
+      ],
+      "section_ids": [
+        "6.3.2",
+        "6.3.3"
+      ],
+      "pdf_page_start": 111,
+      "pdf_page_end": 115,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "card_id": "oadm-ontology-tooling-platform-34aa02435d",
+      "semantic_key": "oadm:engineering:ontology-tooling-platform",
+      "title": "三类角色协同的端到端本体工具平台",
+      "card_type": "platform",
+      "relative_path": "04-engineering-methods/cards/oadm-ontology-tooling-platform-34aa02435d.md",
+      "content_hash": "1b17cca26e05490ba0fa49f7d002878b1061f4a51504840354028cdf2d2edf31",
+      "file_hash": "d3b5dbd33be5d3e184ed6dc7c5a74255e8a3439219dba3a209aa5cda29b44186",
+      "source_span_ids": [
+        "oadm-span-s6-4-1-p115-p117",
+        "oadm-span-s6-4-2-p117-p119",
+        "oadm-span-s6-4-3-p119-p121"
+      ],
+      "section_ids": [
+        "6.4.1",
+        "6.4.2",
+        "6.4.3"
+      ],
+      "pdf_page_start": 115,
+      "pdf_page_end": 121,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "card_id": "oadm-scenario-validation-loop-65cbb0ff79",
+      "semantic_key": "oadm:engineering:scenario-validation-loop",
+      "title": "可视化专家审核与场景测试闭环",
+      "card_type": "quality-gate",
+      "relative_path": "04-engineering-methods/cards/oadm-scenario-validation-loop-65cbb0ff79.md",
+      "content_hash": "f54bb511f834d65542a84e1e7a7e906a2e14a6412f8dd2d30d60073918ddd644",
+      "file_hash": "4da7297ed538ea3cbe4346d5905d5419d6eabe7be185c09c9f06e07f7d87785a",
+      "source_span_ids": [
+        "oadm-span-s6-2-3-p106-p109",
+        "oadm-span-s6-2-4-p109-p110"
+      ],
+      "section_ids": [
+        "6.2.3",
+        "6.2.4"
+      ],
+      "pdf_page_start": 106,
+      "pdf_page_end": 110,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "card_id": "oadm-entity-ontology-complement-1535903339",
+      "semantic_key": "oadm:enterprise-architecture:entity-ontology-complement",
+      "title": "实体建模与本体建模互补",
+      "card_type": "comparison",
+      "relative_path": "03-core-theory/cards/oadm-entity-ontology-complement-1535903339.md",
+      "content_hash": "cf181606f8cc216dc3350caa023453ce2396f8399198d5300ca7b62bb3bb2952",
+      "file_hash": "5e1ade596420e9e13c80f722a38d5382bbdc4c4c8bbea13113babfcf29a915c0",
+      "source_span_ids": [
+        "oadm-span-s4-4-2-p069-p070"
+      ],
+      "section_ids": [
+        "4.4.2"
+      ],
+      "pdf_page_start": 69,
+      "pdf_page_end": 70,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-knowledge-graph-ontology-complement-96986134a0",
+      "semantic_key": "oadm:enterprise-architecture:knowledge-graph-ontology-complement",
+      "title": "知识图谱与本体的骨架—实例关系",
+      "card_type": "comparison",
+      "relative_path": "03-core-theory/cards/oadm-knowledge-graph-ontology-complement-96986134a0.md",
+      "content_hash": "36eb166434096407cbdd0ef5142f290bd2fa66fc288802962a8944531f79d9fc",
+      "file_hash": "6e79a2efc2e9da87bc5570f3495c62e47d2d58bc06932f419a1d3d6e9f7b14ec",
+      "source_span_ids": [
+        "oadm-span-s4-4-3-p070-p071"
+      ],
+      "section_ids": [
+        "4.4.3"
+      ],
+      "pdf_page_start": 70,
+      "pdf_page_end": 71,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-saas-agent-new-user-ecdc31ccb2",
+      "semantic_key": "oadm:enterprise-architecture:saas-agent-new-user",
+      "title": "AI Agent 作为 SaaS 新用户",
+      "card_type": "model",
+      "relative_path": "03-core-theory/cards/oadm-saas-agent-new-user-ecdc31ccb2.md",
+      "content_hash": "d9579198076d4d4736ba179a45e57adb20363bbc38bb7917dce83a64bf23e841",
+      "file_hash": "580fb212b491bdbc35e14a628fe7520bf947cf6abf5d0a69fe68c36932e01879",
+      "source_span_ids": [
+        "oadm-span-s4-4-5-p072-p073"
+      ],
+      "section_ids": [
+        "4.4.5"
+      ],
+      "pdf_page_start": 72,
+      "pdf_page_end": 73,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-enterprise-architecture-semantic-layer-559e5b63a7",
+      "semantic_key": "oadm:enterprise-architecture:semantic-layer",
+      "title": "企业架构中的本体语义层",
+      "card_type": "model",
+      "relative_path": "03-core-theory/cards/oadm-enterprise-architecture-semantic-layer-559e5b63a7.md",
+      "content_hash": "8533cf9a44ab6966c67dacb1c3073d2ede7b6dd6ad5075678a50a0bb096947eb",
+      "file_hash": "d0e0574243f4a9574720a92fcb06b9bd1df59af015e9a86e41d2142260a1c621",
+      "source_span_ids": [
+        "oadm-span-s4-4-1-p068-p069"
+      ],
+      "section_ids": [
+        "4.4.1"
+      ],
+      "pdf_page_start": 68,
+      "pdf_page_end": 69,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-semantic-handshake-old-new-worlds-5ff7bf2d5e",
+      "semantic_key": "oadm:enterprise-evolution:semantic-handshake-old-new-worlds",
+      "title": "旧系统与自治 Agent 的非侵入式语义握手",
+      "card_type": "integration-pattern",
+      "relative_path": "06-agent-governance-future-enterprise/cards/oadm-semantic-handshake-old-new-worlds-5ff7bf2d5e.md",
+      "content_hash": "89641c827e0be01ab6d3e8c2aac87eecd57d5d51b96b005f21db2c7e3c3b924a",
+      "file_hash": "8de05c7c1774df85dd45c3b85e8e9a212d0d9cbcb30abb1e971fc32e2ae15b93",
+      "source_span_ids": [
+        "oadm-span-s9-1-1-p181-p182",
+        "oadm-span-s9-1-2-p182-p182",
+        "oadm-span-s9-1-3-p182-p183"
+      ],
+      "section_ids": [
+        "9.1.1",
+        "9.1.2",
+        "9.1.3"
+      ],
+      "pdf_page_start": 181,
+      "pdf_page_end": 183,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "card_id": "oadm-four-dimensional-business-ontology-b9a2487d33",
+      "semantic_key": "oadm:enterprise-governance:four-dimensional-business-ontology",
+      "title": "知识、数据、流程、IT 四维融合的业务本体",
+      "card_type": "management-framework",
+      "relative_path": "06-agent-governance-future-enterprise/cards/oadm-four-dimensional-business-ontology-b9a2487d33.md",
+      "content_hash": "6e22877277809743ea3dad8eb97e151f9b8b495c04fd117f1ba6fde55ed9113e",
+      "file_hash": "612c0e1c2c18b0c0d871c9f430bc181de48e313fb7d26c7dc38543dac0811f38",
+      "source_span_ids": [
+        "oadm-span-s10-2-3-p206-p209"
+      ],
+      "section_ids": [
+        "10.2.3"
+      ],
+      "pdf_page_start": 206,
+      "pdf_page_end": 209,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "card_id": "oadm-physical-logical-dual-learning-954c0d339b",
+      "semantic_key": "oadm:enterprise-learning:physical-logical-dual-learning",
+      "title": "面向物理规律与业务逻辑的 AI 双重学习",
+      "card_type": "learning-model",
+      "relative_path": "06-agent-governance-future-enterprise/cards/oadm-physical-logical-dual-learning-954c0d339b.md",
+      "content_hash": "8f1b0edd6e37c590ee24eb686d8af1d880eef9441e641ff39cb51bfe31f8340c",
+      "file_hash": "c04fd7fa2eca28009171cdf1921798924492e1425315c9ef0bb8a7ba53dcd9ac",
+      "source_span_ids": [
+        "oadm-span-s10-1-2-p200-p202"
+      ],
+      "section_ids": [
+        "10.1.2"
+      ],
+      "pdf_page_start": 200,
+      "pdf_page_end": 202,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "card_id": "oadm-ontology-world-model-fusion-61b7f67680",
+      "semantic_key": "oadm:enterprise-model:ontology-world-model-fusion",
+      "title": "本体模型与世界模型的四层动态融合",
+      "card_type": "model-architecture",
+      "relative_path": "06-agent-governance-future-enterprise/cards/oadm-ontology-world-model-fusion-61b7f67680.md",
+      "content_hash": "43d04dbfe65c47a7ec20d1282e18711e4a7a67dfd653b8631735930531861a08",
+      "file_hash": "24d33d393c251e83744d9b89adfff8ed93ccaf33eb77bc23ed62b3d96c7787f6",
+      "source_span_ids": [
+        "oadm-span-s10-1-3-p202-p203"
+      ],
+      "section_ids": [
+        "10.1.3"
+      ],
+      "pdf_page_start": 202,
+      "pdf_page_end": 203,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "card_id": "oadm-triple-world-digital-twin-af3291a296",
+      "semantic_key": "oadm:enterprise-model:triple-world-digital-twin",
+      "title": "物理、逻辑、智能三重世界的企业数字孪生",
+      "card_type": "enterprise-model",
+      "relative_path": "06-agent-governance-future-enterprise/cards/oadm-triple-world-digital-twin-af3291a296.md",
+      "content_hash": "3b67d682aab08cbdf588bf822006b7b61d42098fce8cbf897f975f5e6c0a4ef3",
+      "file_hash": "f4d4c052483a1809a9d628882b11496f3822f028d1a80656e93568ef19b62a72",
+      "source_span_ids": [
+        "oadm-span-s10-1-1-p199-p200"
+      ],
+      "section_ids": [
+        "10.1.1"
+      ],
+      "pdf_page_start": 199,
+      "pdf_page_end": 200,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "card_id": "oadm-intelligent-native-enterprise-91d3aeda52",
+      "semantic_key": "oadm:enterprise-operating-model:intelligent-native-enterprise",
+      "title": "智慧资产、自主流程与弹性智力的智能原生企业",
+      "card_type": "operating-model",
+      "relative_path": "06-agent-governance-future-enterprise/cards/oadm-intelligent-native-enterprise-91d3aeda52.md",
+      "content_hash": "b3fdaca28f8963815ca2ec19c77723ccf38b3442975b90b3807365724271dab1",
+      "file_hash": "ff1f06a1a062e9ec82c1f5e9e7cea6abbe811e5698321aa308aa4ce3525dbd2e",
+      "source_span_ids": [
+        "oadm-span-s10-2-1-p203-p205"
+      ],
+      "section_ids": [
+        "10.2.1"
+      ],
+      "pdf_page_start": 203,
+      "pdf_page_end": 205,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "card_id": "oadm-agent-centered-network-ca63aa00e6",
+      "semantic_key": "oadm:enterprise-organization:agent-centered-network",
+      "title": "角色、协作、层级、考核驱动的 Agent 组织网络",
+      "card_type": "organization-model",
+      "relative_path": "06-agent-governance-future-enterprise/cards/oadm-agent-centered-network-ca63aa00e6.md",
+      "content_hash": "6a5cac22412a3b43f80877af26286b057150a7727ab98880998c749dde801d54",
+      "file_hash": "1eebfe050e86d5ae1ef9b024388bfb8083fc8ee0045efa677834857df528497e",
+      "source_span_ids": [
+        "oadm-span-s10-2-2-p205-p206"
+      ],
+      "section_ids": [
+        "10.2.2"
+      ],
+      "pdf_page_start": 205,
+      "pdf_page_end": 206,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "card_id": "oadm-four-enterprise-ai-needs-8e5afd7ee4",
+      "semantic_key": "oadm:governance:four-enterprise-ai-needs",
+      "title": "企业 AI 数据治理的四项关键需求",
+      "card_type": "framework",
+      "relative_path": "02-strategic-cognition/cards/oadm-four-enterprise-ai-needs-8e5afd7ee4.md",
+      "content_hash": "c49c63f035d46bb1d2da5a1ed464f2b5af1173d9f07f10e11f0de03f4da5c18d",
+      "file_hash": "f7ae6c9ef9e2cfa6f2aac5d4ca4a7e2a93d726cd88b0fd3c757ba2fea92e5841",
+      "source_span_ids": [
+        "oadm-span-s2-1-1-p021-p022",
+        "oadm-span-s2-1-2-p022-p023",
+        "oadm-span-s2-1-3-p023-p024",
+        "oadm-span-s2-1-4-p024-p025"
+      ],
+      "section_ids": [
+        "2.1.1",
+        "2.1.2",
+        "2.1.3",
+        "2.1.4"
+      ],
+      "pdf_page_start": 21,
+      "pdf_page_end": 25,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2a-strategic-cognition-ch01-ch03"
+    },
+    {
+      "card_id": "oadm-four-governance-transformations-80d616f5fd",
+      "semantic_key": "oadm:governance:four-transformations",
+      "title": "智能时代数据治理的四重转变",
+      "card_type": "framework",
+      "relative_path": "02-strategic-cognition/cards/oadm-four-governance-transformations-80d616f5fd.md",
+      "content_hash": "cf92d6e31aeb01ef3bbab378091079a269554f7957f646232591d187ec9e6840",
+      "file_hash": "4941c25e75318895862ba5743783e5093ad059aca1400769ab729fb4faed24ed",
+      "source_span_ids": [
+        "oadm-span-s2-2-1-p025-p026",
+        "oadm-span-s2-2-2-p026-p027",
+        "oadm-span-s2-2-3-p027-p028",
+        "oadm-span-s2-2-4-p028-p029"
+      ],
+      "section_ids": [
+        "2.2.1",
+        "2.2.2",
+        "2.2.3",
+        "2.2.4"
+      ],
+      "pdf_page_start": 25,
+      "pdf_page_end": 29,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2a-strategic-cognition-ch01-ch03"
+    },
+    {
+      "card_id": "oadm-four-transition-challenges-7c14af5425",
+      "semantic_key": "oadm:governance:four-transition-challenges",
+      "title": "AI 数据治理转型的四类挑战",
+      "card_type": "risk-framework",
+      "relative_path": "02-strategic-cognition/cards/oadm-four-transition-challenges-7c14af5425.md",
+      "content_hash": "8d20fafa5aece9e6405a3b70e3ef4ca725b0a797181bc96b7b39ed8c185b312b",
+      "file_hash": "2011666df60a19d5c226b4e19a15d638953f657147e87cd0b28647976c5fa9f3",
+      "source_span_ids": [
+        "oadm-span-s2-3-1-p029-p031",
+        "oadm-span-s2-3-2-p031-p032",
+        "oadm-span-s2-3-3-p032-p034",
+        "oadm-span-s2-3-4-p034-p035"
+      ],
+      "section_ids": [
+        "2.3.1",
+        "2.3.2",
+        "2.3.3",
+        "2.3.4"
+      ],
+      "pdf_page_start": 29,
+      "pdf_page_end": 35,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2a-strategic-cognition-ch01-ch03"
+    },
+    {
+      "card_id": "oadm-federated-cross-domain-integration-c97fddf870",
+      "semantic_key": "oadm:implementation:federated-cross-domain-integration",
+      "title": "桥接本体与联邦查询的跨域整合",
+      "card_type": "architecture",
+      "relative_path": "04-engineering-methods/cards/oadm-federated-cross-domain-integration-c97fddf870.md",
+      "content_hash": "2a7ddcc80116e312e3492ba8b71451e8d43918c6240bdb58003de90ea5e3e7b8",
+      "file_hash": "c055b0fd740c1daa418c8d77023fb200d183ee0401ae511b578e7c00f4091b4c",
+      "source_span_ids": [
+        "oadm-span-s6-5-3-p124-p126"
+      ],
+      "section_ids": [
+        "6.5.3"
+      ],
+      "pdf_page_start": 124,
+      "pdf_page_end": 126,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "card_id": "oadm-legacy-asset-evolution-8cfff4942d",
+      "semantic_key": "oadm:implementation:legacy-asset-evolution",
+      "title": "存量数据湖与知识图谱的三阶段语义演进",
+      "card_type": "migration-path",
+      "relative_path": "04-engineering-methods/cards/oadm-legacy-asset-evolution-8cfff4942d.md",
+      "content_hash": "e3980feab4c4e69413910ae1a0dc5327f80ac88a5a1c63581fa0cc9112f32a86",
+      "file_hash": "26bcda1b6f92cad4a9bba0dafa0e95b3c8977ece0eb25e1d99d5d54b005ca6ae",
+      "source_span_ids": [
+        "oadm-span-s6-5-4-p126-p127"
+      ],
+      "section_ids": [
+        "6.5.4"
+      ],
+      "pdf_page_start": 126,
+      "pdf_page_end": 127,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "card_id": "oadm-point-line-surface-08ab3b75c8",
+      "semantic_key": "oadm:implementation:point-line-surface",
+      "title": "从场景点到领域线再到企业面的迭代路径",
+      "card_type": "implementation-path",
+      "relative_path": "04-engineering-methods/cards/oadm-point-line-surface-08ab3b75c8.md",
+      "content_hash": "c2a7b12cf5ea9d9c3d1f24f297def09104265bf69621d1f30f5e0686d4d534a5",
+      "file_hash": "86fc9bc40572101195a6f3c8bb4338b8b1352321a828fc10c2e5a87b4afcc241",
+      "source_span_ids": [
+        "oadm-span-s6-5-1-p121-p122",
+        "oadm-span-s6-5-2-p122-p124",
+        "oadm-span-s6-5-3-p124-p126"
+      ],
+      "section_ids": [
+        "6.5.1",
+        "6.5.2",
+        "6.5.3"
+      ],
+      "pdf_page_start": 121,
+      "pdf_page_end": 126,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "card_id": "oadm-inference-asset-triad-64d708aa8e",
+      "semantic_key": "oadm:inference-asset:fact-mechanism-result",
+      "title": "推理资产的事实—事理—结果三分法",
+      "card_type": "framework",
+      "relative_path": "03-core-theory/cards/oadm-inference-asset-triad-64d708aa8e.md",
+      "content_hash": "b15888055da494a8dd264904e7337bd8949ab222d178b807248d6c684bb628cb",
+      "file_hash": "7dbae1b5d7f78595dc7428df27ae6ea8f619462e84c20b21196124255fbcf34d",
+      "source_span_ids": [
+        "oadm-span-s5-3-1-p087-p088",
+        "oadm-span-s5-3-2-p088-p089",
+        "oadm-span-s5-3-3-p089-p090"
+      ],
+      "section_ids": [
+        "5.3.1",
+        "5.3.2",
+        "5.3.3"
+      ],
+      "pdf_page_start": 87,
+      "pdf_page_end": 90,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-inference-result-traceability-0d0557615e",
+      "semantic_key": "oadm:inference-asset:traceability",
+      "title": "推理结果与过程日志的全链路追溯",
+      "card_type": "governance-rule",
+      "relative_path": "03-core-theory/cards/oadm-inference-result-traceability-0d0557615e.md",
+      "content_hash": "73838631e27313c7c5aca14c84b3afb7ede7780b03d280c0dfe03fc05027b490",
+      "file_hash": "c41dd322118b0329f1cab840ef37196b1653078a58acc121e4a72c476b937216",
+      "source_span_ids": [
+        "oadm-span-s5-3-3-p089-p090"
+      ],
+      "section_ids": [
+        "5.3.3"
+      ],
+      "pdf_page_start": 89,
+      "pdf_page_end": 90,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-bit-to-token-a10e8a8d88",
+      "semantic_key": "oadm:information-unit:bit-to-token",
+      "title": "信息处理单元从比特扩展到 Token",
+      "card_type": "concept",
+      "relative_path": "02-strategic-cognition/cards/oadm-bit-to-token-a10e8a8d88.md",
+      "content_hash": "03dabbbb74ab2511182f6958fe75d5c4c093e298e893a7a00ddbc5526ed57a33",
+      "file_hash": "d4140e7febef3116f1fe6873e64b4c52a4f4291b43f6f6409d78c7e761cc38ad",
+      "source_span_ids": [
+        "oadm-span-s1-1-1-p008-p009"
+      ],
+      "section_ids": [
+        "1.1.1"
+      ],
+      "pdf_page_start": 8,
+      "pdf_page_end": 9,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2a-strategic-cognition-ch01-ch03"
+    },
+    {
+      "card_id": "oadm-lake-kb-ontology-triad-d5e33d6b69",
+      "semantic_key": "oadm:knowledge-platform:lake-kb-ontology-triad",
+      "title": "数据湖—知识库—本体库的互补分工",
+      "card_type": "framework",
+      "relative_path": "03-core-theory/cards/oadm-lake-kb-ontology-triad-d5e33d6b69.md",
+      "content_hash": "8eb3eb6c27dc03f5ad82a8da6dcb464ebb113ffc4db336858a34bcbfe1f3c590",
+      "file_hash": "616514e5014baba4246b8fd4e4d08c2fe2bb2bf5ebf86b769c8e0e05c8d4c85f",
+      "source_span_ids": [
+        "oadm-span-s4-4-4-p071-p072"
+      ],
+      "section_ids": [
+        "4.4.4"
+      ],
+      "pdf_page_start": 71,
+      "pdf_page_end": 72,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-abstract-structure-evolve-f14dbd0c04",
+      "semantic_key": "oadm:modeling-thinking:abstract-structure-evolve",
+      "title": "建模思维的抽象—结构化—演化方法",
+      "card_type": "method",
+      "relative_path": "02-strategic-cognition/cards/oadm-abstract-structure-evolve-f14dbd0c04.md",
+      "content_hash": "c1617ab3d33cb43d72e5eb2222c67bedd0ba19faf0a1dd1a62884bfcafbc70dd",
+      "file_hash": "1d7c70b7418afb366bdd6afffc58964ac50f97060087edf42a24d0ced5990ee4",
+      "source_span_ids": [
+        "oadm-span-s1-2-3-p014-p015"
+      ],
+      "section_ids": [
+        "1.2.3"
+      ],
+      "pdf_page_start": 14,
+      "pdf_page_end": 15,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2a-strategic-cognition-ch01-ch03"
+    },
+    {
+      "card_id": "oadm-business-system-dual-drive-b276acbff6",
+      "semantic_key": "oadm:modeling:business-system-dual-drive",
+      "title": "业务逻辑与系统逻辑双轮驱动模型",
+      "card_type": "model",
+      "relative_path": "02-strategic-cognition/cards/oadm-business-system-dual-drive-b276acbff6.md",
+      "content_hash": "234a50b92f3d36db8c26463180cecd2d90451ce94ab90bb12e13b863d3746532",
+      "file_hash": "68ae18e8af47ea2c6dbfdfb3f2d7c5c40d4dd418ec7832afb55016946919d22d",
+      "source_span_ids": [
+        "oadm-span-s3-1-2-p038-p040"
+      ],
+      "section_ids": [
+        "3.1.2"
+      ],
+      "pdf_page_start": 38,
+      "pdf_page_end": 40,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2a-strategic-cognition-ch01-ch03"
+    },
+    {
+      "card_id": "oadm-fact-mechanism-action-2bdf3db6c5",
+      "semantic_key": "oadm:modeling:fact-mechanism-action",
+      "title": "事实—事理—行动一体化动态模型",
+      "card_type": "model",
+      "relative_path": "02-strategic-cognition/cards/oadm-fact-mechanism-action-2bdf3db6c5.md",
+      "content_hash": "b15dd428a05f6dc5d122fa3105022fcfdd6bf7110b8c20b078e747d1e1985da3",
+      "file_hash": "e77248cc9bb4a9acbc173d5e4f5d314abf168505ba56e42e6892a9b68973d953",
+      "source_span_ids": [
+        "oadm-span-s3-1-3-p040-p042"
+      ],
+      "section_ids": [
+        "3.1.3"
+      ],
+      "pdf_page_start": 40,
+      "pdf_page_end": 42,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2a-strategic-cognition-ch01-ch03"
+    },
+    {
+      "card_id": "oadm-human-machine-bidirectional-ae9dd60c37",
+      "semantic_key": "oadm:modeling:human-machine-bidirectional",
+      "title": "人机共用的双向适配模型",
+      "card_type": "model",
+      "relative_path": "02-strategic-cognition/cards/oadm-human-machine-bidirectional-ae9dd60c37.md",
+      "content_hash": "27453a69737d3763a214bd1a3198a96615c5435981203016fe397c27bcdfd56b",
+      "file_hash": "da154f8f829adc3a07043affe577b9a75b4e4c7d8c2508ee158bcdae02c6231a",
+      "source_span_ids": [
+        "oadm-span-s3-1-1-p037-p038"
+      ],
+      "section_ids": [
+        "3.1.1"
+      ],
+      "pdf_page_start": 37,
+      "pdf_page_end": 38,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2a-strategic-cognition-ch01-ch03"
+    },
+    {
+      "card_id": "oadm-modeler-user-coevolution-b71499df72",
+      "semantic_key": "oadm:ontology-ai:modeler-user-coevolution",
+      "title": "大模型作为本体建模师与使用者的双向演进",
+      "card_type": "technology-trend",
+      "relative_path": "06-agent-governance-future-enterprise/cards/oadm-modeler-user-coevolution-b71499df72.md",
+      "content_hash": "2cce5b2fac11475289eb8f560d04be71337533a7af17abba2add45eab4a7d914",
+      "file_hash": "ec13b85c8b38514c6f23ad099a7ec9e71f63d5ce5e1be10061765e8bd013ca73",
+      "source_span_ids": [
+        "oadm-span-s9-3-4-p194-p195",
+        "oadm-span-s9-3-5-p195-p196"
+      ],
+      "section_ids": [
+        "9.3.4",
+        "9.3.5"
+      ],
+      "pdf_page_start": 194,
+      "pdf_page_end": 196,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "card_id": "oadm-ai-assisted-ontology-modeling-bfcd56b66d",
+      "semantic_key": "oadm:ontology-engineering:ai-assisted-modeling",
+      "title": "AI 辅助业务专家进行本体建模",
+      "card_type": "method",
+      "relative_path": "03-core-theory/cards/oadm-ai-assisted-ontology-modeling-bfcd56b66d.md",
+      "content_hash": "1dac142f6859c3c50b14d1fc78f4f77b40afa19acdf668753ab6da15c195beaa",
+      "file_hash": "6494259ab64e58475c5505da1553b51f51533a429803734bb25141983982eab2",
+      "source_span_ids": [
+        "oadm-span-s4-3-2-p067-p068"
+      ],
+      "section_ids": [
+        "4.3.2"
+      ],
+      "pdf_page_start": 67,
+      "pdf_page_end": 68,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-continuous-tool-ecosystem-9eabee007d",
+      "semantic_key": "oadm:ontology-engineering:continuous-tool-ecosystem",
+      "title": "本体持续集成、双向反馈与工具生态",
+      "card_type": "engineering-direction",
+      "relative_path": "06-agent-governance-future-enterprise/cards/oadm-continuous-tool-ecosystem-9eabee007d.md",
+      "content_hash": "6d68639c0504e838706c9f7b5e5a8938c9f62eb92ac80eda1a9741fe39964e36",
+      "file_hash": "9db06da23d6ca587ac3cf373f6438e3a22f9bde74217ce01a63275a8bbf961ab",
+      "source_span_ids": [
+        "oadm-span-s9-3-6-p197-p198"
+      ],
+      "section_ids": [
+        "9.3.6"
+      ],
+      "pdf_page_start": 197,
+      "pdf_page_end": 198,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "card_id": "oadm-dynamic-connection-strength-8bfddada49",
+      "semantic_key": "oadm:ontology-governance:dynamic-connection-strength",
+      "title": "以连接强度衡量本体动态治理",
+      "card_type": "governance-framework",
+      "relative_path": "06-agent-governance-future-enterprise/cards/oadm-dynamic-connection-strength-8bfddada49.md",
+      "content_hash": "32f19d7980a8ca0160dd12a4dbac052097e7d8cd0af4ff1e6d8e64ff3ee7467b",
+      "file_hash": "cd49e1ceb3dae3213bdaba66375bedf508ee4415bacc9c26dceeb83aa7951d13",
+      "source_span_ids": [
+        "oadm-span-s9-3-2-p192-p193"
+      ],
+      "section_ids": [
+        "9.3.2"
+      ],
+      "pdf_page_start": 192,
+      "pdf_page_end": 193,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "card_id": "oadm-representation-reasoning-validation-bf357f4567",
+      "semantic_key": "oadm:ontology-llm:representation-reasoning-validation",
+      "title": "本体增强推理的表示—推理—验证三阶段",
+      "card_type": "method",
+      "relative_path": "03-core-theory/cards/oadm-representation-reasoning-validation-bf357f4567.md",
+      "content_hash": "72e01c99d4993eb8ed4581e5ea4529ad84c640970aeeb5c16c1822a6486f0001",
+      "file_hash": "5a690f1f3719c98ff1047bc3b8245a648264744819247a56d5ac4e977d347bfc",
+      "source_span_ids": [
+        "oadm-span-s4-2-2-p063-p064"
+      ],
+      "section_ids": [
+        "4.2.2"
+      ],
+      "pdf_page_start": 63,
+      "pdf_page_end": 64,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-ontology-ai-integration-matrix-5864150c68",
+      "semantic_key": "oadm:ontology-llm:technology-integration-matrix",
+      "title": "本体与 AI 技术融合矩阵",
+      "card_type": "framework",
+      "relative_path": "03-core-theory/cards/oadm-ontology-ai-integration-matrix-5864150c68.md",
+      "content_hash": "a53e9b93c50bcdf521451eef2f2109330023707ff32f18594ea5dcf69edaf988",
+      "file_hash": "986a548c97891ee1c4d68cdbe8206c38b0758f97203160b01fe6c10b517c3de0",
+      "source_span_ids": [
+        "oadm-span-s4-2-3-p064-p066"
+      ],
+      "section_ids": [
+        "4.2.3"
+      ],
+      "pdf_page_start": 64,
+      "pdf_page_end": 66,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-ontology-llm-three-connections-578bb66efc",
+      "semantic_key": "oadm:ontology-llm:three-connections",
+      "title": "本体模型与大模型的三重连接",
+      "card_type": "framework",
+      "relative_path": "03-core-theory/cards/oadm-ontology-llm-three-connections-578bb66efc.md",
+      "content_hash": "12221d9aacb33a66851ce65a107027d7ab28a4cdef25c61367eb22467f1d2d8b",
+      "file_hash": "36c84512e1218c5efbe4baedaa10f98579703438f3b39009b5c16acb198371e1",
+      "source_span_ids": [
+        "oadm-span-s4-2-1-p060-p063"
+      ],
+      "section_ids": [
+        "4.2.1"
+      ],
+      "pdf_page_start": 60,
+      "pdf_page_end": 63,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-multimodal-dynamic-modeling-afcdd6cb46",
+      "semantic_key": "oadm:ontology-modeling:multimodal-dynamic-modeling",
+      "title": "多模态语义提取、对齐与本体动态更新",
+      "card_type": "technology-trend",
+      "relative_path": "06-agent-governance-future-enterprise/cards/oadm-multimodal-dynamic-modeling-afcdd6cb46.md",
+      "content_hash": "341e76e883da79f827e3ce25da76763d89b86d7a052166dd6d5b464e951e1dcb",
+      "file_hash": "271691de65f2268b23fff9bf66710ee254ef0947f43c10d09ac6ebf64b438b68",
+      "source_span_ids": [
+        "oadm-span-s9-3-3-p193-p194"
+      ],
+      "section_ids": [
+        "9.3.3"
+      ],
+      "pdf_page_start": 193,
+      "pdf_page_end": 194,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "card_id": "oadm-human-machine-semantics-425a6b2adc",
+      "semantic_key": "oadm:ontology:human-machine-semantics",
+      "title": "本体作为人机共享的业务意义框架",
+      "card_type": "concept",
+      "relative_path": "03-core-theory/cards/oadm-human-machine-semantics-425a6b2adc.md",
+      "content_hash": "5247ba60bf0151641af2743bfde27be993d51395bf9b6b8cdca4be6153c8e78a",
+      "file_hash": "578004bcd77ab7bf9e00359cee8d2b7b9ebba1fe1e7ccbfc7f9e641d71344b1c",
+      "source_span_ids": [
+        "oadm-span-s4-1-1-p053-p055"
+      ],
+      "section_ids": [
+        "4.1.1"
+      ],
+      "pdf_page_start": 53,
+      "pdf_page_end": 55,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-ontology-museum-antipattern-eae207943e",
+      "semantic_key": "oadm:ontology:ontology-museum-antipattern",
+      "title": "“本体博物馆”反模式",
+      "card_type": "risk",
+      "relative_path": "03-core-theory/cards/oadm-ontology-museum-antipattern-eae207943e.md",
+      "content_hash": "563ae0e6168f0f66649f1e693bd3900dd20552450778cbb2a31f2b607c5fef09",
+      "file_hash": "62fc47396c5577c9d73c2da9a487e58c2b332469daa1933e08948ffa8cf668f1",
+      "source_span_ids": [
+        "oadm-span-s4-1-3-p057-p059"
+      ],
+      "section_ids": [
+        "4.1.3"
+      ],
+      "pdf_page_start": 57,
+      "pdf_page_end": 59,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-semantic-interconnection-reasoning-1ad9f4a05a",
+      "semantic_key": "oadm:ontology:semantic-interconnection-reasoning",
+      "title": "从语义互联到语义推理",
+      "card_type": "framework",
+      "relative_path": "03-core-theory/cards/oadm-semantic-interconnection-reasoning-1ad9f4a05a.md",
+      "content_hash": "589684625a7dd62a6d1bcf7065a2ea83bc8884535c69e26ce7ea4328e44ba3db",
+      "file_hash": "1895cb56125d841cc0e651f253629b85be11e1a529bd4d6e267fa0ee47c6cd5a",
+      "source_span_ids": [
+        "oadm-span-s4-1-3-p057-p059"
+      ],
+      "section_ids": [
+        "4.1.3"
+      ],
+      "pdf_page_start": 57,
+      "pdf_page_end": 59,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-seven-plus-one-framework-4e7856904e",
+      "semantic_key": "oadm:semantic-framework:seven-plus-one",
+      "title": "事理模型的“7+1”语义规范框架",
+      "card_type": "framework",
+      "relative_path": "03-core-theory/cards/oadm-seven-plus-one-framework-4e7856904e.md",
+      "content_hash": "1595df89a4a22ce45d2e6bd89c6de1542d606bec609fbb4df52376176004a06e",
+      "file_hash": "71641363f20b52faad24d41e45252d0cca3fefbe88634cd23b12b605ea2044b0",
+      "source_span_ids": [
+        "oadm-span-s5-4-1-p090-p092",
+        "oadm-span-s5-4-2-p092-p092",
+        "oadm-span-s5-4-3-p092-p092",
+        "oadm-span-s5-4-4-p092-p092",
+        "oadm-span-s5-4-5-p092-p092",
+        "oadm-span-s5-4-6-p092-p093",
+        "oadm-span-s5-4-7-p093-p093",
+        "oadm-span-s5-4-8-p093-p093"
+      ],
+      "section_ids": [
+        "5.4.1",
+        "5.4.2",
+        "5.4.3",
+        "5.4.4",
+        "5.4.5",
+        "5.4.6",
+        "5.4.7",
+        "5.4.8"
+      ],
+      "pdf_page_start": 90,
+      "pdf_page_end": 93,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-semantic-standard-role-map-d76258da48",
+      "semantic_key": "oadm:semantic-standard:role-map",
+      "title": "7+1 维度与语义标准的作者映射",
+      "card_type": "mapping",
+      "relative_path": "03-core-theory/cards/oadm-semantic-standard-role-map-d76258da48.md",
+      "content_hash": "1d559a2b679c84e580094016533164c83c365e87cda4a7a890209d6e399ba4c5",
+      "file_hash": "0559df59068efda9506564300ca8d5b081ceb97e8970db8830b883be3ac5e0a7",
+      "source_span_ids": [
+        "oadm-span-s5-4-1-p090-p092",
+        "oadm-span-s5-4-2-p092-p092",
+        "oadm-span-s5-4-3-p092-p092",
+        "oadm-span-s5-4-4-p092-p092",
+        "oadm-span-s5-4-5-p092-p092",
+        "oadm-span-s5-4-6-p092-p093",
+        "oadm-span-s5-4-7-p093-p093",
+        "oadm-span-s5-4-8-p093-p093"
+      ],
+      "section_ids": [
+        "5.4.1",
+        "5.4.2",
+        "5.4.3",
+        "5.4.4",
+        "5.4.5",
+        "5.4.6",
+        "5.4.7",
+        "5.4.8"
+      ],
+      "pdf_page_start": 90,
+      "pdf_page_end": 93,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "card_id": "oadm-w3c-semantic-stack-bc94d749c7",
+      "semantic_key": "oadm:semantic-standard:w3c-stack",
+      "title": "W3C 语义技术栈的作者映射",
+      "card_type": "framework",
+      "relative_path": "03-core-theory/cards/oadm-w3c-semantic-stack-bc94d749c7.md",
+      "content_hash": "7a0c0b405ca8da9c5f9c347cc92e32d879bf8dbd8002655a854730bcd52e8adf",
+      "file_hash": "dd3e297a3518f42fd09b8113604dcab6ca627def4227fd7479824e17f54755b2",
+      "source_span_ids": [
+        "oadm-span-s4-3-1-p066-p067"
+      ],
+      "section_ids": [
+        "4.3.1"
+      ],
+      "pdf_page_start": 66,
+      "pdf_page_end": 67,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1,
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    }
+  ]
+}

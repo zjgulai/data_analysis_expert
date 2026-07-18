@@ -1,0 +1,16 @@
+{
+  "schema_version":"1.0.0",
+  "document_id":"book-ontology-ai-data-management-2026",
+  "batch_id":"m2c-engineering-method-ch06",
+  "method":"pdftoppm-selected-pages-manual-review",
+  "full_page_images_persisted":false,
+  "reviews":[
+    {"pdf_page":97,"artifact_ids":["oadm-figure-6-1-p097"],"status":"reviewed","finding":"图示将“7+1”细化为 29 句话并作为业务知识到本体语义的表达桥梁，支持预处理方法摘要。"},
+    {"pdf_page":100,"artifact_ids":["oadm-figure-6-2-p100"],"status":"reviewed","finding":"页面展示隐性知识访谈表的尾部以及尺蠖图像素材，正文明确进入描述、逻辑、内容与极简表达的建模准入审核。"},
+    {"pdf_page":104,"artifact_ids":["oadm-table-6-3-p104"],"status":"reviewed","finding":"表格明确区分模型 A 的语义重构与模型 B 的逻辑审计，并说明生成—审核—仲裁闭环。"},
+    {"pdf_page":111,"artifact_ids":["oadm-table-6-4-p111"],"status":"reviewed","finding":"表格列出材料完备、语法结构、元数据、质量证据和安全合规五类入库审查维度。"},
+    {"pdf_page":114,"artifact_ids":["oadm-table-6-7-p114","oadm-table-6-8-p114"],"status":"reviewed","finding":"两张表分别呈现资产健康质量校验和利用率、业务价值等效能指标，支持“建用优复”运营摘要。"},
+    {"pdf_page":118,"artifact_ids":["oadm-figure-6-8-p118","oadm-table-6-9-p118"],"status":"reviewed","finding":"页面以多种视图映射“7+1”语义维度，并强调专家从看图、审图到交互改图。"},
+    {"pdf_page":126,"artifact_ids":["oadm-figure-6-10-p126"],"status":"reviewed","finding":"图文以合同管理展示公共、领域、实例、动作纵轴与多业务域横轴，支持点线面扩展路径。"}
+  ]
+}

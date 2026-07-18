@@ -1,0 +1,1035 @@
+{
+  "schema_version": "1.0.0",
+  "document_id": "book-ontology-ai-data-management-2026",
+  "domain_id": "ontology-ai-data-management-draft",
+  "batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10",
+  "allowed_predicates": [
+    "DEFINES",
+    "PART_OF",
+    "REQUIRES",
+    "PRODUCES",
+    "CONSUMES",
+    "GOVERNS",
+    "CONSTRAINS",
+    "TRIGGERS",
+    "OWNED_BY",
+    "EVIDENCED_BY",
+    "APPLICABLE_TO",
+    "CANDIDATE_CROSSWALK",
+    "CONTRADICTS",
+    "SUPERSEDES"
+  ],
+  "relation_count": 48,
+  "relations": [
+    {
+      "relation_id": "oadm-rel-e9572f6afbf9",
+      "subject_id": "oadm-ontology-blockchain-layered-governance-d1edf7ae3a",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:agent-governance:ontology-blockchain-layered-governance",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-carbon-silicon-governance-b9b15ea1",
+      "object_type": "Term",
+      "object_key": "oadm:term:carbon-silicon-governance",
+      "source_span_ids": [
+        "oadm-span-s9-1-1-p181-p182",
+        "oadm-span-s9-1-2-p182-p182",
+        "oadm-span-s9-1-3-p182-p183",
+        "oadm-span-s9-1-4-p184-p184"
+      ],
+      "section_ids": [
+        "9.1.1",
+        "9.1.2",
+        "9.1.3",
+        "9.1.4"
+      ],
+      "rationale": "框架以人员与 Agent 的协同权责为治理对象。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "0786b52b2ceb54212cb62821913d24cf7217cead727a106333bde16aef83a89e"
+    },
+    {
+      "relation_id": "oadm-rel-c162171bf0c7",
+      "subject_id": "oadm-ontology-blockchain-layered-governance-d1edf7ae3a",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:agent-governance:ontology-blockchain-layered-governance",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-tri-pillar-risk-governance-a3ee65e56e",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:agent-governance:tri-pillar-risk-governance",
+      "source_span_ids": [
+        "oadm-span-s9-1-1-p181-p182",
+        "oadm-span-s9-1-2-p182-p182",
+        "oadm-span-s9-1-3-p182-p183",
+        "oadm-span-s9-1-4-p184-p184",
+        "oadm-span-s9-3-1-p191-p192"
+      ],
+      "section_ids": [
+        "9.1.1",
+        "9.1.2",
+        "9.1.3",
+        "9.1.4",
+        "9.3.1"
+      ],
+      "rationale": "高阶框架需要按风险分配本体、AI 与人类的职责。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "6fada36356b49598731c72820e1783a72e88f6cabaed9dc2ff25dafc637180a8"
+    },
+    {
+      "relation_id": "oadm-rel-7a8a61eefffb",
+      "subject_id": "oadm-semantic-handshake-old-new-worlds-5ff7bf2d5e",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:enterprise-evolution:semantic-handshake-old-new-worlds",
+      "predicate": "PART_OF",
+      "object_id": "oadm-ontology-blockchain-layered-governance-d1edf7ae3a",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:agent-governance:ontology-blockchain-layered-governance",
+      "source_span_ids": [
+        "oadm-span-s9-1-1-p181-p182",
+        "oadm-span-s9-1-2-p182-p182",
+        "oadm-span-s9-1-3-p182-p183"
+      ],
+      "section_ids": [
+        "9.1.1",
+        "9.1.2",
+        "9.1.3"
+      ],
+      "rationale": "新旧世界交互解释治理框架的系统上下文。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "0d84e99987906cbd3c8193f551e0eca5cb62fa0eab20db1a8893a5618f682a86"
+    },
+    {
+      "relation_id": "oadm-rel-193a01a4c8ec",
+      "subject_id": "oadm-semantic-handshake-old-new-worlds-5ff7bf2d5e",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:enterprise-evolution:semantic-handshake-old-new-worlds",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-legacy-asset-evolution-8cfff4942d",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:implementation:legacy-asset-evolution",
+      "source_span_ids": [
+        "oadm-span-s9-1-3-p182-p183"
+      ],
+      "section_ids": [
+        "9.1.3"
+      ],
+      "rationale": "语义握手延续存量系统的渐进演进与非侵入连接。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "2281846e80e16e395ae48465a440cf90c7ebbaf5e9c6aef79146c2ff093e840b"
+    },
+    {
+      "relation_id": "oadm-rel-71bcb788cdae",
+      "subject_id": "oadm-six-proof-accountability-system-392f0d445c",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:agent-trust:six-proof-accountability-system",
+      "predicate": "PART_OF",
+      "object_id": "oadm-ontology-blockchain-layered-governance-d1edf7ae3a",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:agent-governance:ontology-blockchain-layered-governance",
+      "source_span_ids": [
+        "oadm-span-s9-2-1-p185-p185",
+        "oadm-span-s9-2-2-p185-p186",
+        "oadm-span-s9-2-3-p186-p187",
+        "oadm-span-s9-2-4-p187-p188",
+        "oadm-span-s9-2-5-p188-p189",
+        "oadm-span-s9-2-6-p188-p189"
+      ],
+      "section_ids": [
+        "9.2.1",
+        "9.2.2",
+        "9.2.3",
+        "9.2.4",
+        "9.2.5",
+        "9.2.6"
+      ],
+      "rationale": "六类证明是作者治理框架中的候选可信底座。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "d73f196c26242993787e7c2bc48f0b86a2cf936ed210d9c7f21b13051b2ee967"
+    },
+    {
+      "relation_id": "oadm-rel-a2ac97c01bfc",
+      "subject_id": "oadm-six-proof-accountability-system-392f0d445c",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:agent-trust:six-proof-accountability-system",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-six-proof-system-8ad39424",
+      "object_type": "Term",
+      "object_key": "oadm:term:six-proof-system",
+      "source_span_ids": [
+        "oadm-span-s9-2-1-p185-p185",
+        "oadm-span-s9-2-2-p185-p186",
+        "oadm-span-s9-2-3-p186-p187",
+        "oadm-span-s9-2-4-p187-p188",
+        "oadm-span-s9-2-5-p188-p189",
+        "oadm-span-s9-2-6-p188-p189"
+      ],
+      "section_ids": [
+        "9.2.1",
+        "9.2.2",
+        "9.2.3",
+        "9.2.4",
+        "9.2.5",
+        "9.2.6"
+      ],
+      "rationale": "该卡系统化定义六类证明。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "6dc600efaefc0a57653455c5aa162cd8faa3dfd4a7fe25da09a386fe49757dce"
+    },
+    {
+      "relation_id": "oadm-rel-cb9ef849b77f",
+      "subject_id": "oadm-hybrid-identity-asset-provenance-056bb03eec",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:agent-trust:hybrid-identity-asset-provenance",
+      "predicate": "PART_OF",
+      "object_id": "oadm-six-proof-accountability-system-392f0d445c",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:agent-trust:six-proof-accountability-system",
+      "source_span_ids": [
+        "oadm-span-s9-2-1-p185-p185",
+        "oadm-span-s9-2-2-p185-p186"
+      ],
+      "section_ids": [
+        "9.2.1",
+        "9.2.2"
+      ],
+      "rationale": "身份与资产是六类证明的前两类。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "9477ccf699634854eb8e67782c48195947d58f2601d0e48be574692cf1438047"
+    },
+    {
+      "relation_id": "oadm-rel-898ae253ceda",
+      "subject_id": "oadm-hybrid-identity-asset-provenance-056bb03eec",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:agent-trust:hybrid-identity-asset-provenance",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-hybrid-did-199130fa",
+      "object_type": "Term",
+      "object_key": "oadm:term:hybrid-did",
+      "source_span_ids": [
+        "oadm-span-s9-2-1-p185-p185"
+      ],
+      "section_ids": [
+        "9.2.1"
+      ],
+      "rationale": "混合身份模式以 DID 标识人员和 Agent。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "c1ba9bd6b937720fd3e11e57b0c74ff066e3149e2bc04d228070a4cece61c7db"
+    },
+    {
+      "relation_id": "oadm-rel-f6a0b091b4ae",
+      "subject_id": "oadm-hybrid-identity-asset-provenance-056bb03eec",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:agent-trust:hybrid-identity-asset-provenance",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-digital-asset-provenance-chain-e56e83c2",
+      "object_type": "Term",
+      "object_key": "oadm:term:digital-asset-provenance-chain",
+      "source_span_ids": [
+        "oadm-span-s9-2-2-p185-p186"
+      ],
+      "section_ids": [
+        "9.2.2"
+      ],
+      "rationale": "资产证明以哈希与凭证描述来源和权属。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "372cb4cf6c8e64d2236b3168110383d22d4a74de5c6501829c09616961c0c030"
+    },
+    {
+      "relation_id": "oadm-rel-def78317b1cb",
+      "subject_id": "oadm-hybrid-identity-asset-provenance-056bb03eec",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:agent-trust:hybrid-identity-asset-provenance",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-ontology-asset-registration-5b7e350efb",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:engineering:ontology-asset-registration",
+      "source_span_ids": [
+        "oadm-span-s9-2-2-p185-p186"
+      ],
+      "section_ids": [
+        "9.2.2"
+      ],
+      "rationale": "可信资产凭证需要先有受控资产标识与登记。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "8acff1e63040bc667ed8559858a22c49ac62c3934b16147d1bf6375efbd49714"
+    },
+    {
+      "relation_id": "oadm-rel-0a6d6bfe0703",
+      "subject_id": "oadm-dynamic-authorization-contract-control-3d407cd756",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:agent-trust:dynamic-authorization-contract-control",
+      "predicate": "PART_OF",
+      "object_id": "oadm-six-proof-accountability-system-392f0d445c",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:agent-trust:six-proof-accountability-system",
+      "source_span_ids": [
+        "oadm-span-s9-2-3-p186-p187",
+        "oadm-span-s9-2-4-p187-p188"
+      ],
+      "section_ids": [
+        "9.2.3",
+        "9.2.4"
+      ],
+      "rationale": "授权与合约是六类证明的控制部分。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "c3c14207242040b2eb48570cfad318d3d3bf8b12926a5931b6cb9a14f6fed6c3"
+    },
+    {
+      "relation_id": "oadm-rel-b054b5de1b8d",
+      "subject_id": "oadm-dynamic-authorization-contract-control-3d407cd756",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:agent-trust:dynamic-authorization-contract-control",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-verifiable-permission-chain-9c75894b",
+      "object_type": "Term",
+      "object_key": "oadm:term:verifiable-permission-chain",
+      "source_span_ids": [
+        "oadm-span-s9-2-3-p186-p187"
+      ],
+      "section_ids": [
+        "9.2.3"
+      ],
+      "rationale": "权限凭证显式承载授权条件和时效。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "509f32ceb906cce79d7c2f7e7ba631f6933902bd4b43e4bc94c453c7bae3557d"
+    },
+    {
+      "relation_id": "oadm-rel-7a9a0a770205",
+      "subject_id": "oadm-dynamic-authorization-contract-control-3d407cd756",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:agent-trust:dynamic-authorization-contract-control",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-smart-contract-collaboration-6ae52bc9",
+      "object_type": "Term",
+      "object_key": "oadm:term:smart-contract-collaboration",
+      "source_span_ids": [
+        "oadm-span-s9-2-4-p187-p188"
+      ],
+      "section_ids": [
+        "9.2.4"
+      ],
+      "rationale": "协作规则被表达为候选智能合约流水线。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "d96bc840b54b8aa506c5c89619af5000b192c2bad55858086feb0fbc5d17a5c8"
+    },
+    {
+      "relation_id": "oadm-rel-02568c6cacee",
+      "subject_id": "oadm-dynamic-authorization-contract-control-3d407cd756",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:agent-trust:dynamic-authorization-contract-control",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-safe-dynamic-action-loop-e794577c2f",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:agent-action:safe-dynamic-action-loop",
+      "source_span_ids": [
+        "oadm-span-s9-2-3-p186-p187",
+        "oadm-span-s9-2-4-p187-p188"
+      ],
+      "section_ids": [
+        "9.2.3",
+        "9.2.4"
+      ],
+      "rationale": "自动执行仍需执行前校验、反馈与终止门禁。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "f07cde6a756b27a0df519dcf837c28a6cf0aaac5bd67100e02a8cfaf652789bc"
+    },
+    {
+      "relation_id": "oadm-rel-4b8edbd68dca",
+      "subject_id": "oadm-traceability-contribution-accountability-8d512e3160",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:agent-trust:traceability-contribution-accountability",
+      "predicate": "PART_OF",
+      "object_id": "oadm-six-proof-accountability-system-392f0d445c",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:agent-trust:six-proof-accountability-system",
+      "source_span_ids": [
+        "oadm-span-s9-2-5-p188-p189",
+        "oadm-span-s9-2-6-p188-p189"
+      ],
+      "section_ids": [
+        "9.2.5",
+        "9.2.6"
+      ],
+      "rationale": "追溯与贡献构成六类证明的证据和激励部分。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "7b67cb9db31948a089c9401143b74b28bf9816a6bd84279462a98225b1ab7cbe"
+    },
+    {
+      "relation_id": "oadm-rel-d14ba5056392",
+      "subject_id": "oadm-traceability-contribution-accountability-8d512e3160",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:agent-trust:traceability-contribution-accountability",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-operation-hash-chain-966637e4",
+      "object_type": "Term",
+      "object_key": "oadm:term:operation-hash-chain",
+      "source_span_ids": [
+        "oadm-span-s9-2-5-p188-p189"
+      ],
+      "section_ids": [
+        "9.2.5"
+      ],
+      "rationale": "操作哈希链是来源提出的追溯结构。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "83928be990c4318393aa2f38651627abf4748c01d7a42b5b4b65a77d60fae199"
+    },
+    {
+      "relation_id": "oadm-rel-b225a9b249d3",
+      "subject_id": "oadm-traceability-contribution-accountability-8d512e3160",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:agent-trust:traceability-contribution-accountability",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-contribution-proof-70e36d42",
+      "object_type": "Term",
+      "object_key": "oadm:term:contribution-proof",
+      "source_span_ids": [
+        "oadm-span-s9-2-6-p188-p189"
+      ],
+      "section_ids": [
+        "9.2.6"
+      ],
+      "rationale": "贡献证明表达人员与 Agent 的候选价值计量。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "c280ac7c883678df28e2021b451b7d4e344fa3f9a198169279a157ae69ece875"
+    },
+    {
+      "relation_id": "oadm-rel-8c4fd947bacf",
+      "subject_id": "oadm-traceability-contribution-accountability-8d512e3160",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:agent-trust:traceability-contribution-accountability",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-inference-result-traceability-0d0557615e",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:inference-asset:traceability",
+      "source_span_ids": [
+        "oadm-span-s9-2-5-p188-p189"
+      ],
+      "section_ids": [
+        "9.2.5"
+      ],
+      "rationale": "责任闭环依赖可关联到推理和行动依据的来源轨迹。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "7d02b93d8ab1e2f14d99b2a3d8e884db8d5c9317d5a366fb869b4b05c71eaffa"
+    },
+    {
+      "relation_id": "oadm-rel-2d6b8f39e0b6",
+      "subject_id": "oadm-six-proof-accountability-system-392f0d445c",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:agent-trust:six-proof-accountability-system",
+      "predicate": "EVIDENCED_BY",
+      "object_id": "oadm-industry-exploration-evidence-boundary-ec30c7d9bf",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:agent-trust:industry-exploration-evidence-boundary",
+      "source_span_ids": [
+        "oadm-span-s9-2-7-p190-p190"
+      ],
+      "section_ids": [
+        "9.2.7"
+      ],
+      "rationale": "作者以行业项目作为概念例证，但该证据仍待外部核验。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "da48f05edfe2062fcfa25987461592702f61ac615e3f8222d48c60241da1a2de"
+    },
+    {
+      "relation_id": "oadm-rel-3d1430383f37",
+      "subject_id": "oadm-industry-exploration-evidence-boundary-ec30c7d9bf",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:agent-trust:industry-exploration-evidence-boundary",
+      "predicate": "APPLICABLE_TO",
+      "object_id": "oadm-four-transition-challenges-7c14af5425",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:governance:four-transition-challenges",
+      "source_span_ids": [
+        "oadm-span-s9-2-7-p190-p190"
+      ],
+      "section_ids": [
+        "9.2.7"
+      ],
+      "rationale": "证据边界防止把趋势案例误作已验证转型能力。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "0082df55f03aa9ba9ab4187f92eb7f0b38ec6ee9b2610affcc8d51f073a1ac86"
+    },
+    {
+      "relation_id": "oadm-rel-8a04c3f0a554",
+      "subject_id": "oadm-tri-pillar-risk-governance-a3ee65e56e",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:agent-governance:tri-pillar-risk-governance",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-tri-pillar-agent-governance-fb8257d7",
+      "object_type": "Term",
+      "object_key": "oadm:term:tri-pillar-agent-governance",
+      "source_span_ids": [
+        "oadm-span-s9-3-1-p191-p192"
+      ],
+      "section_ids": [
+        "9.3.1"
+      ],
+      "rationale": "来源明确三支柱及其分层职责。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "882958c8a5607ef5876601647c56e6c0ca94d6c775f73f9464a595d81277c38e"
+    },
+    {
+      "relation_id": "oadm-rel-b66dd621eb3e",
+      "subject_id": "oadm-tri-pillar-risk-governance-a3ee65e56e",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:agent-governance:tri-pillar-risk-governance",
+      "predicate": "GOVERNS",
+      "object_id": "oadm-human-multi-agent-modes-2d191ac219",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:agent-decision:human-multi-agent-modes",
+      "source_span_ids": [
+        "oadm-span-s9-3-1-p191-p192"
+      ],
+      "section_ids": [
+        "9.3.1"
+      ],
+      "rationale": "三支柱治理决定自主决策与人工介入的风险边界。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "964d4d972e41e060f2b81bc8863f44ffb585d50fb31d38507d589d625c4beabc"
+    },
+    {
+      "relation_id": "oadm-rel-64133b61e9d5",
+      "subject_id": "oadm-dynamic-connection-strength-8bfddada49",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:ontology-governance:dynamic-connection-strength",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-tri-pillar-risk-governance-a3ee65e56e",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:agent-governance:tri-pillar-risk-governance",
+      "source_span_ids": [
+        "oadm-span-s9-3-2-p192-p193"
+      ],
+      "section_ids": [
+        "9.3.2"
+      ],
+      "rationale": "动态治理持续校准三支柱之间的连接。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "9b1f58701dd0092cf056b9b82f9067fb88d65ad01d3da0f21e40e0101a7f7647"
+    },
+    {
+      "relation_id": "oadm-rel-0cf14378759e",
+      "subject_id": "oadm-dynamic-connection-strength-8bfddada49",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:ontology-governance:dynamic-connection-strength",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-dynamic-ontology-governance-9d719f1d",
+      "object_type": "Term",
+      "object_key": "oadm:term:dynamic-ontology-governance",
+      "source_span_ids": [
+        "oadm-span-s9-3-2-p192-p193"
+      ],
+      "section_ids": [
+        "9.3.2"
+      ],
+      "rationale": "该卡定义感知、校准、响应和反馈的动态治理。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "9814c999609bea198b1a9ac1d73750ad6ad367cdbff03b4aefd9133034ce08cf"
+    },
+    {
+      "relation_id": "oadm-rel-28831b98515e",
+      "subject_id": "oadm-dynamic-connection-strength-8bfddada49",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:ontology-governance:dynamic-connection-strength",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-connection-strength-bdb43eb0",
+      "object_type": "Term",
+      "object_key": "oadm:term:connection-strength",
+      "source_span_ids": [
+        "oadm-span-s9-3-2-p192-p193"
+      ],
+      "section_ids": [
+        "9.3.2"
+      ],
+      "rationale": "作者用连接强度描述三方变化传导。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "433d3207e41e4675420ae2af57322dddc47b6fa647f1cc1dac313764b993367f"
+    },
+    {
+      "relation_id": "oadm-rel-7051c3a16306",
+      "subject_id": "oadm-dynamic-connection-strength-8bfddada49",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:ontology-governance:dynamic-connection-strength",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-ontology-lifecycle-operations-968c388b34",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:engineering:ontology-lifecycle-operations",
+      "source_span_ids": [
+        "oadm-span-s9-3-2-p192-p193"
+      ],
+      "section_ids": [
+        "9.3.2"
+      ],
+      "rationale": "持续校准需要版本、变更和运行反馈闭环。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "48cb0a45f9ee6c651072a0777abee32853f7bf38b9409e67eac1373f0f06da80"
+    },
+    {
+      "relation_id": "oadm-rel-8302fc07af8b",
+      "subject_id": "oadm-multimodal-dynamic-modeling-afcdd6cb46",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:ontology-modeling:multimodal-dynamic-modeling",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-multimodal-ontology-74ff86f3",
+      "object_type": "Term",
+      "object_key": "oadm:term:multimodal-ontology",
+      "source_span_ids": [
+        "oadm-span-s9-3-3-p193-p194"
+      ],
+      "section_ids": [
+        "9.3.3"
+      ],
+      "rationale": "该趋势将多种信号纳入统一语义结构。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "7e1aa563ebbbc7e2d8ed63ccae4191d723a55c2f9191796444a1640c30356aaf"
+    },
+    {
+      "relation_id": "oadm-rel-e01c9ce0391e",
+      "subject_id": "oadm-multimodal-dynamic-modeling-afcdd6cb46",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:ontology-modeling:multimodal-dynamic-modeling",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-controlled-ai-ontology-modeling-db667058ad",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:engineering:controlled-ai-ontology-modeling",
+      "source_span_ids": [
+        "oadm-span-s9-3-3-p193-p194"
+      ],
+      "section_ids": [
+        "9.3.3"
+      ],
+      "rationale": "多模态候选必须经过受控验证再进入本体。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "a62d8aab45d1b1ed29da36eb8b08d9a0b342b404099229d7e932e4d5d2e170d4"
+    },
+    {
+      "relation_id": "oadm-rel-e13b087065e3",
+      "subject_id": "oadm-multimodal-dynamic-modeling-afcdd6cb46",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:ontology-modeling:multimodal-dynamic-modeling",
+      "predicate": "APPLICABLE_TO",
+      "object_id": "oadm-knowledge-parsing-autonomous-reasoning-ed0de008fc",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:application:knowledge-parsing-autonomous-reasoning",
+      "source_span_ids": [
+        "oadm-span-s9-3-3-p193-p194"
+      ],
+      "section_ids": [
+        "9.3.3"
+      ],
+      "rationale": "多模态本体可为现场识别和规则纠偏提供语义锚点。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "b28dc1a7bd365cbcd99f334210cd978632f815baaaff9eb591c23090a2dfbb0d"
+    },
+    {
+      "relation_id": "oadm-rel-ad6e0e5af5a9",
+      "subject_id": "oadm-modeler-user-coevolution-b71499df72",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:ontology-ai:modeler-user-coevolution",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-ai-ontology-modeler-23945624",
+      "object_type": "Term",
+      "object_key": "oadm:term:ai-ontology-modeler",
+      "source_span_ids": [
+        "oadm-span-s9-3-4-p194-p195"
+      ],
+      "section_ids": [
+        "9.3.4"
+      ],
+      "rationale": "来源描述大模型承担候选建模与自校验角色。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "67f67e4e2a720782efbf19faba8514b5df36de2d768b5b341422a2a59d5a77a6"
+    },
+    {
+      "relation_id": "oadm-rel-0634790a5687",
+      "subject_id": "oadm-modeler-user-coevolution-b71499df72",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:ontology-ai:modeler-user-coevolution",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-human-ai-shared-memory-31425cd1",
+      "object_type": "Term",
+      "object_key": "oadm:term:human-ai-shared-memory",
+      "source_span_ids": [
+        "oadm-span-s9-3-5-p195-p196"
+      ],
+      "section_ids": [
+        "9.3.5"
+      ],
+      "rationale": "本体被设想为业务人员与 Agent 的共同记忆载体。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "d76a29e56b2ffe7356ee8acd1e10c2bf6537bc0fb2c6b76e524ab35f98d999d2"
+    },
+    {
+      "relation_id": "oadm-rel-03d9457f0de8",
+      "subject_id": "oadm-modeler-user-coevolution-b71499df72",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:ontology-ai:modeler-user-coevolution",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-ai-assisted-ontology-modeling-bfcd56b66d",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:ontology-engineering:ai-assisted-modeling",
+      "source_span_ids": [
+        "oadm-span-s9-3-4-p194-p195",
+        "oadm-span-s9-3-5-p195-p196"
+      ],
+      "section_ids": [
+        "9.3.4",
+        "9.3.5"
+      ],
+      "rationale": "双向演进延展了受控的 AI 辅助建模能力。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "4039e14e050c06547bb1e7bdf6f7e258295b5305c09b6476188a81d62fdf7d81"
+    },
+    {
+      "relation_id": "oadm-rel-86584f666ee4",
+      "subject_id": "oadm-continuous-tool-ecosystem-9eabee007d",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:ontology-engineering:continuous-tool-ecosystem",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-ontology-tooling-platform-34aa02435d",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:engineering:ontology-tooling-platform",
+      "source_span_ids": [
+        "oadm-span-s9-3-6-p197-p198"
+      ],
+      "section_ids": [
+        "9.3.6"
+      ],
+      "rationale": "持续集成和双视图需要端到端工具平台。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "05bdb11b54d38c6d7fd0d501c34535b460abe2519054e284d15cde67e5ac48e1"
+    },
+    {
+      "relation_id": "oadm-rel-84fbeeb1fb75",
+      "subject_id": "oadm-continuous-tool-ecosystem-9eabee007d",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:ontology-engineering:continuous-tool-ecosystem",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-ontology-lifecycle-operations-968c388b34",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:engineering:ontology-lifecycle-operations",
+      "source_span_ids": [
+        "oadm-span-s9-3-6-p197-p198"
+      ],
+      "section_ids": [
+        "9.3.6"
+      ],
+      "rationale": "运行反馈和变更回归依赖生命周期运营。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "cb9c4467d894fdbb7c408cb399e4b7920b41de675afa5909da526689baef5fc5"
+    },
+    {
+      "relation_id": "oadm-rel-f0b894e52b66",
+      "subject_id": "oadm-triple-world-digital-twin-af3291a296",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:enterprise-model:triple-world-digital-twin",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-triple-world-model-6537c189",
+      "object_type": "Term",
+      "object_key": "oadm:term:triple-world-model",
+      "source_span_ids": [
+        "oadm-span-s10-1-1-p199-p200"
+      ],
+      "section_ids": [
+        "10.1.1"
+      ],
+      "rationale": "该卡定义物理、逻辑、智能三个数字世界。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "5dc9c1f5d88418e4eef4f5845b3ea75b7f09e4f446656a91838d19b41e755d6f"
+    },
+    {
+      "relation_id": "oadm-rel-4b75cdc5c00d",
+      "subject_id": "oadm-triple-world-digital-twin-af3291a296",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:enterprise-model:triple-world-digital-twin",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-ontology-world-model-fusion-61b7f67680",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:enterprise-model:ontology-world-model-fusion",
+      "source_span_ids": [
+        "oadm-span-s10-1-1-p199-p200",
+        "oadm-span-s10-1-3-p202-p203"
+      ],
+      "section_ids": [
+        "10.1.1",
+        "10.1.3"
+      ],
+      "rationale": "三重世界需用双模型连接物理现实和业务逻辑。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "c57843a7e0c1ffdb0dffe1dfef19b772b8b74a83067e3a910366890f8398d1d3"
+    },
+    {
+      "relation_id": "oadm-rel-a6eedd17e390",
+      "subject_id": "oadm-physical-logical-dual-learning-954c0d339b",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:enterprise-learning:physical-logical-dual-learning",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-physical-logical-dual-learning-e3156e12",
+      "object_type": "Term",
+      "object_key": "oadm:term:physical-logical-dual-learning",
+      "source_span_ids": [
+        "oadm-span-s10-1-2-p200-p202"
+      ],
+      "section_ids": [
+        "10.1.2"
+      ],
+      "rationale": "该卡定义 AI 面向物理和逻辑的双重学习。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "c853cb5bdaede29b576012e1d8ead1a958e4a83814d44dece261f4530d018e4a"
+    },
+    {
+      "relation_id": "oadm-rel-63d7613978fe",
+      "subject_id": "oadm-physical-logical-dual-learning-954c0d339b",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:enterprise-learning:physical-logical-dual-learning",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-tri-pillar-risk-governance-a3ee65e56e",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:agent-governance:tri-pillar-risk-governance",
+      "source_span_ids": [
+        "oadm-span-s10-1-2-p200-p202"
+      ],
+      "section_ids": [
+        "10.1.2"
+      ],
+      "rationale": "持续学习需人类监督、价值治理与明确边界。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "43ed1b569ada506e18b6ca693501cc54d4d20b2c843c45d7e8d1e998821cbe5b"
+    },
+    {
+      "relation_id": "oadm-rel-fcf1718c7b6d",
+      "subject_id": "oadm-ontology-world-model-fusion-61b7f67680",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:enterprise-model:ontology-world-model-fusion",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-world-model-a4f1c161",
+      "object_type": "Term",
+      "object_key": "oadm:term:world-model",
+      "source_span_ids": [
+        "oadm-span-s10-1-3-p202-p203"
+      ],
+      "section_ids": [
+        "10.1.3"
+      ],
+      "rationale": "融合架构区分现实因果引擎和业务逻辑内核。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "00c8091be3204d8c2b1dfe519cd8daff6237c51c7e0402446c1920bfa9ea4b81"
+    },
+    {
+      "relation_id": "oadm-rel-cc928d3bf38d",
+      "subject_id": "oadm-intelligent-native-enterprise-91d3aeda52",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:enterprise-operating-model:intelligent-native-enterprise",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-intelligent-native-enterprise-8b5d2426",
+      "object_type": "Term",
+      "object_key": "oadm:term:intelligent-native-enterprise",
+      "source_span_ids": [
+        "oadm-span-s10-2-1-p203-p205"
+      ],
+      "section_ids": [
+        "10.2.1"
+      ],
+      "rationale": "该卡概括智能原生企业的作者定义。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "7b53b201745a45e054bd278ba2de68f76b72b6daed8445f82d50beea2b54726d"
+    },
+    {
+      "relation_id": "oadm-rel-ed991f49e1d3",
+      "subject_id": "oadm-intelligent-native-enterprise-91d3aeda52",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:enterprise-operating-model:intelligent-native-enterprise",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-three-stage-landing-strategy-e8681d951c",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:application:three-stage-landing-strategy",
+      "source_span_ids": [
+        "oadm-span-s10-2-1-p203-p205"
+      ],
+      "section_ids": [
+        "10.2.1"
+      ],
+      "rationale": "未来形态仍需通过验证、小切口和资产化逐步落地。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "ea31f180d7dbf9b4f7f68279e162acf0e95e4112755f5d677aa4a95be94ab7b6"
+    },
+    {
+      "relation_id": "oadm-rel-5ea2c9e1a7de",
+      "subject_id": "oadm-agent-centered-network-ca63aa00e6",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:enterprise-organization:agent-centered-network",
+      "predicate": "PART_OF",
+      "object_id": "oadm-intelligent-native-enterprise-91d3aeda52",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:enterprise-operating-model:intelligent-native-enterprise",
+      "source_span_ids": [
+        "oadm-span-s10-2-2-p205-p206"
+      ],
+      "section_ids": [
+        "10.2.2"
+      ],
+      "rationale": "Agent 组织网络是智能原生企业的组织形态。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "9be85c043f746fecad0908c2823202797aeaae0d69662a81f130bc387c1718cc"
+    },
+    {
+      "relation_id": "oadm-rel-722913dce0dc",
+      "subject_id": "oadm-agent-centered-network-ca63aa00e6",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:enterprise-organization:agent-centered-network",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-human-multi-agent-modes-2d191ac219",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:agent-decision:human-multi-agent-modes",
+      "source_span_ids": [
+        "oadm-span-s10-2-2-p205-p206"
+      ],
+      "section_ids": [
+        "10.2.2"
+      ],
+      "rationale": "组织网络需要明确人机和多 Agent 决策职责。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "862289419238d10cb019a57a4603b2bb8f8988b12ed4b103e265f9f717120313"
+    },
+    {
+      "relation_id": "oadm-rel-6f3d872cc611",
+      "subject_id": "oadm-four-dimensional-business-ontology-b9a2487d33",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:enterprise-governance:four-dimensional-business-ontology",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-four-dimensional-integration-880ddb58",
+      "object_type": "Term",
+      "object_key": "oadm:term:four-dimensional-integration",
+      "source_span_ids": [
+        "oadm-span-s10-2-3-p206-p209"
+      ],
+      "section_ids": [
+        "10.2.3"
+      ],
+      "rationale": "业务本体统一知识、数据、流程与 IT。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "ab5a79345889be6a7f39b50395c9d301b21a775ac72f059c5ab9146579274cb1"
+    },
+    {
+      "relation_id": "oadm-rel-eba7f42b5044",
+      "subject_id": "oadm-four-dimensional-business-ontology-b9a2487d33",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:enterprise-governance:four-dimensional-business-ontology",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-persuasion-boundary-8c12a208",
+      "object_type": "Term",
+      "object_key": "oadm:term:persuasion-boundary",
+      "source_span_ids": [
+        "oadm-span-s10-2-3-p206-p209"
+      ],
+      "section_ids": [
+        "10.2.3"
+      ],
+      "rationale": "流程治理需覆盖 Agent 语言影响与说服责任。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "8787a2791a23f7df1e86dd9db3bd035847c477a9e174f7576f14e12de43a07f8"
+    },
+    {
+      "relation_id": "oadm-rel-228a2e435246",
+      "subject_id": "oadm-four-dimensional-business-ontology-b9a2487d33",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:enterprise-governance:four-dimensional-business-ontology",
+      "predicate": "DEFINES",
+      "object_id": "oadm-term-ontology-clone-governance-d5a6a998",
+      "object_type": "Term",
+      "object_key": "oadm:term:ontology-clone-governance",
+      "source_span_ids": [
+        "oadm-span-s10-2-3-p206-p209"
+      ],
+      "section_ids": [
+        "10.2.3"
+      ],
+      "rationale": "IT 维度按共享本体版本治理 Agent 分身。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "d2e56f3dcfd01c5730759c6672d34b0ee00a545713d680b1e0fc857342c4d2a5"
+    },
+    {
+      "relation_id": "oadm-rel-901c22530c66",
+      "subject_id": "oadm-four-dimensional-business-ontology-b9a2487d33",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:enterprise-governance:four-dimensional-business-ontology",
+      "predicate": "GOVERNS",
+      "object_id": "oadm-agent-centered-network-ca63aa00e6",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:enterprise-organization:agent-centered-network",
+      "source_span_ids": [
+        "oadm-span-s10-2-3-p206-p209"
+      ],
+      "section_ids": [
+        "10.2.3"
+      ],
+      "rationale": "四维业务本体规定 Agent 组织的职责、权限和行动边界。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "3a5ca3278bac2bf2611d6900a52f21c4102b4af226d5a6fb5c144309a813b086"
+    },
+    {
+      "relation_id": "oadm-rel-d2d7f8d7dedc",
+      "subject_id": "oadm-four-dimensional-business-ontology-b9a2487d33",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:enterprise-governance:four-dimensional-business-ontology",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-enterprise-architecture-semantic-layer-559e5b63a7",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:enterprise-architecture:semantic-layer",
+      "source_span_ids": [
+        "oadm-span-s10-2-3-p206-p209"
+      ],
+      "section_ids": [
+        "10.2.3"
+      ],
+      "rationale": "四维融合需要统一企业语义层承载业务关系和规则。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "2eee0117ff9858a60f976b90a0527ddc5323b76fa758d1e398bda445e759d3ef"
+    }
+  ]
+}

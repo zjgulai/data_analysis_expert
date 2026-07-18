@@ -1,0 +1,269 @@
+{
+  "schema_version": "1.0.0",
+  "document_id": "book-ontology-ai-data-management-2026",
+  "domain_id": "ontology-ai-data-management-draft",
+  "batch_id": "m2c-engineering-method-ch06",
+  "id_policy": {
+    "semantic_key_pattern": "oadm:<subject-area>:<semantic-slug>",
+    "card_id_pattern": "oadm-<semantic-slug>-<sha256(semantic-key)[0:10]>",
+    "content_hash_policy": "sha256(canonical-json-of-card-seed)",
+    "sorting_independent": true
+  },
+  "card_count": 12,
+  "cards": [
+    {
+      "card_id": "oadm-five-loop-method-ca9bb22b58",
+      "semantic_key": "oadm:engineering:five-loop-method",
+      "title": "预处理—建模—入库—平台—实施五环工程闭环",
+      "card_type": "framework",
+      "relative_path": "04-engineering-methods/cards/oadm-five-loop-method-ca9bb22b58.md",
+      "content_hash": "0250a8b1e944db78f33b823b06b798ce0638833335e97da700acaf96a21fc785",
+      "file_hash": "b9dbe10742ae495f5baad357712cd13bcc04b0788a7cc4fbaaa8881ff5082b20",
+      "source_span_ids": [
+        "oadm-span-s6-6-p127-p127"
+      ],
+      "section_ids": [
+        "6.6"
+      ],
+      "pdf_page_start": 127,
+      "pdf_page_end": 127,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-knowledge-preprocessing-29-sentences-20eba05512",
+      "semantic_key": "oadm:engineering:knowledge-preprocessing-29-sentences",
+      "title": "用“29 句话”统一显性与隐性知识预处理",
+      "card_type": "method",
+      "relative_path": "04-engineering-methods/cards/oadm-knowledge-preprocessing-29-sentences-20eba05512.md",
+      "content_hash": "55c40eb93ebf52c2bce3bd2c7afe633a847da104437722695b7685239b49fea9",
+      "file_hash": "47d06fa28ad4636cc3b2a51854e44f074142b384f00efe480bb3ed88d8ea5aaf",
+      "source_span_ids": [
+        "oadm-span-s6-1-1-p096-p097",
+        "oadm-span-s6-1-2-p098-p099"
+      ],
+      "section_ids": [
+        "6.1.1",
+        "6.1.2"
+      ],
+      "pdf_page_start": 96,
+      "pdf_page_end": 99,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-modeling-admission-review-fd13d2a7bf",
+      "semantic_key": "oadm:engineering:modeling-admission-review",
+      "title": "形式化建模前的准入审核与测试增强循环",
+      "card_type": "quality-gate",
+      "relative_path": "04-engineering-methods/cards/oadm-modeling-admission-review-fd13d2a7bf.md",
+      "content_hash": "85aefccb832c1b8598190e2097e5f760dfa0883cfaca428755b94fe7dc153349",
+      "file_hash": "9681858ea0cf91ed675e1cd8a2a73b98408fe6ce7283ab53e28b5cb9f0433e4e",
+      "source_span_ids": [
+        "oadm-span-s6-1-3-p100-p101"
+      ],
+      "section_ids": [
+        "6.1.3"
+      ],
+      "pdf_page_start": 100,
+      "pdf_page_end": 101,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-controlled-ai-ontology-modeling-db667058ad",
+      "semantic_key": "oadm:engineering:controlled-ai-ontology-modeling",
+      "title": "受控输入驱动的 AI 本体建模",
+      "card_type": "method",
+      "relative_path": "04-engineering-methods/cards/oadm-controlled-ai-ontology-modeling-db667058ad.md",
+      "content_hash": "230a111401c7470700a423dc4e08d97cd74e345f665d230546076c862d272a8e",
+      "file_hash": "21ea8a83ede73859d4e2cdeb2d370b9596115f0f8cf7b28beb8c5f7ecc646f64",
+      "source_span_ids": [
+        "oadm-span-s6-2-1-p102-p103"
+      ],
+      "section_ids": [
+        "6.2.1"
+      ],
+      "pdf_page_start": 102,
+      "pdf_page_end": 103,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-dual-model-validation-eff49bdf82",
+      "semantic_key": "oadm:engineering:dual-model-validation",
+      "title": "生成—审核—仲裁的双大模型校验",
+      "card_type": "quality-gate",
+      "relative_path": "04-engineering-methods/cards/oadm-dual-model-validation-eff49bdf82.md",
+      "content_hash": "f8396f7fadf73ea3bf044498e3e03ffccce0f1059fee7353f85b2c41286c83b6",
+      "file_hash": "04443ce314cbe7c3f209e86c17d2e353e175810740f93c3f06707706a433a99d",
+      "source_span_ids": [
+        "oadm-span-s6-2-2-p103-p106"
+      ],
+      "section_ids": [
+        "6.2.2"
+      ],
+      "pdf_page_start": 103,
+      "pdf_page_end": 106,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-scenario-validation-loop-65cbb0ff79",
+      "semantic_key": "oadm:engineering:scenario-validation-loop",
+      "title": "可视化专家审核与场景测试闭环",
+      "card_type": "quality-gate",
+      "relative_path": "04-engineering-methods/cards/oadm-scenario-validation-loop-65cbb0ff79.md",
+      "content_hash": "f54bb511f834d65542a84e1e7a7e906a2e14a6412f8dd2d30d60073918ddd644",
+      "file_hash": "4da7297ed538ea3cbe4346d5905d5419d6eabe7be185c09c9f06e07f7d87785a",
+      "source_span_ids": [
+        "oadm-span-s6-2-3-p106-p109",
+        "oadm-span-s6-2-4-p109-p110"
+      ],
+      "section_ids": [
+        "6.2.3",
+        "6.2.4"
+      ],
+      "pdf_page_start": 106,
+      "pdf_page_end": 110,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-ontology-asset-registration-5b7e350efb",
+      "semantic_key": "oadm:engineering:ontology-asset-registration",
+      "title": "本体模型从验证态到资产服务态的注册入库",
+      "card_type": "governance",
+      "relative_path": "04-engineering-methods/cards/oadm-ontology-asset-registration-5b7e350efb.md",
+      "content_hash": "4e4c12f4462fecd84da96bb4f91fa8ff6f0cd6a87dfcac86f6f4d4e42d9686cf",
+      "file_hash": "8e13c4270bbbd754a810d1247972e89413d6b45a5fe8d8c9680a3ce93b5144a9",
+      "source_span_ids": [
+        "oadm-span-s6-3-1-p111-p111"
+      ],
+      "section_ids": [
+        "6.3.1"
+      ],
+      "pdf_page_start": 111,
+      "pdf_page_end": 111,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-ontology-lifecycle-operations-968c388b34",
+      "semantic_key": "oadm:engineering:ontology-lifecycle-operations",
+      "title": "数据—语义双重运维与“建用优复”运营",
+      "card_type": "governance",
+      "relative_path": "04-engineering-methods/cards/oadm-ontology-lifecycle-operations-968c388b34.md",
+      "content_hash": "ee41b3494cc4cbbb94e7e88e56fd1b7598c5a24f58aac4bd37a727ce1b70c17a",
+      "file_hash": "24476fb22f8b588e0cd3e56f9fcb4d69eb7ac0937bd79e50f45cb7ace5f6f7e6",
+      "source_span_ids": [
+        "oadm-span-s6-3-2-p111-p113",
+        "oadm-span-s6-3-3-p113-p115"
+      ],
+      "section_ids": [
+        "6.3.2",
+        "6.3.3"
+      ],
+      "pdf_page_start": 111,
+      "pdf_page_end": 115,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-ontology-tooling-platform-34aa02435d",
+      "semantic_key": "oadm:engineering:ontology-tooling-platform",
+      "title": "三类角色协同的端到端本体工具平台",
+      "card_type": "platform",
+      "relative_path": "04-engineering-methods/cards/oadm-ontology-tooling-platform-34aa02435d.md",
+      "content_hash": "1b17cca26e05490ba0fa49f7d002878b1061f4a51504840354028cdf2d2edf31",
+      "file_hash": "d3b5dbd33be5d3e184ed6dc7c5a74255e8a3439219dba3a209aa5cda29b44186",
+      "source_span_ids": [
+        "oadm-span-s6-4-1-p115-p117",
+        "oadm-span-s6-4-2-p117-p119",
+        "oadm-span-s6-4-3-p119-p121"
+      ],
+      "section_ids": [
+        "6.4.1",
+        "6.4.2",
+        "6.4.3"
+      ],
+      "pdf_page_start": 115,
+      "pdf_page_end": 121,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-point-line-surface-08ab3b75c8",
+      "semantic_key": "oadm:implementation:point-line-surface",
+      "title": "从场景点到领域线再到企业面的迭代路径",
+      "card_type": "implementation-path",
+      "relative_path": "04-engineering-methods/cards/oadm-point-line-surface-08ab3b75c8.md",
+      "content_hash": "c2a7b12cf5ea9d9c3d1f24f297def09104265bf69621d1f30f5e0686d4d534a5",
+      "file_hash": "86fc9bc40572101195a6f3c8bb4338b8b1352321a828fc10c2e5a87b4afcc241",
+      "source_span_ids": [
+        "oadm-span-s6-5-1-p121-p122",
+        "oadm-span-s6-5-2-p122-p124",
+        "oadm-span-s6-5-3-p124-p126"
+      ],
+      "section_ids": [
+        "6.5.1",
+        "6.5.2",
+        "6.5.3"
+      ],
+      "pdf_page_start": 121,
+      "pdf_page_end": 126,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-federated-cross-domain-integration-c97fddf870",
+      "semantic_key": "oadm:implementation:federated-cross-domain-integration",
+      "title": "桥接本体与联邦查询的跨域整合",
+      "card_type": "architecture",
+      "relative_path": "04-engineering-methods/cards/oadm-federated-cross-domain-integration-c97fddf870.md",
+      "content_hash": "2a7ddcc80116e312e3492ba8b71451e8d43918c6240bdb58003de90ea5e3e7b8",
+      "file_hash": "c055b0fd740c1daa418c8d77023fb200d183ee0401ae511b578e7c00f4091b4c",
+      "source_span_ids": [
+        "oadm-span-s6-5-3-p124-p126"
+      ],
+      "section_ids": [
+        "6.5.3"
+      ],
+      "pdf_page_start": 124,
+      "pdf_page_end": 126,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-legacy-asset-evolution-8cfff4942d",
+      "semantic_key": "oadm:implementation:legacy-asset-evolution",
+      "title": "存量数据湖与知识图谱的三阶段语义演进",
+      "card_type": "migration-path",
+      "relative_path": "04-engineering-methods/cards/oadm-legacy-asset-evolution-8cfff4942d.md",
+      "content_hash": "e3980feab4c4e69413910ae1a0dc5327f80ac88a5a1c63581fa0cc9112f32a86",
+      "file_hash": "26bcda1b6f92cad4a9bba0dafa0e95b3c8977ece0eb25e1d99d5d54b005ca6ae",
+      "source_span_ids": [
+        "oadm-span-s6-5-4-p126-p127"
+      ],
+      "section_ids": [
+        "6.5.4"
+      ],
+      "pdf_page_start": 126,
+      "pdf_page_end": 127,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    }
+  ]
+}

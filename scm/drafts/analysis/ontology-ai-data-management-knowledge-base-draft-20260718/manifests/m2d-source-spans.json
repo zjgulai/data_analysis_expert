@@ -1,0 +1,502 @@
+{
+  "schema_version": "1.0.0",
+  "document_id": "book-ontology-ai-data-management-2026",
+  "domain_id": "ontology-ai-data-management-draft",
+  "batch_id": "m2d-agent-engineering-applications-ch07-ch08",
+  "span_count": 35,
+  "physical_pdf_page_is_primary_locator": true,
+  "raw_full_text_persisted": false,
+  "source_spans": [
+    {
+      "span_id": "oadm-span-s7-1-1-p128-p130",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 128,
+      "pdf_page_end": 130,
+      "section_path": "第 7 章 基于企业私域知识的本体增强 AI Agent 工程实现 / 7.1 基于 AI Agent 意图的本体调用 / 7.1.1 AI Agent 意图设计",
+      "section_id": "7.1.1",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "6e71aebd751c535aa998099f3dd58b1ae2f1b36ceaa4b33f74aee5f0dda6090e",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s7-1-2-p130-p131",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 130,
+      "pdf_page_end": 131,
+      "section_path": "第 7 章 基于企业私域知识的本体增强 AI Agent 工程实现 / 7.1 基于 AI Agent 意图的本体调用 / 7.1.2 意图与本体对齐",
+      "section_id": "7.1.2",
+      "figure_or_table_refs": [
+        "oadm-table-7-1-p130"
+      ],
+      "derived_summary_hash": "5ad3b058dbc4f47cc37dadf91dc0a1d10a05f2b92683538034b8e04423167969",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s7-1-3-p131-p133",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 131,
+      "pdf_page_end": 133,
+      "section_path": "第 7 章 基于企业私域知识的本体增强 AI Agent 工程实现 / 7.1 基于 AI Agent 意图的本体调用 / 7.1.3 本体检索与调用",
+      "section_id": "7.1.3",
+      "figure_or_table_refs": [
+        "oadm-table-7-2-p132"
+      ],
+      "derived_summary_hash": "977517b8ff8545721fec825257aa7fe2bda8deab55354c4931bb632df8ff8d81",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s7-1-4-p133-p134",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 133,
+      "pdf_page_end": 134,
+      "section_path": "第 7 章 基于企业私域知识的本体增强 AI Agent 工程实现 / 7.1 基于 AI Agent 意图的本体调用 / 7.1.4 本体嵌入 AI 模型",
+      "section_id": "7.1.4",
+      "figure_or_table_refs": [
+        "oadm-table-7-3-p133"
+      ],
+      "derived_summary_hash": "9ea3e6a1954e2ed5b73c442b691f31c9c3f47655731bce5e3863b2f7773ae6f3",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s7-2-1-p135-p136",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 135,
+      "pdf_page_end": 136,
+      "section_path": "第 7 章 基于企业私域知识的本体增强 AI Agent 工程实现 / 7.2 本体驱动的增强推理 / 7.2.1 基于事实数据的实时感知",
+      "section_id": "7.2.1",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "ec9bf42dea7ea1c9a277b69a284a0bda96d64df16352f5d12befd580babf107a",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s7-2-2-p136-p138",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 136,
+      "pdf_page_end": 138,
+      "section_path": "第 7 章 基于企业私域知识的本体增强 AI Agent 工程实现 / 7.2 本体驱动的增强推理 / 7.2.2 基于感知+事理的融合推理",
+      "section_id": "7.2.2",
+      "figure_or_table_refs": [
+        "oadm-table-7-4-p136"
+      ],
+      "derived_summary_hash": "a497835bd5d5834a3824c0cca8741b95e285090a360fa95b9aa9ccea7ab2af7e",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s7-2-3-p138-p140",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 138,
+      "pdf_page_end": 140,
+      "section_path": "第 7 章 基于企业私域知识的本体增强 AI Agent 工程实现 / 7.2 本体驱动的增强推理 / 7.2.3 基于感知、推理和目标的综合决策",
+      "section_id": "7.2.3",
+      "figure_or_table_refs": [
+        "oadm-figure-7-1-p139"
+      ],
+      "derived_summary_hash": "6c285c85fd3257f3631f485e2649a36aa78e28b68641e5b43a81a236b02379fe",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s7-3-1-p141-p141",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 141,
+      "pdf_page_end": 141,
+      "section_path": "第 7 章 基于企业私域知识的本体增强 AI Agent 工程实现 / 7.3 AI Agent 决策到行动的转化 / 7.3.1 指令直驱型",
+      "section_id": "7.3.1",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "a4e27fc43342fb511633509a936556d40fe4f8e87f78e6026cf0e7f82865ff25",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s7-3-2-p141-p143",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 141,
+      "pdf_page_end": 143,
+      "section_path": "第 7 章 基于企业私域知识的本体增强 AI Agent 工程实现 / 7.3 AI Agent 决策到行动的转化 / 7.3.2 人工介入型",
+      "section_id": "7.3.2",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "d17884b3b3f4916bf6dde72975d42df3150e24d13d2c11bd9564ab7a570eed3b",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s7-3-3-p143-p144",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 143,
+      "pdf_page_end": 144,
+      "section_path": "第 7 章 基于企业私域知识的本体增强 AI Agent 工程实现 / 7.3 AI Agent 决策到行动的转化 / 7.3.3 业务协同执行型",
+      "section_id": "7.3.3",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "654ee9c01f73f8cff58050e2fbf00a2cb31a08ba386ca49c944f8c59ff0dd860",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s7-4-1-p144-p146",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 144,
+      "pdf_page_end": 146,
+      "section_path": "第 7 章 基于企业私域知识的本体增强 AI Agent 工程实现 / 7.4 本体增强型 AI Agent 构建 / 7.4.1 动态事实关联机制",
+      "section_id": "7.4.1",
+      "figure_or_table_refs": [
+        "oadm-figure-7-2-p145"
+      ],
+      "derived_summary_hash": "f22053695cb8732a786a698b8eff057c4f586d22802e7555d532dc0389e6254b",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s7-4-2-p146-p147",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 146,
+      "pdf_page_end": 147,
+      "section_path": "第 7 章 基于企业私域知识的本体增强 AI Agent 工程实现 / 7.4 本体增强型 AI Agent 构建 / 7.4.2 动态 Action 关联机制",
+      "section_id": "7.4.2",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "2925f8d7d766f7d07506b601c0f7a0dad2cfa90027c5e2a4989757f9f0d0486b",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s7-4-3-p147-p147",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 147,
+      "pdf_page_end": 147,
+      "section_path": "第 7 章 基于企业私域知识的本体增强 AI Agent 工程实现 / 7.4 本体增强型 AI Agent 构建 / 7.4.3 本体服务支撑能力",
+      "section_id": "7.4.3",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "3e65cd2d7b530c4be92b2bb63da764971a3e7ed994bf9a4c95c9c3b306aab473",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s7-4-4-p147-p148",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 147,
+      "pdf_page_end": 148,
+      "section_path": "第 7 章 基于企业私域知识的本体增强 AI Agent 工程实现 / 7.4 本体增强型 AI Agent 构建 / 7.4.4 AI 大模型智能引擎",
+      "section_id": "7.4.4",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "608f6cf9b908c3eed8eac4c039d7256f734ff90f81a6dbfa0e01a5b2e3716b16",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s7-4-5-p148-p149",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 148,
+      "pdf_page_end": 149,
+      "section_path": "第 7 章 基于企业私域知识的本体增强 AI Agent 工程实现 / 7.4 本体增强型 AI Agent 构建 / 7.4.5 AI Agent 运行支撑框架",
+      "section_id": "7.4.5",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "dca7150c1d3fb9d7708995b505c84fdbae6fd9ec54df2d886ccb6e6f21c7450a",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s7-5-1-p149-p150",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 149,
+      "pdf_page_end": 150,
+      "section_path": "第 7 章 基于企业私域知识的本体增强 AI Agent 工程实现 / 7.5 本体增强型 AI Agent 的能力建设实施路径 / 7.5.1 本体构建与数据整合实施",
+      "section_id": "7.5.1",
+      "figure_or_table_refs": [
+        "oadm-figure-7-3-p149"
+      ],
+      "derived_summary_hash": "994eb8a026b1615e487f48e81533a6aa0f3a8c5b25af2340f559f73f248a1571",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s7-5-2-p150-p151",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 150,
+      "pdf_page_end": 151,
+      "section_path": "第 7 章 基于企业私域知识的本体增强 AI Agent 工程实现 / 7.5 本体增强型 AI Agent 的能力建设实施路径 / 7.5.2 本体可视化与质量管控实施",
+      "section_id": "7.5.2",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "ec30ff5a9c0751f68352a057dff04246587564c732fdf17a0861cfbab44501e2",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s7-5-3-p151-p152",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 151,
+      "pdf_page_end": 152,
+      "section_path": "第 7 章 基于企业私域知识的本体增强 AI Agent 工程实现 / 7.5 本体增强型 AI Agent 的能力建设实施路径 / 7.5.3 本体存储与安全保障实施",
+      "section_id": "7.5.3",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "6d8290cbb2ef8f455cb43c0e8f8937d704b1bca7dd65ee732d3dbedc0843f0a1",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s7-5-4-p152-p153",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 152,
+      "pdf_page_end": 153,
+      "section_path": "第 7 章 基于企业私域知识的本体增强 AI Agent 工程实现 / 7.5 本体增强型 AI Agent 的能力建设实施路径 / 7.5.4 智能推理与资产管理实施",
+      "section_id": "7.5.4",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "ddff7c64003f23ecd856717a24e06a9f3ef0631cdcc8928b9a8d1f603f6d606f",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s7-5-5-p153-p154",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 153,
+      "pdf_page_end": 154,
+      "section_path": "第 7 章 基于企业私域知识的本体增强 AI Agent 工程实现 / 7.5 本体增强型 AI Agent 的能力建设实施路径 / 7.5.5 平台集成与关键技术",
+      "section_id": "7.5.5",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "960f5a8546e3f069d49cad2cdab1c07f720053fd0c073cfcd39c1212701cee22",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s7-6-p154-p154",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 154,
+      "pdf_page_end": 154,
+      "section_path": "第 7 章 基于企业私域知识的本体增强 AI Agent 工程实现 / 7.6 本章小结",
+      "section_id": "7.6",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "440ec91309edead19a6fbe1e32f9c12d3ce5c49e6ffa59ef6da5ae42e4c2a3c8",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s8-1-1-p154-p155",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 154,
+      "pdf_page_end": 155,
+      "section_path": "第 8 章 典型应用场景与探索实践 / 8.1 本体与 AI 融合应用的场景选择 / 8.1.1 本体激活 AI 三大核心价值",
+      "section_id": "8.1.1",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "e69cb81d935542f5232b9c40a5af6436689aa983b5224070e53460137bbaddb6",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s8-1-2-p155-p157",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 155,
+      "pdf_page_end": 157,
+      "section_path": "第 8 章 典型应用场景与探索实践 / 8.1 本体与 AI 融合应用的场景选择 / 8.1.2 场景选择原则：瞄准业务痛点，聚焦投入产出",
+      "section_id": "8.1.2",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "bb1b639b42963ccee28af53782a77ce7edf8257b76838143e205c43e73653a62",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s8-1-3-p157-p158",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 157,
+      "pdf_page_end": 158,
+      "section_path": "第 8 章 典型应用场景与探索实践 / 8.1 本体与 AI 融合应用的场景选择 / 8.1.3 优选语义复杂、规则明确、高合规的业务场景",
+      "section_id": "8.1.3",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "02d2a5511fc8c30dcbdcf2ffaaebd695f0376e415006371434f2924302b1a4a7",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s8-2-1-p158-p161",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 158,
+      "pdf_page_end": 161,
+      "section_path": "第 8 章 典型应用场景与探索实践 / 8.2 本体与 AI 协同的核心应用模式 / 8.2.1 本体驱动的智能流程自动化",
+      "section_id": "8.2.1",
+      "figure_or_table_refs": [
+        "oadm-figure-8-1-p159",
+        "oadm-figure-8-2-p160"
+      ],
+      "derived_summary_hash": "e382611fa567b9e3e4fd7482bb85a89b22a488f5da30715c1a21bab3ed33f52e",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s8-2-2-p161-p162",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 161,
+      "pdf_page_end": 162,
+      "section_path": "第 8 章 典型应用场景与探索实践 / 8.2 本体与 AI 协同的核心应用模式 / 8.2.2 数据规则驱动的自主运营体系",
+      "section_id": "8.2.2",
+      "figure_or_table_refs": [
+        "oadm-figure-8-3-p161"
+      ],
+      "derived_summary_hash": "66946989dd93891a19d74c0bff82aa8f3b59ac96ac8a1da68f7216f0fa660eba",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s8-2-3-p162-p164",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 162,
+      "pdf_page_end": 164,
+      "section_path": "第 8 章 典型应用场景与探索实践 / 8.2 本体与 AI 协同的核心应用模式 / 8.2.3 多维度一体化智能决策",
+      "section_id": "8.2.3",
+      "figure_or_table_refs": [
+        "oadm-figure-8-4-p163"
+      ],
+      "derived_summary_hash": "994a2dad9d1ba11c52f4e934597f20df3c07d4639dbfb0d29f4b62f4c082aef3",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s8-2-4-p164-p166",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 164,
+      "pdf_page_end": 166,
+      "section_path": "第 8 章 典型应用场景与探索实践 / 8.2 本体与 AI 协同的核心应用模式 / 8.2.4 跨领域动态智能协同",
+      "section_id": "8.2.4",
+      "figure_or_table_refs": [
+        "oadm-figure-8-5-p165",
+        "oadm-figure-8-6-p166"
+      ],
+      "derived_summary_hash": "da93050e40b377b07e8abd2bd7bf870870925116e4f0268798528886964f76a8",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s8-2-5-p166-p169",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 166,
+      "pdf_page_end": 169,
+      "section_path": "第 8 章 典型应用场景与探索实践 / 8.2 本体与 AI 协同的核心应用模式 / 8.2.5 基于知识解析的自主推理",
+      "section_id": "8.2.5",
+      "figure_or_table_refs": [
+        "oadm-figure-8-7-p167",
+        "oadm-figure-8-8-p167",
+        "oadm-figure-8-9-p168",
+        "oadm-table-8-1-p168",
+        "oadm-figure-8-10-p169"
+      ],
+      "derived_summary_hash": "7a6a3e604d15f930a6598a8338fd8bf1a0e8ee1d84a5b0d6cba07615db1b8ba9",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s8-2-6-p169-p172",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 169,
+      "pdf_page_end": 172,
+      "section_path": "第 8 章 典型应用场景与探索实践 / 8.2 本体与 AI 协同的核心应用模式 / 8.2.6 多场景综合统筹的 PDCA 闭环",
+      "section_id": "8.2.6",
+      "figure_or_table_refs": [
+        "oadm-figure-8-10-p169",
+        "oadm-figure-8-11-p170",
+        "oadm-figure-8-12-p172"
+      ],
+      "derived_summary_hash": "16a2ac1651aa72a9bbf669acda23f5c291326b564104a8f39f66b78bad0e68dc",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s8-3-1-p173-p174",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 173,
+      "pdf_page_end": 174,
+      "section_path": "第 8 章 典型应用场景与探索实践 / 8.3 企业 AI 落地的整体策略 / 8.3.1 基于快速迭代的穿刺式验证",
+      "section_id": "8.3.1",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "5f293509b72914bd08270563b1de74605241dd31532146b11b0f7854e27a45c2",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s8-3-2-p174-p175",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 174,
+      "pdf_page_end": 175,
+      "section_path": "第 8 章 典型应用场景与探索实践 / 8.3 企业 AI 落地的整体策略 / 8.3.2 场景“小切口”驱动的企业 AI 价值落地",
+      "section_id": "8.3.2",
+      "figure_or_table_refs": [
+        "oadm-figure-8-13-p175"
+      ],
+      "derived_summary_hash": "fefa45a10a36728da32748dc83f2a6f5086d687dae836a1d25eedfeb780bf16e",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s8-3-3-p175-p177",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 175,
+      "pdf_page_end": 177,
+      "section_path": "第 8 章 典型应用场景与探索实践 / 8.3 企业 AI 落地的整体策略 / 8.3.3 基于存量知识资产的 AI 转译",
+      "section_id": "8.3.3",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "293c0f6b93b8862138d97e2d985dc97fa2732054e7884272d58c53898fd71b86",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s8-3-4-p177-p178",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 177,
+      "pdf_page_end": 178,
+      "section_path": "第 8 章 典型应用场景与探索实践 / 8.3 企业 AI 落地的整体策略 / 8.3.4 实施落地的典型问题",
+      "section_id": "8.3.4",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "9d34069648280d23ebe8a7bc00fdc03b6193913260d776b21df38ef7b4ed3a24",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s8-4-p178-p178",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 178,
+      "pdf_page_end": 178,
+      "section_path": "第 8 章 典型应用场景与探索实践 / 8.4 本章小结",
+      "section_id": "8.4",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "b6832434f54b6373652dd4691a5090ef79ac16f4ee9b4d9f42294384df044c9b",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    }
+  ]
+}

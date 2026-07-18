@@ -1,0 +1,549 @@
+{
+  "schema_version": "1.0.0",
+  "document_id": "book-ontology-ai-data-management-2026",
+  "domain_id": "ontology-ai-data-management-draft",
+  "batch_id": "m2b-core-theory-ch04-ch05",
+  "span_count": 38,
+  "physical_pdf_page_is_primary_locator": true,
+  "raw_full_text_persisted": false,
+  "source_spans": [
+    {
+      "span_id": "oadm-span-s4-1-1-p053-p055",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 53,
+      "pdf_page_end": 55,
+      "section_path": "第 4 章 本体源于哲学概念，驱动智能演进 / 4.1 本体的前世今生 / 4.1.1 从事物本源到计算科学",
+      "section_id": "4.1.1",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "86b57695ea2e86ac94d920c3b1cc8081528bbee464d3a74d3f06906932c8b03b",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s4-1-2-p055-p057",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 55,
+      "pdf_page_end": 57,
+      "section_path": "第 4 章 本体源于哲学概念，驱动智能演进 / 4.1 本体的前世今生 / 4.1.2 从“对象、属性、关系”到“事实、事理、行动”",
+      "section_id": "4.1.2",
+      "figure_or_table_refs": [
+        "oadm-table-4-1-p055",
+        "oadm-figure-4-1-p056"
+      ],
+      "derived_summary_hash": "cb26eab27eb222e6d824ea5654151356290badf27235cc2d8c141316ebafd39a",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s4-1-3-p057-p059",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 57,
+      "pdf_page_end": 59,
+      "section_path": "第 4 章 本体源于哲学概念，驱动智能演进 / 4.1 本体的前世今生 / 4.1.3 从语义互联到语义推理",
+      "section_id": "4.1.3",
+      "figure_or_table_refs": [
+        "oadm-figure-4-2-p057",
+        "oadm-figure-4-3-p058",
+        "oadm-table-4-2-p058"
+      ],
+      "derived_summary_hash": "c3ef25b1ab06c8ee8da59f1d016401af0a6145d6c303790c877d5b37a9e2f88d",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s4-1-4-p059-p060",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 59,
+      "pdf_page_end": 60,
+      "section_path": "第 4 章 本体源于哲学概念，驱动智能演进 / 4.1 本体的前世今生 / 4.1.4 从符号主义到联结主义",
+      "section_id": "4.1.4",
+      "figure_or_table_refs": [
+        "oadm-figure-4-4-p059",
+        "oadm-figure-4-5-p060"
+      ],
+      "derived_summary_hash": "7c1cfd58c28b9724820b1f0c346b8ebd2d416e15147e2bfbdfb034c3d2fa46ca",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s4-2-1-p060-p063",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 60,
+      "pdf_page_end": 63,
+      "section_path": "第 4 章 本体源于哲学概念，驱动智能演进 / 4.2 企业 AI 的必然选择：联结主义+符号主义 / 4.2.1 纯概率推理难成企业 AI 落地有效路径",
+      "section_id": "4.2.1",
+      "figure_or_table_refs": [
+        "oadm-figure-4-5-p060",
+        "oadm-figure-4-6-p061",
+        "oadm-figure-4-7-p062"
+      ],
+      "derived_summary_hash": "911827a06b77391f8b6400441c0bb656c23b07ff76a3933f4d20c438166fc0d9",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s4-2-2-p063-p064",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 63,
+      "pdf_page_end": 64,
+      "section_path": "第 4 章 本体源于哲学概念，驱动智能演进 / 4.2 企业 AI 的必然选择：联结主义+符号主义 / 4.2.2 本体增强 AI 推理的核心机理",
+      "section_id": "4.2.2",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "cc3d335ba5c5345e6830d05d3738c2053d417c63e7247f7cc7d311a2b91a8649",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s4-2-3-p064-p066",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 64,
+      "pdf_page_end": 66,
+      "section_path": "第 4 章 本体源于哲学概念，驱动智能演进 / 4.2 企业 AI 的必然选择：联结主义+符号主义 / 4.2.3 本体融合 AI 技术赋能企业智能",
+      "section_id": "4.2.3",
+      "figure_or_table_refs": [
+        "oadm-figure-4-8-p065"
+      ],
+      "derived_summary_hash": "0b698781e691858931d7fcae8f7a93f8ee3dad5cdf7b7a2d60ccaeab7a5eace5",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s4-3-1-p066-p067",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 66,
+      "pdf_page_end": 67,
+      "section_path": "第 4 章 本体源于哲学概念，驱动智能演进 / 4.3 以本体建模标准为基础实现统一结构化表达 / 4.3.1 W3C 本体建模标准语言体系",
+      "section_id": "4.3.1",
+      "figure_or_table_refs": [
+        "oadm-figure-4-9-p066"
+      ],
+      "derived_summary_hash": "00c4df21f1e1ad92c8635b2fb15243b645d1528691f70a35a0410337989b1a24",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s4-3-2-p067-p068",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 67,
+      "pdf_page_end": 68,
+      "section_path": "第 4 章 本体源于哲学概念，驱动智能演进 / 4.3 以本体建模标准为基础实现统一结构化表达 / 4.3.2 AI 成为“高级本体建模师”",
+      "section_id": "4.3.2",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "5306f148d11e41dd33e333ebc871651d97d0839b40953e8f3a5d86843752e199",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s4-4-1-p068-p069",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 68,
+      "pdf_page_end": 69,
+      "section_path": "第 4 章 本体源于哲学概念，驱动智能演进 / 4.4 本体融入企业架构体系构筑统一语义层 / 4.4.1 本体与企业架构",
+      "section_id": "4.4.1",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "4d980d2ebf67b8a9d2fd7cf16671321c28d444511e49e98fa69802dfc4d3ab5b",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s4-4-2-p069-p070",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 69,
+      "pdf_page_end": 70,
+      "section_path": "第 4 章 本体源于哲学概念，驱动智能演进 / 4.4 本体融入企业架构体系构筑统一语义层 / 4.4.2 本体与实体建模",
+      "section_id": "4.4.2",
+      "figure_or_table_refs": [
+        "oadm-figure-4-10-p070"
+      ],
+      "derived_summary_hash": "05075ec2e459c7ed78cb71be7feac24daebfa439125c9cd689593aa94400ad63",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s4-4-3-p070-p071",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 70,
+      "pdf_page_end": 71,
+      "section_path": "第 4 章 本体源于哲学概念，驱动智能演进 / 4.4 本体融入企业架构体系构筑统一语义层 / 4.4.3 本体与知识图谱",
+      "section_id": "4.4.3",
+      "figure_or_table_refs": [
+        "oadm-figure-4-10-p070"
+      ],
+      "derived_summary_hash": "a30684aaeabd95cac7f8fda887a610adc9f363c008db9ebe671f105a6bf8872b",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s4-4-4-p071-p072",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 71,
+      "pdf_page_end": 72,
+      "section_path": "第 4 章 本体源于哲学概念，驱动智能演进 / 4.4 本体融入企业架构体系构筑统一语义层 / 4.4.4 本体库与数据湖、知识库",
+      "section_id": "4.4.4",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "12fb9ae6b6abb4840ac45f2f0fc1356899d2fab081582719b5d043e811139047",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s4-4-5-p072-p073",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 72,
+      "pdf_page_end": 73,
+      "section_path": "第 4 章 本体源于哲学概念，驱动智能演进 / 4.4 本体融入企业架构体系构筑统一语义层 / 4.4.5 本体与 SaaS",
+      "section_id": "4.4.5",
+      "figure_or_table_refs": [
+        "oadm-figure-4-11-p073"
+      ],
+      "derived_summary_hash": "6a0288fcc714e644c12da9eb628065a7b45e7610caa46d61677bfd8d5bfd26cc",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s4-5-p073-p073",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 73,
+      "pdf_page_end": 73,
+      "section_path": "第 4 章 本体源于哲学概念，驱动智能演进 / 4.5 本章小结",
+      "section_id": "4.5",
+      "figure_or_table_refs": [
+        "oadm-figure-4-11-p073"
+      ],
+      "derived_summary_hash": "326c5799e9aef8f4c640c762f5aa49a9eaefc283439c60444244eb13c891f853",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-1-1-p074-p076",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 74,
+      "pdf_page_end": 76,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.1 企业面向作业、分析、AI 的三类数据资产目录 / 5.1.1 面向作业的数据资产目录",
+      "section_id": "5.1.1",
+      "figure_or_table_refs": [
+        "oadm-figure-5-1-p075"
+      ],
+      "derived_summary_hash": "5b5680e14db5f9178740019cdefa9e41a77b5606dc2cb8008687be4d6be64ce5",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-1-2-p076-p076",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 76,
+      "pdf_page_end": 76,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.1 企业面向作业、分析、AI 的三类数据资产目录 / 5.1.2 面向分析的数据资产目录",
+      "section_id": "5.1.2",
+      "figure_or_table_refs": [
+        "oadm-figure-5-2-p076"
+      ],
+      "derived_summary_hash": "5257bcf1aa33467284fd6a3a3e9b0bdefb3de3ddd8ba7fd352691201e3181fe8",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-1-3-p076-p080",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 76,
+      "pdf_page_end": 80,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.1 企业面向作业、分析、AI 的三类数据资产目录 / 5.1.3 面向 AI 的数据资产目录",
+      "section_id": "5.1.3",
+      "figure_or_table_refs": [
+        "oadm-figure-5-3-p077",
+        "oadm-figure-5-4-p080"
+      ],
+      "derived_summary_hash": "cb50b73e002c1faa991f088625c0d7fcd3b1e576375911d56f04c76c1f56c374",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-2-1-p080-p081",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 80,
+      "pdf_page_end": 81,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.2 管理支撑企业 AI 增强训练的数据资产 / 5.2.1 筛选高质量、合规的 AI 数据集",
+      "section_id": "5.2.1",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "2eddf679e4aca5c5097d7f0ed18ba06bc1119fe64cc890de0d1c1551a616a65e",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-2-2-p081-p082",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 81,
+      "pdf_page_end": 82,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.2 管理支撑企业 AI 增强训练的数据资产 / 5.2.2 AI 数据集构建",
+      "section_id": "5.2.2",
+      "figure_or_table_refs": [
+        "oadm-figure-5-5-p081"
+      ],
+      "derived_summary_hash": "2b163e90ad8347ee1eacc7d673d750b8ce33482155d05dbf5105413c5cdc255a",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-2-3-p082-p084",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 82,
+      "pdf_page_end": 84,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.2 管理支撑企业 AI 增强训练的数据资产 / 5.2.3 数据 Owner 与 AI 数据集责任人、AI 数据集使用责任人的关系界定",
+      "section_id": "5.2.3",
+      "figure_or_table_refs": [
+        "oadm-figure-5-6-p082"
+      ],
+      "derived_summary_hash": "a931c18a2416aa4dcf7263785ae1f4b60c0afb9856176897d865728dfdc175c6",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-2-4-p084-p086",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 84,
+      "pdf_page_end": 86,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.2 管理支撑企业 AI 增强训练的数据资产 / 5.2.4 厘清差异规范管理的多维 AI 数据集分类",
+      "section_id": "5.2.4",
+      "figure_or_table_refs": [
+        "oadm-figure-5-7-p085"
+      ],
+      "derived_summary_hash": "e4eb3c0c7efa2fcde4a48ccd214fce54705bc5d837c9103494f29427a0dd3880",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-2-5-p086-p087",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 86,
+      "pdf_page_end": 87,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.2 管理支撑企业 AI 增强训练的数据资产 / 5.2.5 支撑 AI 数据集治理与追溯的统一 ID 及版本标识",
+      "section_id": "5.2.5",
+      "figure_or_table_refs": [
+        "oadm-table-5-1-p086"
+      ],
+      "derived_summary_hash": "ce87f679436bc5dd935f35d39bfa60507a6c36eddd5f9654fae04a192d0e5378",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-3-1-p087-p088",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 87,
+      "pdf_page_end": 88,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.3 管理支撑企业 AI 推理的数据资产 / 5.3.1 支撑 AI 实时感知与精准判断的事实数据",
+      "section_id": "5.3.1",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "8272fbf5b112b7c6c578489f6b59fd34f6adcc61a6e0370b046e59393ea2bb36",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-3-2-p088-p089",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 88,
+      "pdf_page_end": 89,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.3 管理支撑企业 AI 推理的数据资产 / 5.3.2 支撑 AI 按企业业务规则精准推理的事理模型",
+      "section_id": "5.3.2",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "04c88855731b5620dba1235855a8d139a2722f1997d8d3ea363e7113337dcdaa",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-3-3-p089-p090",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 89,
+      "pdf_page_end": 90,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.3 管理支撑企业 AI 推理的数据资产 / 5.3.3 支撑 AI 输出可控、可解释、可审计的推理结果数据",
+      "section_id": "5.3.3",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "0fff023e6a5479bb744ccdd5a359ee1c8b389cf96c8752064cf47d9f473797e5",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-4-1-p090-p092",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 90,
+      "pdf_page_end": 92,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.4 实现事理模型统一结构化表达的“7+1”语义规范框架 / 5.4.1 RDF：定义业务资源，支撑 AI 理解",
+      "section_id": "5.4.1",
+      "figure_or_table_refs": [
+        "oadm-figure-5-8-p091",
+        "oadm-table-5-27-p091"
+      ],
+      "derived_summary_hash": "522e72b6beb6eaca1ce967390425a263d1b056f844773ad11b2993416e6ba7ee",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-4-2-p092-p092",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 92,
+      "pdf_page_end": 92,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.4 实现事理模型统一结构化表达的“7+1”语义规范框架 / 5.4.2 OWL：统一跨域概念，消除语义歧义",
+      "section_id": "5.4.2",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "97ca661c8c3a03126f17c8a21b805daeed88607bb82e9d3ef5c28d889dba7bbf",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-4-3-p092-p092",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 92,
+      "pdf_page_end": 92,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.4 实现事理模型统一结构化表达的“7+1”语义规范框架 / 5.4.3 SKOS：统一基础术语，筑牢语义基础",
+      "section_id": "5.4.3",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "6d3b76b62e2cae1165f707c283d0c3aa0334fa8b0bfd505bae2339bee7c7af17",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-4-4-p092-p092",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 92,
+      "pdf_page_end": 92,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.4 实现事理模型统一结构化表达的“7+1”语义规范框架 / 5.4.4 SWRL：定义跨域逻辑，支撑 AI 自主决策",
+      "section_id": "5.4.4",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "902c1aaed17b001bb95283f6afada1958b0f6692345a7902bd7078646413503f",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-4-5-p092-p092",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 92,
+      "pdf_page_end": 92,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.4 实现事理模型统一结构化表达的“7+1”语义规范框架 / 5.4.5 OWL-S：串联流程逻辑，搭建任务框架",
+      "section_id": "5.4.5",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "ddf375b0bcc84e3d70d116b2b42be88d1a989ebbec1b271395e5429cf5452f89",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-4-6-p092-p093",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 92,
+      "pdf_page_end": 93,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.4 实现事理模型统一结构化表达的“7+1”语义规范框架 / 5.4.6 ODRL：定义操作权限，筑牢安全边界",
+      "section_id": "5.4.6",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "279e98c5980e8c9b824e597f2b181863c4667f5000c79ec08a62cfe249f8e006",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-4-7-p093-p093",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 93,
+      "pdf_page_end": 93,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.4 实现事理模型统一结构化表达的“7+1”语义规范框架 / 5.4.7 SPARQL：定义数据操作，支撑 AI 执行",
+      "section_id": "5.4.7",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "eaaacbe0ad03ef4198131cd46132da99ba10adf029345940a45a87c366fd0db7",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-4-8-p093-p093",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 93,
+      "pdf_page_end": 93,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.4 实现事理模型统一结构化表达的“7+1”语义规范框架 / 5.4.8 目标与评估：明确任务及业务效果，支撑 AI 迭代优化",
+      "section_id": "5.4.8",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "397f5c0c3e43c416953b052e3ea8d3a418f684b57a9a95f111bfe5f157db8e6b",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-5-1-p093-p094",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 93,
+      "pdf_page_end": 94,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.5 本体语义规范驱动 AI 明事实、懂事理、会行动的落地机制 / 5.5.1 基于事实的推演：本体驱动 AI Agent 还原当前状态并推演下一步变化",
+      "section_id": "5.5.1",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "cebb88c833ff2f58c47ec1cf3afb942b3c9ab2bdf886ab5e2de6b3b34f5e377e",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-5-2-p094-p094",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 94,
+      "pdf_page_end": 94,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.5 本体语义规范驱动 AI 明事实、懂事理、会行动的落地机制 / 5.5.2 事理上下文：本体使 AI Agent 对齐从当前事实到未来行动的事理逻辑",
+      "section_id": "5.5.2",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "1c3658da083ab005fb54ab271ee93880a8c9bd4c207d37da1f5ac261ca67860d",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-5-3-p094-p095",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 94,
+      "pdf_page_end": 95,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.5 本体语义规范驱动 AI 明事实、懂事理、会行动的落地机制 / 5.5.3 语义到行动：本体驱动 AI Agent 对接传统 IT 与人，落实具体业务操作",
+      "section_id": "5.5.3",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "fc359e67aef7c04b90e891569250468a42445ef260c9582b3ce152bf8382f4dc",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s5-6-p095-p095",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 95,
+      "pdf_page_end": 95,
+      "section_path": "第 5 章 基于本体的企业 AI 数据管理体系 / 5.6 本章小结",
+      "section_id": "5.6",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "48600fd819079d5789ae30ad9042f63c9add7e7d867806c56725739732fc8e98",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    }
+  ]
+}

@@ -1,0 +1,258 @@
+{
+  "schema_version": "1.0.0",
+  "document_id": "book-ontology-ai-data-management-2026",
+  "domain_id": "ontology-ai-data-management-draft",
+  "batch_id": "m2c-engineering-method-ch06",
+  "term_count": 11,
+  "terms": [
+    {
+      "term_id": "oadm-term-twenty-nine-sentences-70406ecd",
+      "term_key": "oadm:term:twenty-nine-sentences",
+      "preferred_label": "29 句话",
+      "aliases": [
+        "29 句话范式",
+        "29 种标准化自然语言模板"
+      ],
+      "definition": "作者用于把“7+1”语义维度细化为可访谈、可提炼、可交给 AI 建模的标准化业务描述模板集合。",
+      "not_equivalent_to": [
+        "完整本体模型",
+        "通用自然语言规范"
+      ],
+      "section_ids": [
+        "6.1.1",
+        "6.1.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-1-1-p096-p097",
+        "oadm-span-s6-1-2-p098-p099"
+      ],
+      "content_hash": "16ac50c435aa800d61042e23d24ceb5cd5bfe41bd6e3f7702669e1a9eded807a",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-modeling-admission-67d86c9b",
+      "term_key": "oadm:term:modeling-admission",
+      "preferred_label": "建模准入",
+      "aliases": [
+        "本体建模准入审核"
+      ],
+      "definition": "在形式化建模前，按描述、逻辑、内容和极简表达检查知识制品是否达到可编码条件的质量关口。",
+      "not_equivalent_to": [
+        "模型验收",
+        "生产发布审批"
+      ],
+      "section_ids": [
+        "6.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-1-3-p100-p101"
+      ],
+      "content_hash": "9a37c7866db20da91c429e21cbe2366fcf7aecb6e1b16b8b300aa573a4849e44",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-dual-model-collaboration-0d7693da",
+      "term_key": "oadm:term:dual-model-collaboration",
+      "preferred_label": "双大模型协同",
+      "aliases": [
+        "异构双模型校验"
+      ],
+      "definition": "将本体生成和独立逻辑审计分配给不同模型，并以修订、辩护和人工仲裁处理分歧的作者方法。",
+      "not_equivalent_to": [
+        "两个模型简单并联",
+        "人工终审"
+      ],
+      "section_ids": [
+        "6.2.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-2-2-p103-p106"
+      ],
+      "content_hash": "623e24ab21c7bccdca2cdb6564701b6a7072af10e477819ad99fd0386b4342cd",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-golden-test-case-6bd84b45",
+      "term_key": "oadm:term:golden-test-case",
+      "preferred_label": "黄金测试用例",
+      "aliases": [
+        "专家黄金用例"
+      ],
+      "definition": "由业务专家基于关键流程、决策点和异常场景定义输入、核心问题与预期结果的高价值验证用例。",
+      "not_equivalent_to": [
+        "AI 自动生成的边缘用例"
+      ],
+      "section_ids": [
+        "6.2.4"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-2-4-p109-p110"
+      ],
+      "content_hash": "ab6897970b0c4e5b02fdcd2e508737ce2f5886bfe9f71acd5278fbc448554b5f",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-semantic-database-157b8c4c",
+      "term_key": "oadm:term:semantic-database",
+      "preferred_label": "专用语义数据库",
+      "aliases": [
+        "本体语义数据库"
+      ],
+      "definition": "作者用于保存、查询并服务化发布通过审查的本体模型与相关三元组资产的专用存储。",
+      "not_equivalent_to": [
+        "普通文档库",
+        "本体模型文件"
+      ],
+      "section_ids": [
+        "6.3.1",
+        "6.4.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-3-1-p111-p111",
+        "oadm-span-s6-4-3-p119-p121"
+      ],
+      "content_hash": "f2f0d59ccbb1f9dd31988c590a1dd4428a663134bdeb7f82af9473f3bb12d4d9",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-dual-layer-operations-b1bb8cf0",
+      "term_key": "oadm:term:dual-layer-operations",
+      "preferred_label": "数据层+语义层双重运维",
+      "aliases": [
+        "双重运维"
+      ],
+      "definition": "同时维护底层数据存储性能与上层术语、规则、推理一致性的主动监控、诊断、处置和复核机制。",
+      "not_equivalent_to": [
+        "仅数据库运维",
+        "仅模型版本管理"
+      ],
+      "section_ids": [
+        "6.3.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-3-2-p111-p113"
+      ],
+      "content_hash": "f20c0649c9209a6b04d11f1d654ed5841b3cab907754b103dd546aa5dfc95a31",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-build-use-optimize-reuse-e5bafd1e",
+      "term_key": "oadm:term:build-use-optimize-reuse",
+      "preferred_label": "建用优复",
+      "aliases": [
+        "构建使用优化复用"
+      ],
+      "definition": "作者将本体资产构建、使用、优化和复用串成持续运营循环的生命周期框架。",
+      "not_equivalent_to": [
+        "一次性交付"
+      ],
+      "section_ids": [
+        "6.3.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-3-3-p113-p115"
+      ],
+      "content_hash": "75bc4d9cf356a7193aa5fa176365a1a59d27c5d275e9e336164874442d621192",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-ontology-tooling-platform-d6cb0e01",
+      "term_key": "oadm:term:ontology-tooling-platform",
+      "preferred_label": "本体工具平台",
+      "aliases": [
+        "端到端本体模型构建平台"
+      ],
+      "definition": "承载智能建模、自校验、专家可视化审阅、语义存储检索、版本与服务接口的平台能力集合。",
+      "not_equivalent_to": [
+        "单一本体编辑器"
+      ],
+      "section_ids": [
+        "6.4.1",
+        "6.4.2",
+        "6.4.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-4-1-p115-p117",
+        "oadm-span-s6-4-2-p117-p119",
+        "oadm-span-s6-4-3-p119-p121"
+      ],
+      "content_hash": "30afcf3fa00491fe0411ca5c0285ae02336cc1f9be43ca548a9f1636dc164a02",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-point-line-surface-e24ea436",
+      "term_key": "oadm:term:point-line-surface",
+      "preferred_label": "点线面实施路径",
+      "aliases": [
+        "点—线—面迭代"
+      ],
+      "definition": "从小切口场景验证，到领域纵向整合，再到跨领域横向贯通的作者迭代式本体工程路径。",
+      "not_equivalent_to": [
+        "一次性企业级顶层建模"
+      ],
+      "section_ids": [
+        "6.5.1",
+        "6.5.2",
+        "6.5.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-5-1-p121-p122",
+        "oadm-span-s6-5-2-p122-p124",
+        "oadm-span-s6-5-3-p124-p126"
+      ],
+      "content_hash": "cfa7b878e392c3c33b40c16de7a1bc4ba096e485e475d9b538a5418daac777a7",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-bridge-ontology-a1fa11b2",
+      "term_key": "oadm:term:bridge-ontology",
+      "preferred_label": "桥接本体",
+      "aliases": [
+        "跨域桥接本体模型"
+      ],
+      "definition": "用于承载跨领域通用概念、语义映射与冲突约束，以连接自治领域本体的轻量模型。",
+      "not_equivalent_to": [
+        "强制合并后的单体本体"
+      ],
+      "section_ids": [
+        "6.5.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-5-3-p124-p126"
+      ],
+      "content_hash": "af5299faf5d3a9c1b568c63a5da32ac5dc96d31eefe2aacdaa633fa6b31b0010",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-federated-query-5b4d5476",
+      "term_key": "oadm:term:federated-query",
+      "preferred_label": "联邦查询",
+      "aliases": [
+        "跨领域联邦查询机制"
+      ],
+      "definition": "依据映射关系将跨域问题拆分为多个领域子查询并合并结果的查询机制。",
+      "not_equivalent_to": [
+        "单库 SPARQL 查询"
+      ],
+      "section_ids": [
+        "6.5.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-5-3-p124-p126"
+      ],
+      "content_hash": "9372331b3fcf2c74e3a436b2f5520bf116c46678c1107a4cda46e97e4d553522",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "m2b-core-theory-ch04-ch05",
+  "scope": "第 4–5 章来源内核心理论萃取",
+  "section_record_count": 38,
+  "substantive_subsection_count": 36,
+  "chapter_summary_count": 2,
+  "card_count": 24,
+  "term_count": 33,
+  "relation_count": 36,
+  "pdf_page_start": 53,
+  "pdf_page_end": 95,
+  "claim_type_counts": {
+    "author_argument": 2,
+    "author_framework": 17,
+    "author_governance_rule": 6,
+    "author_mechanism": 3,
+    "author_standard_mapping": 8,
+    "chapter_summary": 2
+  },
+  "visual_review_counts": {
+    "not_required": 20,
+    "pending": 8,
+    "reviewed": 10
+  },
+  "boundaries": {
+    "faithful_source_paraphrase_only": true,
+    "author_examples_independently_verified": false,
+    "official_standards_verified": false,
+    "scm_crosswalk_performed": false,
+    "importer_modified": false,
+    "database_write": false,
+    "provider_call": false,
+    "full_raw_text_persisted": false,
+    "full_page_images_persisted": false,
+    "personal_absolute_path_persisted": false
+  }
+}

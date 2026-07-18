@@ -1,0 +1,471 @@
+{
+  "schema_version": "1.0.0",
+  "document_id": "book-ontology-ai-data-management-2026",
+  "domain_id": "ontology-ai-data-management-draft",
+  "batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10",
+  "term_count": 21,
+  "terms": [
+    {
+      "term_id": "oadm-term-carbon-silicon-governance-b9b15ea1",
+      "term_key": "oadm:term:carbon-silicon-governance",
+      "preferred_label": "碳硅协同治理",
+      "aliases": [
+        "碳基人与硅基 Agent 协同治理"
+      ],
+      "definition": "围绕人员与 Agent 的目标、权限、行为、证据和责任设计的协同治理概念。",
+      "not_equivalent_to": [
+        "纯技术访问控制"
+      ],
+      "section_ids": [
+        "9.1.1",
+        "9.1.2",
+        "9.1.3",
+        "9.1.4"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-1-1-p181-p182",
+        "oadm-span-s9-1-2-p182-p182",
+        "oadm-span-s9-1-3-p182-p183",
+        "oadm-span-s9-1-4-p184-p184"
+      ],
+      "content_hash": "d2f45a565244065eb78cc3d896e259dba8a984a84a22e4c14989323f563a1ced",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-six-proof-system-8ad39424",
+      "term_key": "oadm:term:six-proof-system",
+      "preferred_label": "六类证明体系",
+      "aliases": [
+        "Agent 六类证明"
+      ],
+      "definition": "由身份、资产、授权、合约、追溯和贡献证明组成的作者可信协作框架。",
+      "not_equivalent_to": [
+        "已认证行业标准"
+      ],
+      "section_ids": [
+        "9.2.1",
+        "9.2.2",
+        "9.2.3",
+        "9.2.4",
+        "9.2.5",
+        "9.2.6"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-2-1-p185-p185",
+        "oadm-span-s9-2-2-p185-p186",
+        "oadm-span-s9-2-3-p186-p187",
+        "oadm-span-s9-2-4-p187-p188",
+        "oadm-span-s9-2-5-p188-p189",
+        "oadm-span-s9-2-6-p188-p189"
+      ],
+      "content_hash": "3ca1b76298c5bf8b6f9619b753a38d174df66351fbe1e8bc22b3fac63d01f2d3",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-hybrid-did-199130fa",
+      "term_key": "oadm:term:hybrid-did",
+      "preferred_label": "碳硅混合 DID",
+      "aliases": [
+        "碳硅混合身份档案链"
+      ],
+      "definition": "为人员与 Agent 提供统一可验证标识并关联动态身份属性的作者候选模式。",
+      "not_equivalent_to": [
+        "企业账号"
+      ],
+      "section_ids": [
+        "9.2.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-2-1-p185-p185"
+      ],
+      "content_hash": "e61b8f01eafb93b6831c990e777c03674f0d1bafc2fd1f6f3ad6e316f1e86c2b",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-digital-asset-provenance-chain-e56e83c2",
+      "term_key": "oadm:term:digital-asset-provenance-chain",
+      "preferred_label": "数字资产产权链",
+      "aliases": [
+        "数字资产来源链"
+      ],
+      "definition": "用哈希、权属凭证和变更记录关联模型、数据、模板等数字资产来源与流转的候选结构。",
+      "not_equivalent_to": [
+        "法律产权登记"
+      ],
+      "section_ids": [
+        "9.2.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-2-2-p185-p186"
+      ],
+      "content_hash": "d7b24578109fa2b4d263661e08e7e696fc998ee0e0041bbd0c18268910003bce",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-verifiable-permission-chain-9c75894b",
+      "term_key": "oadm:term:verifiable-permission-chain",
+      "preferred_label": "权限凭证链",
+      "aliases": [
+        "可验证权限凭证"
+      ],
+      "definition": "显式携带授权主体、范围、条件、时效与撤销状态的动态权限证明机制。",
+      "not_equivalent_to": [
+        "永久角色权限"
+      ],
+      "section_ids": [
+        "9.2.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-2-3-p186-p187"
+      ],
+      "content_hash": "18d7347078fa129ba04286a2189febc8ade66e789aefd1b98d3f1046011d7f32",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-smart-contract-collaboration-6ae52bc9",
+      "term_key": "oadm:term:smart-contract-collaboration",
+      "preferred_label": "智能合约协作流水线",
+      "aliases": [
+        "合约证明"
+      ],
+      "definition": "把跨主体业务条件编码为可自动校验和推进节点的协作执行模式。",
+      "not_equivalent_to": [
+        "普通工作流脚本"
+      ],
+      "section_ids": [
+        "9.2.4"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-2-4-p187-p188"
+      ],
+      "content_hash": "f0eb9801bcf01267e6b55475521750d875525a42f484f4060eecbeddc29d1602",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-operation-hash-chain-966637e4",
+      "term_key": "oadm:term:operation-hash-chain",
+      "preferred_label": "操作哈希链",
+      "aliases": [
+        "全链路操作哈希链"
+      ],
+      "definition": "将主体、操作、时间和前序哈希串联，用于完整性验证与行为回放的记录链。",
+      "not_equivalent_to": [
+        "源事件真实性证明"
+      ],
+      "section_ids": [
+        "9.2.5"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-2-5-p188-p189"
+      ],
+      "content_hash": "4511fcda33e49bf8a83cdedeb61c5f478da61b8f22b2039f8419ce7005dba086",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-contribution-proof-70e36d42",
+      "term_key": "oadm:term:contribution-proof",
+      "preferred_label": "贡献证明",
+      "aliases": [
+        "贡献值计量链"
+      ],
+      "definition": "按显式维度和权重记录人员与 Agent 贡献并用于候选价值分配的作者机制。",
+      "not_equivalent_to": [
+        "客观公平评价"
+      ],
+      "section_ids": [
+        "9.2.6"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-2-6-p188-p189"
+      ],
+      "content_hash": "8691d76364db94a77755b7f64cfaaa529f36b5ff8a5acafc3fce297a962a641c",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-tri-pillar-agent-governance-fb8257d7",
+      "term_key": "oadm:term:tri-pillar-agent-governance",
+      "preferred_label": "三支柱 Agent 治理",
+      "aliases": [
+        "本体约束+AI 智能+人类监督"
+      ],
+      "definition": "由本体边界、AI 自主能力和人类价值监督共同组成的分层治理框架。",
+      "not_equivalent_to": [
+        "完全自治"
+      ],
+      "section_ids": [
+        "9.3.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-3-1-p191-p192"
+      ],
+      "content_hash": "04467e173c4f84a4e9076e649983e2dea16941ea9bc86940e48374ad821e6d10",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-dynamic-ontology-governance-9d719f1d",
+      "term_key": "oadm:term:dynamic-ontology-governance",
+      "preferred_label": "本体动态治理",
+      "aliases": [
+        "动态本体治理"
+      ],
+      "definition": "持续感知业务变化、校准本体、调整 Agent 行为并反馈验证的治理过程。",
+      "not_equivalent_to": [
+        "定期版本发布"
+      ],
+      "section_ids": [
+        "9.3.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-3-2-p192-p193"
+      ],
+      "content_hash": "d9300e9d69f238e70effd0861364d8b00edce69749622a6235c0b55f29de19c2",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-connection-strength-bdb43eb0",
+      "term_key": "oadm:term:connection-strength",
+      "preferred_label": "连接强度",
+      "aliases": [
+        "动态契合度"
+      ],
+      "definition": "作者用于描述业务、本体和 AI 之间变化传导速度、准确性与双向影响程度的概念。",
+      "not_equivalent_to": [
+        "神经网络权重指标"
+      ],
+      "section_ids": [
+        "9.3.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-3-2-p192-p193"
+      ],
+      "content_hash": "ef44990d328255caf817eabb835c6f1e8fb23bd59b510a9a6221b569b69a317a",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-multimodal-ontology-74ff86f3",
+      "term_key": "oadm:term:multimodal-ontology",
+      "preferred_label": "多模态本体",
+      "aliases": [
+        "多模态本体建模"
+      ],
+      "definition": "把文本、图像、语音、视频和传感器信号统一映射到业务概念与关系的本体形态。",
+      "not_equivalent_to": [
+        "多模态向量库"
+      ],
+      "section_ids": [
+        "9.3.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-3-3-p193-p194"
+      ],
+      "content_hash": "4ac9ac3d5cae653a325567a0c6774d4196159651a8384bc1acb85a2d287c1711",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-ai-ontology-modeler-23945624",
+      "term_key": "oadm:term:ai-ontology-modeler",
+      "preferred_label": "AI 本体建模师",
+      "aliases": [
+        "大模型本体建模师"
+      ],
+      "definition": "由大模型承担候选知识提取、结构生成、逻辑检查和交互修正的作者未来角色。",
+      "not_equivalent_to": [
+        "无需人工审核的建模器"
+      ],
+      "section_ids": [
+        "9.3.4"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-3-4-p194-p195"
+      ],
+      "content_hash": "42216611118818bb9a8b61dca5663849c28d06729dfcded531fa6060cb81c5bf",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-human-ai-shared-memory-31425cd1",
+      "term_key": "oadm:term:human-ai-shared-memory",
+      "preferred_label": "人机共享记忆",
+      "aliases": [
+        "本体共享记忆"
+      ],
+      "definition": "以受控本体承载组织规则与经验，使人员更新意图、Agent 读取并反馈实践的共同记忆机制。",
+      "not_equivalent_to": [
+        "模型参数记忆"
+      ],
+      "section_ids": [
+        "9.3.5"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-3-5-p195-p196"
+      ],
+      "content_hash": "e60177f905977fd1d4f813591082d27d6303124f86d3d8b39ea536264fbd0fa1",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-triple-world-model-6537c189",
+      "term_key": "oadm:term:triple-world-model",
+      "preferred_label": "三重世界模型",
+      "aliases": [
+        "物理逻辑智能三重世界"
+      ],
+      "definition": "以物理世界、逻辑世界和智能世界共同描述企业数字孪生的作者战略框架。",
+      "not_equivalent_to": [
+        "单一数字孪生平台"
+      ],
+      "section_ids": [
+        "10.1.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s10-1-1-p199-p200"
+      ],
+      "content_hash": "e928a6000a6451a3334ca5a004f27a9c4ecf8cc8e671a74cbc8c655b21e64de6",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-world-model-a4f1c161",
+      "term_key": "oadm:term:world-model",
+      "preferred_label": "世界模型",
+      "aliases": [
+        "现实引擎",
+        "因果镜像"
+      ],
+      "definition": "对物理状态、客观规律、动态演化与行动结果进行建模和推演的模型。",
+      "not_equivalent_to": [
+        "业务本体模型"
+      ],
+      "section_ids": [
+        "10.1.1",
+        "10.1.2",
+        "10.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s10-1-1-p199-p200",
+        "oadm-span-s10-1-2-p200-p202",
+        "oadm-span-s10-1-3-p202-p203"
+      ],
+      "content_hash": "dd7d9ad4caf82fcfe2f9379e6b7a99b28334c199300ddcafb601585b5b169c3d",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-physical-logical-dual-learning-e3156e12",
+      "term_key": "oadm:term:physical-logical-dual-learning",
+      "preferred_label": "物理—逻辑双重学习",
+      "aliases": [
+        "AI 双重学习"
+      ],
+      "definition": "AI 同时学习物理因果规律和业务语义规则，并在价值治理下协同更新的作者范式。",
+      "not_equivalent_to": [
+        "双模型集成"
+      ],
+      "section_ids": [
+        "10.1.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s10-1-2-p200-p202"
+      ],
+      "content_hash": "b18a77f094c6c6101ee8338d078be2babf4d7ee468732b1356366793b36f2bd8",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-intelligent-native-enterprise-8b5d2426",
+      "term_key": "oadm:term:intelligent-native-enterprise",
+      "preferred_label": "智能原生企业",
+      "aliases": [
+        "认知驱动企业"
+      ],
+      "definition": "把本体与 Agent 作为业务底层能力，使智慧资产、流程和组织持续进化的作者未来企业形态。",
+      "not_equivalent_to": [
+        "部署聊天机器人的企业"
+      ],
+      "section_ids": [
+        "10.2.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s10-2-1-p203-p205"
+      ],
+      "content_hash": "ebea97374d73faaf8f32f506f87722303a39d4ef25ea36ae03ffa6958b628f22",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-persuasion-boundary-8c12a208",
+      "term_key": "oadm:term:persuasion-boundary",
+      "preferred_label": "说服边界",
+      "aliases": [
+        "AI 语言边界"
+      ],
+      "definition": "规定 Agent 可主动发起的话题、可暗示的结论、影响对象和透明义务的人机交互治理边界。",
+      "not_equivalent_to": [
+        "操作权限"
+      ],
+      "section_ids": [
+        "10.2.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s10-2-3-p206-p209"
+      ],
+      "content_hash": "f5e68fcd23faa78cdabbef1121c63f04a1651404d31480af96e8d9cb6bb3dc54",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-ontology-clone-governance-d5a6a998",
+      "term_key": "oadm:term:ontology-clone-governance",
+      "preferred_label": "本体分身治理",
+      "aliases": [
+        "Agent 分身治理"
+      ],
+      "definition": "按共享本体版本、能力和权限管理大量 Agent 分身，并控制学习同步与全息审计的作者 IT 治理概念。",
+      "not_equivalent_to": [
+        "逐账号配置"
+      ],
+      "section_ids": [
+        "10.2.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s10-2-3-p206-p209"
+      ],
+      "content_hash": "e667e072832d1a6422dd364ea37a20e12f6d0102952c70d41323f69b5d26c2ef",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-four-dimensional-integration-880ddb58",
+      "term_key": "oadm:term:four-dimensional-integration",
+      "preferred_label": "知识数据流程 IT 四维融合",
+      "aliases": [
+        "四维融合"
+      ],
+      "definition": "在业务本体层统一知识连接、数据关系、流程边界和 IT 分身治理的作者管理框架。",
+      "not_equivalent_to": [
+        "技术系统集成"
+      ],
+      "section_ids": [
+        "10.2.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s10-2-3-p206-p209"
+      ],
+      "content_hash": "0e99887dbe455a61009770db8b61c7b4e1af692e4f429cda349cf642e9674726",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    }
+  ]
+}
