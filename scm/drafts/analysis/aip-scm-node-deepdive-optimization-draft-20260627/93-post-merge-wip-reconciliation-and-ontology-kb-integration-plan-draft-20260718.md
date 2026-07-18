@@ -198,7 +198,31 @@ scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/93-post-me
 
 - [ ] 先执行 `rsync --dry-run --itemize-changes`，确认输出只有上述路径；不得使用 `--delete`。
 - [ ] dry-run 通过后，以同一 allowlist 搬运到 clean clone。
-- [ ] 父仓 `.gitignore` 的通用 `tools/` 规则会忽略知识库内 14 个 `.mjs` 文件（原 12 个构建/验证脚本，加本次评审新增的 helper 与 regression test）；不得遗漏这些文件，也不得为本任务放宽全局 ignore。搬运后用 `find "$KB_ROOT/tools" -type f -name '*.mjs' | wc -l` 明确验证数量为 14。
+- [ ] 父仓 `.gitignore` 的通用 `tools/` 规则会忽略知识库内 14 个 `.mjs` 文件（原 12 个构建/验证脚本，加本次评审新增的 helper 与 regression test）；不得遗漏这些文件，也不得为本任务放宽全局 ignore。不能只校验数量，必须把实际文件名与以下排序后的 canonical allowlist 逐项比较：
+
+```bash
+EXPECTED_TOOLS="$(cat <<'EOF'
+build-m1-source-map.mjs
+build-m2a-content.mjs
+build-m2b-content.mjs
+build-m2c-content.mjs
+build-m2d-content.mjs
+build-m2e-content.mjs
+review-regressions.test.mjs
+verification-helpers.mjs
+verify-m1-source-map.mjs
+verify-m2a-content.mjs
+verify-m2b-content.mjs
+verify-m2c-content.mjs
+verify-m2d-content.mjs
+verify-m2e-content.mjs
+EOF
+)"
+ACTUAL_TOOLS="$(find "$KB_ROOT/tools" -maxdepth 1 -type f -name '*.mjs' -exec basename {} \; | LC_ALL=C sort)"
+test "$ACTUAL_TOOLS" = "$EXPECTED_TOOLS"
+```
+
+  10.x 中的 12 个工具是 `ad6a7b5` 评审修复前的 K0 历史检查点；当前提交集合必须使用上面的 14 文件 allowlist，不能把历史计数覆盖成当前状态，也不能为追求旧计数漏掉 helper/test。
 - [ ] 检查没有 PDF、原始全文、整页图片、绝对源路径或临时输出：
 
 ```bash
@@ -206,7 +230,9 @@ git -C "$CLEAN_ROOT" status --short
 KB_ROOT="$CLEAN_ROOT/scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718"
 INGESTION_PLAN="$CLEAN_ROOT/scm/drafts/analysis/ontology-driven-ai-data-management-kb-ingestion-plan-draft-20260718.md"
 RECONCILIATION_PLAN="$CLEAN_ROOT/scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/93-post-merge-wip-reconciliation-and-ontology-kb-integration-plan-draft-20260718.md"
-rg -n '/[U]sers/|桌面[[:space:]]+-[[:space:]]+Pray|BEGIN (RSA |OPENSSH )?PRIVATE KEY|sk-[A-Za-z0-9]{20,}' \
+rg -n '/[U]sers/|/[h]ome/|[A-Za-z]:[\\/]+[U]sers[\\/]+|\$[H]OME[\\/]+|\$\{[H]OME\}[\\/]+|~[\\/]+|%[U]SERPROFILE%[\\/]+|\$env:[U]SERPROFILE[\\/]+|file:/{2,3}|桌面[[:space:]]+-[[:space:]]+Pray|BEGIN (RSA |OPENSSH )?PRIVATE KEY|sk-[A-Za-z0-9]{20,}' \
+  --glob '!tools/review-regressions.test.mjs' \
+  --glob '!tools/verification-helpers.mjs' \
   "$KB_ROOT" \
   "$INGESTION_PLAN" \
   "$RECONCILIATION_PLAN"
@@ -240,6 +266,7 @@ node "$KB_ROOT/tools/verify-m1-source-map.mjs" --pdf "$PDF_PATH" --output-root "
 
 - [ ] 顺序执行 `verify-m2a-content.mjs` 至 `verify-m2e-content.mjs`；M2 验证器支持 `--pdf` 时统一传入同一附件。
 - [ ] 确认最新质量门槛：151 section records、141 subsections、10 summaries、89 cards、81 terms、154 relations、exact duplicate 0、normalized-title duplicate 0、missing node 0、M2E orphan 0；1 条 `CONTRADICTS` 候选和 30 个视觉复核区间必须保留为待评审项，不能伪装为零风险。
+  当前 `manifests/knowledge-relation-manifest.json` 与 `verify-m2e-content.mjs` 的实测 154 是单一事实源；10.3 中的 155 是删除错误 typed edge 前的历史检查点，不得回写为当前验收值。
 - [ ] 复制验证前后的知识库清单 hash 并比较；执行 build 重跑时必须做到确定性一致。
 - [ ] 验证前后分别计算两份 `governance_workbench.sqlite` hash，并使用不同变量保存路径：
 
