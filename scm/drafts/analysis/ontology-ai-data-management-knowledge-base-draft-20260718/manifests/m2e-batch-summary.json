@@ -7,7 +7,7 @@
   "chapter_summary_count": 2,
   "card_count": 18,
   "term_count": 21,
-  "relation_count": 49,
+  "relation_count": 48,
   "pdf_page_start": 179,
   "pdf_page_end": 209,
   "claim_type_counts": {
@@ -32,8 +32,8 @@
     "chapter_summary": 2
   },
   "visual_review_counts": {
-    "not_required": 16,
-    "reviewed": 9
+    "not_required": 17,
+    "reviewed": 8
   },
   "selected_visual_review_page_count": 8,
   "boundaries": {

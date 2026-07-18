@@ -3,6 +3,7 @@ import { execFileSync } from "node:child_process";
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { artifactMatchesPage, artifactWithinPageRange, containsPersonalAbsolutePath } from "./verification-helpers.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
@@ -80,14 +81,18 @@ const batchSummary = readJson(batchSummaryPath);
 const sourceManifest = readJson(sourceManifestPath);
 const artifacts = readJsonl(artifactManifestPath);
 const visualReview = readJson(visualReviewPath);
-const artifactIds = new Set(artifacts.map((artifact) => artifact.artifact_id));
+const artifactById = new Map(artifacts.map((artifact) => [artifact.artifact_id, artifact]));
+const artifactIds = new Set(artifactById.keys());
 
 assert(visualReview.reviews.length === 8, `expected 8 selected-page visual reviews, received ${visualReview.reviews.length}`);
 assert(visualReview.full_page_images_persisted === false, "visual review must not persist full-page images");
 for (const review of visualReview.reviews) {
   assert(review.status === "reviewed", `visual review for PDF p.${review.pdf_page} is incomplete`);
   assert(review.pdf_page >= 8 && review.pdf_page <= 52, `visual review page ${review.pdf_page} is outside M2-A scope`);
-  for (const artifactId of review.artifact_ids) assert(artifactIds.has(artifactId), `visual review references unknown artifact ${artifactId}`);
+  for (const artifactId of review.artifact_ids) {
+    assert(artifactIds.has(artifactId), `visual review references unknown artifact ${artifactId}`);
+    assert(artifactMatchesPage(artifactById.get(artifactId), review.pdf_page), `visual review page mismatch for ${artifactId}`);
+  }
 }
 
 assert(sectionMap.sections.length === 35, `expected 35 section records, received ${sectionMap.sections.length}`);
@@ -110,6 +115,7 @@ for (const section of sectionMap.sections) {
   assert(section.summary.length >= 25, `section ${section.section_id} summary is too short`);
   for (const artifactId of section.figure_table_refs) {
     assert(artifactIds.has(artifactId), `section ${section.section_id} references unknown artifact ${artifactId}`);
+    assert(artifactWithinPageRange(artifactById.get(artifactId), section.pdf_page_start, section.pdf_page_end), `section ${section.section_id} references ${artifactId} outside its page range`);
   }
 }
 
@@ -180,8 +186,7 @@ assert(contentMap.includes("32 个三级正文小节和 3 个章末小结"), "co
 const policyScanPaths = [sectionMapPath, cardSeedsPath, visualReviewPath, sourceSpansPath, cardManifestPath, batchSummaryPath, contentMapPath, ...cardManifest.cards.map((card) => resolve(root, card.relative_path))];
 for (const path of policyScanPaths) {
   const content = readFileSync(path, "utf8");
-  assert(!content.includes("/Users/"), `personal absolute path found in ${path}`);
-  assert(!content.includes("桌面 - "), `personal desktop locator found in ${path}`);
+  assert(!containsPersonalAbsolutePath(content), `personal absolute path found in ${path}`);
 }
 
 const deterministicPaths = [sourceSpansPath, cardManifestPath, batchSummaryPath, contentMapPath, ...cardManifest.cards.map((card) => resolve(root, card.relative_path))];

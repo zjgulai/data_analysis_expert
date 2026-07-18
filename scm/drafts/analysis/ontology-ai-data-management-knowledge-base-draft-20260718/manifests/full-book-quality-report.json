@@ -16,7 +16,7 @@
   "inventory": {
     "card_count": 89,
     "term_count": 81,
-    "relation_count": 155,
+    "relation_count": 154,
     "source_span_count": 151
   },
   "exact_duplicates": {

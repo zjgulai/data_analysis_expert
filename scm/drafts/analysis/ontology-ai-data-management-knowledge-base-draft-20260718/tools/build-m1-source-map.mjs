@@ -149,7 +149,7 @@ function updateSectionState(state, heading) {
   }
 }
 
-function detectCaptions(lines, page) {
+function detectCaptions(lines, page, sectionSnapshots) {
   const captions = [];
   lines.forEach((line, index) => {
     const normalized = normalizeLine(line);
@@ -164,10 +164,26 @@ function detectCaptions(lines, page) {
     captions.push({
       artifact_type: match[1] === "图" ? "figure" : "table",
       number: `${match[2]}-${match[3]}`,
-      caption: caption.slice(0, 240)
+      caption: caption.slice(0, 240),
+      section_path: sectionSnapshots[index]
     });
   });
   return captions;
+}
+
+function normalizeSemanticText(value) {
+  return value.replace(/[\s，。、“”‘’：:；;（）()《》—–-]+/g, "");
+}
+
+function resolveCaptionSectionPath(caption, fallback, subsectionCandidates) {
+  const normalizedCaption = normalizeSemanticText(caption);
+  if (normalizedCaption.length < 12) return fallback;
+  const match = subsectionCandidates.findLast((candidate) => {
+    if (candidate.section_path.chapter !== fallback.chapter || candidate.section_path.section !== fallback.section) return false;
+    const normalizedLabel = normalizeSemanticText(candidate.label);
+    return normalizedLabel.includes(normalizedCaption) || normalizedCaption.includes(normalizedLabel.replace(/^\d+(?:\.\d+){2}/, ""));
+  });
+  return match?.section_path || fallback;
 }
 
 function yamlFrontmatter(title, topic) {
@@ -230,7 +246,7 @@ function buildStructureMarkdown(entries, summary) {
 const args = parseArgs(process.argv.slice(2));
 const pdfPath = args.get("--pdf");
 const outputRoot = resolve(args.get("--output-root") || defaultOutputRoot);
-const generatedAt = args.get("--generated-at") || new Date().toISOString();
+const generatedAt = args.get("--generated-at");
 const reviewedPages = new Set(
   String(args.get("--visual-reviewed-pages") || "")
     .split(",")
@@ -240,6 +256,12 @@ const reviewedPages = new Set(
 
 if (!pdfPath) {
   throw new Error("Missing required --pdf argument.");
+}
+if (!generatedAt) {
+  throw new Error("Missing required --generated-at argument.");
+}
+if (Number.isNaN(Date.parse(generatedAt))) {
+  throw new Error(`Invalid --generated-at value: ${generatedAt}`);
 }
 if (!existsSync(pdfPath)) {
   throw new Error(`PDF does not exist: ${pdfPath}`);
@@ -271,22 +293,32 @@ const structureEntries = [];
 const pageCoverage = [];
 const artifactRows = [];
 const artifactKeys = new Set();
+const subsectionCandidates = [];
 
 rawPages.forEach((pageText, pageIndex) => {
   const page = pageIndex + 1;
   const lines = pageText.split(/\r?\n/);
   const sectionAtStart = snapshotSection(sectionState);
   const headings = [];
+  const sectionSnapshots = [];
 
-  lines.forEach((line) => {
+  lines.forEach((line, index) => {
     const heading = detectHeading(line, page);
-    if (!heading) return;
-    const key = `${heading.kind}|${heading.label}`;
-    if (!structureEntries.some((entry) => `${entry.kind}|${entry.label}` === key)) {
-      structureEntries.push(heading);
+    if (heading) {
+      const key = `${heading.kind}|${heading.label}`;
+      if (!structureEntries.some((entry) => `${entry.kind}|${entry.label}` === key)) {
+        structureEntries.push(heading);
+      }
+      headings.push(heading);
+      updateSectionState(sectionState, heading);
+      if (heading.kind === "subsection") {
+        subsectionCandidates.push({
+          label: heading.label,
+          section_path: snapshotSection(sectionState)
+        });
+      }
     }
-    headings.push(heading);
-    updateSectionState(sectionState, heading);
+    sectionSnapshots[index] = snapshotSection(sectionState);
   });
 
   const sectionAtEnd = snapshotSection(sectionState);
@@ -297,7 +329,7 @@ rawPages.forEach((pageText, pageIndex) => {
       ? "low_text_requires_visual_review"
       : "text_extracted";
   const pageImages = imageObjects.byPage.get(page) || { image: 0, smask: 0, mask: 0, total: 0 };
-  const captions = detectCaptions(lines, page);
+  const captions = detectCaptions(lines, page, sectionSnapshots);
 
   captions.forEach((caption) => {
     const artifactKey = `${caption.artifact_type}|${caption.number}|${page}|${caption.caption}`;
@@ -310,7 +342,7 @@ rawPages.forEach((pageText, pageIndex) => {
       number: caption.number,
       caption: caption.caption || null,
       pdf_page: page,
-      section_path: sectionAtEnd,
+      section_path: resolveCaptionSectionPath(caption.caption, caption.section_path, subsectionCandidates),
       page_image_object_count: pageImages.total,
       detection_method: "pdf_text_caption_pattern",
       extraction_status: "caption_detected",

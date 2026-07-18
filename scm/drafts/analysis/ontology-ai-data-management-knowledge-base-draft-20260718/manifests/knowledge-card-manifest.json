@@ -412,13 +412,13 @@
       "card_type": "trust-model",
       "relative_path": "06-agent-governance-future-enterprise/cards/oadm-six-proof-accountability-system-392f0d445c.md",
       "content_hash": "9adba060ac068e9f770807e9e375afb4e62b09cb7d0b134d4db9048e2fea909a",
-      "file_hash": "12aa065f4aacd7d8fe6d52ec1f85b88af0b689ef60978d3434f1195f9ae21b45",
+      "file_hash": "94ac1117d73f3f39c162ac50f80ec6b38cbb2ea1ca8f512848e2d645f5376e5c",
       "source_span_ids": [
         "oadm-span-s9-2-1-p185-p185",
         "oadm-span-s9-2-2-p185-p186",
         "oadm-span-s9-2-3-p186-p187",
         "oadm-span-s9-2-4-p187-p188",
-        "oadm-span-s9-2-5-p188-p188",
+        "oadm-span-s9-2-5-p188-p189",
         "oadm-span-s9-2-6-p188-p189"
       ],
       "section_ids": [
@@ -443,9 +443,9 @@
       "card_type": "accountability-pattern",
       "relative_path": "06-agent-governance-future-enterprise/cards/oadm-traceability-contribution-accountability-8d512e3160.md",
       "content_hash": "98d1c13355afb1471b8f34b0feee7f39cec7eafa9af4178728a1582b3b126e15",
-      "file_hash": "9563689d9d4e22fbe5abe70d2418b42742d2e508d3d189e4ef7f01f577bb3b59",
+      "file_hash": "b63a0b6c745a5c89ed7cb3a69dea56b5103e0ad4b35ff9f3da8b7c492ae67f45",
       "source_span_ids": [
-        "oadm-span-s9-2-5-p188-p188",
+        "oadm-span-s9-2-5-p188-p189",
         "oadm-span-s9-2-6-p188-p189"
       ],
       "section_ids": [

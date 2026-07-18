@@ -17,11 +17,8 @@ const relationTablePath = resolve(root, "03-core-theory/02-core-framework-relati
 const cardsDirectory = resolve(root, "03-core-theory/cards");
 const sourceSpansPath = resolve(root, "manifests/m2b-source-spans.json");
 const cardManifestPath = resolve(root, "manifests/m2b-knowledge-card-manifest.json");
-const aggregateCardManifestPath = resolve(root, "manifests/knowledge-card-manifest.json");
 const batchTermManifestPath = resolve(root, "manifests/m2b-knowledge-term-manifest.json");
-const termManifestPath = resolve(root, "manifests/knowledge-term-manifest.json");
 const batchRelationManifestPath = resolve(root, "manifests/m2b-knowledge-relation-manifest.json");
-const relationManifestPath = resolve(root, "manifests/knowledge-relation-manifest.json");
 const batchSummaryPath = resolve(root, "manifests/m2b-batch-summary.json");
 
 function sha256(value) {
@@ -254,23 +251,6 @@ writeFileSync(cardManifestPath, `${JSON.stringify({
   cards: cardRecords
 }, null, 2)}\n`, "utf8");
 
-const aggregateCardRecords = [
-  ...m2aCardManifest.cards.map((card) => ({ ...card, source_batch_id: m2aCardManifest.batch_id })),
-  ...cardRecords.map((card) => ({ ...card, source_batch_id: "m2b-core-theory-ch04-ch05" }))
-].sort((left, right) => left.semantic_key.localeCompare(right.semantic_key));
-writeFileSync(aggregateCardManifestPath, `${JSON.stringify({
-  schema_version: "1.0.0",
-  document_id: cardSeeds.document_id,
-  domain_id: cardSeeds.domain_id,
-  manifest_scope: "aggregate-through-m2b",
-  batch_counts: {
-    "m2a-strategic-cognition-ch01-ch03": m2aCardManifest.card_count,
-    "m2b-core-theory-ch04-ch05": cardRecords.length
-  },
-  card_count: aggregateCardRecords.length,
-  cards: aggregateCardRecords
-}, null, 2)}\n`, "utf8");
-
 const termRecords = termSeeds.terms.map((seed) => ({
   term_id: termId(seed),
   term_key: seed.term_key,
@@ -293,7 +273,6 @@ const termManifestPayload = {
   terms: termRecords
 };
 writeFileSync(batchTermManifestPath, `${JSON.stringify(termManifestPayload, null, 2)}\n`, "utf8");
-writeFileSync(termManifestPath, `${JSON.stringify(termManifestPayload, null, 2)}\n`, "utf8");
 
 const termTableLines = [
   "---",
@@ -356,7 +335,6 @@ const relationManifestPayload = {
   relations: relationRecords
 };
 writeFileSync(batchRelationManifestPath, `${JSON.stringify(relationManifestPayload, null, 2)}\n`, "utf8");
-writeFileSync(relationManifestPath, `${JSON.stringify(relationManifestPayload, null, 2)}\n`, "utf8");
 
 const relationTableLines = [
   "---",

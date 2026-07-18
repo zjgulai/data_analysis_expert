@@ -55,7 +55,6 @@ source: human+ai
 | `oadm:enterprise-learning:physical-logical-dual-learning` | `DEFINES` | `oadm:term:physical-logical-dual-learning` | 该卡定义 AI 面向物理和逻辑的双重学习。 | 10.1.2 |
 | `oadm:enterprise-learning:physical-logical-dual-learning` | `REQUIRES` | `oadm:agent-governance:tri-pillar-risk-governance` | 持续学习需人类监督、价值治理与明确边界。 | 10.1.2 |
 | `oadm:enterprise-model:ontology-world-model-fusion` | `DEFINES` | `oadm:term:world-model` | 融合架构区分现实因果引擎和业务逻辑内核。 | 10.1.3 |
-| `oadm:enterprise-model:ontology-world-model-fusion` | `REQUIRES` | `oadm:engineering:dual-model-validation` | 双模型输出和冲突需要双重验证。 | 10.1.3 |
 | `oadm:enterprise-operating-model:intelligent-native-enterprise` | `DEFINES` | `oadm:term:intelligent-native-enterprise` | 该卡概括智能原生企业的作者定义。 | 10.2.1 |
 | `oadm:enterprise-operating-model:intelligent-native-enterprise` | `REQUIRES` | `oadm:application:three-stage-landing-strategy` | 未来形态仍需通过验证、小切口和资产化逐步落地。 | 10.2.1 |
 | `oadm:enterprise-organization:agent-centered-network` | `PART_OF` | `oadm:enterprise-operating-model:intelligent-native-enterprise` | Agent 组织网络是智能原生企业的组织形态。 | 10.2.2 |

@@ -3,6 +3,7 @@ import { execFileSync } from "node:child_process";
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { artifactMatchesPage, artifactWithinPageRange, containsPersonalAbsolutePath } from "./verification-helpers.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
@@ -20,9 +21,9 @@ const paths = {
   termTable: at("05-agent-engineering-applications/01-agent-application-terms.md"),
   relationTable: at("05-agent-engineering-applications/02-agent-application-relations.md"),
   cardsDir: at("05-agent-engineering-applications/cards"), spans: at("manifests/m2d-source-spans.json"),
-  cardManifest: at("manifests/m2d-knowledge-card-manifest.json"), aggregateCards: at("manifests/knowledge-card-manifest.json"),
-  termManifest: at("manifests/m2d-knowledge-term-manifest.json"), aggregateTerms: at("manifests/knowledge-term-manifest.json"),
-  relationManifest: at("manifests/m2d-knowledge-relation-manifest.json"), aggregateRelations: at("manifests/knowledge-relation-manifest.json"),
+  cardManifest: at("manifests/m2d-knowledge-card-manifest.json"),
+  termManifest: at("manifests/m2d-knowledge-term-manifest.json"),
+  relationManifest: at("manifests/m2d-knowledge-relation-manifest.json"),
   summary: at("manifests/m2d-batch-summary.json")
 };
 const parseArgs = (argv) => { const result = new Map(); for (let i = 0; i < argv.length; i += 1) if (argv[i].startsWith("--")) { const value = argv[i + 1]; if (!value || value.startsWith("--")) result.set(argv[i], "true"); else { result.set(argv[i], value); i += 1; } } return result; };
@@ -51,11 +52,8 @@ const artifacts = readJsonl(paths.artifacts);
 const source = readJson(paths.source);
 const spans = readJson(paths.spans);
 const cardManifest = readJson(paths.cardManifest);
-const aggregateCards = readJson(paths.aggregateCards);
 const termManifest = readJson(paths.termManifest);
-const aggregateTerms = readJson(paths.aggregateTerms);
 const relationManifest = readJson(paths.relationManifest);
-const aggregateRelations = readJson(paths.aggregateRelations);
 const summary = readJson(paths.summary);
 
 assert(sectionMap.sections.length === 35, `expected 35 section records, received ${sectionMap.sections.length}`);
@@ -68,13 +66,17 @@ const sectionById = new Map(sectionMap.sections.map((section) => [section.sectio
 assert(sectionMap.sections.filter((section) => section.section_id.startsWith("7.")).length === 21, "chapter 7 section count mismatch");
 assert(sectionMap.sections.filter((section) => section.section_id.startsWith("8.")).length === 14, "chapter 8 section count mismatch");
 const allowedClaimTypes = new Set(["author_method", "author_mechanism", "author_decision_pattern", "author_action_pattern", "author_architecture", "author_implementation_path", "author_value_framework", "author_selection_rule", "author_application_pattern", "author_faq", "chapter_summary"]);
-const artifactIds = new Set(artifacts.map((artifact) => artifact.artifact_id));
+const artifactById = new Map(artifacts.map((artifact) => [artifact.artifact_id, artifact]));
+const artifactIds = new Set(artifactById.keys());
 for (const section of sectionMap.sections) {
   assert(section.pdf_page_start >= 128 && section.pdf_page_end <= 178, `section outside page scope ${section.section_id}`);
   assert(section.pdf_page_start <= section.pdf_page_end, `inverted page range ${section.section_id}`);
   assert(allowedClaimTypes.has(section.claim_type), `unsupported claim type ${section.claim_type}`);
   assert(section.summary.length >= 25, `summary too short ${section.section_id}`);
-  for (const id of section.figure_table_refs) assert(artifactIds.has(id), `unknown artifact ${id}`);
+  for (const id of section.figure_table_refs) {
+    assert(artifactIds.has(id), `unknown artifact ${id}`);
+    assert(artifactWithinPageRange(artifactById.get(id), section.pdf_page_start, section.pdf_page_end), `section ${section.section_id} references ${id} outside its page range`);
+  }
 }
 
 assert(visualReview.reviews.length === 11, `expected 11 visual reviews, received ${visualReview.reviews.length}`);
@@ -82,7 +84,10 @@ assert(visualReview.full_page_images_persisted === false, "visual review images 
 for (const review of visualReview.reviews) {
   assert(review.status === "reviewed", `visual review incomplete p.${review.pdf_page}`);
   assert(review.pdf_page >= 128 && review.pdf_page <= 178, `visual review outside scope p.${review.pdf_page}`);
-  for (const id of review.artifact_ids) assert(artifactIds.has(id), `visual review unknown artifact ${id}`);
+  for (const id of review.artifact_ids) {
+    assert(artifactIds.has(id), `visual review unknown artifact ${id}`);
+    assert(artifactMatchesPage(artifactById.get(id), review.pdf_page), `visual review page mismatch for ${id}`);
+  }
 }
 
 assert(spans.span_count === 35 && spans.source_spans.length === 35, "source span count mismatch");
@@ -119,8 +124,9 @@ for (const record of cardManifest.cards) {
   assert(content.includes("尚未进行 SCM 适用性评估"), `SCM boundary missing ${record.card_id}`);
 }
 assert(readdirSync(paths.cardsDir).filter((name) => name.endsWith(".md")).length === 23, "expected exactly 23 M2-D cards");
-assert(aggregateCards.manifest_scope === "aggregate-through-m2d" && aggregateCards.card_count === 71, "aggregate card count mismatch");
-assert(new Set(aggregateCards.cards.map((card) => card.semantic_key)).size === 71, "aggregate card keys must be unique");
+const aggregateCards = [...priorCards.flatMap((manifest) => manifest.cards), ...cardManifest.cards];
+assert(aggregateCards.length === 71, "in-memory aggregate card count mismatch");
+assert(new Set(aggregateCards.map((card) => card.semantic_key)).size === 71, "aggregate card keys must be unique");
 
 const priorTermKeys = new Set(priorTerms.flatMap((manifest) => manifest.terms.map((term) => term.term_key)));
 assert(termSeeds.terms.length === 16, `expected 16 term seeds, received ${termSeeds.terms.length}`);
@@ -134,8 +140,9 @@ for (const record of termManifest.terms) {
   assert(record.term_id === termId(seed), `term ID mismatch ${record.term_key}`);
   assert(record.content_hash === sha256(canonicalize(seed)), `term hash mismatch ${record.term_key}`);
 }
-assert(aggregateTerms.manifest_scope === "aggregate-through-m2d" && aggregateTerms.term_count === 60, "aggregate term count mismatch");
-assert(new Set(aggregateTerms.terms.map((term) => term.term_key)).size === 60, "aggregate term keys must be unique");
+const aggregateTerms = [...priorTerms.flatMap((manifest) => manifest.terms), ...termManifest.terms];
+assert(aggregateTerms.length === 60, "in-memory aggregate term count mismatch");
+assert(new Set(aggregateTerms.map((term) => term.term_key)).size === 60, "aggregate term keys must be unique");
 
 assert(relationSeeds.relations.length === 46, `expected 46 relations, received ${relationSeeds.relations.length}`);
 assert(relationManifest.relation_count === 46 && relationManifest.relations.length === 46, "M2-D relation manifest count mismatch");
@@ -159,8 +166,9 @@ for (const record of relationManifest.relations) {
   assert(record.relation_status === "candidate" && record.review_status === "pending", `relation boundary mismatch ${record.relation_id}`);
   assert(record.content_hash === sha256(canonicalize(seed)), `relation hash mismatch ${record.relation_id}`);
 }
-assert(aggregateRelations.manifest_scope === "aggregate-through-m2d" && aggregateRelations.relation_count === 106, "aggregate relation count mismatch");
-assert(new Set(aggregateRelations.relations.map((relation) => relation.relation_id)).size === 106, "aggregate relation IDs must be unique");
+const aggregateRelations = [...priorRelations.flatMap((manifest) => manifest.relations), ...relationManifest.relations];
+assert(aggregateRelations.length === 106, "in-memory aggregate relation count mismatch");
+assert(new Set(aggregateRelations.map((relation) => relation.relation_id)).size === 106, "aggregate relation IDs must be unique");
 
 const contentMap = readFileSync(paths.contentMap, "utf8");
 const termTable = readFileSync(paths.termTable, "utf8");
@@ -172,13 +180,12 @@ assert(summary.section_record_count === 35 && summary.card_count === 23 && summa
 assert(summary.boundaries.author_metrics_independently_verified === false, "author metric boundary mismatch");
 assert(summary.boundaries.scm_crosswalk_performed === false && summary.boundaries.database_write === false && summary.boundaries.provider_call === false, "side-effect boundary mismatch");
 
-const policyPaths = [paths.sectionMap, paths.cardSeeds, paths.termSeeds, paths.relationSeeds, paths.visualReview, paths.spans, paths.cardManifest, paths.aggregateCards, paths.termManifest, paths.aggregateTerms, paths.relationManifest, paths.aggregateRelations, paths.summary, paths.contentMap, paths.termTable, paths.relationTable, ...cardManifest.cards.map((card) => at(card.relative_path))];
+const policyPaths = [paths.sectionMap, paths.cardSeeds, paths.termSeeds, paths.relationSeeds, paths.visualReview, paths.spans, paths.cardManifest, paths.termManifest, paths.relationManifest, paths.summary, paths.contentMap, paths.termTable, paths.relationTable, ...cardManifest.cards.map((card) => at(card.relative_path))];
 for (const path of policyPaths) {
   const content = readFileSync(path, "utf8");
-  assert(!content.includes("/Users/"), `personal absolute path found in ${path}`);
-  assert(!content.includes("桌面 - "), `personal desktop path found in ${path}`);
+  assert(!containsPersonalAbsolutePath(content), `personal absolute path found in ${path}`);
 }
-const deterministicPaths = [paths.spans, paths.cardManifest, paths.aggregateCards, paths.termManifest, paths.aggregateTerms, paths.relationManifest, paths.aggregateRelations, paths.summary, paths.contentMap, paths.termTable, paths.relationTable, ...cardManifest.cards.map((card) => at(card.relative_path))];
+const deterministicPaths = [paths.spans, paths.cardManifest, paths.termManifest, paths.relationManifest, paths.summary, paths.contentMap, paths.termTable, paths.relationTable, ...cardManifest.cards.map((card) => at(card.relative_path))];
 const before = snapshot(deterministicPaths);
 execFileSync(process.execPath, [paths.build], { encoding: "utf8" });
 const after = snapshot(deterministicPaths);

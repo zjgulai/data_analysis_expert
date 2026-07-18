@@ -3,6 +3,7 @@ import { execFileSync } from "node:child_process";
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { artifactMatchesPage, artifactWithinPageRange, containsPersonalAbsolutePath } from "./verification-helpers.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
@@ -76,13 +77,17 @@ const sectionIdSet = new Set(sectionIds);
 const sectionById = new Map(sectionMap.sections.map((section) => [section.section_id, section]));
 assert(sectionIdSet.size === 25, "section IDs must be unique");
 const allowedClaimTypes = new Set(["author_governance_context", "author_future_state", "author_integration_pattern", "author_trust_model", "author_trust_pattern", "author_control_pattern", "author_evidence_pattern", "author_incentive_pattern", "author_industry_example", "author_governance_framework", "author_technology_trend", "author_engineering_direction", "author_enterprise_model", "author_learning_model", "author_model_architecture", "author_operating_model", "author_organization_model", "author_management_framework", "chapter_summary"]);
-const artifactIds = new Set(artifacts.map((artifact) => artifact.artifact_id));
+const artifactById = new Map(artifacts.map((artifact) => [artifact.artifact_id, artifact]));
+const artifactIds = new Set(artifactById.keys());
 for (const section of sectionMap.sections) {
   assert(section.pdf_page_start >= 179 && section.pdf_page_end <= 209, `section outside page scope ${section.section_id}`);
   assert(section.pdf_page_start <= section.pdf_page_end, `inverted page range ${section.section_id}`);
   assert(allowedClaimTypes.has(section.claim_type), `unsupported claim type ${section.claim_type}`);
   assert(section.summary.length >= 25, `summary too short ${section.section_id}`);
-  for (const id of section.figure_table_refs) assert(artifactIds.has(id), `unknown artifact ${id}`);
+  for (const id of section.figure_table_refs) {
+    assert(artifactIds.has(id), `unknown artifact ${id}`);
+    assert(artifactWithinPageRange(artifactById.get(id), section.pdf_page_start, section.pdf_page_end), `section ${section.section_id} references ${id} outside its page range`);
+  }
 }
 
 assert(visualReview.reviews.length === 8, `expected 8 visual reviews, received ${visualReview.reviews.length}`);
@@ -90,7 +95,10 @@ assert(visualReview.full_page_images_persisted === false, "visual review images 
 for (const review of visualReview.reviews) {
   assert(review.status === "reviewed", `visual review incomplete p.${review.pdf_page}`);
   assert(review.pdf_page >= 179 && review.pdf_page <= 199, `visual review outside selected scope p.${review.pdf_page}`);
-  for (const id of review.artifact_ids) assert(artifactIds.has(id), `visual review unknown artifact ${id}`);
+  for (const id of review.artifact_ids) {
+    assert(artifactIds.has(id), `visual review unknown artifact ${id}`);
+    assert(artifactMatchesPage(artifactById.get(id), review.pdf_page), `visual review page mismatch for ${id}`);
+  }
 }
 assert(spans.span_count === 25 && spans.source_spans.length === 25, "M2-E source span count mismatch");
 const spanById = new Map(spans.source_spans.map((span) => [span.span_id, span]));
@@ -145,11 +153,11 @@ for (const record of termManifest.terms) {
 assert(aggregateTerms.manifest_scope === "aggregate-through-m2e" && aggregateTerms.term_count === 81, "aggregate term count mismatch");
 assert(new Set(aggregateTerms.terms.map((term) => term.term_key)).size === 81, "aggregate term keys must be unique");
 
-assert(relationSeeds.relations.length === 49, `expected 49 relations, received ${relationSeeds.relations.length}`);
-assert(relationManifest.relation_count === 49 && relationManifest.relations.length === 49, "M2-E relation manifest count mismatch");
+assert(relationSeeds.relations.length === 48, `expected 48 relations, received ${relationSeeds.relations.length}`);
+assert(relationManifest.relation_count === 48 && relationManifest.relations.length === 48, "M2-E relation manifest count mismatch");
 const nodeKeys = new Set([...allCardKeys, ...priorTermKeys, ...newTermKeys]);
 const edges = relationSeeds.relations.map((seed) => `${seed.subject_key}|${seed.predicate}|${seed.object_key}`);
-assert(new Set(edges).size === 49, "M2-E relation edges must be unique");
+assert(new Set(edges).size === 48, "M2-E relation edges must be unique");
 const participatingKeys = new Set();
 for (const seed of relationSeeds.relations) {
   assert(nodeKeys.has(seed.subject_key), `relation missing subject ${seed.subject_key}`);
@@ -166,8 +174,8 @@ for (const record of relationManifest.relations) {
   assert(record.relation_status === "candidate" && record.review_status === "pending", `relation boundary mismatch ${record.relation_id}`);
   assert(record.content_hash === sha256(canonicalize(seed)), `relation hash mismatch ${record.relation_id}`);
 }
-assert(aggregateRelations.manifest_scope === "aggregate-through-m2e" && aggregateRelations.relation_count === 155, "aggregate relation count mismatch");
-assert(new Set(aggregateRelations.relations.map((relation) => relation.relation_id)).size === 155, "aggregate relation IDs must be unique");
+assert(aggregateRelations.manifest_scope === "aggregate-through-m2e" && aggregateRelations.relation_count === 154, "aggregate relation count mismatch");
+assert(new Set(aggregateRelations.relations.map((relation) => relation.relation_id)).size === 154, "aggregate relation IDs must be unique");
 
 const allSections = sectionMaps.flatMap((manifest) => manifest.sections);
 const extractedSubsections = allSections.filter((section) => /^\d+\.\d+\.\d+$/.test(section.section_id)).map((section) => section.section_id);
@@ -181,7 +189,7 @@ assert(allSpans.length === 151 && new Set(allSpans.map((span) => span.span_id)).
 
 assert(quality.coverage.section_record_count === 151 && quality.coverage.substantive_subsection_count === 141 && quality.coverage.chapter_summary_count === 10, "quality coverage counts mismatch");
 assert(quality.coverage.missing_subsection_ids.length === 0 && quality.coverage.unexpected_subsection_ids.length === 0, "quality report has uncovered sections");
-assert(quality.inventory.card_count === 89 && quality.inventory.term_count === 81 && quality.inventory.relation_count === 155 && quality.inventory.source_span_count === 151, "quality inventory mismatch");
+assert(quality.inventory.card_count === 89 && quality.inventory.term_count === 81 && quality.inventory.relation_count === 154 && quality.inventory.source_span_count === 151, "quality inventory mismatch");
 for (const values of Object.values(quality.exact_duplicates)) assert(values.length === 0, "quality report found exact duplicates");
 assert(quality.semantic_duplicate_candidates.length === 0, "normalized title duplicate candidates require review");
 assert(quality.relation_integrity.missing_subject_nodes.length === 0 && quality.relation_integrity.missing_object_nodes.length === 0, "quality report found missing relation nodes");
@@ -199,17 +207,16 @@ const relationTable = readFileSync(paths.relationTable, "utf8");
 const qualityMd = readFileSync(paths.qualityMd, "utf8");
 assert((contentMap.match(/^\| (?:9|10)\./gm) || []).length === 25, "content map row count mismatch");
 assert((termTable.match(/^\| (?!---)/gm) || []).length === 22, "term table row count mismatch");
-assert((relationTable.match(/^\| (?!---)/gm) || []).length === 50, "relation table row count mismatch");
+assert((relationTable.match(/^\| (?!---)/gm) || []).length === 49, "relation table row count mismatch");
 assert(qualityMd.includes("141 个三级正文小节") && qualityMd.includes("不得直接导入数据库"), "quality report conclusion or gate missing");
-assert(summary.section_record_count === 25 && summary.card_count === 18 && summary.term_count === 21 && summary.relation_count === 49, "M2-E summary count mismatch");
+assert(summary.section_record_count === 25 && summary.card_count === 18 && summary.term_count === 21 && summary.relation_count === 48, "M2-E summary count mismatch");
 assert(summary.boundaries.blockchain_architecture_selected === false && summary.boundaries.industry_examples_independently_verified === false, "M2-E evidence boundary mismatch");
 assert(summary.boundaries.scm_crosswalk_performed === false && summary.boundaries.database_write === false && summary.boundaries.provider_call === false, "M2-E side-effect boundary mismatch");
 
 const policyPaths = [paths.sectionMap, paths.cardSeeds, paths.termSeeds, paths.relationSeeds, paths.visualReview, paths.spans, paths.cardManifest, paths.aggregateCards, paths.termManifest, paths.aggregateTerms, paths.relationManifest, paths.aggregateRelations, paths.summary, paths.qualityJson, paths.qualityMd, paths.contentMap, paths.termTable, paths.relationTable, ...cardManifest.cards.map((card) => at(card.relative_path))];
 for (const path of policyPaths) {
   const content = readFileSync(path, "utf8");
-  assert(!content.includes("/Users/"), `personal absolute path found in ${path}`);
-  assert(!content.includes("桌面 - "), `personal desktop path found in ${path}`);
+  assert(!containsPersonalAbsolutePath(content), `personal absolute path found in ${path}`);
 }
 const deterministicPaths = [paths.spans, paths.cardManifest, paths.aggregateCards, paths.termManifest, paths.aggregateTerms, paths.relationManifest, paths.aggregateRelations, paths.summary, paths.qualityJson, paths.qualityMd, paths.contentMap, paths.termTable, paths.relationTable, ...cardManifest.cards.map((card) => at(card.relative_path))];
 const before = snapshot(deterministicPaths);
@@ -224,4 +231,4 @@ if (args.has("--pdf")) {
   assert(Number(info.match(/^Pages:\s+(\d+)$/m)?.[1]) === 211, "PDF page count mismatch");
 }
 if (args.has("--baseline-db") && args.has("--baseline-db-sha256")) assert(sha256(readFileSync(resolve(args.get("--baseline-db")))) === args.get("--baseline-db-sha256"), "baseline DB hash changed");
-process.stdout.write(`${JSON.stringify({ status: "m2e_verification_passed", section_records: 25, substantive_subsections: 23, chapter_summaries: 2, source_spans: 25, cards: 18, terms: 21, relations: 49, relation_orphans: 0, aggregate_cards: 89, aggregate_terms: 81, aggregate_relations: 155, full_book_section_records: 151, full_book_subsections: 141, uncovered_subsections: 0, exact_duplicates: 0, normalized_title_duplicate_candidates: 0, explicit_contradiction_candidates: 1, pending_visual_review_spans: 30, selected_visual_reviews: 8, stable_ids: true, deterministic_rerun: true, database_write: false, provider_call: false }, null, 2)}\n`);
+process.stdout.write(`${JSON.stringify({ status: "m2e_verification_passed", section_records: 25, substantive_subsections: 23, chapter_summaries: 2, source_spans: 25, cards: 18, terms: 21, relations: 48, relation_orphans: 0, aggregate_cards: 89, aggregate_terms: 81, aggregate_relations: 154, full_book_section_records: 151, full_book_subsections: 141, uncovered_subsections: 0, exact_duplicates: 0, normalized_title_duplicate_candidates: 0, explicit_contradiction_candidates: 1, pending_visual_review_spans: 30, selected_visual_reviews: 8, stable_ids: true, deterministic_rerun: true, database_write: false, provider_call: false }, null, 2)}\n`);

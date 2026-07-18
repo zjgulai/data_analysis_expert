@@ -3,6 +3,7 @@ import { execFileSync } from "node:child_process";
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { artifactMatchesPage, artifactWithinPageRange, containsPersonalAbsolutePath } from "./verification-helpers.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
@@ -18,9 +19,9 @@ const paths = {
   contentMap: pathAt("04-engineering-methods/00-engineering-methods-content-map.md"),
   termTable: pathAt("04-engineering-methods/01-engineering-terms.md"), relationTable: pathAt("04-engineering-methods/02-engineering-workflow-relations.md"),
   cardsDirectory: pathAt("04-engineering-methods/cards"), spans: pathAt("manifests/m2c-source-spans.json"),
-  cardManifest: pathAt("manifests/m2c-knowledge-card-manifest.json"), aggregateCards: pathAt("manifests/knowledge-card-manifest.json"),
-  termManifest: pathAt("manifests/m2c-knowledge-term-manifest.json"), aggregateTerms: pathAt("manifests/knowledge-term-manifest.json"),
-  relationManifest: pathAt("manifests/m2c-knowledge-relation-manifest.json"), aggregateRelations: pathAt("manifests/knowledge-relation-manifest.json"),
+  cardManifest: pathAt("manifests/m2c-knowledge-card-manifest.json"),
+  termManifest: pathAt("manifests/m2c-knowledge-term-manifest.json"),
+  relationManifest: pathAt("manifests/m2c-knowledge-relation-manifest.json"),
   summary: pathAt("manifests/m2c-batch-summary.json")
 };
 
@@ -58,11 +59,8 @@ const artifacts = readJsonl(paths.artifacts);
 const source = readJson(paths.source);
 const spans = readJson(paths.spans);
 const cardManifest = readJson(paths.cardManifest);
-const aggregateCards = readJson(paths.aggregateCards);
 const termManifest = readJson(paths.termManifest);
-const aggregateTerms = readJson(paths.aggregateTerms);
 const relationManifest = readJson(paths.relationManifest);
-const aggregateRelations = readJson(paths.aggregateRelations);
 const summary = readJson(paths.summary);
 
 assert(sectionMap.sections.length === 18, `expected 18 section records, received ${sectionMap.sections.length}`);
@@ -73,13 +71,17 @@ assert(new Set(sectionIds).size === 18, "section IDs must be unique");
 const sectionIdSet = new Set(sectionIds);
 const sectionById = new Map(sectionMap.sections.map((section) => [section.section_id, section]));
 const allowedClaimTypes = new Set(["author_method", "author_quality_gate", "author_governance_rule", "author_platform_capability", "author_implementation_path", "chapter_summary"]);
-const artifactIdSet = new Set(artifacts.map((artifact) => artifact.artifact_id));
+const artifactById = new Map(artifacts.map((artifact) => [artifact.artifact_id, artifact]));
+const artifactIdSet = new Set(artifactById.keys());
 for (const section of sectionMap.sections) {
   assert(section.pdf_page_start >= 96 && section.pdf_page_end <= 127, `section ${section.section_id} outside page scope`);
   assert(section.pdf_page_start <= section.pdf_page_end, `section ${section.section_id} has inverted pages`);
   assert(allowedClaimTypes.has(section.claim_type), `unsupported claim type ${section.claim_type}`);
   assert(section.summary.length >= 25, `summary too short ${section.section_id}`);
-  for (const artifactId of section.figure_table_refs) assert(artifactIdSet.has(artifactId), `unknown artifact ${artifactId}`);
+  for (const artifactId of section.figure_table_refs) {
+    assert(artifactIdSet.has(artifactId), `unknown artifact ${artifactId}`);
+    assert(artifactWithinPageRange(artifactById.get(artifactId), section.pdf_page_start, section.pdf_page_end), `section ${section.section_id} references ${artifactId} outside its page range`);
+  }
 }
 
 assert(visualReview.reviews.length === 7, `expected 7 selected visual reviews, received ${visualReview.reviews.length}`);
@@ -87,7 +89,10 @@ assert(visualReview.full_page_images_persisted === false, "visual review images 
 for (const review of visualReview.reviews) {
   assert(review.status === "reviewed", `visual review incomplete at p.${review.pdf_page}`);
   assert(review.pdf_page >= 96 && review.pdf_page <= 127, `visual review outside scope p.${review.pdf_page}`);
-  for (const id of review.artifact_ids) assert(artifactIdSet.has(id), `visual review references unknown artifact ${id}`);
+  for (const id of review.artifact_ids) {
+    assert(artifactIdSet.has(id), `visual review references unknown artifact ${id}`);
+    assert(artifactMatchesPage(artifactById.get(id), review.pdf_page), `visual review page mismatch for ${id}`);
+  }
 }
 
 assert(spans.span_count === 18 && spans.source_spans.length === 18, "source span count mismatch");
@@ -124,9 +129,10 @@ for (const record of cardManifest.cards) {
   assert(content.includes("尚未进行 SCM 适用性评估"), `SCM boundary missing ${record.card_id}`);
 }
 assert(readdirSync(paths.cardsDirectory).filter((name) => name.endsWith(".md")).length === 12, "expected exactly 12 M2-C card files");
-assert(aggregateCards.manifest_scope === "aggregate-through-m2c" && aggregateCards.card_count === 48, "aggregate card count mismatch");
-assert(aggregateCards.batch_counts[batchId] === 12 && aggregateCards.batch_counts[m2bCards.batch_id] === 24, "aggregate card batch count mismatch");
-assert(new Set(aggregateCards.cards.map((card) => card.semantic_key)).size === 48, "aggregate card keys must be unique");
+const aggregateCards = [...m2aCards.cards, ...m2bCards.cards, ...cardManifest.cards];
+assert(aggregateCards.length === 48, "in-memory aggregate card count mismatch");
+assert(m2bCards.card_count === 24 && cardManifest.card_count === 12, "aggregate card batch count mismatch");
+assert(new Set(aggregateCards.map((card) => card.semantic_key)).size === 48, "aggregate card keys must be unique");
 
 assert(termSeeds.terms.length === 11, `expected 11 term seeds, received ${termSeeds.terms.length}`);
 const priorTermKeys = new Set(m2bTerms.terms.map((term) => term.term_key));
@@ -140,8 +146,9 @@ for (const record of termManifest.terms) {
   assert(record.term_id === termId(seed), `term ID mismatch ${record.term_key}`);
   assert(record.content_hash === sha256(canonicalize(seed)), `term hash mismatch ${record.term_key}`);
 }
-assert(aggregateTerms.manifest_scope === "aggregate-through-m2c" && aggregateTerms.term_count === 44, "aggregate term count mismatch");
-assert(new Set(aggregateTerms.terms.map((term) => term.term_key)).size === 44, "aggregate term keys must be unique");
+const aggregateTerms = [...m2bTerms.terms, ...termManifest.terms];
+assert(aggregateTerms.length === 44, "in-memory aggregate term count mismatch");
+assert(new Set(aggregateTerms.map((term) => term.term_key)).size === 44, "aggregate term keys must be unique");
 
 assert(relationSeeds.relations.length === 24, `expected 24 relation seeds, received ${relationSeeds.relations.length}`);
 assert(relationManifest.relation_count === 24 && relationManifest.relations.length === 24, "M2-C relation manifest count mismatch");
@@ -165,9 +172,10 @@ for (const record of relationManifest.relations) {
   assert(record.relation_status === "candidate" && record.review_status === "pending", `relation boundary mismatch ${record.relation_id}`);
   assert(record.content_hash === sha256(canonicalize(seed)), `relation hash mismatch ${record.relation_id}`);
 }
-assert(aggregateRelations.manifest_scope === "aggregate-through-m2c" && aggregateRelations.relation_count === 60, "aggregate relation count mismatch");
-assert(aggregateRelations.batch_counts[m2bRelations.batch_id] === 36 && aggregateRelations.batch_counts[batchId] === 24, "aggregate relation batch count mismatch");
-assert(new Set(aggregateRelations.relations.map((relation) => relation.relation_id)).size === 60, "aggregate relation IDs must be unique");
+const aggregateRelations = [...m2bRelations.relations, ...relationManifest.relations];
+assert(aggregateRelations.length === 60, "in-memory aggregate relation count mismatch");
+assert(m2bRelations.relation_count === 36 && relationManifest.relation_count === 24, "aggregate relation batch count mismatch");
+assert(new Set(aggregateRelations.map((relation) => relation.relation_id)).size === 60, "aggregate relation IDs must be unique");
 
 const contentMap = readFileSync(paths.contentMap, "utf8");
 const termTable = readFileSync(paths.termTable, "utf8");
@@ -178,13 +186,12 @@ assert((relationTable.match(/^\| (?!---)/gm) || []).length === 25, "relation tab
 assert(summary.section_record_count === 18 && summary.card_count === 12 && summary.term_count === 11 && summary.relation_count === 24, "batch summary count mismatch");
 assert(summary.boundaries.scm_crosswalk_performed === false && summary.boundaries.database_write === false && summary.boundaries.provider_call === false, "side-effect boundary mismatch");
 
-const policyPaths = [paths.sectionMap, paths.cardSeeds, paths.termSeeds, paths.relationSeeds, paths.visualReview, paths.spans, paths.cardManifest, paths.aggregateCards, paths.termManifest, paths.aggregateTerms, paths.relationManifest, paths.aggregateRelations, paths.summary, paths.contentMap, paths.termTable, paths.relationTable, ...cardManifest.cards.map((card) => pathAt(card.relative_path))];
+const policyPaths = [paths.sectionMap, paths.cardSeeds, paths.termSeeds, paths.relationSeeds, paths.visualReview, paths.spans, paths.cardManifest, paths.termManifest, paths.relationManifest, paths.summary, paths.contentMap, paths.termTable, paths.relationTable, ...cardManifest.cards.map((card) => pathAt(card.relative_path))];
 for (const path of policyPaths) {
   const content = readFileSync(path, "utf8");
-  assert(!content.includes("/Users/"), `personal absolute path found in ${path}`);
-  assert(!content.includes("桌面 - "), `personal desktop path found in ${path}`);
+  assert(!containsPersonalAbsolutePath(content), `personal absolute path found in ${path}`);
 }
-const deterministicPaths = [paths.spans, paths.cardManifest, paths.aggregateCards, paths.termManifest, paths.aggregateTerms, paths.relationManifest, paths.aggregateRelations, paths.summary, paths.contentMap, paths.termTable, paths.relationTable, ...cardManifest.cards.map((card) => pathAt(card.relative_path))];
+const deterministicPaths = [paths.spans, paths.cardManifest, paths.termManifest, paths.relationManifest, paths.summary, paths.contentMap, paths.termTable, paths.relationTable, ...cardManifest.cards.map((card) => pathAt(card.relative_path))];
 const before = snapshot(deterministicPaths);
 execFileSync(process.execPath, [paths.build], { encoding: "utf8" });
 const after = snapshot(deterministicPaths);

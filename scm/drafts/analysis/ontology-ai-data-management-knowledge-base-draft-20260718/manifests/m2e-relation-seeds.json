@@ -41,7 +41,6 @@
     {"subject_key":"oadm:enterprise-learning:physical-logical-dual-learning","predicate":"DEFINES","object_key":"oadm:term:physical-logical-dual-learning","section_ids":["10.1.2"],"rationale":"该卡定义 AI 面向物理和逻辑的双重学习。"},
     {"subject_key":"oadm:enterprise-learning:physical-logical-dual-learning","predicate":"REQUIRES","object_key":"oadm:agent-governance:tri-pillar-risk-governance","section_ids":["10.1.2"],"rationale":"持续学习需人类监督、价值治理与明确边界。"},
     {"subject_key":"oadm:enterprise-model:ontology-world-model-fusion","predicate":"DEFINES","object_key":"oadm:term:world-model","section_ids":["10.1.3"],"rationale":"融合架构区分现实因果引擎和业务逻辑内核。"},
-    {"subject_key":"oadm:enterprise-model:ontology-world-model-fusion","predicate":"REQUIRES","object_key":"oadm:engineering:dual-model-validation","section_ids":["10.1.3"],"rationale":"双模型输出和冲突需要双重验证。"},
     {"subject_key":"oadm:enterprise-operating-model:intelligent-native-enterprise","predicate":"DEFINES","object_key":"oadm:term:intelligent-native-enterprise","section_ids":["10.2.1"],"rationale":"该卡概括智能原生企业的作者定义。"},
     {"subject_key":"oadm:enterprise-operating-model:intelligent-native-enterprise","predicate":"REQUIRES","object_key":"oadm:application:three-stage-landing-strategy","section_ids":["10.2.1"],"rationale":"未来形态仍需通过验证、小切口和资产化逐步落地。"},
     {"subject_key":"oadm:enterprise-organization:agent-centered-network","predicate":"PART_OF","object_key":"oadm:enterprise-operating-model:intelligent-native-enterprise","section_ids":["10.2.2"],"rationale":"Agent 组织网络是智能原生企业的组织形态。"},

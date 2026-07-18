@@ -14,7 +14,6 @@ const visualReviewPath = resolve(root, "manifests/m2c-visual-review.json");
 const m2aCardManifestPath = resolve(root, "manifests/m2a-knowledge-card-manifest.json");
 const m2bCardManifestPath = resolve(root, "manifests/m2b-knowledge-card-manifest.json");
 const m2bTermManifestPath = resolve(root, "manifests/m2b-knowledge-term-manifest.json");
-const m2bRelationManifestPath = resolve(root, "manifests/m2b-knowledge-relation-manifest.json");
 const contentDirectory = resolve(root, "04-engineering-methods");
 const cardsDirectory = resolve(contentDirectory, "cards");
 const contentMapPath = resolve(contentDirectory, "00-engineering-methods-content-map.md");
@@ -22,11 +21,8 @@ const termTablePath = resolve(contentDirectory, "01-engineering-terms.md");
 const relationTablePath = resolve(contentDirectory, "02-engineering-workflow-relations.md");
 const sourceSpansPath = resolve(root, "manifests/m2c-source-spans.json");
 const cardManifestPath = resolve(root, "manifests/m2c-knowledge-card-manifest.json");
-const aggregateCardManifestPath = resolve(root, "manifests/knowledge-card-manifest.json");
 const termManifestPath = resolve(root, "manifests/m2c-knowledge-term-manifest.json");
-const aggregateTermManifestPath = resolve(root, "manifests/knowledge-term-manifest.json");
 const relationManifestPath = resolve(root, "manifests/m2c-knowledge-relation-manifest.json");
-const aggregateRelationManifestPath = resolve(root, "manifests/knowledge-relation-manifest.json");
 const batchSummaryPath = resolve(root, "manifests/m2c-batch-summary.json");
 
 const sha256 = (value) => createHash("sha256").update(value).digest("hex");
@@ -51,7 +47,6 @@ const visualReview = readJson(visualReviewPath);
 const m2aCards = readJson(m2aCardManifestPath);
 const m2bCards = readJson(m2bCardManifestPath);
 const m2bTerms = readJson(m2bTermManifestPath);
-const m2bRelations = readJson(m2bRelationManifestPath);
 const sectionById = new Map(sectionMap.sections.map((section) => [section.section_id, section]));
 const reviewedArtifactIds = new Set(visualReview.reviews.flatMap((review) => review.status === "reviewed" ? review.artifact_ids : []));
 
@@ -132,18 +127,6 @@ writeFileSync(cardManifestPath, `${JSON.stringify({
   batch_id: batchId, id_policy: cardSeeds.id_policy, card_count: cardRecords.length, cards: cardRecords
 }, null, 2)}\n`);
 
-const aggregateCards = [
-  ...m2aCards.cards.map((card) => ({ ...card, source_batch_id: m2aCards.batch_id })),
-  ...m2bCards.cards.map((card) => ({ ...card, source_batch_id: m2bCards.batch_id })),
-  ...cardRecords.map((card) => ({ ...card, source_batch_id: batchId }))
-].sort((a, b) => a.semantic_key.localeCompare(b.semantic_key));
-writeFileSync(aggregateCardManifestPath, `${JSON.stringify({
-  schema_version: "1.0.0", document_id: cardSeeds.document_id, domain_id: cardSeeds.domain_id,
-  manifest_scope: "aggregate-through-m2c",
-  batch_counts: { [m2aCards.batch_id]: m2aCards.card_count, [m2bCards.batch_id]: m2bCards.card_count, [batchId]: cardRecords.length },
-  card_count: aggregateCards.length, cards: aggregateCards
-}, null, 2)}\n`);
-
 const termRecords = termSeeds.terms.map((seed) => ({
   term_id: termId(seed), term_key: seed.term_key, preferred_label: seed.preferred_label, aliases: seed.aliases,
   definition: seed.definition, not_equivalent_to: seed.not_equivalent_to, section_ids: seed.section_ids,
@@ -153,15 +136,6 @@ const termRecords = termSeeds.terms.map((seed) => ({
 writeFileSync(termManifestPath, `${JSON.stringify({
   schema_version: "1.0.0", document_id: termSeeds.document_id, domain_id: termSeeds.domain_id,
   batch_id: batchId, term_count: termRecords.length, terms: termRecords
-}, null, 2)}\n`);
-const aggregateTerms = [
-  ...m2bTerms.terms.map((term) => ({ ...term, source_batch_id: m2bTerms.batch_id })),
-  ...termRecords.map((term) => ({ ...term, source_batch_id: batchId }))
-].sort((a, b) => a.term_key.localeCompare(b.term_key));
-writeFileSync(aggregateTermManifestPath, `${JSON.stringify({
-  schema_version: "1.0.0", document_id: termSeeds.document_id, domain_id: termSeeds.domain_id,
-  manifest_scope: "aggregate-through-m2c", batch_counts: { [m2bTerms.batch_id]: m2bTerms.term_count, [batchId]: termRecords.length },
-  term_count: aggregateTerms.length, terms: aggregateTerms
 }, null, 2)}\n`);
 
 const termTableLines = ["---", "title: 第 6 章新增工程术语", "doc_type: glossary", "module: scm", "topic: ontology-ai-data-management-m2c", "status: draft", "created: 2026-07-18", "updated: 2026-07-18", "owner: self", "source: human+ai", "---", "", "# 第 6 章新增工程术语", "", "仅收录相对 M2-B 新增的术语；既有 W3C 标准术语直接复用，不重复建档。", "", "| 首选词 | 检索别名 | 来源内定义 | 不等同于 | 来源小节 |", "|---|---|---|---|---|"];
@@ -186,16 +160,6 @@ writeFileSync(relationManifestPath, `${JSON.stringify({
   schema_version: "1.0.0", document_id: relationSeeds.document_id, domain_id: relationSeeds.domain_id,
   batch_id: batchId, allowed_predicates: relationSeeds.allowed_predicates,
   relation_count: relationRecords.length, relations: relationRecords
-}, null, 2)}\n`);
-const aggregateRelations = [
-  ...m2bRelations.relations.map((relation) => ({ ...relation, source_batch_id: m2bRelations.batch_id })),
-  ...relationRecords.map((relation) => ({ ...relation, source_batch_id: batchId }))
-].sort((a, b) => a.relation_id.localeCompare(b.relation_id));
-writeFileSync(aggregateRelationManifestPath, `${JSON.stringify({
-  schema_version: "1.0.0", document_id: relationSeeds.document_id, domain_id: relationSeeds.domain_id,
-  manifest_scope: "aggregate-through-m2c", allowed_predicates: relationSeeds.allowed_predicates,
-  batch_counts: { [m2bRelations.batch_id]: m2bRelations.relation_count, [batchId]: relationRecords.length },
-  relation_count: aggregateRelations.length, relations: aggregateRelations
 }, null, 2)}\n`);
 
 const relationTableLines = ["---", "title: 第 6 章工程方法候选关系", "doc_type: relation-map", "module: scm", "topic: ontology-ai-data-management-m2c", "status: draft", "created: 2026-07-18", "updated: 2026-07-18", "owner: self", "source: human+ai", "---", "", "# 第 6 章工程方法候选关系", "", "以下关系均为来源内候选关系，状态为 `candidate/pending`；没有 SCM crosswalk。", "", "| 主体 | 关系 | 客体 | 理由 | 来源小节 |", "|---|---|---|---|---|"];

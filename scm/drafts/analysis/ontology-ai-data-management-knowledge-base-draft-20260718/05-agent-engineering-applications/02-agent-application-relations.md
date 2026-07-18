@@ -16,7 +16,7 @@ source: human+ai
 
 | 主体 | 关系 | 客体 | 理由 | 来源小节 |
 |---|---|---|---|---|
-| `oadm:agent-engineering:intent-ontology-activation` | `REQUIRES` | `oadm:semantic-framework:seven-plus-one` | 意图到本体的桥接需要可区分的标准语义维度。 | 7.1.1、7.1.2 |
+| `oadm:agent-engineering:intent-ontology-activation` | `REQUIRES` | `oadm:semantic-framework:seven-plus-one` | 意图到本体的桥接需要可区分的标准语义维度。 | 7.1.2、7.2.2 |
 | `oadm:agent-engineering:intent-ontology-activation` | `DEFINES` | `oadm:term:intent-ontology-alignment` | 该链路定义了任务语义与知识结构对齐。 | 7.1.2 |
 | `oadm:agent-engineering:minimal-ontology-retrieval` | `REQUIRES` | `oadm:agent-engineering:intent-ontology-activation` | 检索边界由已对齐的任务意图确定。 | 7.1.3 |
 | `oadm:agent-engineering:minimal-ontology-retrieval` | `DEFINES` | `oadm:term:minimal-necessary-ontology` | 来源把最小必要本体作为调用原则。 | 7.1.3 |
@@ -45,7 +45,7 @@ source: human+ai
 | `oadm:agent-platform:four-module-implementation` | `REQUIRES` | `oadm:engineering:ontology-tooling-platform` | 四模块路径复用第 6 章端到端工具平台能力。 | 7.5.1、7.5.2、7.5.3、7.5.4、7.5.5 |
 | `oadm:agent-platform:four-module-implementation` | `DEFINES` | `oadm:term:semantic-middleware` | 语义中间件是模块协同的统一枢纽。 | 7.5.5 |
 | `oadm:application:scenario-portfolio-selection` | `APPLICABLE_TO` | `oadm:application:three-stage-landing-strategy` | 场景选择规则决定后续三阶段落地对象。 | 8.1.1、8.1.2、8.1.3 |
-| `oadm:application:scenario-portfolio-selection` | `REQUIRES` | `oadm:implementation:point-line-surface` | 小切口与扩展策略需要先筛选高价值可结构化场景。 | 8.1.2、8.1.3 |
+| `oadm:implementation:point-line-surface` | `REQUIRES` | `oadm:application:scenario-portfolio-selection` | 点线面实施路径需要先筛选高价值且可结构化的场景。 | 8.1.2、8.1.3 |
 | `oadm:application:intelligent-workflow-automation` | `APPLICABLE_TO` | `oadm:agent-action:risk-routed-execution` | 智能流程根据审批风险选择自动或人工执行。 | 8.2.1 |
 | `oadm:application:intelligent-workflow-automation` | `REQUIRES` | `oadm:agent-action:safe-dynamic-action-loop` | API 流程执行需要 Action 前置条件和反馈门禁。 | 8.2.1 |
 | `oadm:application:autonomous-operations` | `REQUIRES` | `oadm:agent-engineering:minimal-ontology-retrieval` | 产品配置用渐进 Skills 与压缩控制知识上下文。 | 8.2.2 |

@@ -37,8 +37,12 @@ source: human+ai
 ## 可重跑命令
 
 ```bash
-node tools/build-m1-source-map.mjs \
-  --pdf "/path/to/user-provided.pdf" \
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+KB_ROOT="$REPO_ROOT/scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718"
+: "${PDF_PATH:?Set PDF_PATH to the user-provided PDF outside the repository}"
+test -f "$PDF_PATH"
+node "$KB_ROOT/tools/build-m1-source-map.mjs" \
+  --pdf "$PDF_PATH" \
   --generated-at "2026-07-18T00:00:00.000Z"
 ```
 

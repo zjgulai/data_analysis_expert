@@ -23,9 +23,9 @@
     "m2b-core-theory-ch04-ch05": 36,
     "m2c-engineering-method-ch06": 24,
     "m2d-agent-engineering-applications-ch07-ch08": 46,
-    "m2e-agent-governance-future-enterprise-ch09-ch10": 49
+    "m2e-agent-governance-future-enterprise-ch09-ch10": 48
   },
-  "relation_count": 155,
+  "relation_count": 154,
   "relations": [
     {
       "relation_id": "oadm-rel-02568c6cacee",
@@ -698,27 +698,6 @@
       "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
     },
     {
-      "relation_id": "oadm-rel-3d34912b5abb",
-      "subject_id": "oadm-ontology-world-model-fusion-61b7f67680",
-      "subject_type": "KnowledgeCard",
-      "subject_key": "oadm:enterprise-model:ontology-world-model-fusion",
-      "predicate": "REQUIRES",
-      "object_id": "oadm-dual-model-validation-eff49bdf82",
-      "object_type": "KnowledgeCard",
-      "object_key": "oadm:engineering:dual-model-validation",
-      "source_span_ids": [
-        "oadm-span-s10-1-3-p202-p203"
-      ],
-      "section_ids": [
-        "10.1.3"
-      ],
-      "rationale": "双模型输出和冲突需要双重验证。",
-      "relation_status": "candidate",
-      "review_status": "pending",
-      "content_hash": "d157d06b873ac01b63bd5d76e832519aaadb2bdc7cd7af233eeba81ea2824bff",
-      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
-    },
-    {
       "relation_id": "oadm-rel-3dbc090ade14",
       "subject_id": "oadm-four-module-implementation-5ef6abe282",
       "subject_type": "KnowledgeCard",
@@ -883,7 +862,7 @@
       "object_type": "KnowledgeCard",
       "object_key": "oadm:agent-trust:six-proof-accountability-system",
       "source_span_ids": [
-        "oadm-span-s9-2-5-p188-p188",
+        "oadm-span-s9-2-5-p188-p189",
         "oadm-span-s9-2-6-p188-p189"
       ],
       "section_ids": [
@@ -1228,6 +1207,29 @@
       "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
     },
     {
+      "relation_id": "oadm-rel-669d32d801fd",
+      "subject_id": "oadm-point-line-surface-08ab3b75c8",
+      "subject_type": "KnowledgeCard",
+      "subject_key": "oadm:implementation:point-line-surface",
+      "predicate": "REQUIRES",
+      "object_id": "oadm-scenario-portfolio-selection-39626e3606",
+      "object_type": "KnowledgeCard",
+      "object_key": "oadm:application:scenario-portfolio-selection",
+      "source_span_ids": [
+        "oadm-span-s8-1-2-p155-p157",
+        "oadm-span-s8-1-3-p157-p158"
+      ],
+      "section_ids": [
+        "8.1.2",
+        "8.1.3"
+      ],
+      "rationale": "点线面实施路径需要先筛选高价值且可结构化的场景。",
+      "relation_status": "candidate",
+      "review_status": "pending",
+      "content_hash": "8284141b1b0398b9a924e35bd9db75827a27ca3963c85310e01bd2f684ed8183",
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
       "relation_id": "oadm-rel-676ca0c20199",
       "subject_id": "oadm-term-owl-s-2ad01f94",
       "subject_type": "Term",
@@ -1455,7 +1457,7 @@
         "oadm-span-s9-2-2-p185-p186",
         "oadm-span-s9-2-3-p186-p187",
         "oadm-span-s9-2-4-p187-p188",
-        "oadm-span-s9-2-5-p188-p188",
+        "oadm-span-s9-2-5-p188-p189",
         "oadm-span-s9-2-6-p188-p189"
       ],
       "section_ids": [
@@ -1612,17 +1614,17 @@
       "object_type": "KnowledgeCard",
       "object_key": "oadm:semantic-framework:seven-plus-one",
       "source_span_ids": [
-        "oadm-span-s7-1-1-p128-p130",
-        "oadm-span-s7-1-2-p130-p131"
+        "oadm-span-s7-1-2-p130-p131",
+        "oadm-span-s7-2-2-p136-p138"
       ],
       "section_ids": [
-        "7.1.1",
-        "7.1.2"
+        "7.1.2",
+        "7.2.2"
       ],
       "rationale": "意图到本体的桥接需要可区分的标准语义维度。",
       "relation_status": "candidate",
       "review_status": "pending",
-      "content_hash": "1dd87f0452a6b1864f5d7260f425b2e1cfb7ae4e21876b3cafb5da7be827583e",
+      "content_hash": "5b7059e914968f98d1e1ecf4cb216db7793b60672345f974f1630001b224c2a9",
       "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
     },
     {
@@ -1903,7 +1905,7 @@
       "object_type": "KnowledgeCard",
       "object_key": "oadm:inference-asset:traceability",
       "source_span_ids": [
-        "oadm-span-s9-2-5-p188-p188"
+        "oadm-span-s9-2-5-p188-p189"
       ],
       "section_ids": [
         "9.2.5"
@@ -2083,7 +2085,7 @@
         "oadm-span-s9-2-2-p185-p186",
         "oadm-span-s9-2-3-p186-p187",
         "oadm-span-s9-2-4-p187-p188",
-        "oadm-span-s9-2-5-p188-p188",
+        "oadm-span-s9-2-5-p188-p189",
         "oadm-span-s9-2-6-p188-p189"
       ],
       "section_ids": [
@@ -2794,7 +2796,7 @@
       "object_type": "Term",
       "object_key": "oadm:term:operation-hash-chain",
       "source_span_ids": [
-        "oadm-span-s9-2-5-p188-p188"
+        "oadm-span-s9-2-5-p188-p189"
       ],
       "section_ids": [
         "9.2.5"
@@ -3246,29 +3248,6 @@
       "review_status": "pending",
       "content_hash": "cdbfe70b5724ad0c1270b070dd6aa60e9bab1bc471fd3f13548e5d9ad98be1de",
       "source_batch_id": "m2c-engineering-method-ch06"
-    },
-    {
-      "relation_id": "oadm-rel-eecbc7b0bf18",
-      "subject_id": "oadm-scenario-portfolio-selection-39626e3606",
-      "subject_type": "KnowledgeCard",
-      "subject_key": "oadm:application:scenario-portfolio-selection",
-      "predicate": "REQUIRES",
-      "object_id": "oadm-point-line-surface-08ab3b75c8",
-      "object_type": "KnowledgeCard",
-      "object_key": "oadm:implementation:point-line-surface",
-      "source_span_ids": [
-        "oadm-span-s8-1-2-p155-p157",
-        "oadm-span-s8-1-3-p157-p158"
-      ],
-      "section_ids": [
-        "8.1.2",
-        "8.1.3"
-      ],
-      "rationale": "小切口与扩展策略需要先筛选高价值可结构化场景。",
-      "relation_status": "candidate",
-      "review_status": "pending",
-      "content_hash": "f987e4dee6eb8375e15f0ddf12287e62dd191124f27a98ecced2c49dd59adc0e",
-      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
     },
     {
       "relation_id": "oadm-rel-effd14b23539",

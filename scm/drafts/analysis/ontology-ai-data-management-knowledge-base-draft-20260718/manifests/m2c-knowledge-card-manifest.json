@@ -3,7 +3,12 @@
   "document_id": "book-ontology-ai-data-management-2026",
   "domain_id": "ontology-ai-data-management-draft",
   "batch_id": "m2c-engineering-method-ch06",
-  "id_policy": "card ID is derived only from semantic_key; content_hash is derived from the canonical seed",
+  "id_policy": {
+    "semantic_key_pattern": "oadm:<subject-area>:<semantic-slug>",
+    "card_id_pattern": "oadm-<semantic-slug>-<sha256(semantic-key)[0:10]>",
+    "content_hash_policy": "sha256(canonical-json-of-card-seed)",
+    "sorting_independent": true
+  },
   "card_count": 12,
   "cards": [
     {

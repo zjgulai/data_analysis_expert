@@ -14,12 +14,10 @@
       "pdf_page_end": 182,
       "section_path": "第 9 章 企业碳硅协同的智能体治理理念 / 9.1 基于区块链与本体的高阶治理框架 / 9.1.1 规则驱动的旧世界",
       "section_id": "9.1.1",
-      "figure_or_table_refs": [
-        "oadm-figure-9-1-p180"
-      ],
+      "figure_or_table_refs": [],
       "derived_summary_hash": "5333085215076ecc247eedd75a13ce199e08439fc95ca08c796f25d207c9bd2b",
       "raw_text_persisted": false,
-      "visual_review_status": "reviewed",
+      "visual_review_status": "not_required",
       "extraction_status": "paraphrased_and_mapped"
     },
     {
@@ -124,10 +122,10 @@
       "extraction_status": "paraphrased_and_mapped"
     },
     {
-      "span_id": "oadm-span-s9-2-5-p188-p188",
+      "span_id": "oadm-span-s9-2-5-p188-p189",
       "document_id": "book-ontology-ai-data-management-2026",
       "pdf_page_start": 188,
-      "pdf_page_end": 188,
+      "pdf_page_end": 189,
       "section_path": "第 9 章 企业碳硅协同的智能体治理理念 / 9.2 基于区块链技术构建智能体可信体系 / 9.2.5 追溯证明：构建全链路操作哈希链，实现智能化全过程数字监控",
       "section_id": "9.2.5",
       "figure_or_table_refs": [

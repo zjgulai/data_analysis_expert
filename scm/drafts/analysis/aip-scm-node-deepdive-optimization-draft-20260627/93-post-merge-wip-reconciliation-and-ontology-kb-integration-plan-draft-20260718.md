@@ -4,6 +4,7 @@ doc_type: execution_plan
 module: scm
 topic: post-merge-wip-reconciliation-and-ontology-kb-integration
 status: k0_local_commit_created_not_pushed
+status_snapshot: 2026-07-18_local_candidate_commit_creation_pre_push
 created: 2026-07-18
 updated: 2026-07-18
 owner: self
@@ -60,7 +61,7 @@ related:
 6. Wave E：旧 Loop、provider、Amazon/SOP 等资产逐组判定归属，不混入 K0/K1。
 7. 只有源仓运行时 PR 合并后，才创建独立仓内容同步 PR；知识库分析文档不下发独立仓。
 
-定性把握：**高**。两仓主线 SHA、开放 PR、当前 Git 现场和知识库本地验证均有新鲜只读证据；尚未执行任何本计划中的写操作。
+定性把握：**高**。以上结论是 2026-07-18 计划建立时的历史快照：当时两仓主线 SHA、开放 PR、Git 现场和知识库本地验证均有新鲜只读证据，且尚未执行本计划中的写操作；后续执行状态以第 10 节的分阶段历史检查点为准。
 
 ## 2. 不可突破的执行边界
 
@@ -146,7 +147,9 @@ gh pr list --repo zjgulai/scm --state open --json number,title,headRefName
 - [ ] 确认隔离 clone 干净，不自动修复其现场：
 
 ```bash
-CLEAN_ROOT="$(git -C "$HOME/project/ecom_ana_overview_scm_cleanmain_20260716" rev-parse --show-toplevel)"
+ORIGINAL_ROOT="$(git rev-parse --show-toplevel)"
+CLEAN_ROOT="$(git -C "${ORIGINAL_ROOT}_scm_cleanmain_20260716" rev-parse --show-toplevel)"
+test "$CLEAN_ROOT" = "${ORIGINAL_ROOT}_scm_cleanmain_20260716"
 test -z "$(git -C "$CLEAN_ROOT" status --porcelain)"
 ```
 
@@ -154,10 +157,13 @@ test -z "$(git -C "$CLEAN_ROOT" status --porcelain)"
 - [ ] 记录当前 SQLite 基线 hash，但不打开写连接：
 
 ```bash
-shasum -a 256 drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite
+ORIGINAL_ROOT="$(git rev-parse --show-toplevel)"
+ORIGINAL_DB_PATH="$ORIGINAL_ROOT/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite"
+test -f "$ORIGINAL_DB_PATH"
+shasum -a 256 "$ORIGINAL_DB_PATH"
 ```
 
-预期当前已知值为 `cb91dd0d63dad2d62d73f7da5c7058254b08ac36feb139921a38121dcf61cc99`；变化则停止并重新审计。
+这是原始脏工作区 WIP DB，预期当前已知值为 `cb91dd0d63dad2d62d73f7da5c7058254b08ac36feb139921a38121dcf61cc99`；变化则停止并重新审计。它不是 clean clone 的源仓 main 基线 DB。
 
 ### Task 1：建立 K0 隔离分支
 
@@ -192,15 +198,19 @@ scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/93-post-me
 
 - [ ] 先执行 `rsync --dry-run --itemize-changes`，确认输出只有上述路径；不得使用 `--delete`。
 - [ ] dry-run 通过后，以同一 allowlist 搬运到 clean clone。
-- [ ] 父仓 `.gitignore` 的通用 `tools/` 规则会忽略知识库内 12 个 `.mjs` 构建/验证脚本；不得遗漏这些文件，也不得为本任务放宽全局 ignore。搬运后用 `find "$KB_ROOT/tools" -type f -name '*.mjs' | wc -l` 明确验证数量为 12。
+- [ ] 父仓 `.gitignore` 的通用 `tools/` 规则会忽略知识库内 14 个 `.mjs` 文件（原 12 个构建/验证脚本，加本次评审新增的 helper 与 regression test）；不得遗漏这些文件，也不得为本任务放宽全局 ignore。搬运后用 `find "$KB_ROOT/tools" -type f -name '*.mjs' | wc -l` 明确验证数量为 14。
 - [ ] 检查没有 PDF、原始全文、整页图片、绝对源路径或临时输出：
 
 ```bash
 git -C "$CLEAN_ROOT" status --short
-rg -n '/Users/|桌面 - Pray|BEGIN (RSA |OPENSSH )?PRIVATE KEY|sk-[A-Za-z0-9]{20,}' \
-  "$CLEAN_ROOT/scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718" \
-  "$CLEAN_ROOT/scm/drafts/analysis/ontology-driven-ai-data-management-kb-ingestion-plan-draft-20260718.md"
-find "$CLEAN_ROOT/scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718" \
+KB_ROOT="$CLEAN_ROOT/scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718"
+INGESTION_PLAN="$CLEAN_ROOT/scm/drafts/analysis/ontology-driven-ai-data-management-kb-ingestion-plan-draft-20260718.md"
+RECONCILIATION_PLAN="$CLEAN_ROOT/scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/93-post-merge-wip-reconciliation-and-ontology-kb-integration-plan-draft-20260718.md"
+rg -n '/[U]sers/|桌面[[:space:]]+-[[:space:]]+Pray|BEGIN (RSA |OPENSSH )?PRIVATE KEY|sk-[A-Za-z0-9]{20,}' \
+  "$KB_ROOT" \
+  "$INGESTION_PLAN" \
+  "$RECONCILIATION_PLAN"
+find "$KB_ROOT" \
   -type f \( -iname '*.pdf' -o -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' \) -print
 ```
 
@@ -213,6 +223,7 @@ find "$CLEAN_ROOT/scm/drafts/analysis/ontology-ai-data-management-knowledge-base
 - [ ] 对全部 JSON、JSONL 和 Node 工具做静态验证：
 
 ```bash
+CLEAN_ROOT="$(git rev-parse --show-toplevel)"
 KB_ROOT="$CLEAN_ROOT/scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718"
 find "$KB_ROOT" -type f -name '*.json' -exec jq empty {} \;
 find "$KB_ROOT" -type f -name '*.jsonl' -exec sh -c 'while IFS= read -r line; do printf "%s\n" "$line" | jq -e . >/dev/null || exit 1; done < "$1"' sh {} \;
@@ -222,21 +233,35 @@ find "$KB_ROOT/tools" -type f -name '*.mjs' -exec node --check {} \;
 - [ ] 使用外部附件路径执行 M1 来源验证；PDF 只参与本地校验，不复制到仓库：
 
 ```bash
-PDF_PATH="$HOME/Desktop/桌面 - Pray.Chow的MacBook Pro/本体驱动的AI数据管理.pdf"
+: "${PDF_PATH:?Set PDF_PATH to the user-provided PDF outside the repository}"
+test -f "$PDF_PATH"
 node "$KB_ROOT/tools/verify-m1-source-map.mjs" --pdf "$PDF_PATH" --output-root "$KB_ROOT"
 ```
 
 - [ ] 顺序执行 `verify-m2a-content.mjs` 至 `verify-m2e-content.mjs`；M2 验证器支持 `--pdf` 时统一传入同一附件。
-- [ ] 确认最新质量门槛：151 section records、141 subsections、10 summaries、89 cards、81 terms、155 relations、exact duplicate 0、normalized-title duplicate 0、missing node 0、M2E orphan 0；1 条 `CONTRADICTS` 候选和 30 个视觉复核区间必须保留为待评审项，不能伪装为零风险。
+- [ ] 确认最新质量门槛：151 section records、141 subsections、10 summaries、89 cards、81 terms、154 relations、exact duplicate 0、normalized-title duplicate 0、missing node 0、M2E orphan 0；1 条 `CONTRADICTS` 候选和 30 个视觉复核区间必须保留为待评审项，不能伪装为零风险。
 - [ ] 复制验证前后的知识库清单 hash 并比较；执行 build 重跑时必须做到确定性一致。
-- [ ] 验证前后分别计算两份 `governance_workbench.sqlite` hash：原始脏工作区 WIP DB 必须保持 `cb91dd0d63dad2d62d73f7da5c7058254b08ac36feb139921a38121dcf61cc99`；源仓 main 基线的 clean clone DB 必须保持 `3d972e46ec43a64ad69265f295af4ffd9039dfe721a0e9f7f22d02e9b7652af7`。两者是不同证据层，不要求相互相等，也不复制或打开写连接。
+- [ ] 验证前后分别计算两份 `governance_workbench.sqlite` hash，并使用不同变量保存路径：
+
+```bash
+CLEAN_ROOT="$(git rev-parse --show-toplevel)"
+ORIGINAL_ROOT="$(git -C "${CLEAN_ROOT%_scm_cleanmain_20260716}" rev-parse --show-toplevel)"
+test "$CLEAN_ROOT" = "${ORIGINAL_ROOT}_scm_cleanmain_20260716"
+ORIGINAL_DB_PATH="$ORIGINAL_ROOT/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite"
+CLEAN_DB_PATH="$CLEAN_ROOT/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite"
+test -f "$ORIGINAL_DB_PATH" && test -f "$CLEAN_DB_PATH"
+test "$(shasum -a 256 "$ORIGINAL_DB_PATH" | awk '{print $1}')" = "cb91dd0d63dad2d62d73f7da5c7058254b08ac36feb139921a38121dcf61cc99"
+test "$(shasum -a 256 "$CLEAN_DB_PATH" | awk '{print $1}')" = "3d972e46ec43a64ad69265f295af4ffd9039dfe721a0e9f7f22d02e9b7652af7"
+```
+
+  原始脏工作区 WIP DB 必须保持 `cb91dd0d63dad2d62d73f7da5c7058254b08ac36feb139921a38121dcf61cc99`；源仓 main 基线的 clean clone DB 必须保持 `3d972e46ec43a64ad69265f295af4ffd9039dfe721a0e9f7f22d02e9b7652af7`。两者是不同证据层，不要求相互相等，也不复制或打开写连接。
 - [ ] 执行 `git -C "$CLEAN_ROOT" diff --check`。
 
 ### Task 4：K0 精确 stage、commit 与 PR Gate
 
 **验收：** staged diff 只包含三条 allowlist，且 PR 描述明确 `docs/manifests/tools-only`、`database_write=false`、`provider_call=false`。
 
-- [ ] 使用三个完整路径分别 `git add -- <path>`；其中仅对已验证的 12 个 `tools/*.mjs` 使用精确 `git add -f -- <12 个路径>`，不修改全局 `.gitignore`。禁止从仓库根执行 `git add .`。
+- [ ] 使用三个完整路径分别 `git add -- <path>`；其中仅对已验证的 14 个 `tools/*.mjs` 使用精确 `git add -f -- <14 个路径>`，不修改全局 `.gitignore`。禁止从仓库根执行 `git add .`。
 - [ ] 以 `git diff --cached --name-status` 与固定 allowlist 比较；出现任何额外路径立即 unstage 并停止。
 - [ ] 本地 Gate 全绿后，建议单一提交：`docs(scm): add ontology knowledge base M1-M2E candidate assets`。
 - [ ] commit 是独立授权点；未授权时停在 clean staged diff。
@@ -366,7 +391,9 @@ production_unchanged=true
 
 在此之前，准确表述应是：“原始双仓合并链已完成；post-merge WIP 正在分批收敛”，不能笼统称整个当前工作区已经合并完成。
 
-## 10. 2026-07-18 K0 Task 0–3 执行检查点
+## 10. 2026-07-18 K0 历史执行检查点
+
+本节按执行先后保留多个历史快照，不表示 GitHub 当前状态：10.1–10.4 是 commit 前，10.5 是 staged 后、commit 前，10.6 是本地候选 commit 创建后且尚未 push/创建 PR/merge 的检查点。任何后续远端状态必须另行读取新鲜证据，不回写覆盖这些历史边界。
 
 ### 10.1 Gate 0 与隔离分支
 
@@ -374,7 +401,7 @@ production_unchanged=true
 - WIP 冻结为 337 条：K0 180、R1/R2/R3 各 1、D 1、E 65、X 88；完整清单字段为 decision/status/size/SHA-256/path，指纹为 `34c4e479813717ddbe3011c93b003cbf2fd2fe170efd365a3625a128e39aed3c`。
 - K0 清单 180 条，包含 178 个知识库文件和 2 个计划文件；其中 12 个 `tools/*.mjs` 被父仓通用 ignore 规则隐藏。K0 指纹为 `074a3625fa34660ebd382574c4e1b9ff14e05faf892dbf9c6a8f6bdbdc4b5b4b`。
 - clean clone 的 Git HTTPS fetch 未填充 `FETCH_HEAD`。本次未使用陈旧 remote-tracking ref，而是以 GitHub API 新鲜精确 SHA 加本地 `cat-file` commit 对象双重确认基线。
-- 已从该精确 SHA 创建 `codex/scm-ontology-kb-m2-20260718`；当前没有 commit、push、PR 或 merge。
+- 已从该精确 SHA 创建 `codex/scm-ontology-kb-m2-20260718`；在此 Gate 0 历史检查点尚无 commit、push、PR 或 merge。
 
 ### 10.2 Allowlist 与安全边界
 
@@ -395,7 +422,7 @@ production_unchanged=true
 | KB 确定性 | 178 文件，重建前后树指纹均为 `2f46102b941eba8b35475b805eaa2cbd1ce9277ba8eec97b505b6acdadf9f994`。 |
 | DB 边界 | 脏工作区 DB 前后均为 `cb91dd0d...cc99`；clean main DB 前后均为 `3d972e46...2af7`。两者未复制、未写入。 |
 
-### 10.4 当前授权边界
+### 10.4 Task 0–3 历史授权边界（commit 前）
 
 ```text
 source_commit_created=false
@@ -408,7 +435,7 @@ provider_call=false
 production_unchanged=true
 ```
 
-Task 4 的精确 stage 已获授权并执行；本地 commit 仍是独立授权点。
+随后 Task 4 的精确 stage 获授权并执行；在本检查点，本地 commit 仍是独立授权点。
 
 ### 10.5 Task 4 staged 检查点
 
@@ -416,11 +443,23 @@ Task 4 的精确 stage 已获授权并执行；本地 commit 仍是独立授权�
 - staged 文件集合与“178 个知识库文件 + 知识入库总计划 + 本计划”精确相等；allowlist 外路径、未 stage 路径和未跟踪路径均为 0。
 - `git diff --cached --check` 通过；staged 资产为 115 Markdown、51 JSON、2 JSONL、12 MJS，全部是新增文本文件，二进制、数据库、prototype runtime 和禁止文件类型均为 0。
 - staged 与 worktree 一致时重新完成 51 JSON、2 JSONL/306 条记录、12 MJS 静态检查以及 M1、M2-A 至 M2-E 全链验证；确定性、数据库和 provider 边界保持不变。
-- cached 内容中的 5 个 `/Users/` 字面量仅存在于 verifier 的“拒绝个人绝对路径”自检断言；知识数据与知识入库计划中的真实绝对路径命中为 0。
-- 本地原子 commit 使用 `docs(scm): add ontology knowledge base M1-M2E candidate assets`；未创建远端分支或 PR。
+- cached 内容中的 5 个 macOS 用户目录字面量仅存在于 verifier 的“拒绝个人绝对路径”自检断言；知识数据与计划文档中的真实个人绝对路径命中为 0。
+- 候选本地原子 commit 信息为 `docs(scm): add ontology knowledge base M1-M2E candidate assets`；在此 staged 检查点尚未创建 commit、远端分支或 PR。
 
-### 10.6 本地原子 commit 授权
+### 10.6 本地候选原子 commit 历史检查点
 
 - 用户已明确授权提交信息：`docs(scm): add ontology knowledge base M1-M2E candidate assets`。
-- 本计划与 178 个知识库文件、知识入库总计划共同进入同一个本地原子 commit；具体 commit SHA 以 Git 提交结果为准。
-- 本次授权不包含 push、远端分支、PR、merge、独立仓同步或 deploy，相关 boundary 继续保持 `false`。
+- 本计划与 178 个知识库文件、知识入库总计划共同进入本地候选原子 commit `26f9e98`。
+- 该候选 commit 创建时的边界如下；本节不记录也不推断任何后续 push/PR 状态：
+
+```text
+source_commit_created=true
+source_commit=26f9e98
+push_created=false
+pull_request_created=false
+merge_executed=false
+standalone_sync_executed=false
+database_write=false
+provider_call=false
+production_unchanged=true
+```

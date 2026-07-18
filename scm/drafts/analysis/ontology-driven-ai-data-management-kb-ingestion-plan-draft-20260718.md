@@ -16,7 +16,7 @@ source: human+ai
 
 推荐采用“源文件冻结 → 页级结构化抽取 → 原子知识卡 → 本体关系层 → 隔离候选库 → 检索与引用验收 → 人工晋升”的完整链路。
 
-现已按批准完成 M1 与 M2-A 至 M2-E：全书第 1–10 章的 141 个三级正文小节和 10 个章末小结均已形成来源地图，聚合为 89 张知识卡、81 个术语和 155 条候选关系，并输出全书覆盖与图谱质量报告。当前仍未执行 SCM crosswalk、知识库导入、SQLite 写入、工作台 provider 调用、commit 或 merge。
+现已按批准完成 M1 与 M2-A 至 M2-E：全书第 1–10 章的 141 个三级正文小节和 10 个章末小结均已形成 151 条来源记录；PR 评审修正后聚合为 89 张知识卡、81 个术语和 154 条候选关系，并输出全书覆盖与图谱质量报告。候选分支和 PR #28 已存在；仍未执行 SCM crosswalk、知识库导入、SQLite 写入、工作台 provider 调用或 merge。本文不以静态句子声称远端最新 commit/check 状态；第 13 节另行保留 M2-E 首次内容完成时的 49/155 历史快照。
 
 不建议直接执行现有 `npm run import`，原因如下：
 
@@ -98,7 +98,7 @@ promotion_policy: owner_review_required
 建议源资产目录：
 
 ```text
-drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/
+scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/
 ├─ 00-governance/
 │  ├─ source-manifest.json
 │  ├─ extraction-policy.md
@@ -401,7 +401,7 @@ flowchart LR
   - [x] M2-B：生成第一版 33 个术语与 36 条候选关系。
   - [x] M2-C：新增 11 个工程术语与 24 条候选关系；聚合为 44 个术语与 60 条关系。
   - [x] M2-D：新增 16 个 Agent 与应用术语、46 条候选关系；聚合为 60 个术语与 106 条关系。
-  - [x] M2-E：新增 21 个治理与未来企业术语、49 条候选关系；聚合为 81 个术语与 155 条关系。
+  - [x] M2-E：新增 21 个治理与未来企业术语、48 条候选关系；评审修正后聚合为 81 个术语与 154 条关系。
 - [x] 标注全书作者案例、推断、不确定项和反例。
   - [x] M2-A：第 1–3 章已分离 `author_argument`、`author_framework`、`author_risk`、`author_example` 与 `chapter_summary`。
   - [x] M2-B：新增区分 `author_standard_mapping`、`author_governance_rule` 与 `author_mechanism`，并保留案例和标准未核验边界。
@@ -432,7 +432,7 @@ flowchart LR
   - [x] M2-B：生成 36 条候选关系，主体、客体和证据引用错误为 0，M2-B 卡片孤儿数为 0。
   - [x] M2-C：新增 24 条候选关系，主体、客体和证据引用错误为 0，M2-C 卡片孤儿数为 0。
   - [x] M2-D：新增 46 条候选关系，主体、客体和证据引用错误为 0，M2-D 卡片孤儿数为 0。
-  - [x] M2-E：新增 49 条候选关系，主体、客体和证据引用错误为 0，M2-E 卡片与术语孤儿数为 0。
+  - [x] M2-E：新增 48 条候选关系，主体、客体和证据引用错误为 0，M2-E 卡片与术语孤儿数为 0。
 - [ ] 建立 candidate card → SCM object/metric/rule crosswalk。
 - [x] 输出重复、冲突、孤儿和未覆盖报告。
 
@@ -475,10 +475,19 @@ flowchart LR
 - 图表：74 个图、21 个表；图表编号在清单内唯一。
 - 视觉复核：PDF p.1、2、40、91、97、126、145、211。
 - 异常解释：p.2 为图片版正式封面，p.211 为图片版出版社书目页，均不是漏抽。
-- 验收命令：`node tools/verify-m1-source-map.mjs --pdf "/path/to/user-provided.pdf"`。
+- 验收命令：
+
+```bash
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+KB_ROOT="$REPO_ROOT/scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718"
+: "${PDF_PATH:?Set PDF_PATH to the user-provided PDF outside the repository}"
+test -f "$PDF_PATH"
+node "$KB_ROOT/tools/verify-m1-source-map.mjs" --pdf "$PDF_PATH" --output-root "$KB_ROOT"
+```
+
 - 验收结果：`m1_verification_passed`，失败项 0。
 
-## 13. 当前证据边界
+## 13. M2-E 内容完成时的证据边界（历史快照）
 
 - `pdf_audit=true`
 - `chapter_structure_extracted=true`
@@ -523,6 +532,18 @@ flowchart LR
 - `aggregate_candidate_relations=106`
 - `m2d_relation_orphans=0`
 - `m2d_selected_visual_reviews=11`
+- `m2e_content_map_created=true`
+- `m2e_section_records=25`
+- `m2e_source_spans=25`
+- `aggregate_source_records=151`
+- `m2e_knowledge_cards=18`
+- `aggregate_knowledge_cards=89`
+- `m2e_terms=21`
+- `aggregate_terms=81`
+- `m2e_candidate_relations=49`
+- `aggregate_candidate_relations=155`
+- `m2e_relation_orphans=0`
+- `m2e_selected_visual_reviews=8`
 - `author_metrics_independently_verified=false`
 - `author_examples_independently_verified=false`
 - `official_standards_verified=false`
@@ -549,10 +570,16 @@ flowchart LR
 ### 14.2 验收命令
 
 ```bash
-node drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/tools/verify-m2a-content.mjs \
-  --pdf "/path/to/user-provided.pdf" \
-  --baseline-db drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite \
-  --baseline-db-sha256 "<hash-captured-before-batch>"
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+KB_ROOT="$REPO_ROOT/scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718"
+DB_PATH="$REPO_ROOT/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite"
+: "${PDF_PATH:?Set PDF_PATH to the user-provided PDF outside the repository}"
+test -f "$PDF_PATH" && test -f "$DB_PATH"
+DB_SHA256="$(shasum -a 256 "$DB_PATH" | awk '{print $1}')"
+node "$KB_ROOT/tools/verify-m2a-content.mjs" \
+  --pdf "$PDF_PATH" \
+  --baseline-db "$DB_PATH" \
+  --baseline-db-sha256 "$DB_SHA256"
 ```
 
 验收结果：`m2a_verification_passed`，35 条 section records、35 条 source spans、12 张 cards，稳定 ID 与确定性重跑均通过。
@@ -577,10 +604,16 @@ M2-B 已完成。下一断点调整为 M2-C：完成第 6 章工程化落地方�
 ### 15.2 验收命令
 
 ```bash
-node drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/tools/verify-m2b-content.mjs \
-  --pdf "/path/to/user-provided.pdf" \
-  --baseline-db drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite \
-  --baseline-db-sha256 "<hash-captured-before-batch>"
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+KB_ROOT="$REPO_ROOT/scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718"
+DB_PATH="$REPO_ROOT/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite"
+: "${PDF_PATH:?Set PDF_PATH to the user-provided PDF outside the repository}"
+test -f "$PDF_PATH" && test -f "$DB_PATH"
+DB_SHA256="$(shasum -a 256 "$DB_PATH" | awk '{print $1}')"
+node "$KB_ROOT/tools/verify-m2b-content.mjs" \
+  --pdf "$PDF_PATH" \
+  --baseline-db "$DB_PATH" \
+  --baseline-db-sha256 "$DB_SHA256"
 ```
 
 验收结果：`m2b_verification_passed`；38 条 section records、38 条 source spans、24 张 cards、33 个 terms、36 条 relations，稳定 ID、确定性重跑、零关系孤儿和无数据库写入门禁均通过。
@@ -601,19 +634,25 @@ node drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/t
 ### 16.2 验收命令
 
 ```bash
-node drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/tools/verify-m2c-content.mjs \
-  --pdf "/path/to/user-provided.pdf" \
-  --baseline-db drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite \
-  --baseline-db-sha256 "<hash-captured-before-batch>"
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+KB_ROOT="$REPO_ROOT/scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718"
+DB_PATH="$REPO_ROOT/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite"
+: "${PDF_PATH:?Set PDF_PATH to the user-provided PDF outside the repository}"
+test -f "$PDF_PATH" && test -f "$DB_PATH"
+DB_SHA256="$(shasum -a 256 "$DB_PATH" | awk '{print $1}')"
+node "$KB_ROOT/tools/verify-m2c-content.mjs" \
+  --pdf "$PDF_PATH" \
+  --baseline-db "$DB_PATH" \
+  --baseline-db-sha256 "$DB_SHA256"
 ```
 
 验收结果：`m2c_verification_passed`；18 条 section records、18 条 source spans、12 张 cards、11 个 terms、24 条 relations，稳定 ID、确定性重跑、零关系孤儿和无数据库写入门禁均通过。
 
-### 16.3 下一断点
+### 16.3 历史断点（M2-D 已完成）
 
-M2-D：完成第 7–8 章（PDF p.128–178）的 Agent 工程实现与典型应用场景萃取，重点覆盖意图—本体对齐、本体检索与嵌入、事实—事理—目标融合推理、Agent 构建路径、六类应用模式与企业 AI 落地策略。继续保持 docs/manifests-only；在第 1–8 章来源覆盖完成前，不进入 SCM crosswalk、importer 或 SQLite。
+以下为 M2-C 完成时记录的历史断点；M2-D 后续已完成，不应将本段解释为当前待办：完成第 7–8 章（PDF p.128–178）的 Agent 工程实现与典型应用场景萃取，重点覆盖意图—本体对齐、本体检索与嵌入、事实—事理—目标融合推理、Agent 构建路径、六类应用模式与企业 AI 落地策略。继续保持 docs/manifests-only；在第 1–8 章来源覆盖完成前，不进入 SCM crosswalk、importer 或 SQLite。
 
-## 17. M2-D 执行结果与下一断点
+## 17. M2-D 历史执行结果（已完成）
 
 ### 17.1 已完成
 
@@ -629,17 +668,23 @@ M2-D：完成第 7–8 章（PDF p.128–178）的 Agent 工程实现与典型�
 ### 17.2 验收命令
 
 ```bash
-node drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/tools/verify-m2d-content.mjs \
-  --pdf "/path/to/user-provided.pdf" \
-  --baseline-db drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite \
-  --baseline-db-sha256 "<hash-captured-before-batch>"
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+KB_ROOT="$REPO_ROOT/scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718"
+DB_PATH="$REPO_ROOT/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite"
+: "${PDF_PATH:?Set PDF_PATH to the user-provided PDF outside the repository}"
+test -f "$PDF_PATH" && test -f "$DB_PATH"
+DB_SHA256="$(shasum -a 256 "$DB_PATH" | awk '{print $1}')"
+node "$KB_ROOT/tools/verify-m2d-content.mjs" \
+  --pdf "$PDF_PATH" \
+  --baseline-db "$DB_PATH" \
+  --baseline-db-sha256 "$DB_SHA256"
 ```
 
 验收结果：`m2d_verification_passed`；35 条 section records、35 条 source spans、23 张 cards、16 个 terms、46 条 relations，稳定 ID、确定性重跑、零关系孤儿和无数据库写入门禁均通过。
 
-### 17.3 下一断点
+### 17.3 历史断点（M2-E 已完成）
 
-M2-E：完成第 9–10 章（PDF p.179–211）的智能体治理与未来企业形态萃取，覆盖碳硅协同、Agent 治理、责任与风险边界、组织及管理范式变化。M2-E 完成后先形成全书内容覆盖、重复/冲突/孤儿和未覆盖报告，再决定是否进入 M3 SCM crosswalk；继续保持 docs/manifests-only。
+以下为 M2-D 完成时记录的历史断点；M2-E 后续已完成，不应将本段解释为当前待办：完成第 9–10 章（PDF p.179–211）的智能体治理与未来企业形态萃取，覆盖碳硅协同、Agent 治理、责任与风险边界、组织及管理范式变化。M2-E 完成后先形成全书内容覆盖、重复/冲突、孤儿和未覆盖报告，再决定是否进入 M3 SCM crosswalk；继续保持 docs/manifests-only。
 
 ## 18. M2-E 执行结果与下一断点
 
@@ -648,7 +693,8 @@ M2-E：完成第 9–10 章（PDF p.179–211）的智能体治理与未来企�
 - 来源范围：第 9–10 章正文，PDF p.179–209；p.210 为推荐阅读，p.211 已在 M1 作为空文本图片页视觉复核。
 - 来源记录：23 个三级正文小节、2 个章末小结，共 25 条。
 - 知识卡：新增 18 张，覆盖本体加候选可信底座的分层治理、六类证明、三支柱风险治理、动态与多模态本体、三重世界、双模型融合、智能原生企业、Agent 组织和四维融合。
-- 术语与关系：新增 21 个术语和 49 条 `candidate/pending` 关系；聚合累计 89 张卡片、81 个术语、155 条关系。
+- 术语与关系：新增 21 个术语和 48 条 `candidate/pending` 关系；聚合累计 89 张卡片、81 个术语、154 条关系。
+- PR 评审修正：删除 1 条把“本体/世界模型融合”错误指向“双 LLM 生成校验”的 typed edge；因此本节记录的是评审修正后的当前清单，13 节的 49/155 仍保留为 M2-E 首次内容完成时的历史快照。
 - 视觉复核：PDF p.180、183、185、186、187、189、190、199；临时整页图片未进入项目目录。
 - 证据边界：区块链未被选为项目架构；DID、VC、NFT、零知识证明、智能合约、0G、Fetch.ai、Near Protocol、示例阈值和未来企业效果均未独立核验。
 - 全书覆盖：M1 的 141 个三级小节与 M2-A 至 M2-E 完全一致；10 个章末小结齐全，共 151 条来源记录与 151 条 source span。
@@ -660,13 +706,19 @@ M2-E：完成第 9–10 章（PDF p.179–211）的智能体治理与未来企�
 ### 18.2 验收命令
 
 ```bash
-node drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/tools/verify-m2e-content.mjs \
-  --pdf "/path/to/user-provided.pdf" \
-  --baseline-db drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite \
-  --baseline-db-sha256 "<hash-captured-before-batch>"
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+KB_ROOT="$REPO_ROOT/scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718"
+DB_PATH="$REPO_ROOT/scm/drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite"
+: "${PDF_PATH:?Set PDF_PATH to the user-provided PDF outside the repository}"
+test -f "$PDF_PATH" && test -f "$DB_PATH"
+DB_SHA256="$(shasum -a 256 "$DB_PATH" | awk '{print $1}')"
+node "$KB_ROOT/tools/verify-m2e-content.mjs" \
+  --pdf "$PDF_PATH" \
+  --baseline-db "$DB_PATH" \
+  --baseline-db-sha256 "$DB_SHA256"
 ```
 
-验收结果：`m2e_verification_passed`；25 条 section records、25 条 source spans、18 张 cards、21 个 terms、49 条 relations；全书 151 条来源记录、141 个三级小节、89 张卡、81 个术语、155 条关系，稳定 ID、确定性重跑、零遗漏、零精确重复、零 M2-E 关系孤儿和无数据库写入门禁均通过。
+验收结果：`m2e_verification_passed`；25 条 section records、25 条 source spans、18 张 cards、21 个 terms、48 条 relations；全书 151 条来源记录、141 个三级小节、89 张卡、81 个术语、154 条关系，稳定 ID、确定性重跑、零遗漏、零精确重复、零 M2-E 关系孤儿和无数据库写入门禁均通过。
 
 ### 18.3 下一断点
 

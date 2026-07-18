@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, extname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { artifactMatchesPage, containsPersonalAbsolutePath } from "./verification-helpers.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const defaultOutputRoot = resolve(__dirname, "..");
@@ -115,9 +116,13 @@ verify(tableCount === 21, `expected 21 tables, got ${tableCount}`);
 verify(manifest.coverage_summary.figure_records === figureCount, "manifest figure count does not match artifact manifest");
 verify(manifest.coverage_summary.table_records === tableCount, "manifest table count does not match artifact manifest");
 
-const artifactRefs = new Set(artifactNumbers);
+const artifactRefs = new Map(artifacts.map((row) => [`${row.artifact_type}:${row.number}`, row]));
 const unresolvedRefs = coverage.flatMap((row) => row.figure_table_refs).filter((ref) => !artifactRefs.has(ref));
 verify(unresolvedRefs.length === 0, `page coverage contains unresolved figure/table refs: ${[...new Set(unresolvedRefs)].join(",")}`);
+const misplacedRefs = coverage.flatMap((row) => row.figure_table_refs
+  .filter((ref) => artifactRefs.has(ref) && !artifactMatchesPage(artifactRefs.get(ref), row.pdf_page))
+  .map((ref) => `${ref}@coverage-p${row.pdf_page}/artifact-p${artifactRefs.get(ref).pdf_page}`));
+verify(misplacedRefs.length === 0, `page coverage contains figure/table refs on the wrong page: ${misplacedRefs.join(",")}`);
 
 const expectedReviewedPages = [1, 2, 40, 91, 97, 126, 145, 211];
 verify(
@@ -133,7 +138,7 @@ const persistedFiles = [...walkFiles(governanceDir), ...walkFiles(sourceMapDir)]
 const forbiddenExtensions = new Set([".pdf", ".png", ".jpg", ".jpeg", ".txt"]);
 verify(!persistedFiles.some((path) => forbiddenExtensions.has(extname(path).toLowerCase())), "persisted M1 artifacts contain raw PDF/text/page images");
 const persistedContent = persistedFiles.map((path) => readFileSync(path, "utf8")).join("\n");
-verify(!/\/Users\/pray|Desktop|Pray\.Chow|MacBook/.test(persistedContent), "persisted M1 artifacts contain a personal absolute path");
+verify(!containsPersonalAbsolutePath(persistedContent), "persisted M1 artifacts contain a personal absolute path");
 
 const summary = {
   status: failures.length ? "m1_verification_failed" : "m1_verification_passed",

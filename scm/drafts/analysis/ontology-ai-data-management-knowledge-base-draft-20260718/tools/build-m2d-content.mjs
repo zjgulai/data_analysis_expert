@@ -13,15 +13,13 @@ const paths = {
   visualReview: at("manifests/m2d-visual-review.json"),
   priorCards: [at("manifests/m2a-knowledge-card-manifest.json"), at("manifests/m2b-knowledge-card-manifest.json"), at("manifests/m2c-knowledge-card-manifest.json")],
   priorTerms: [at("manifests/m2b-knowledge-term-manifest.json"), at("manifests/m2c-knowledge-term-manifest.json")],
-  priorRelations: [at("manifests/m2b-knowledge-relation-manifest.json"), at("manifests/m2c-knowledge-relation-manifest.json")],
   contentDir: at("05-agent-engineering-applications"), cardsDir: at("05-agent-engineering-applications/cards"),
   contentMap: at("05-agent-engineering-applications/00-agent-engineering-applications-content-map.md"),
   termTable: at("05-agent-engineering-applications/01-agent-application-terms.md"),
   relationTable: at("05-agent-engineering-applications/02-agent-application-relations.md"),
   spans: at("manifests/m2d-source-spans.json"), cardManifest: at("manifests/m2d-knowledge-card-manifest.json"),
-  aggregateCards: at("manifests/knowledge-card-manifest.json"), termManifest: at("manifests/m2d-knowledge-term-manifest.json"),
-  aggregateTerms: at("manifests/knowledge-term-manifest.json"), relationManifest: at("manifests/m2d-knowledge-relation-manifest.json"),
-  aggregateRelations: at("manifests/knowledge-relation-manifest.json"), summary: at("manifests/m2d-batch-summary.json")
+  termManifest: at("manifests/m2d-knowledge-term-manifest.json"),
+  relationManifest: at("manifests/m2d-knowledge-relation-manifest.json"), summary: at("manifests/m2d-batch-summary.json")
 };
 
 const sha256 = (value) => createHash("sha256").update(value).digest("hex");
@@ -41,7 +39,6 @@ const relationSeeds = readJson(paths.relationSeeds);
 const visualReview = readJson(paths.visualReview);
 const priorCardManifests = paths.priorCards.map(readJson);
 const priorTermManifests = paths.priorTerms.map(readJson);
-const priorRelationManifests = paths.priorRelations.map(readJson);
 const sectionById = new Map(sectionMap.sections.map((section) => [section.section_id, section]));
 const reviewedArtifacts = new Set(visualReview.reviews.flatMap((review) => review.status === "reviewed" ? review.artifact_ids : []));
 mkdirSync(paths.cardsDir, { recursive: true });
@@ -103,13 +100,9 @@ const cardRecords = cardSeeds.cards.map((seed) => {
   return { card_id: cardId(seed), semantic_key: seed.semantic_key, title: seed.title, card_type: seed.card_type, relative_path: relative(root, path), content_hash: sha256(canonicalize(seed)), file_hash: sha256(content), source_span_ids: sections.map(spanId), section_ids: seed.section_ids, pdf_page_start: Math.min(...sections.map((section) => section.pdf_page_start)), pdf_page_end: Math.max(...sections.map((section) => section.pdf_page_end)), evidence_level: cardSeeds.evidence_level, review_status: "pending", version: 1 };
 });
 writeFileSync(paths.cardManifest, `${JSON.stringify({ schema_version: "1.0.0", document_id: cardSeeds.document_id, domain_id: cardSeeds.domain_id, batch_id: batchId, id_policy: cardSeeds.id_policy, card_count: cardRecords.length, cards: cardRecords }, null, 2)}\n`);
-const aggregateCards = [...priorCardManifests.flatMap((manifest) => manifest.cards.map((card) => ({ ...card, source_batch_id: manifest.batch_id }))), ...cardRecords.map((card) => ({ ...card, source_batch_id: batchId }))].sort((a, b) => a.semantic_key.localeCompare(b.semantic_key));
-writeFileSync(paths.aggregateCards, `${JSON.stringify({ schema_version: "1.0.0", document_id: cardSeeds.document_id, domain_id: cardSeeds.domain_id, manifest_scope: "aggregate-through-m2d", batch_counts: Object.fromEntries([...priorCardManifests.map((manifest) => [manifest.batch_id, manifest.card_count]), [batchId, cardRecords.length]]), card_count: aggregateCards.length, cards: aggregateCards }, null, 2)}\n`);
 
 const termRecords = termSeeds.terms.map((seed) => ({ term_id: termId(seed), term_key: seed.term_key, preferred_label: seed.preferred_label, aliases: seed.aliases, definition: seed.definition, not_equivalent_to: seed.not_equivalent_to, section_ids: seed.section_ids, source_span_ids: seed.section_ids.map((id) => spanId(sectionById.get(id))), content_hash: sha256(canonicalize(seed)), evidence_level: termSeeds.evidence_level, review_status: "pending" }));
 writeFileSync(paths.termManifest, `${JSON.stringify({ schema_version: "1.0.0", document_id: termSeeds.document_id, domain_id: termSeeds.domain_id, batch_id: batchId, term_count: termRecords.length, terms: termRecords }, null, 2)}\n`);
-const aggregateTerms = [...priorTermManifests.flatMap((manifest) => manifest.terms.map((term) => ({ ...term, source_batch_id: manifest.batch_id }))), ...termRecords.map((term) => ({ ...term, source_batch_id: batchId }))].sort((a, b) => a.term_key.localeCompare(b.term_key));
-writeFileSync(paths.aggregateTerms, `${JSON.stringify({ schema_version: "1.0.0", document_id: termSeeds.document_id, domain_id: termSeeds.domain_id, manifest_scope: "aggregate-through-m2d", batch_counts: Object.fromEntries([...priorTermManifests.map((manifest) => [manifest.batch_id, manifest.term_count]), [batchId, termRecords.length]]), term_count: aggregateTerms.length, terms: aggregateTerms }, null, 2)}\n`);
 const termLines = ["---", "title: 第 7–8 章新增 Agent 与应用术语", "doc_type: glossary", "module: scm", "topic: ontology-ai-data-management-m2d", "status: draft", "created: 2026-07-18", "updated: 2026-07-18", "owner: self", "source: human+ai", "---", "", "# 第 7–8 章新增 Agent 与应用术语", "", "仅收录相对 M2-C 新增的来源派生术语。", "", "| 首选词 | 检索别名 | 来源内定义 | 不等同于 | 来源小节 |", "|---|---|---|---|---|"];
 for (const term of termRecords) termLines.push(`| ${term.preferred_label} | ${term.aliases.join("；") || "—"} | ${term.definition} | ${term.not_equivalent_to.join("；") || "—"} | ${term.section_ids.join("、")} |`);
 termLines.push(""); writeFileSync(paths.termTable, termLines.join("\n"));
@@ -121,8 +114,6 @@ for (const manifest of priorTermManifests) for (const term of manifest.terms) no
 for (const term of termRecords) nodeByKey.set(term.term_key, { id: term.term_id, type: "Term" });
 const relationRecords = relationSeeds.relations.map((seed) => ({ relation_id: relationId(seed), subject_id: nodeByKey.get(seed.subject_key).id, subject_type: nodeByKey.get(seed.subject_key).type, subject_key: seed.subject_key, predicate: seed.predicate, object_id: nodeByKey.get(seed.object_key).id, object_type: nodeByKey.get(seed.object_key).type, object_key: seed.object_key, source_span_ids: seed.section_ids.map((id) => spanId(sectionById.get(id))), section_ids: seed.section_ids, rationale: seed.rationale, relation_status: relationSeeds.relation_status, review_status: relationSeeds.review_status, content_hash: sha256(canonicalize(seed)) }));
 writeFileSync(paths.relationManifest, `${JSON.stringify({ schema_version: "1.0.0", document_id: relationSeeds.document_id, domain_id: relationSeeds.domain_id, batch_id: batchId, allowed_predicates: relationSeeds.allowed_predicates, relation_count: relationRecords.length, relations: relationRecords }, null, 2)}\n`);
-const aggregateRelations = [...priorRelationManifests.flatMap((manifest) => manifest.relations.map((relation) => ({ ...relation, source_batch_id: manifest.batch_id }))), ...relationRecords.map((relation) => ({ ...relation, source_batch_id: batchId }))].sort((a, b) => a.relation_id.localeCompare(b.relation_id));
-writeFileSync(paths.aggregateRelations, `${JSON.stringify({ schema_version: "1.0.0", document_id: relationSeeds.document_id, domain_id: relationSeeds.domain_id, manifest_scope: "aggregate-through-m2d", allowed_predicates: relationSeeds.allowed_predicates, batch_counts: Object.fromEntries([...priorRelationManifests.map((manifest) => [manifest.batch_id, manifest.relation_count]), [batchId, relationRecords.length]]), relation_count: aggregateRelations.length, relations: aggregateRelations }, null, 2)}\n`);
 const relationLines = ["---", "title: 第 7–8 章 Agent 与应用候选关系", "doc_type: relation-map", "module: scm", "topic: ontology-ai-data-management-m2d", "status: draft", "created: 2026-07-18", "updated: 2026-07-18", "owner: self", "source: human+ai", "---", "", "# 第 7–8 章 Agent 与应用候选关系", "", "以下关系均为 `candidate/pending`，没有 SCM crosswalk。", "", "| 主体 | 关系 | 客体 | 理由 | 来源小节 |", "|---|---|---|---|---|"];
 for (const relation of relationSeeds.relations) relationLines.push(`| \`${relation.subject_key}\` | \`${relation.predicate}\` | \`${relation.object_key}\` | ${relation.rationale} | ${relation.section_ids.join("、")} |`);
 relationLines.push(""); writeFileSync(paths.relationTable, relationLines.join("\n"));

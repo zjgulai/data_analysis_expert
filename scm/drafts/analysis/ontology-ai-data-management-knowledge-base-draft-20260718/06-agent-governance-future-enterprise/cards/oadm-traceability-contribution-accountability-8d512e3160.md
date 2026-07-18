@@ -7,7 +7,7 @@ domain: "ontology-ai-data-management-draft"
 status: "draft"
 evidence_level: "published-book-derived-candidate"
 source_document_id: "book-ontology-ai-data-management-2026"
-source_span_ids: ["oadm-span-s9-2-5-p188-p188","oadm-span-s9-2-6-p188-p189"]
+source_span_ids: ["oadm-span-s9-2-5-p188-p189","oadm-span-s9-2-6-p188-p189"]
 section_ids: ["9.2.5","9.2.6"]
 fact_reason_action_class: "mechanism"
 scm_applicability: "not_assessed_in_m2e"
