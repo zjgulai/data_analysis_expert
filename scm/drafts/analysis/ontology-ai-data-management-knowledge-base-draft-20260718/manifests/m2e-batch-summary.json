@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10",
+  "scope": "第 9–10 章来源内 Agent 治理与未来企业形态萃取",
+  "section_record_count": 25,
+  "substantive_subsection_count": 23,
+  "chapter_summary_count": 2,
+  "card_count": 18,
+  "term_count": 21,
+  "relation_count": 49,
+  "pdf_page_start": 179,
+  "pdf_page_end": 209,
+  "claim_type_counts": {
+    "author_control_pattern": 2,
+    "author_engineering_direction": 1,
+    "author_enterprise_model": 1,
+    "author_evidence_pattern": 1,
+    "author_future_state": 1,
+    "author_governance_context": 1,
+    "author_governance_framework": 2,
+    "author_incentive_pattern": 1,
+    "author_industry_example": 1,
+    "author_integration_pattern": 1,
+    "author_learning_model": 1,
+    "author_management_framework": 1,
+    "author_model_architecture": 1,
+    "author_operating_model": 1,
+    "author_organization_model": 1,
+    "author_technology_trend": 3,
+    "author_trust_model": 1,
+    "author_trust_pattern": 2,
+    "chapter_summary": 2
+  },
+  "visual_review_counts": {
+    "not_required": 16,
+    "reviewed": 9
+  },
+  "selected_visual_review_page_count": 8,
+  "boundaries": {
+    "faithful_source_paraphrase_only": true,
+    "blockchain_architecture_selected": false,
+    "industry_examples_independently_verified": false,
+    "author_metrics_independently_verified": false,
+    "scm_crosswalk_performed": false,
+    "importer_modified": false,
+    "database_write": false,
+    "provider_call": false,
+    "full_raw_text_persisted": false,
+    "full_page_images_persisted": false,
+    "personal_absolute_path_persisted": false
+  }
+}

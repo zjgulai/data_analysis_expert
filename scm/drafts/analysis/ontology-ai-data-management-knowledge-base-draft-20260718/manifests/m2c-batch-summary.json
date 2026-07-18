@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "m2c-engineering-method-ch06",
+  "scope": "第 6 章来源内工程方法萃取",
+  "section_record_count": 18,
+  "substantive_subsection_count": 17,
+  "chapter_summary_count": 1,
+  "card_count": 12,
+  "term_count": 11,
+  "relation_count": 24,
+  "pdf_page_start": 96,
+  "pdf_page_end": 127,
+  "claim_type_counts": {
+    "author_governance_rule": 3,
+    "author_implementation_path": 4,
+    "author_method": 4,
+    "author_platform_capability": 3,
+    "author_quality_gate": 3,
+    "chapter_summary": 1
+  },
+  "visual_review_counts": {
+    "not_required": 6,
+    "pending": 5,
+    "reviewed": 7
+  },
+  "selected_visual_review_page_count": 7,
+  "boundaries": {
+    "faithful_source_paraphrase_only": true,
+    "author_examples_independently_verified": false,
+    "official_standards_verified": false,
+    "scm_crosswalk_performed": false,
+    "importer_modified": false,
+    "database_write": false,
+    "provider_call": false,
+    "full_raw_text_persisted": false,
+    "full_page_images_persisted": false,
+    "personal_absolute_path_persisted": false
+  }
+}

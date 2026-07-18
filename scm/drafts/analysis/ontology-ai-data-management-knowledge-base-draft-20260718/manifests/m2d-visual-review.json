@@ -1,0 +1,16 @@
+{
+  "schema_version":"1.0.0","document_id":"book-ontology-ai-data-management-2026","batch_id":"m2d-agent-engineering-applications-ch07-ch08","method":"pdftoppm-selected-pages-manual-review","full_page_images_persisted":false,
+  "reviews":[
+    {"pdf_page":130,"artifact_ids":["oadm-table-7-1-p130"],"status":"reviewed","finding":"表格对比固定映射、规则语义映射和本体自主推理对齐的优劣与成熟度，支持意图—本体对齐摘要。"},
+    {"pdf_page":132,"artifact_ids":["oadm-table-7-2-p132"],"status":"reviewed","finding":"表格列出图查询、图向量、记忆增强和 Skills 封装四类调用机制及局限。"},
+    {"pdf_page":133,"artifact_ids":["oadm-table-7-3-p133"],"status":"reviewed","finding":"表格明确 Prompt 嵌入为推荐方式，微调和数据增训各有成本与通用性风险。"},
+    {"pdf_page":139,"artifact_ids":["oadm-figure-7-1-p139"],"status":"reviewed","finding":"图示区分人类关键节点确认的人机协同，以及多 Agent 代理迭代的自主联合决策。"},
+    {"pdf_page":145,"artifact_ids":["oadm-figure-7-2-p145"],"status":"reviewed","finding":"能力框架从动态事实与 Action、本体服务、大模型引擎到运行平台分层展示知识—数据—行动闭环。"},
+    {"pdf_page":149,"artifact_ids":["oadm-figure-7-3-p149"],"status":"reviewed","finding":"实施框架呈现构建整合、可视化质量、存储安全、推理资产四模块及本体与 AI 双向赋能。"},
+    {"pdf_page":160,"artifact_ids":["oadm-figure-8-2-p160"],"status":"reviewed","finding":"图示展示信息收集、流程申请、审批执行 Agent 基于流程本体和 MCP/API 完成闭环。"},
+    {"pdf_page":163,"artifact_ids":["oadm-figure-8-4-p163"],"status":"reviewed","finding":"图示把供需缺口、趋势、物料策略和应急响应 Agent 连接到多源事实与供需本体。"},
+    {"pdf_page":168,"artifact_ids":["oadm-figure-8-9-p168","oadm-table-8-1-p168"],"status":"reviewed","finding":"页面以作者示例对比未用与使用本体的推理结果；该效果仅作来源案例，不视为独立验证。"},
+    {"pdf_page":170,"artifact_ids":["oadm-figure-8-11-p170"],"status":"reviewed","finding":"图示以综合统筹 Agent 连接育秧、深耕、插秧三个专属 Agent，并保留人机确认环节。"},
+    {"pdf_page":175,"artifact_ids":["oadm-figure-8-13-p175"],"status":"reviewed","finding":"图示呈现总体组统筹本体建模、动态连接、动态 Agent 和动态行动的 1+4 协同模式。"}
+  ]
+}

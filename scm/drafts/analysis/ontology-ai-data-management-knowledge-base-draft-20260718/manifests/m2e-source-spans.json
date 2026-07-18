@@ -1,0 +1,354 @@
+{
+  "schema_version": "1.0.0",
+  "document_id": "book-ontology-ai-data-management-2026",
+  "domain_id": "ontology-ai-data-management",
+  "batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10",
+  "span_count": 25,
+  "physical_pdf_page_is_primary_locator": true,
+  "raw_full_text_persisted": false,
+  "source_spans": [
+    {
+      "span_id": "oadm-span-s9-1-1-p181-p182",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 181,
+      "pdf_page_end": 182,
+      "section_path": "第 9 章 企业碳硅协同的智能体治理理念 / 9.1 基于区块链与本体的高阶治理框架 / 9.1.1 规则驱动的旧世界",
+      "section_id": "9.1.1",
+      "figure_or_table_refs": [
+        "oadm-figure-9-1-p180"
+      ],
+      "derived_summary_hash": "5333085215076ecc247eedd75a13ce199e08439fc95ca08c796f25d207c9bd2b",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s9-1-2-p182-p182",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 182,
+      "pdf_page_end": 182,
+      "section_path": "第 9 章 企业碳硅协同的智能体治理理念 / 9.1 基于区块链与本体的高阶治理框架 / 9.1.2 自主进化的新世界",
+      "section_id": "9.1.2",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "6e9acf03207074cece8dc4d9b906325aa810abf55ee274557d806d793dc3dab8",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s9-1-3-p182-p183",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 182,
+      "pdf_page_end": 183,
+      "section_path": "第 9 章 企业碳硅协同的智能体治理理念 / 9.1 基于区块链与本体的高阶治理框架 / 9.1.3 新旧世界协同交互与融合发展",
+      "section_id": "9.1.3",
+      "figure_or_table_refs": [
+        "oadm-figure-9-2-p183"
+      ],
+      "derived_summary_hash": "d83a1f25517027a162fa063508b7b74115cf9fc82c7163127b8e9f6017aee28d",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s9-1-4-p184-p184",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 184,
+      "pdf_page_end": 184,
+      "section_path": "第 9 章 企业碳硅协同的智能体治理理念 / 9.1 基于区块链与本体的高阶治理框架 / 9.1.4 去中心化“公证处”与“账本”",
+      "section_id": "9.1.4",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "7a5e1ac0e30fc700819c844e2dbb7bd3a3f0e302567dd15160cd4de7c7b8d54c",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s9-2-1-p185-p185",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 185,
+      "pdf_page_end": 185,
+      "section_path": "第 9 章 企业碳硅协同的智能体治理理念 / 9.2 基于区块链技术构建智能体可信体系 / 9.2.1 身份证明：基于碳硅混合身份档案链构建智能世界动态身份证",
+      "section_id": "9.2.1",
+      "figure_or_table_refs": [
+        "oadm-figure-9-3-p185"
+      ],
+      "derived_summary_hash": "18ae7d2ac733bd8c25376e5ab593e439c9cc3aaa03bbd567034f90fce250ea9b",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s9-2-2-p185-p186",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 185,
+      "pdf_page_end": 186,
+      "section_path": "第 9 章 企业碳硅协同的智能体治理理念 / 9.2 基于区块链技术构建智能体可信体系 / 9.2.2 资产证明：依托数字资产产权链生成大模型与 Agent 产权凭证",
+      "section_id": "9.2.2",
+      "figure_or_table_refs": [
+        "oadm-figure-9-4-p186"
+      ],
+      "derived_summary_hash": "d2db0baf71486100e95d049c0bb6b295019c0a2cfccae237d09e2c1cb35139fd",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s9-2-3-p186-p187",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 186,
+      "pdf_page_end": 187,
+      "section_path": "第 9 章 企业碳硅协同的智能体治理理念 / 9.2 基于区块链技术构建智能体可信体系 / 9.2.3 授权证明：通过权限凭证链实现 AI 权限管理与智能锁控",
+      "section_id": "9.2.3",
+      "figure_or_table_refs": [
+        "oadm-figure-9-5-p187"
+      ],
+      "derived_summary_hash": "372f0a629f2f604b9910287421ac8bf16b6ed48134b7b3293d1b47bfe5de817e",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s9-2-4-p187-p188",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 187,
+      "pdf_page_end": 188,
+      "section_path": "第 9 章 企业碳硅协同的智能体治理理念 / 9.2 基于区块链技术构建智能体可信体系 / 9.2.4 合约证明：以智能合约搭建智能协作自动执行流水线",
+      "section_id": "9.2.4",
+      "figure_or_table_refs": [
+        "oadm-figure-9-6-p187"
+      ],
+      "derived_summary_hash": "11c01586e73f583edd16c4fb26371138a372993b11f491fb3946ffb84b43caf5",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s9-2-5-p188-p188",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 188,
+      "pdf_page_end": 188,
+      "section_path": "第 9 章 企业碳硅协同的智能体治理理念 / 9.2 基于区块链技术构建智能体可信体系 / 9.2.5 追溯证明：构建全链路操作哈希链，实现智能化全过程数字监控",
+      "section_id": "9.2.5",
+      "figure_or_table_refs": [
+        "oadm-figure-9-7-p189"
+      ],
+      "derived_summary_hash": "53703e85d9cebd71d1d27c1caffda3d20b258e4ab0f9f789ae4dabc53aa5d242",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s9-2-6-p188-p189",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 188,
+      "pdf_page_end": 189,
+      "section_path": "第 9 章 企业碳硅协同的智能体治理理念 / 9.2 基于区块链技术构建智能体可信体系 / 9.2.6 贡献证明：搭建贡献值计量链，打造 AI 价值量化自动评价体系",
+      "section_id": "9.2.6",
+      "figure_or_table_refs": [
+        "oadm-figure-9-8-p189"
+      ],
+      "derived_summary_hash": "c1778c36beb7acdfe822878dd20ac57edf171abfec6db5a2d546ba326401fc22",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s9-2-7-p190-p190",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 190,
+      "pdf_page_end": 190,
+      "section_path": "第 9 章 企业碳硅协同的智能体治理理念 / 9.2 基于区块链技术构建智能体可信体系 / 9.2.7 六类证明的业界探索",
+      "section_id": "9.2.7",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "23d90f0b878dafdeb951fbbf250a9712f583013d9e52b799ac9d3541b97826a5",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s9-3-1-p191-p192",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 191,
+      "pdf_page_end": 192,
+      "section_path": "第 9 章 企业碳硅协同的智能体治理理念 / 9.3 智能驱动的本体建模范式与技术演进 / 9.3.1 “本体约束+AI 智能+人类监督”的协同范式",
+      "section_id": "9.3.1",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "bca14613725aabc7e8a0186e9f64be37ea6fa323fde517ac8d4b060cd94fbb11",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s9-3-2-p192-p193",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 192,
+      "pdf_page_end": 193,
+      "section_path": "第 9 章 企业碳硅协同的智能体治理理念 / 9.3 智能驱动的本体建模范式与技术演进 / 9.3.2 本体从静态治理向动态治理演进",
+      "section_id": "9.3.2",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "3c83789c6c0e964d0b265b239929f12b002090a68e241934fa7cc5b6cc9126f2",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s9-3-3-p193-p194",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 193,
+      "pdf_page_end": 194,
+      "section_path": "第 9 章 企业碳硅协同的智能体治理理念 / 9.3 智能驱动的本体建模范式与技术演进 / 9.3.3 突破纯文本，实现多模态本体建模",
+      "section_id": "9.3.3",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "5d981d2d30c2449efab7a35ef7f5b9620224f1d40619b373495deb77888ae7cb",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s9-3-4-p194-p195",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 194,
+      "pdf_page_end": 195,
+      "section_path": "第 9 章 企业碳硅协同的智能体治理理念 / 9.3 智能驱动的本体建模范式与技术演进 / 9.3.4 大模型成为更好的本体建模师",
+      "section_id": "9.3.4",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "d2648f39c30351a546f1c74aaf9117586f396b76d819de562f3f1faa4e0ce53b",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s9-3-5-p195-p196",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 195,
+      "pdf_page_end": 196,
+      "section_path": "第 9 章 企业碳硅协同的智能体治理理念 / 9.3 智能驱动的本体建模范式与技术演进 / 9.3.5 大模型更好地理解与使用本体模型",
+      "section_id": "9.3.5",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "784826c818c5972a0f58ec424dfc9d202347364d38e9fe5ebf0619e2b8f62376",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s9-3-6-p197-p198",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 197,
+      "pdf_page_end": 198,
+      "section_path": "第 9 章 企业碳硅协同的智能体治理理念 / 9.3 智能驱动的本体建模范式与技术演进 / 9.3.6 本体建模工程化与全链路工具生态建设",
+      "section_id": "9.3.6",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "1be81e843b7ec0d778f7c7dddaa406d0916c8d612efbb2d4545b350488fd78ec",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s9-4-p198-p198",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 198,
+      "pdf_page_end": 198,
+      "section_path": "第 9 章 企业碳硅协同的智能体治理理念 / 9.4 本章小结",
+      "section_id": "9.4",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "775fb1229c6c3c7fa1d92d1db0636c19fc29747d34855e2dd9734bc7b91ce840",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s10-1-1-p199-p200",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 199,
+      "pdf_page_end": 200,
+      "section_path": "第 10 章 企业发展新范式、新形态 / 10.1 三重世界的协同模型 / 10.1.1 物理世界、逻辑世界和智能世界",
+      "section_id": "10.1.1",
+      "figure_or_table_refs": [
+        "oadm-figure-10-1-p199"
+      ],
+      "derived_summary_hash": "7ffd66343bf3e048e11c0ed2c7e8638582424effdc3996ac2938accadfbf29d9",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s10-1-2-p200-p202",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 200,
+      "pdf_page_end": 202,
+      "section_path": "第 10 章 企业发展新范式、新形态 / 10.1 三重世界的协同模型 / 10.1.2 面向逻辑世界与物理世界的 AI 双重学习目标",
+      "section_id": "10.1.2",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "23feb47acf4f74acb452f0b9cae309b9cb26e8495e7aeb22067dd10a40201626",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s10-1-3-p202-p203",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 202,
+      "pdf_page_end": 203,
+      "section_path": "第 10 章 企业发展新范式、新形态 / 10.1 三重世界的协同模型 / 10.1.3 本体模型和世界模型的协同与融合",
+      "section_id": "10.1.3",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "2978aea65e04c5e92fbead45be084c36c7bbdd729a713da6b0459b262db99807",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s10-2-1-p203-p205",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 203,
+      "pdf_page_end": 205,
+      "section_path": "第 10 章 企业发展新范式、新形态 / 10.2 企业业务与管理新形态 / 10.2.1 业务形态演进：智能原生业务",
+      "section_id": "10.2.1",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "8936c955351a2571c67c47f564c798ecd4992b3c5cbaded6e6eb543ea7dc7a92",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s10-2-2-p205-p206",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 205,
+      "pdf_page_end": 206,
+      "section_path": "第 10 章 企业发展新范式、新形态 / 10.2 企业业务与管理新形态 / 10.2.2 企业数智化新范式：知识建模+AI 自主实现",
+      "section_id": "10.2.2",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "92707b2e3e229c21022dd9c08b7a22955a172fab0103eedbbe5f997c02abd72b",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s10-2-3-p206-p209",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 206,
+      "pdf_page_end": 209,
+      "section_path": "第 10 章 企业发展新范式、新形态 / 10.2 企业业务与管理新形态 / 10.2.3 管理组织变革：知识、数据、流程、IT 四维融合",
+      "section_id": "10.2.3",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "a3c2fc73da58b3d2fb034d15326209037a9b605e13043acd25ac595a5a4f6154",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s10-3-p209-p209",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 209,
+      "pdf_page_end": 209,
+      "section_path": "第 10 章 企业发展新范式、新形态 / 10.3 本章小结",
+      "section_id": "10.3",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "0bb68b2e3188e0284531143bb7a75a7f4617ca893c52de6c8fe18db09e3f3a04",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    }
+  ]
+}

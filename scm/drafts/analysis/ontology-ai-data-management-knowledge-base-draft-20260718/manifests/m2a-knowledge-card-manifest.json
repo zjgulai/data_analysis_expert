@@ -1,0 +1,273 @@
+{
+  "schema_version": "1.0.0",
+  "document_id": "book-ontology-ai-data-management-2026",
+  "domain_id": "ontology-ai-data-management-draft",
+  "batch_id": "m2a-strategic-cognition-ch01-ch03",
+  "id_policy": {
+    "semantic_key_pattern": "oadm:<subject-area>:<semantic-slug>",
+    "card_id_pattern": "oadm-<semantic-slug>-<sha256(semantic-key)[0:10]>",
+    "content_hash_policy": "sha256(canonical-json-of-card-seed)",
+    "sorting_independent": true
+  },
+  "card_count": 12,
+  "cards": [
+    {
+      "card_id": "oadm-bit-to-token-a10e8a8d88",
+      "semantic_key": "oadm:information-unit:bit-to-token",
+      "title": "信息处理单元从比特扩展到 Token",
+      "card_type": "concept",
+      "relative_path": "02-strategic-cognition/cards/oadm-bit-to-token-a10e8a8d88.md",
+      "content_hash": "03dabbbb74ab2511182f6958fe75d5c4c093e298e893a7a00ddbc5526ed57a33",
+      "file_hash": "d4140e7febef3116f1fe6873e64b4c52a4f4291b43f6f6409d78c7e761cc38ad",
+      "source_span_ids": [
+        "oadm-span-s1-1-1-p008-p009"
+      ],
+      "section_ids": [
+        "1.1.1"
+      ],
+      "pdf_page_start": 8,
+      "pdf_page_end": 9,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-reasoning-memory-action-c613d2da56",
+      "semantic_key": "oadm:ai-capability:reasoning-memory-action",
+      "title": "大模型能力跃升的推理—记忆—行动三要素",
+      "card_type": "concept",
+      "relative_path": "02-strategic-cognition/cards/oadm-reasoning-memory-action-c613d2da56.md",
+      "content_hash": "392bd52cb8b72c5aeb39724aa483644d08e33e958955b10082e130634802bddc",
+      "file_hash": "eaebeb22281f2ec9fbeeccf4af8b98e0b834f1b1ec8af85de6ced1113fe6ff6e",
+      "source_span_ids": [
+        "oadm-span-s1-1-2-p009-p010"
+      ],
+      "section_ids": [
+        "1.1.2"
+      ],
+      "pdf_page_start": 9,
+      "pdf_page_end": 10,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-understand-decide-act-07d64e037b",
+      "semantic_key": "oadm:agentic-ai:understand-decide-act",
+      "title": "Agentic AI 的理解—决策—行动闭环",
+      "card_type": "concept",
+      "relative_path": "02-strategic-cognition/cards/oadm-understand-decide-act-07d64e037b.md",
+      "content_hash": "f3c4cc2a9325fa0b727dda475158c9806f871d0bf00c5f08e0c442ea1d94e2b9",
+      "file_hash": "f3d34140aa0bd8f7f5b9471039e69de6c4dc5af9c34132afa6f1f0d7ff3d79fd",
+      "source_span_ids": [
+        "oadm-span-s1-1-3-p010-p011"
+      ],
+      "section_ids": [
+        "1.1.3"
+      ],
+      "pdf_page_start": 10,
+      "pdf_page_end": 11,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-abstract-structure-evolve-f14dbd0c04",
+      "semantic_key": "oadm:modeling-thinking:abstract-structure-evolve",
+      "title": "建模思维的抽象—结构化—演化方法",
+      "card_type": "method",
+      "relative_path": "02-strategic-cognition/cards/oadm-abstract-structure-evolve-f14dbd0c04.md",
+      "content_hash": "c1617ab3d33cb43d72e5eb2222c67bedd0ba19faf0a1dd1a62884bfcafbc70dd",
+      "file_hash": "1d7c70b7418afb366bdd6afffc58964ac50f97060087edf42a24d0ced5990ee4",
+      "source_span_ids": [
+        "oadm-span-s1-2-3-p014-p015"
+      ],
+      "section_ids": [
+        "1.2.3"
+      ],
+      "pdf_page_start": 14,
+      "pdf_page_end": 15,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-fact-and-mechanism-carrier-8339594ba8",
+      "semantic_key": "oadm:data-role:fact-and-mechanism-carrier",
+      "title": "数据应同时承载业务事实与事理",
+      "card_type": "principle",
+      "relative_path": "02-strategic-cognition/cards/oadm-fact-and-mechanism-carrier-8339594ba8.md",
+      "content_hash": "3b5abd0dd3707ffcb0275b705713f28c92547b511eb2a7e65c99869521f8dbf7",
+      "file_hash": "3e768e812d3479d33bfa54f3cf0b87727a54240fe64a63ae19ebf92c094171a4",
+      "source_span_ids": [
+        "oadm-span-s1-3-3-p018-p020"
+      ],
+      "section_ids": [
+        "1.3.3"
+      ],
+      "pdf_page_start": 18,
+      "pdf_page_end": 20,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-four-enterprise-ai-needs-8e5afd7ee4",
+      "semantic_key": "oadm:governance:four-enterprise-ai-needs",
+      "title": "企业 AI 数据治理的四项关键需求",
+      "card_type": "framework",
+      "relative_path": "02-strategic-cognition/cards/oadm-four-enterprise-ai-needs-8e5afd7ee4.md",
+      "content_hash": "c49c63f035d46bb1d2da5a1ed464f2b5af1173d9f07f10e11f0de03f4da5c18d",
+      "file_hash": "f7ae6c9ef9e2cfa6f2aac5d4ca4a7e2a93d726cd88b0fd3c757ba2fea92e5841",
+      "source_span_ids": [
+        "oadm-span-s2-1-1-p021-p022",
+        "oadm-span-s2-1-2-p022-p023",
+        "oadm-span-s2-1-3-p023-p024",
+        "oadm-span-s2-1-4-p024-p025"
+      ],
+      "section_ids": [
+        "2.1.1",
+        "2.1.2",
+        "2.1.3",
+        "2.1.4"
+      ],
+      "pdf_page_start": 21,
+      "pdf_page_end": 25,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-four-governance-transformations-80d616f5fd",
+      "semantic_key": "oadm:governance:four-transformations",
+      "title": "智能时代数据治理的四重转变",
+      "card_type": "framework",
+      "relative_path": "02-strategic-cognition/cards/oadm-four-governance-transformations-80d616f5fd.md",
+      "content_hash": "cf92d6e31aeb01ef3bbab378091079a269554f7957f646232591d187ec9e6840",
+      "file_hash": "4941c25e75318895862ba5743783e5093ad059aca1400769ab729fb4faed24ed",
+      "source_span_ids": [
+        "oadm-span-s2-2-1-p025-p026",
+        "oadm-span-s2-2-2-p026-p027",
+        "oadm-span-s2-2-3-p027-p028",
+        "oadm-span-s2-2-4-p028-p029"
+      ],
+      "section_ids": [
+        "2.2.1",
+        "2.2.2",
+        "2.2.3",
+        "2.2.4"
+      ],
+      "pdf_page_start": 25,
+      "pdf_page_end": 29,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-four-transition-challenges-7c14af5425",
+      "semantic_key": "oadm:governance:four-transition-challenges",
+      "title": "AI 数据治理转型的四类挑战",
+      "card_type": "risk-framework",
+      "relative_path": "02-strategic-cognition/cards/oadm-four-transition-challenges-7c14af5425.md",
+      "content_hash": "8d20fafa5aece9e6405a3b70e3ef4ca725b0a797181bc96b7b39ed8c185b312b",
+      "file_hash": "2011666df60a19d5c226b4e19a15d638953f657147e87cd0b28647976c5fa9f3",
+      "source_span_ids": [
+        "oadm-span-s2-3-1-p029-p031",
+        "oadm-span-s2-3-2-p031-p032",
+        "oadm-span-s2-3-3-p032-p034",
+        "oadm-span-s2-3-4-p034-p035"
+      ],
+      "section_ids": [
+        "2.3.1",
+        "2.3.2",
+        "2.3.3",
+        "2.3.4"
+      ],
+      "pdf_page_start": 29,
+      "pdf_page_end": 35,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-human-machine-bidirectional-ae9dd60c37",
+      "semantic_key": "oadm:modeling:human-machine-bidirectional",
+      "title": "人机共用的双向适配模型",
+      "card_type": "model",
+      "relative_path": "02-strategic-cognition/cards/oadm-human-machine-bidirectional-ae9dd60c37.md",
+      "content_hash": "27453a69737d3763a214bd1a3198a96615c5435981203016fe397c27bcdfd56b",
+      "file_hash": "da154f8f829adc3a07043affe577b9a75b4e4c7d8c2508ee158bcdae02c6231a",
+      "source_span_ids": [
+        "oadm-span-s3-1-1-p037-p038"
+      ],
+      "section_ids": [
+        "3.1.1"
+      ],
+      "pdf_page_start": 37,
+      "pdf_page_end": 38,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-business-system-dual-drive-b276acbff6",
+      "semantic_key": "oadm:modeling:business-system-dual-drive",
+      "title": "业务逻辑与系统逻辑双轮驱动模型",
+      "card_type": "model",
+      "relative_path": "02-strategic-cognition/cards/oadm-business-system-dual-drive-b276acbff6.md",
+      "content_hash": "234a50b92f3d36db8c26463180cecd2d90451ce94ab90bb12e13b863d3746532",
+      "file_hash": "68ae18e8af47ea2c6dbfdfb3f2d7c5c40d4dd418ec7832afb55016946919d22d",
+      "source_span_ids": [
+        "oadm-span-s3-1-2-p038-p040"
+      ],
+      "section_ids": [
+        "3.1.2"
+      ],
+      "pdf_page_start": 38,
+      "pdf_page_end": 40,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-fact-mechanism-action-2bdf3db6c5",
+      "semantic_key": "oadm:modeling:fact-mechanism-action",
+      "title": "事实—事理—行动一体化动态模型",
+      "card_type": "model",
+      "relative_path": "02-strategic-cognition/cards/oadm-fact-mechanism-action-2bdf3db6c5.md",
+      "content_hash": "b15dd428a05f6dc5d122fa3105022fcfdd6bf7110b8c20b078e747d1e1985da3",
+      "file_hash": "e77248cc9bb4a9acbc173d5e4f5d314abf168505ba56e42e6892a9b68973d953",
+      "source_span_ids": [
+        "oadm-span-s3-1-3-p040-p042"
+      ],
+      "section_ids": [
+        "3.1.3"
+      ],
+      "pdf_page_start": 40,
+      "pdf_page_end": 42,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-dikw-dual-loop-910e77a245",
+      "semantic_key": "oadm:collaboration:dikw-dual-loop",
+      "title": "人与 AI 的 DIKW 双循环",
+      "card_type": "model",
+      "relative_path": "02-strategic-cognition/cards/oadm-dikw-dual-loop-910e77a245.md",
+      "content_hash": "c9964d1403cc2f482a2f795aefca9d9d36021cd17a42e1f7302aba9ec2fa01cc",
+      "file_hash": "133af71533d6365ca591c67b5b3d8bb24b9a0599d82ec85503eab2d5dd6c10d2",
+      "source_span_ids": [
+        "oadm-span-s3-3-3-p050-p052"
+      ],
+      "section_ids": [
+        "3.3.3"
+      ],
+      "pdf_page_start": 50,
+      "pdf_page_end": 52,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    }
+  ]
+}

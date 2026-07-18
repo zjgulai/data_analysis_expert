@@ -1,0 +1,1863 @@
+{
+  "schema_version": "1.0.0",
+  "document_id": "book-ontology-ai-data-management-2026",
+  "domain_id": "ontology-ai-data-management-draft",
+  "manifest_scope": "aggregate-through-m2e",
+  "batch_counts": {
+    "m2b-core-theory-ch04-ch05": 33,
+    "m2c-engineering-method-ch06": 11,
+    "m2d-agent-engineering-applications-ch07-ch08": 16,
+    "m2e-agent-governance-future-enterprise-ch09-ch10": 21
+  },
+  "term_count": 81,
+  "terms": [
+    {
+      "term_id": "oadm-term-action-dfe237b9",
+      "term_key": "oadm:term:action",
+      "preferred_label": "行动",
+      "aliases": [
+        "业务行动",
+        "Action"
+      ],
+      "definition": "由目标、前置条件、输入输出、执行效果和反馈约束的可实施业务动作。",
+      "not_equivalent_to": [
+        "自然语言建议"
+      ],
+      "section_ids": [
+        "4.1.2",
+        "5.4.5",
+        "5.5.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-1-2-p055-p057",
+        "oadm-span-s5-4-5-p092-p092",
+        "oadm-span-s5-5-3-p094-p095"
+      ],
+      "content_hash": "01ce057484b63389e64f338d9da4235f9e46c95e326c243007dccb0836c459b1",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-ai-business-data-b68fa13f",
+      "term_key": "oadm:term:ai-business-data",
+      "preferred_label": "AI 业务数据",
+      "aliases": [],
+      "definition": "以 AI 任务或决策为管理锚点，但其事理尚未完成本体建模，可能以 Prompt 或文本方式表达的业务数据集合。",
+      "not_equivalent_to": [
+        "AI 业务本体"
+      ],
+      "section_ids": [
+        "5.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-1-3-p076-p080"
+      ],
+      "content_hash": "2ceae8ec4cd83515a4b2c9437ba66118a12020050575fb6d7cc92cd1b450d3bf",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-ai-business-ontology-37adfcae",
+      "term_key": "oadm:term:ai-business-ontology",
+      "preferred_label": "AI 业务本体",
+      "aliases": [],
+      "definition": "以具体 AI 任务或决策为管理锚点，已经把相关事理本体化并贯通事实、事理与行动的业务模型。",
+      "not_equivalent_to": [
+        "AI 业务数据"
+      ],
+      "section_ids": [
+        "5.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-1-3-p076-p080"
+      ],
+      "content_hash": "3e359c787c378bcec1b36472d4f1aab3e37078c67ad192bfd38baeaef5d751de",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-ai-data-asset-a7d75d55",
+      "term_key": "oadm:term:ai-data-asset",
+      "preferred_label": "AI 数据资产",
+      "aliases": [
+        "面向 AI 的数据资产"
+      ],
+      "definition": "面向大模型训练与 AI Agent 推理组织的数据集、事实数据、事理模型和推理结果等可治理资产。",
+      "not_equivalent_to": [
+        "训练数据集"
+      ],
+      "section_ids": [
+        "5.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-1-3-p076-p080"
+      ],
+      "content_hash": "4b0d3bec05e4b9c2c293851d6c146cf175978267972b35bd26e74b958f9310d1",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-ai-dataset-63dcaf34",
+      "term_key": "oadm:term:ai-dataset",
+      "preferred_label": "AI 数据集",
+      "aliases": [
+        "AI Dataset"
+      ],
+      "definition": "用于模型训练、验证、测试或知识表征，并作为责任、共享、风险和生命周期管理基本单元的数据集合。",
+      "not_equivalent_to": [
+        "全部 AI 数据资产"
+      ],
+      "section_ids": [
+        "5.2.1",
+        "5.2.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-2-1-p080-p081",
+        "oadm-span-s5-2-2-p081-p082"
+      ],
+      "content_hash": "725d76770ef181b9c0f14e998b49896cf9e23c45ede8212aa4e76bb529ff36cc",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-ai-ontology-modeler-23945624",
+      "term_key": "oadm:term:ai-ontology-modeler",
+      "preferred_label": "AI 本体建模师",
+      "aliases": [
+        "大模型本体建模师"
+      ],
+      "definition": "由大模型承担候选知识提取、结构生成、逻辑检查和交互修正的作者未来角色。",
+      "not_equivalent_to": [
+        "无需人工审核的建模器"
+      ],
+      "section_ids": [
+        "9.3.4"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-3-4-p194-p195"
+      ],
+      "content_hash": "42216611118818bb9a8b61dca5663849c28d06729dfcded531fa6060cb81c5bf",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "term_id": "oadm-term-ai-translation-cf72fd7e",
+      "term_key": "oadm:term:ai-translation",
+      "preferred_label": "AI 转译",
+      "aliases": [
+        "知识资产 AI 转译"
+      ],
+      "definition": "由 AI 将半结构化业务知识初步转换为机器可读本体，再经专家校验和数据连接的过程。",
+      "not_equivalent_to": [
+        "自动认证知识"
+      ],
+      "section_ids": [
+        "8.3.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s8-3-3-p175-p177"
+      ],
+      "content_hash": "661a0616e63661bc5e35140f22b88d7979c82d9e10b9f34975baf790db72850e",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "term_id": "oadm-term-bridge-ontology-a1fa11b2",
+      "term_key": "oadm:term:bridge-ontology",
+      "preferred_label": "桥接本体",
+      "aliases": [
+        "跨域桥接本体模型"
+      ],
+      "definition": "用于承载跨领域通用概念、语义映射与冲突约束，以连接自治领域本体的轻量模型。",
+      "not_equivalent_to": [
+        "强制合并后的单体本体"
+      ],
+      "section_ids": [
+        "6.5.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-5-3-p124-p126"
+      ],
+      "content_hash": "af5299faf5d3a9c1b568c63a5da32ac5dc96d31eefe2aacdaa633fa6b31b0010",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "term_id": "oadm-term-build-use-optimize-reuse-e5bafd1e",
+      "term_key": "oadm:term:build-use-optimize-reuse",
+      "preferred_label": "建用优复",
+      "aliases": [
+        "构建使用优化复用"
+      ],
+      "definition": "作者将本体资产构建、使用、优化和复用串成持续运营循环的生命周期框架。",
+      "not_equivalent_to": [
+        "一次性交付"
+      ],
+      "section_ids": [
+        "6.3.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-3-3-p113-p115"
+      ],
+      "content_hash": "75bc4d9cf356a7193aa5fa176365a1a59d27c5d275e9e336164874442d621192",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "term_id": "oadm-term-business-ontology-737b602b",
+      "term_key": "oadm:term:business-ontology",
+      "preferred_label": "业务本体",
+      "aliases": [
+        "企业业务本体"
+      ],
+      "definition": "围绕具体业务任务或决策组织事实、事理与行动，并供 AI Agent 理解、推理和执行的本体模型。",
+      "not_equivalent_to": [
+        "AI 业务数据"
+      ],
+      "section_ids": [
+        "4.1.2",
+        "5.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-1-2-p055-p057",
+        "oadm-span-s5-1-3-p076-p080"
+      ],
+      "content_hash": "d02432c16a5a69d90ade87bdf744864770cbaf1869f0eaa691e66d7b2e0a6216",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-carbon-silicon-governance-b9b15ea1",
+      "term_key": "oadm:term:carbon-silicon-governance",
+      "preferred_label": "碳硅协同治理",
+      "aliases": [
+        "碳基人与硅基 Agent 协同治理"
+      ],
+      "definition": "围绕人员与 Agent 的目标、权限、行为、证据和责任设计的协同治理概念。",
+      "not_equivalent_to": [
+        "纯技术访问控制"
+      ],
+      "section_ids": [
+        "9.1.1",
+        "9.1.2",
+        "9.1.3",
+        "9.1.4"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-1-1-p181-p182",
+        "oadm-span-s9-1-2-p182-p182",
+        "oadm-span-s9-1-3-p182-p183",
+        "oadm-span-s9-1-4-p184-p184"
+      ],
+      "content_hash": "d2f45a565244065eb78cc3d896e259dba8a984a84a22e4c14989323f563a1ced",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "term_id": "oadm-term-connection-strength-bdb43eb0",
+      "term_key": "oadm:term:connection-strength",
+      "preferred_label": "连接强度",
+      "aliases": [
+        "动态契合度"
+      ],
+      "definition": "作者用于描述业务、本体和 AI 之间变化传导速度、准确性与双向影响程度的概念。",
+      "not_equivalent_to": [
+        "神经网络权重指标"
+      ],
+      "section_ids": [
+        "9.3.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-3-2-p192-p193"
+      ],
+      "content_hash": "ef44990d328255caf817eabb835c6f1e8fb23bd59b510a9a6221b569b69a317a",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "term_id": "oadm-term-connectionism-b46437dd",
+      "term_key": "oadm:term:connectionism",
+      "preferred_label": "联结主义",
+      "aliases": [
+        "Connectionism"
+      ],
+      "definition": "依靠神经网络和数据学习统计模式，擅长模式识别、概率推理和泛化的智能路线。",
+      "not_equivalent_to": [
+        "符号主义"
+      ],
+      "section_ids": [
+        "4.1.4"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-1-4-p059-p060"
+      ],
+      "content_hash": "459602c5c7b4deeaa7f80492b34175502b2db8d74d76bb279014465069329b69",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-constraint-strength-75c2dea9",
+      "term_key": "oadm:term:constraint-strength",
+      "preferred_label": "本体约束强度",
+      "aliases": [
+        "规则约束等级"
+      ],
+      "definition": "按场景风险配置规则对 Agent 推理自主空间限制程度的强、中、弱等级概念。",
+      "not_equivalent_to": [
+        "模型置信度"
+      ],
+      "section_ids": [
+        "7.2.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-2-2-p136-p138"
+      ],
+      "content_hash": "3e7e6ac633db2aa9ffd4fe7761e6ffa780c7cab0f9d89644ae11eb16f44d70f8",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "term_id": "oadm-term-contribution-proof-70e36d42",
+      "term_key": "oadm:term:contribution-proof",
+      "preferred_label": "贡献证明",
+      "aliases": [
+        "贡献值计量链"
+      ],
+      "definition": "按显式维度和权重记录人员与 Agent 贡献并用于候选价值分配的作者机制。",
+      "not_equivalent_to": [
+        "客观公平评价"
+      ],
+      "section_ids": [
+        "9.2.6"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-2-6-p188-p189"
+      ],
+      "content_hash": "8691d76364db94a77755b7f64cfaaa529f36b5ff8a5acafc3fce297a962a641c",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "term_id": "oadm-term-data-owner-c214d736",
+      "term_key": "oadm:term:data-owner",
+      "preferred_label": "数据 Owner",
+      "aliases": [
+        "数据所有者"
+      ],
+      "definition": "作者所述的业务数据端到端责任角色，负责数据体系、质量、底座服务、安全授权与定密等。",
+      "not_equivalent_to": [
+        "AI 数据集责任人"
+      ],
+      "section_ids": [
+        "5.2.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-2-3-p082-p084"
+      ],
+      "content_hash": "d426afa52b26471864134a087f4736098716492270845e4e311a31034ea746b4",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-dataset-steward-b92aa788",
+      "term_key": "oadm:term:dataset-steward",
+      "preferred_label": "AI 数据集责任人",
+      "aliases": [
+        "数据集提供方责任人"
+      ],
+      "definition": "负责 AI 数据集采集、注册、质量、发布、更新、许可、安全和生命周期的供给责任角色。",
+      "not_equivalent_to": [
+        "数据 Owner",
+        "AI 数据集使用责任人"
+      ],
+      "section_ids": [
+        "5.2.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-2-3-p082-p084"
+      ],
+      "content_hash": "fd88170ee3b13960eff51726d9d5d24c92589852c3d5da099f6d7eb76bd87926",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-dataset-use-owner-2949f5a5",
+      "term_key": "oadm:term:dataset-use-owner",
+      "preferred_label": "AI 数据集使用责任人",
+      "aliases": [
+        "数据集消费方责任人"
+      ],
+      "definition": "对 AI 数据集在许可范围内的安全、隐私、合规、质量和使用结束后的处置承担责任的消费角色。",
+      "not_equivalent_to": [
+        "AI 数据集责任人"
+      ],
+      "section_ids": [
+        "5.2.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-2-3-p082-p084"
+      ],
+      "content_hash": "36947bc5fb424f4af5697395e863ba18e1159a2ae8e1e7492e8169291c36fced",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-digital-asset-provenance-chain-e56e83c2",
+      "term_key": "oadm:term:digital-asset-provenance-chain",
+      "preferred_label": "数字资产产权链",
+      "aliases": [
+        "数字资产来源链"
+      ],
+      "definition": "用哈希、权属凭证和变更记录关联模型、数据、模板等数字资产来源与流转的候选结构。",
+      "not_equivalent_to": [
+        "法律产权登记"
+      ],
+      "section_ids": [
+        "9.2.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-2-2-p185-p186"
+      ],
+      "content_hash": "d7b24578109fa2b4d263661e08e7e696fc998ee0e0041bbd0c18268910003bce",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "term_id": "oadm-term-dual-layer-operations-b1bb8cf0",
+      "term_key": "oadm:term:dual-layer-operations",
+      "preferred_label": "数据层+语义层双重运维",
+      "aliases": [
+        "双重运维"
+      ],
+      "definition": "同时维护底层数据存储性能与上层术语、规则、推理一致性的主动监控、诊断、处置和复核机制。",
+      "not_equivalent_to": [
+        "仅数据库运维",
+        "仅模型版本管理"
+      ],
+      "section_ids": [
+        "6.3.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-3-2-p111-p113"
+      ],
+      "content_hash": "f20c0649c9209a6b04d11f1d654ed5841b3cab907754b103dd546aa5dfc95a31",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "term_id": "oadm-term-dual-model-collaboration-0d7693da",
+      "term_key": "oadm:term:dual-model-collaboration",
+      "preferred_label": "双大模型协同",
+      "aliases": [
+        "异构双模型校验"
+      ],
+      "definition": "将本体生成和独立逻辑审计分配给不同模型，并以修订、辩护和人工仲裁处理分歧的作者方法。",
+      "not_equivalent_to": [
+        "两个模型简单并联",
+        "人工终审"
+      ],
+      "section_ids": [
+        "6.2.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-2-2-p103-p106"
+      ],
+      "content_hash": "623e24ab21c7bccdca2cdb6564701b6a7072af10e477819ad99fd0386b4342cd",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "term_id": "oadm-term-dynamic-action-association-63dec742",
+      "term_key": "oadm:term:dynamic-action-association",
+      "preferred_label": "动态 Action 关联",
+      "aliases": [
+        "动态行动关联"
+      ],
+      "definition": "把决策结果转为受协议、参数、安全校验和反馈约束的可执行数字动作机制。",
+      "not_equivalent_to": [
+        "自由文本建议"
+      ],
+      "section_ids": [
+        "7.4.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-4-2-p146-p147"
+      ],
+      "content_hash": "b061fe587f2c28d4cbd46996f1d0059169c5a233f3cff713c3851b353a118f2f",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "term_id": "oadm-term-dynamic-fact-association-6c7c36d6",
+      "term_key": "oadm:term:dynamic-fact-association",
+      "preferred_label": "动态事实关联",
+      "aliases": [
+        "动态事实关联机制"
+      ],
+      "definition": "通过摄取、语义映射和关系构建把多源数据持续转成可查询语义事实网络的机制。",
+      "not_equivalent_to": [
+        "一次性数据导入"
+      ],
+      "section_ids": [
+        "7.4.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-4-1-p144-p146"
+      ],
+      "content_hash": "4a11c823cacda5d4cf6d4c67457c302319a89e51b341d5b57a523e998d86e6fb",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "term_id": "oadm-term-dynamic-ontology-governance-9d719f1d",
+      "term_key": "oadm:term:dynamic-ontology-governance",
+      "preferred_label": "本体动态治理",
+      "aliases": [
+        "动态本体治理"
+      ],
+      "definition": "持续感知业务变化、校准本体、调整 Agent 行为并反馈验证的治理过程。",
+      "not_equivalent_to": [
+        "定期版本发布"
+      ],
+      "section_ids": [
+        "9.3.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-3-2-p192-p193"
+      ],
+      "content_hash": "d9300e9d69f238e70effd0861364d8b00edce69749622a6235c0b55f29de19c2",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "term_id": "oadm-term-entity-modeling-22efc693",
+      "term_key": "oadm:term:entity-modeling",
+      "preferred_label": "实体建模",
+      "aliases": [
+        "ERD",
+        "实体关系建模"
+      ],
+      "definition": "围绕实体、属性和值记录业务事实和结构，主要回答业务中有什么。",
+      "not_equivalent_to": [
+        "本体建模"
+      ],
+      "section_ids": [
+        "4.4.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-4-2-p069-p070"
+      ],
+      "content_hash": "fe5620e7c10b7b3220ed0d5641ca4133adf03b01b2d33a283962b13392614d25",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-execution-event-bus-caf9021d",
+      "term_key": "oadm:term:execution-event-bus",
+      "preferred_label": "执行事件总线",
+      "aliases": [
+        "多 Agent 执行总线"
+      ],
+      "definition": "由本体定义任务、状态和异常语义，用于主子 Agent 传递指令与反馈的交互通道。",
+      "not_equivalent_to": [
+        "消息队列产品"
+      ],
+      "section_ids": [
+        "7.3.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-3-3-p143-p144"
+      ],
+      "content_hash": "c7125563b4b1c959dbdc47da41f59eb7bffc3382061adf3eaadd429e7b7f4508",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "term_id": "oadm-term-fact-7ddabd99",
+      "term_key": "oadm:term:fact",
+      "preferred_label": "事实",
+      "aliases": [
+        "业务事实"
+      ],
+      "definition": "对业务对象、关系、事件和当前状态的可追溯描述，回答发生了什么或当前是什么。",
+      "not_equivalent_to": [
+        "事理",
+        "推理结果"
+      ],
+      "section_ids": [
+        "4.1.2",
+        "5.3.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-1-2-p055-p057",
+        "oadm-span-s5-3-1-p087-p088"
+      ],
+      "content_hash": "6eddfac9dface9b8892de2e9b5b92eefcd051cc67b7e3b7b7210c75efabcbe3e",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-fact-data-2fedce01",
+      "term_key": "oadm:term:fact-data",
+      "preferred_label": "事实数据",
+      "aliases": [
+        "推理态事实数据"
+      ],
+      "definition": "与推理任务直接相关的结构化、非结构化或关系数据，用于还原业务当前状态并支撑精准判断。",
+      "not_equivalent_to": [
+        "事理模型",
+        "推理结果数据"
+      ],
+      "section_ids": [
+        "5.3.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-3-1-p087-p088"
+      ],
+      "content_hash": "a52b606112eeebc25d0a2cc280cf1d9311646dc62ff0c8c5682f874a0e7cc9aa",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-federated-query-5b4d5476",
+      "term_key": "oadm:term:federated-query",
+      "preferred_label": "联邦查询",
+      "aliases": [
+        "跨领域联邦查询机制"
+      ],
+      "definition": "依据映射关系将跨域问题拆分为多个领域子查询并合并结果的查询机制。",
+      "not_equivalent_to": [
+        "单库 SPARQL 查询"
+      ],
+      "section_ids": [
+        "6.5.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-5-3-p124-p126"
+      ],
+      "content_hash": "9372331b3fcf2c74e3a436b2f5520bf116c46678c1107a4cda46e97e4d553522",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "term_id": "oadm-term-four-dimensional-integration-880ddb58",
+      "term_key": "oadm:term:four-dimensional-integration",
+      "preferred_label": "知识数据流程 IT 四维融合",
+      "aliases": [
+        "四维融合"
+      ],
+      "definition": "在业务本体层统一知识连接、数据关系、流程边界和 IT 分身治理的作者管理框架。",
+      "not_equivalent_to": [
+        "技术系统集成"
+      ],
+      "section_ids": [
+        "10.2.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s10-2-3-p206-p209"
+      ],
+      "content_hash": "0e99887dbe455a61009770db8b61c7b4e1af692e4f429cda349cf642e9674726",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "term_id": "oadm-term-goal-evaluation-ed38b4f4",
+      "term_key": "oadm:term:goal-evaluation",
+      "preferred_label": "目标与评估",
+      "aliases": [
+        "目标评估规范"
+      ],
+      "definition": "7+1 中用于明确 AI 任务、业务效果、质控标准和所依赖事理的结构化维度。",
+      "not_equivalent_to": [
+        "单一模型指标"
+      ],
+      "section_ids": [
+        "5.4.8"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-4-8-p093-p093"
+      ],
+      "content_hash": "fa2ede18ebf7b6a336648e21e1d064cbba99b4c64473b2e1199bb127f112e4a9",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-golden-test-case-6bd84b45",
+      "term_key": "oadm:term:golden-test-case",
+      "preferred_label": "黄金测试用例",
+      "aliases": [
+        "专家黄金用例"
+      ],
+      "definition": "由业务专家基于关键流程、决策点和异常场景定义输入、核心问题与预期结果的高价值验证用例。",
+      "not_equivalent_to": [
+        "AI 自动生成的边缘用例"
+      ],
+      "section_ids": [
+        "6.2.4"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-2-4-p109-p110"
+      ],
+      "content_hash": "ab6897970b0c4e5b02fdcd2e508737ce2f5886bfe9f71acd5278fbc448554b5f",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "term_id": "oadm-term-graph-vector-retrieval-784ced9e",
+      "term_key": "oadm:term:graph-vector-retrieval",
+      "preferred_label": "图向量库检索",
+      "aliases": [
+        "本体向量检索"
+      ],
+      "definition": "将本体节点或子图编码为向量并按语义相似度召回候选知识的检索方式。",
+      "not_equivalent_to": [
+        "图数据库精确查询"
+      ],
+      "section_ids": [
+        "7.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-1-3-p131-p133"
+      ],
+      "content_hash": "b5dc848564bab0ab318377ca8de7da345c1586eb65ce0ccc3278f26a64f518a8",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "term_id": "oadm-term-human-ai-shared-memory-31425cd1",
+      "term_key": "oadm:term:human-ai-shared-memory",
+      "preferred_label": "人机共享记忆",
+      "aliases": [
+        "本体共享记忆"
+      ],
+      "definition": "以受控本体承载组织规则与经验，使人员更新意图、Agent 读取并反馈实践的共同记忆机制。",
+      "not_equivalent_to": [
+        "模型参数记忆"
+      ],
+      "section_ids": [
+        "9.3.5"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-3-5-p195-p196"
+      ],
+      "content_hash": "e60177f905977fd1d4f813591082d27d6303124f86d3d8b39ea536264fbd0fa1",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "term_id": "oadm-term-hybrid-did-199130fa",
+      "term_key": "oadm:term:hybrid-did",
+      "preferred_label": "碳硅混合 DID",
+      "aliases": [
+        "碳硅混合身份档案链"
+      ],
+      "definition": "为人员与 Agent 提供统一可验证标识并关联动态身份属性的作者候选模式。",
+      "not_equivalent_to": [
+        "企业账号"
+      ],
+      "section_ids": [
+        "9.2.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-2-1-p185-p185"
+      ],
+      "content_hash": "e61b8f01eafb93b6831c990e777c03674f0d1bafc2fd1f6f3ad6e316f1e86c2b",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "term_id": "oadm-term-hybrid-intelligence-bc33492d",
+      "term_key": "oadm:term:hybrid-intelligence",
+      "preferred_label": "混合智能",
+      "aliases": [
+        "符号主义+联结主义"
+      ],
+      "definition": "以形式化规则和业务语义增强神经网络概率推理，使确定性边界与泛化能力协同的架构方向。",
+      "not_equivalent_to": [
+        "纯规则系统",
+        "纯概率模型"
+      ],
+      "section_ids": [
+        "4.1.4",
+        "4.2.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-1-4-p059-p060",
+        "oadm-span-s4-2-1-p060-p063"
+      ],
+      "content_hash": "4d992b2ea5e4c25f796d13490a0466ca5e85091ae909e6cffd1072d6654502f3",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-inference-result-data-02210b95",
+      "term_key": "oadm:term:inference-result-data",
+      "preferred_label": "推理结果数据",
+      "aliases": [
+        "AI 推理结果数据"
+      ],
+      "definition": "每次 AI 推理任务产生的结果与过程日志，作为可关联任务、来源版本和评估的业务痕迹。",
+      "not_equivalent_to": [
+        "事实数据"
+      ],
+      "section_ids": [
+        "5.3.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-3-3-p089-p090"
+      ],
+      "content_hash": "06406ac4bc9f2ede1063209a2fb01decde652bce1cc7d0e6bbaecac022346204",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-intelligent-native-enterprise-8b5d2426",
+      "term_key": "oadm:term:intelligent-native-enterprise",
+      "preferred_label": "智能原生企业",
+      "aliases": [
+        "认知驱动企业"
+      ],
+      "definition": "把本体与 Agent 作为业务底层能力，使智慧资产、流程和组织持续进化的作者未来企业形态。",
+      "not_equivalent_to": [
+        "部署聊天机器人的企业"
+      ],
+      "section_ids": [
+        "10.2.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s10-2-1-p203-p205"
+      ],
+      "content_hash": "ebea97374d73faaf8f32f506f87722303a39d4ef25ea36ae03ffa6958b628f22",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "term_id": "oadm-term-intent-ontology-alignment-4771904b",
+      "term_key": "oadm:term:intent-ontology-alignment",
+      "preferred_label": "意图与本体对齐",
+      "aliases": [
+        "意图本体映射"
+      ],
+      "definition": "将 Agent 任务语义与本体中相关概念、规则和知识边界建立映射的调用前置过程。",
+      "not_equivalent_to": [
+        "本体检索"
+      ],
+      "section_ids": [
+        "7.1.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-1-2-p130-p131"
+      ],
+      "content_hash": "1a903ca15055564bd4154f5ca6b78952267edd8f712ee74602b901095d8c09fd",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "term_id": "oadm-term-knowledge-graph-f868589d",
+      "term_key": "oadm:term:knowledge-graph",
+      "preferred_label": "知识图谱",
+      "aliases": [
+        "Knowledge Graph",
+        "KG"
+      ],
+      "definition": "以实体及关系承载实例化知识的数据结构；在作者框架中，本体提供其语义骨架和推理规则。",
+      "not_equivalent_to": [
+        "本体",
+        "本体库"
+      ],
+      "section_ids": [
+        "4.4.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-4-3-p070-p071"
+      ],
+      "content_hash": "7fd796ec263a1d34e4a82a8f15a5a134827f6b3c7142eda44d66407ec8f2d69c",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-mechanism-57b8161a",
+      "term_key": "oadm:term:mechanism",
+      "preferred_label": "事理",
+      "aliases": [
+        "业务事理",
+        "事理逻辑"
+      ],
+      "definition": "对业务规则、原因、约束、流程和决策机制的表达，回答为什么以及应如何运作。",
+      "not_equivalent_to": [
+        "事实",
+        "行动"
+      ],
+      "section_ids": [
+        "4.1.2",
+        "5.3.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-1-2-p055-p057",
+        "oadm-span-s5-3-2-p088-p089"
+      ],
+      "content_hash": "4fc90f430fd9f1aabebd544e8d03cb5194878969044d43370cbab2c29bdd783e",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-mechanism-model-06745171",
+      "term_key": "oadm:term:mechanism-model",
+      "preferred_label": "事理模型",
+      "aliases": [
+        "业务事理模型"
+      ],
+      "definition": "将企业规则、决策逻辑、流程、权限和目标转为 AI 可理解结构化语义的推理逻辑载体。",
+      "not_equivalent_to": [
+        "事实数据",
+        "Prompt 文本"
+      ],
+      "section_ids": [
+        "5.3.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-3-2-p088-p089"
+      ],
+      "content_hash": "e432a5519b7ce2cf7f404525b6dafdec5378d189cd595810b04b71b7b6d2cadd",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-memory-augmented-ontology-call-c132df93",
+      "term_key": "oadm:term:memory-augmented-ontology-call",
+      "preferred_label": "记忆增强调用",
+      "aliases": [
+        "本体记忆调用"
+      ],
+      "definition": "结合 Agent 短期上下文与长期成功模式动态筛选本体片段的调用方式。",
+      "not_equivalent_to": [
+        "静态映射"
+      ],
+      "section_ids": [
+        "7.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-1-3-p131-p133"
+      ],
+      "content_hash": "a1e971bcf8bb99b121337f21e722231148d87cf169f994c1dd1554db695ce6bf",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "term_id": "oadm-term-minimal-necessary-ontology-524b5980",
+      "term_key": "oadm:term:minimal-necessary-ontology",
+      "preferred_label": "最小必要本体",
+      "aliases": [
+        "最小本体片段"
+      ],
+      "definition": "仅包含当前任务决策必需概念、关系、规则与约束的按需加载本体子集。",
+      "not_equivalent_to": [
+        "完整本体库"
+      ],
+      "section_ids": [
+        "7.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-1-3-p131-p133"
+      ],
+      "content_hash": "01b165b49b81c35ae41193ccacf8d476e8939e91df827c490f0a4bc918f20e9f",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "term_id": "oadm-term-modeling-admission-67d86c9b",
+      "term_key": "oadm:term:modeling-admission",
+      "preferred_label": "建模准入",
+      "aliases": [
+        "本体建模准入审核"
+      ],
+      "definition": "在形式化建模前，按描述、逻辑、内容和极简表达检查知识制品是否达到可编码条件的质量关口。",
+      "not_equivalent_to": [
+        "模型验收",
+        "生产发布审批"
+      ],
+      "section_ids": [
+        "6.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-1-3-p100-p101"
+      ],
+      "content_hash": "9a37c7866db20da91c429e21cbe2366fcf7aecb6e1b16b8b300aa573a4849e44",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "term_id": "oadm-term-multi-agent-pdca-b1392d3b",
+      "term_key": "oadm:term:multi-agent-pdca",
+      "preferred_label": "多 Agent PDCA",
+      "aliases": [
+        "多场景 PDCA 自闭环"
+      ],
+      "definition": "由统筹 Agent 与环节 Agent 按计划、执行、检查、处理协作运行的闭环模式。",
+      "not_equivalent_to": [
+        "单 Agent 工作流"
+      ],
+      "section_ids": [
+        "8.2.6"
+      ],
+      "source_span_ids": [
+        "oadm-span-s8-2-6-p169-p172"
+      ],
+      "content_hash": "9a8e070f3707322cc3ac708e5f51f97caaa8a86a575bab22f2f9f0c526aba00b",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "term_id": "oadm-term-multimodal-ontology-74ff86f3",
+      "term_key": "oadm:term:multimodal-ontology",
+      "preferred_label": "多模态本体",
+      "aliases": [
+        "多模态本体建模"
+      ],
+      "definition": "把文本、图像、语音、视频和传感器信号统一映射到业务概念与关系的本体形态。",
+      "not_equivalent_to": [
+        "多模态向量库"
+      ],
+      "section_ids": [
+        "9.3.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-3-3-p193-p194"
+      ],
+      "content_hash": "4ac9ac3d5cae653a325567a0c6774d4196159651a8384bc1acb85a2d287c1711",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "term_id": "oadm-term-odrl-789f3a94",
+      "term_key": "oadm:term:odrl",
+      "preferred_label": "ODRL",
+      "aliases": [
+        "Open Digital Rights Language"
+      ],
+      "definition": "作者映射为表达许可、禁止、义务、资产和使用约束的权限与策略语言。",
+      "not_equivalent_to": [
+        "身份认证系统"
+      ],
+      "section_ids": [
+        "5.4.6"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-4-6-p092-p093"
+      ],
+      "content_hash": "9799c17e92e3ea735987c7d04581d411cadadc75c72714f6f8c10c6927a51d0f",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-one-plus-four-organization-c511478f",
+      "term_key": "oadm:term:one-plus-four-organization",
+      "preferred_label": "1+4 组织协同",
+      "aliases": [
+        "总体组加四专业小队"
+      ],
+      "definition": "总体组统筹本体认知、数据感知、Agent 决策和行动执行四类专业小队的作者组织模式。",
+      "not_equivalent_to": [
+        "固定组织架构标准"
+      ],
+      "section_ids": [
+        "8.3.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s8-3-2-p174-p175"
+      ],
+      "content_hash": "44d0b815d52bcf4c43cd34cf61c554262a0b6b160b119f7156f6a5084ff72b18",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "term_id": "oadm-term-ontology-e1e08c0e",
+      "term_key": "oadm:term:ontology",
+      "preferred_label": "本体",
+      "aliases": [
+        "Ontology"
+      ],
+      "definition": "作者所述的形式化、结构化业务意义框架，用于显式组织概念、关系、规则和行动，使知识可被人理解并被机器计算。",
+      "not_equivalent_to": [
+        "知识图谱",
+        "实体模型"
+      ],
+      "section_ids": [
+        "4.1.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-1-1-p053-p055"
+      ],
+      "content_hash": "843d002a1954253583b2f18ab11a245ea13b35ddc3159b9fb95d983287a14896",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-ontology-as-a-service-f60b713a",
+      "term_key": "oadm:term:ontology-as-a-service",
+      "preferred_label": "本体即服务",
+      "aliases": [
+        "Ontology as a Service"
+      ],
+      "definition": "通过标准接口按意图提供可版本化、可授权、可组合本体片段的运行时服务理念。",
+      "not_equivalent_to": [
+        "静态本体文件"
+      ],
+      "section_ids": [
+        "7.4.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-4-3-p147-p147"
+      ],
+      "content_hash": "a87a62e655474498bbc4bbbe1c4d18df963e7d62cbf4bd5d0f033e29ef4d61b0",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "term_id": "oadm-term-ontology-clone-governance-d5a6a998",
+      "term_key": "oadm:term:ontology-clone-governance",
+      "preferred_label": "本体分身治理",
+      "aliases": [
+        "Agent 分身治理"
+      ],
+      "definition": "按共享本体版本、能力和权限管理大量 Agent 分身，并控制学习同步与全息审计的作者 IT 治理概念。",
+      "not_equivalent_to": [
+        "逐账号配置"
+      ],
+      "section_ids": [
+        "10.2.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s10-2-3-p206-p209"
+      ],
+      "content_hash": "e667e072832d1a6422dd364ea37a20e12f6d0102952c70d41323f69b5d26c2ef",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "term_id": "oadm-term-ontology-embedding-d4194651",
+      "term_key": "oadm:term:ontology-embedding",
+      "preferred_label": "本体嵌入",
+      "aliases": [
+        "本体模型嵌入"
+      ],
+      "definition": "将符号化本体逻辑转译为模型可理解和遵循的业务上下文或训练信号。",
+      "not_equivalent_to": [
+        "向量嵌入"
+      ],
+      "section_ids": [
+        "7.1.4"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-1-4-p133-p134"
+      ],
+      "content_hash": "6545b03d76b806cfeed49317576ace2b290403efedc8ef3e0c1f5b6e0d68c46b",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "term_id": "oadm-term-ontology-repository-b2910225",
+      "term_key": "oadm:term:ontology-repository",
+      "preferred_label": "本体库",
+      "aliases": [
+        "Ontology Repository"
+      ],
+      "definition": "存储形式化概念、关系、规则和行动语义，面向 AI Agent 提供可推理业务逻辑的知识基础设施。",
+      "not_equivalent_to": [
+        "数据湖",
+        "文档知识库"
+      ],
+      "section_ids": [
+        "4.4.4"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-4-4-p071-p072"
+      ],
+      "content_hash": "5d2e24d42dd0ab7b7f1eb4d6b2d38271c082e74405c9a76f7b9fa8606a79b823",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-ontology-semantic-layer-69c4fdcf",
+      "term_key": "oadm:term:ontology-semantic-layer",
+      "preferred_label": "本体语义层",
+      "aliases": [
+        "统一语义层"
+      ],
+      "definition": "位于业务、信息、应用和技术架构之间，将业务共识转为机器可理解模型并提供统一语义调用的架构层。",
+      "not_equivalent_to": [
+        "API 网关",
+        "数据仓库"
+      ],
+      "section_ids": [
+        "4.4.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-4-1-p068-p069"
+      ],
+      "content_hash": "9d0e06ab2b53d611fafe24e4d30dac24b0e37c93a5391690e769b82bdb6bc944",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-ontology-semantic-model-c1989f40",
+      "term_key": "oadm:term:ontology-semantic-model",
+      "preferred_label": "本体语义模型",
+      "aliases": [],
+      "definition": "事理模型的一种具象化管理单元，基于形式化语义规范表达特定 AI 推理任务的业务逻辑。",
+      "not_equivalent_to": [
+        "所有事理表达形式"
+      ],
+      "section_ids": [
+        "5.3.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-3-2-p088-p089"
+      ],
+      "content_hash": "b29d5b89e4e3ec52158c4c188c5738ae8a59fb8cdf439a1e2fd028fc89e9fec4",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-ontology-skill-2de0b8a1",
+      "term_key": "oadm:term:ontology-skill",
+      "preferred_label": "本体 Skill",
+      "aliases": [
+        "本体技能封装"
+      ],
+      "definition": "包含功能、输入输出和本体逻辑，可被 Agent 规划与渐进调用的模块化知识单元。",
+      "not_equivalent_to": [
+        "普通提示词"
+      ],
+      "section_ids": [
+        "7.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-1-3-p131-p133"
+      ],
+      "content_hash": "a916dffe29e3ea4c0a4bcbe7cd0d654e379bd2629318dc1e2e10d5325fa8a8f0",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "term_id": "oadm-term-ontology-tooling-platform-d6cb0e01",
+      "term_key": "oadm:term:ontology-tooling-platform",
+      "preferred_label": "本体工具平台",
+      "aliases": [
+        "端到端本体模型构建平台"
+      ],
+      "definition": "承载智能建模、自校验、专家可视化审阅、语义存储检索、版本与服务接口的平台能力集合。",
+      "not_equivalent_to": [
+        "单一本体编辑器"
+      ],
+      "section_ids": [
+        "6.4.1",
+        "6.4.2",
+        "6.4.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-4-1-p115-p117",
+        "oadm-span-s6-4-2-p117-p119",
+        "oadm-span-s6-4-3-p119-p121"
+      ],
+      "content_hash": "30afcf3fa00491fe0411ca5c0285ae02336cc1f9be43ca548a9f1636dc164a02",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "term_id": "oadm-term-operation-hash-chain-966637e4",
+      "term_key": "oadm:term:operation-hash-chain",
+      "preferred_label": "操作哈希链",
+      "aliases": [
+        "全链路操作哈希链"
+      ],
+      "definition": "将主体、操作、时间和前序哈希串联，用于完整性验证与行为回放的记录链。",
+      "not_equivalent_to": [
+        "源事件真实性证明"
+      ],
+      "section_ids": [
+        "9.2.5"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-2-5-p188-p188"
+      ],
+      "content_hash": "4511fcda33e49bf8a83cdedeb61c5f478da61b8f22b2039f8419ce7005dba086",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "term_id": "oadm-term-owl-9d481b03",
+      "term_key": "oadm:term:owl",
+      "preferred_label": "OWL",
+      "aliases": [
+        "Web Ontology Language"
+      ],
+      "definition": "作者映射为表达类层级、属性约束、等价和基数等逻辑语义的本体语言。",
+      "not_equivalent_to": [
+        "RDF",
+        "SWRL"
+      ],
+      "section_ids": [
+        "5.4.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-4-2-p092-p092"
+      ],
+      "content_hash": "08f5a12f4f98d20f6e2ea6bf26e5e7a1a9a0249c80d17c6ecb91812eb6fcc9b9",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-owl-s-2ad01f94",
+      "term_key": "oadm:term:owl-s",
+      "preferred_label": "OWL-S",
+      "aliases": [
+        "Web Ontology Language for Services"
+      ],
+      "definition": "作者映射为用输入、输出、前置条件和效果描述服务、流程活动与行动原语的语义规范。",
+      "not_equivalent_to": [
+        "BPMN",
+        "OWL"
+      ],
+      "section_ids": [
+        "5.4.5"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-4-5-p092-p092"
+      ],
+      "content_hash": "f56bea0d8e4e9214ce067849147b1c6135648d105745ee8810691918a06fef72",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-penetration-validation-730e43f3",
+      "term_key": "oadm:term:penetration-validation",
+      "preferred_label": "穿刺式验证",
+      "aliases": [
+        "快速穿刺验证"
+      ],
+      "definition": "以轻量本体、极简 Agent、真实小样本和量化结果快速检验技术链路可行性的作者策略。",
+      "not_equivalent_to": [
+        "规模化生产验收"
+      ],
+      "section_ids": [
+        "8.3.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s8-3-1-p173-p174"
+      ],
+      "content_hash": "a8ce9383d187330e63547130fc4386b390433ff1290b275c3d5ecebb015701dd",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "term_id": "oadm-term-persuasion-boundary-8c12a208",
+      "term_key": "oadm:term:persuasion-boundary",
+      "preferred_label": "说服边界",
+      "aliases": [
+        "AI 语言边界"
+      ],
+      "definition": "规定 Agent 可主动发起的话题、可暗示的结论、影响对象和透明义务的人机交互治理边界。",
+      "not_equivalent_to": [
+        "操作权限"
+      ],
+      "section_ids": [
+        "10.2.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s10-2-3-p206-p209"
+      ],
+      "content_hash": "f5e68fcd23faa78cdabbef1121c63f04a1651404d31480af96e8d9cb6bb3dc54",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "term_id": "oadm-term-physical-logical-dual-learning-e3156e12",
+      "term_key": "oadm:term:physical-logical-dual-learning",
+      "preferred_label": "物理—逻辑双重学习",
+      "aliases": [
+        "AI 双重学习"
+      ],
+      "definition": "AI 同时学习物理因果规律和业务语义规则，并在价值治理下协同更新的作者范式。",
+      "not_equivalent_to": [
+        "双模型集成"
+      ],
+      "section_ids": [
+        "10.1.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s10-1-2-p200-p202"
+      ],
+      "content_hash": "b18a77f094c6c6101ee8338d078be2babf4d7ee468732b1356366793b36f2bd8",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "term_id": "oadm-term-point-line-surface-e24ea436",
+      "term_key": "oadm:term:point-line-surface",
+      "preferred_label": "点线面实施路径",
+      "aliases": [
+        "点—线—面迭代"
+      ],
+      "definition": "从小切口场景验证，到领域纵向整合，再到跨领域横向贯通的作者迭代式本体工程路径。",
+      "not_equivalent_to": [
+        "一次性企业级顶层建模"
+      ],
+      "section_ids": [
+        "6.5.1",
+        "6.5.2",
+        "6.5.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-5-1-p121-p122",
+        "oadm-span-s6-5-2-p122-p124",
+        "oadm-span-s6-5-3-p124-p126"
+      ],
+      "content_hash": "cfa7b878e392c3c33b40c16de7a1bc4ba096e485e475d9b538a5418daac777a7",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "term_id": "oadm-term-rdf-fd1dab07",
+      "term_key": "oadm:term:rdf",
+      "preferred_label": "RDF",
+      "aliases": [
+        "Resource Description Framework"
+      ],
+      "definition": "作者映射为以主语、谓语、宾语三元组描述业务资源和事实关联的基础语义标准。",
+      "not_equivalent_to": [
+        "OWL",
+        "SPARQL"
+      ],
+      "section_ids": [
+        "5.4.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-4-1-p090-p092"
+      ],
+      "content_hash": "4d26920598523e1988773a11a31c5b2773bd2eced594af80f4bedd07074bddb3",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-semantic-database-157b8c4c",
+      "term_key": "oadm:term:semantic-database",
+      "preferred_label": "专用语义数据库",
+      "aliases": [
+        "本体语义数据库"
+      ],
+      "definition": "作者用于保存、查询并服务化发布通过审查的本体模型与相关三元组资产的专用存储。",
+      "not_equivalent_to": [
+        "普通文档库",
+        "本体模型文件"
+      ],
+      "section_ids": [
+        "6.3.1",
+        "6.4.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-3-1-p111-p111",
+        "oadm-span-s6-4-3-p119-p121"
+      ],
+      "content_hash": "f2f0d59ccbb1f9dd31988c590a1dd4428a663134bdeb7f82af9473f3bb12d4d9",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "term_id": "oadm-term-semantic-interconnection-b73d28a9",
+      "term_key": "oadm:term:semantic-interconnection",
+      "preferred_label": "语义互联",
+      "aliases": [
+        "语义互操作"
+      ],
+      "definition": "不同系统、组织或数据来源在交换数据时保持概念含义和解释一致的能力。",
+      "not_equivalent_to": [
+        "物理连接",
+        "语义推理"
+      ],
+      "section_ids": [
+        "4.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-1-3-p057-p059"
+      ],
+      "content_hash": "e8033a86d89576292135f6541e8d0faf4de1462a79b5971b3391afebdd6f01f9",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-semantic-middleware-feead58c",
+      "term_key": "oadm:term:semantic-middleware",
+      "preferred_label": "语义中间件",
+      "aliases": [
+        "统一语义中间件"
+      ],
+      "definition": "在平台模块之间统一解析、转换、传递和查询本体知识的集成枢纽。",
+      "not_equivalent_to": [
+        "通用 API 网关"
+      ],
+      "section_ids": [
+        "7.5.5"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-5-5-p153-p154"
+      ],
+      "content_hash": "43342ffc97bdcc5a8e07a2c00921cd1c441801370b605fb6ac1fcd6123d95333",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2d-agent-engineering-applications-ch07-ch08"
+    },
+    {
+      "term_id": "oadm-term-semantic-reasoning-90da552e",
+      "term_key": "oadm:term:semantic-reasoning",
+      "preferred_label": "语义推理",
+      "aliases": [
+        "本体语义推理"
+      ],
+      "definition": "基于形式化概念、属性约束和逻辑规则推导结论，并为 AI 提供业务常识与行为边界的能力。",
+      "not_equivalent_to": [
+        "向量相似检索",
+        "语义互联"
+      ],
+      "section_ids": [
+        "4.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-1-3-p057-p059"
+      ],
+      "content_hash": "b3d2c46bb522dde36bccdbb63c69c7b87e3c565b30ad37ca3f488e0796f57b06",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-six-proof-system-8ad39424",
+      "term_key": "oadm:term:six-proof-system",
+      "preferred_label": "六类证明体系",
+      "aliases": [
+        "Agent 六类证明"
+      ],
+      "definition": "由身份、资产、授权、合约、追溯和贡献证明组成的作者可信协作框架。",
+      "not_equivalent_to": [
+        "已认证行业标准"
+      ],
+      "section_ids": [
+        "9.2.1",
+        "9.2.2",
+        "9.2.3",
+        "9.2.4",
+        "9.2.5",
+        "9.2.6"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-2-1-p185-p185",
+        "oadm-span-s9-2-2-p185-p186",
+        "oadm-span-s9-2-3-p186-p187",
+        "oadm-span-s9-2-4-p187-p188",
+        "oadm-span-s9-2-5-p188-p188",
+        "oadm-span-s9-2-6-p188-p189"
+      ],
+      "content_hash": "3ca1b76298c5bf8b6f9619b753a38d174df66351fbe1e8bc22b3fac63d01f2d3",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "term_id": "oadm-term-skos-a7ffd3db",
+      "term_key": "oadm:term:skos",
+      "preferred_label": "SKOS",
+      "aliases": [
+        "Simple Knowledge Organization System"
+      ],
+      "definition": "作者映射为统一术语定义、分类和关联，建立受控词表与语义共识的标准。",
+      "not_equivalent_to": [
+        "OWL"
+      ],
+      "section_ids": [
+        "5.4.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-4-3-p092-p092"
+      ],
+      "content_hash": "941138b5921a245317f80357c1a1e22e47ebb5de984958241faa2e0b20568131",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-smart-contract-collaboration-6ae52bc9",
+      "term_key": "oadm:term:smart-contract-collaboration",
+      "preferred_label": "智能合约协作流水线",
+      "aliases": [
+        "合约证明"
+      ],
+      "definition": "把跨主体业务条件编码为可自动校验和推进节点的协作执行模式。",
+      "not_equivalent_to": [
+        "普通工作流脚本"
+      ],
+      "section_ids": [
+        "9.2.4"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-2-4-p187-p188"
+      ],
+      "content_hash": "f0eb9801bcf01267e6b55475521750d875525a42f484f4060eecbeddc29d1602",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "term_id": "oadm-term-sparql-9878a6e8",
+      "term_key": "oadm:term:sparql",
+      "preferred_label": "SPARQL",
+      "aliases": [
+        "SPARQL Protocol and RDF Query Language"
+      ],
+      "definition": "作者映射为查询和操作 RDF 图数据、支持 Agent 按意图取用本体数据的接口语言。",
+      "not_equivalent_to": [
+        "RDF"
+      ],
+      "section_ids": [
+        "5.4.7"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-4-7-p093-p093"
+      ],
+      "content_hash": "330825f3cb603332ecce099c29113ecd2261ef2284f783d46a201c0cc856153c",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-swrl-2c2a1add",
+      "term_key": "oadm:term:swrl",
+      "preferred_label": "SWRL",
+      "aliases": [
+        "Semantic Web Rule Language"
+      ],
+      "definition": "作者映射为以如果—那么规则组合事实与约束并推导结论的规则语言。",
+      "not_equivalent_to": [
+        "OWL"
+      ],
+      "section_ids": [
+        "5.4.4"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-4-4-p092-p092"
+      ],
+      "content_hash": "c4f14a0232b5b3f7aa6d3c6b9833e521e0c2384a3c74858938fe53660292e03e",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-symbolic-ai-c532b16c",
+      "term_key": "oadm:term:symbolic-ai",
+      "preferred_label": "符号主义",
+      "aliases": [
+        "Symbolic AI"
+      ],
+      "definition": "以符号、概念和规则表达知识并进行可解释确定性推理的智能路线。",
+      "not_equivalent_to": [
+        "联结主义"
+      ],
+      "section_ids": [
+        "4.1.4"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-1-4-p059-p060"
+      ],
+      "content_hash": "e545911843381e667540316078e258694a959ecac43fc5f1eb4dc4e10bcf14ff",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2b-core-theory-ch04-ch05"
+    },
+    {
+      "term_id": "oadm-term-tri-pillar-agent-governance-fb8257d7",
+      "term_key": "oadm:term:tri-pillar-agent-governance",
+      "preferred_label": "三支柱 Agent 治理",
+      "aliases": [
+        "本体约束+AI 智能+人类监督"
+      ],
+      "definition": "由本体边界、AI 自主能力和人类价值监督共同组成的分层治理框架。",
+      "not_equivalent_to": [
+        "完全自治"
+      ],
+      "section_ids": [
+        "9.3.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-3-1-p191-p192"
+      ],
+      "content_hash": "04467e173c4f84a4e9076e649983e2dea16941ea9bc86940e48374ad821e6d10",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "term_id": "oadm-term-triple-world-model-6537c189",
+      "term_key": "oadm:term:triple-world-model",
+      "preferred_label": "三重世界模型",
+      "aliases": [
+        "物理逻辑智能三重世界"
+      ],
+      "definition": "以物理世界、逻辑世界和智能世界共同描述企业数字孪生的作者战略框架。",
+      "not_equivalent_to": [
+        "单一数字孪生平台"
+      ],
+      "section_ids": [
+        "10.1.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s10-1-1-p199-p200"
+      ],
+      "content_hash": "e928a6000a6451a3334ca5a004f27a9c4ecf8cc8e671a74cbc8c655b21e64de6",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "term_id": "oadm-term-twenty-nine-sentences-70406ecd",
+      "term_key": "oadm:term:twenty-nine-sentences",
+      "preferred_label": "29 句话",
+      "aliases": [
+        "29 句话范式",
+        "29 种标准化自然语言模板"
+      ],
+      "definition": "作者用于把“7+1”语义维度细化为可访谈、可提炼、可交给 AI 建模的标准化业务描述模板集合。",
+      "not_equivalent_to": [
+        "完整本体模型",
+        "通用自然语言规范"
+      ],
+      "section_ids": [
+        "6.1.1",
+        "6.1.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s6-1-1-p096-p097",
+        "oadm-span-s6-1-2-p098-p099"
+      ],
+      "content_hash": "16ac50c435aa800d61042e23d24ceb5cd5bfe41bd6e3f7702669e1a9eded807a",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2c-engineering-method-ch06"
+    },
+    {
+      "term_id": "oadm-term-verifiable-permission-chain-9c75894b",
+      "term_key": "oadm:term:verifiable-permission-chain",
+      "preferred_label": "权限凭证链",
+      "aliases": [
+        "可验证权限凭证"
+      ],
+      "definition": "显式携带授权主体、范围、条件、时效与撤销状态的动态权限证明机制。",
+      "not_equivalent_to": [
+        "永久角色权限"
+      ],
+      "section_ids": [
+        "9.2.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s9-2-3-p186-p187"
+      ],
+      "content_hash": "18d7347078fa129ba04286a2189febc8ade66e789aefd1b98d3f1046011d7f32",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    },
+    {
+      "term_id": "oadm-term-world-model-a4f1c161",
+      "term_key": "oadm:term:world-model",
+      "preferred_label": "世界模型",
+      "aliases": [
+        "现实引擎",
+        "因果镜像"
+      ],
+      "definition": "对物理状态、客观规律、动态演化与行动结果进行建模和推演的模型。",
+      "not_equivalent_to": [
+        "业务本体模型"
+      ],
+      "section_ids": [
+        "10.1.1",
+        "10.1.2",
+        "10.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s10-1-1-p199-p200",
+        "oadm-span-s10-1-2-p200-p202",
+        "oadm-span-s10-1-3-p202-p203"
+      ],
+      "content_hash": "dd7d9ad4caf82fcfe2f9379e6b7a99b28334c199300ddcafb601585b5b169c3d",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "source_batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "m2d-agent-engineering-applications-ch07-ch08",
+  "scope": "第 7–8 章来源内 Agent 工程与应用场景萃取",
+  "section_record_count": 35,
+  "substantive_subsection_count": 33,
+  "chapter_summary_count": 2,
+  "card_count": 23,
+  "term_count": 16,
+  "relation_count": 46,
+  "pdf_page_start": 128,
+  "pdf_page_end": 178,
+  "claim_type_counts": {
+    "author_action_pattern": 3,
+    "author_application_pattern": 6,
+    "author_architecture": 5,
+    "author_decision_pattern": 1,
+    "author_faq": 1,
+    "author_implementation_path": 8,
+    "author_mechanism": 2,
+    "author_method": 4,
+    "author_selection_rule": 2,
+    "author_value_framework": 1,
+    "chapter_summary": 2
+  },
+  "visual_review_counts": {
+    "not_required": 21,
+    "pending": 6,
+    "reviewed": 8
+  },
+  "selected_visual_review_page_count": 11,
+  "boundaries": {
+    "faithful_source_paraphrase_only": true,
+    "author_examples_independently_verified": false,
+    "author_metrics_independently_verified": false,
+    "official_standards_verified": false,
+    "scm_crosswalk_performed": false,
+    "importer_modified": false,
+    "database_write": false,
+    "provider_call": false,
+    "full_raw_text_persisted": false,
+    "full_page_images_persisted": false,
+    "personal_absolute_path_persisted": false
+  }
+}

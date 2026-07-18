@@ -1,0 +1,729 @@
+{
+  "schema_version": "1.0.0",
+  "document_id": "book-ontology-ai-data-management-2026",
+  "domain_id": "ontology-ai-data-management-draft",
+  "batch_id": "m2b-core-theory-ch04-ch05",
+  "term_count": 33,
+  "terms": [
+    {
+      "term_id": "oadm-term-ontology-e1e08c0e",
+      "term_key": "oadm:term:ontology",
+      "preferred_label": "本体",
+      "aliases": [
+        "Ontology"
+      ],
+      "definition": "作者所述的形式化、结构化业务意义框架，用于显式组织概念、关系、规则和行动，使知识可被人理解并被机器计算。",
+      "not_equivalent_to": [
+        "知识图谱",
+        "实体模型"
+      ],
+      "section_ids": [
+        "4.1.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-1-1-p053-p055"
+      ],
+      "content_hash": "843d002a1954253583b2f18ab11a245ea13b35ddc3159b9fb95d983287a14896",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-business-ontology-737b602b",
+      "term_key": "oadm:term:business-ontology",
+      "preferred_label": "业务本体",
+      "aliases": [
+        "企业业务本体"
+      ],
+      "definition": "围绕具体业务任务或决策组织事实、事理与行动，并供 AI Agent 理解、推理和执行的本体模型。",
+      "not_equivalent_to": [
+        "AI 业务数据"
+      ],
+      "section_ids": [
+        "4.1.2",
+        "5.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-1-2-p055-p057",
+        "oadm-span-s5-1-3-p076-p080"
+      ],
+      "content_hash": "d02432c16a5a69d90ade87bdf744864770cbaf1869f0eaa691e66d7b2e0a6216",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-fact-7ddabd99",
+      "term_key": "oadm:term:fact",
+      "preferred_label": "事实",
+      "aliases": [
+        "业务事实"
+      ],
+      "definition": "对业务对象、关系、事件和当前状态的可追溯描述，回答发生了什么或当前是什么。",
+      "not_equivalent_to": [
+        "事理",
+        "推理结果"
+      ],
+      "section_ids": [
+        "4.1.2",
+        "5.3.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-1-2-p055-p057",
+        "oadm-span-s5-3-1-p087-p088"
+      ],
+      "content_hash": "6eddfac9dface9b8892de2e9b5b92eefcd051cc67b7e3b7b7210c75efabcbe3e",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-mechanism-57b8161a",
+      "term_key": "oadm:term:mechanism",
+      "preferred_label": "事理",
+      "aliases": [
+        "业务事理",
+        "事理逻辑"
+      ],
+      "definition": "对业务规则、原因、约束、流程和决策机制的表达，回答为什么以及应如何运作。",
+      "not_equivalent_to": [
+        "事实",
+        "行动"
+      ],
+      "section_ids": [
+        "4.1.2",
+        "5.3.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-1-2-p055-p057",
+        "oadm-span-s5-3-2-p088-p089"
+      ],
+      "content_hash": "4fc90f430fd9f1aabebd544e8d03cb5194878969044d43370cbab2c29bdd783e",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-action-dfe237b9",
+      "term_key": "oadm:term:action",
+      "preferred_label": "行动",
+      "aliases": [
+        "业务行动",
+        "Action"
+      ],
+      "definition": "由目标、前置条件、输入输出、执行效果和反馈约束的可实施业务动作。",
+      "not_equivalent_to": [
+        "自然语言建议"
+      ],
+      "section_ids": [
+        "4.1.2",
+        "5.4.5",
+        "5.5.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-1-2-p055-p057",
+        "oadm-span-s5-4-5-p092-p092",
+        "oadm-span-s5-5-3-p094-p095"
+      ],
+      "content_hash": "01ce057484b63389e64f338d9da4235f9e46c95e326c243007dccb0836c459b1",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-semantic-interconnection-b73d28a9",
+      "term_key": "oadm:term:semantic-interconnection",
+      "preferred_label": "语义互联",
+      "aliases": [
+        "语义互操作"
+      ],
+      "definition": "不同系统、组织或数据来源在交换数据时保持概念含义和解释一致的能力。",
+      "not_equivalent_to": [
+        "物理连接",
+        "语义推理"
+      ],
+      "section_ids": [
+        "4.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-1-3-p057-p059"
+      ],
+      "content_hash": "e8033a86d89576292135f6541e8d0faf4de1462a79b5971b3391afebdd6f01f9",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-semantic-reasoning-90da552e",
+      "term_key": "oadm:term:semantic-reasoning",
+      "preferred_label": "语义推理",
+      "aliases": [
+        "本体语义推理"
+      ],
+      "definition": "基于形式化概念、属性约束和逻辑规则推导结论，并为 AI 提供业务常识与行为边界的能力。",
+      "not_equivalent_to": [
+        "向量相似检索",
+        "语义互联"
+      ],
+      "section_ids": [
+        "4.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-1-3-p057-p059"
+      ],
+      "content_hash": "b3d2c46bb522dde36bccdbb63c69c7b87e3c565b30ad37ca3f488e0796f57b06",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-symbolic-ai-c532b16c",
+      "term_key": "oadm:term:symbolic-ai",
+      "preferred_label": "符号主义",
+      "aliases": [
+        "Symbolic AI"
+      ],
+      "definition": "以符号、概念和规则表达知识并进行可解释确定性推理的智能路线。",
+      "not_equivalent_to": [
+        "联结主义"
+      ],
+      "section_ids": [
+        "4.1.4"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-1-4-p059-p060"
+      ],
+      "content_hash": "e545911843381e667540316078e258694a959ecac43fc5f1eb4dc4e10bcf14ff",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-connectionism-b46437dd",
+      "term_key": "oadm:term:connectionism",
+      "preferred_label": "联结主义",
+      "aliases": [
+        "Connectionism"
+      ],
+      "definition": "依靠神经网络和数据学习统计模式，擅长模式识别、概率推理和泛化的智能路线。",
+      "not_equivalent_to": [
+        "符号主义"
+      ],
+      "section_ids": [
+        "4.1.4"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-1-4-p059-p060"
+      ],
+      "content_hash": "459602c5c7b4deeaa7f80492b34175502b2db8d74d76bb279014465069329b69",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-hybrid-intelligence-bc33492d",
+      "term_key": "oadm:term:hybrid-intelligence",
+      "preferred_label": "混合智能",
+      "aliases": [
+        "符号主义+联结主义"
+      ],
+      "definition": "以形式化规则和业务语义增强神经网络概率推理，使确定性边界与泛化能力协同的架构方向。",
+      "not_equivalent_to": [
+        "纯规则系统",
+        "纯概率模型"
+      ],
+      "section_ids": [
+        "4.1.4",
+        "4.2.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-1-4-p059-p060",
+        "oadm-span-s4-2-1-p060-p063"
+      ],
+      "content_hash": "4d992b2ea5e4c25f796d13490a0466ca5e85091ae909e6cffd1072d6654502f3",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-ontology-semantic-layer-69c4fdcf",
+      "term_key": "oadm:term:ontology-semantic-layer",
+      "preferred_label": "本体语义层",
+      "aliases": [
+        "统一语义层"
+      ],
+      "definition": "位于业务、信息、应用和技术架构之间，将业务共识转为机器可理解模型并提供统一语义调用的架构层。",
+      "not_equivalent_to": [
+        "API 网关",
+        "数据仓库"
+      ],
+      "section_ids": [
+        "4.4.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-4-1-p068-p069"
+      ],
+      "content_hash": "9d0e06ab2b53d611fafe24e4d30dac24b0e37c93a5391690e769b82bdb6bc944",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-entity-modeling-22efc693",
+      "term_key": "oadm:term:entity-modeling",
+      "preferred_label": "实体建模",
+      "aliases": [
+        "ERD",
+        "实体关系建模"
+      ],
+      "definition": "围绕实体、属性和值记录业务事实和结构，主要回答业务中有什么。",
+      "not_equivalent_to": [
+        "本体建模"
+      ],
+      "section_ids": [
+        "4.4.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-4-2-p069-p070"
+      ],
+      "content_hash": "fe5620e7c10b7b3220ed0d5641ca4133adf03b01b2d33a283962b13392614d25",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-knowledge-graph-f868589d",
+      "term_key": "oadm:term:knowledge-graph",
+      "preferred_label": "知识图谱",
+      "aliases": [
+        "Knowledge Graph",
+        "KG"
+      ],
+      "definition": "以实体及关系承载实例化知识的数据结构；在作者框架中，本体提供其语义骨架和推理规则。",
+      "not_equivalent_to": [
+        "本体",
+        "本体库"
+      ],
+      "section_ids": [
+        "4.4.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-4-3-p070-p071"
+      ],
+      "content_hash": "7fd796ec263a1d34e4a82a8f15a5a134827f6b3c7142eda44d66407ec8f2d69c",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-ontology-repository-b2910225",
+      "term_key": "oadm:term:ontology-repository",
+      "preferred_label": "本体库",
+      "aliases": [
+        "Ontology Repository"
+      ],
+      "definition": "存储形式化概念、关系、规则和行动语义，面向 AI Agent 提供可推理业务逻辑的知识基础设施。",
+      "not_equivalent_to": [
+        "数据湖",
+        "文档知识库"
+      ],
+      "section_ids": [
+        "4.4.4"
+      ],
+      "source_span_ids": [
+        "oadm-span-s4-4-4-p071-p072"
+      ],
+      "content_hash": "5d2e24d42dd0ab7b7f1eb4d6b2d38271c082e74405c9a76f7b9fa8606a79b823",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-ai-data-asset-a7d75d55",
+      "term_key": "oadm:term:ai-data-asset",
+      "preferred_label": "AI 数据资产",
+      "aliases": [
+        "面向 AI 的数据资产"
+      ],
+      "definition": "面向大模型训练与 AI Agent 推理组织的数据集、事实数据、事理模型和推理结果等可治理资产。",
+      "not_equivalent_to": [
+        "训练数据集"
+      ],
+      "section_ids": [
+        "5.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-1-3-p076-p080"
+      ],
+      "content_hash": "4b0d3bec05e4b9c2c293851d6c146cf175978267972b35bd26e74b958f9310d1",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-ai-business-data-b68fa13f",
+      "term_key": "oadm:term:ai-business-data",
+      "preferred_label": "AI 业务数据",
+      "aliases": [],
+      "definition": "以 AI 任务或决策为管理锚点，但其事理尚未完成本体建模，可能以 Prompt 或文本方式表达的业务数据集合。",
+      "not_equivalent_to": [
+        "AI 业务本体"
+      ],
+      "section_ids": [
+        "5.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-1-3-p076-p080"
+      ],
+      "content_hash": "2ceae8ec4cd83515a4b2c9437ba66118a12020050575fb6d7cc92cd1b450d3bf",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-ai-business-ontology-37adfcae",
+      "term_key": "oadm:term:ai-business-ontology",
+      "preferred_label": "AI 业务本体",
+      "aliases": [],
+      "definition": "以具体 AI 任务或决策为管理锚点，已经把相关事理本体化并贯通事实、事理与行动的业务模型。",
+      "not_equivalent_to": [
+        "AI 业务数据"
+      ],
+      "section_ids": [
+        "5.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-1-3-p076-p080"
+      ],
+      "content_hash": "3e359c787c378bcec1b36472d4f1aab3e37078c67ad192bfd38baeaef5d751de",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-ai-dataset-63dcaf34",
+      "term_key": "oadm:term:ai-dataset",
+      "preferred_label": "AI 数据集",
+      "aliases": [
+        "AI Dataset"
+      ],
+      "definition": "用于模型训练、验证、测试或知识表征，并作为责任、共享、风险和生命周期管理基本单元的数据集合。",
+      "not_equivalent_to": [
+        "全部 AI 数据资产"
+      ],
+      "section_ids": [
+        "5.2.1",
+        "5.2.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-2-1-p080-p081",
+        "oadm-span-s5-2-2-p081-p082"
+      ],
+      "content_hash": "725d76770ef181b9c0f14e998b49896cf9e23c45ede8212aa4e76bb529ff36cc",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-fact-data-2fedce01",
+      "term_key": "oadm:term:fact-data",
+      "preferred_label": "事实数据",
+      "aliases": [
+        "推理态事实数据"
+      ],
+      "definition": "与推理任务直接相关的结构化、非结构化或关系数据，用于还原业务当前状态并支撑精准判断。",
+      "not_equivalent_to": [
+        "事理模型",
+        "推理结果数据"
+      ],
+      "section_ids": [
+        "5.3.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-3-1-p087-p088"
+      ],
+      "content_hash": "a52b606112eeebc25d0a2cc280cf1d9311646dc62ff0c8c5682f874a0e7cc9aa",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-mechanism-model-06745171",
+      "term_key": "oadm:term:mechanism-model",
+      "preferred_label": "事理模型",
+      "aliases": [
+        "业务事理模型"
+      ],
+      "definition": "将企业规则、决策逻辑、流程、权限和目标转为 AI 可理解结构化语义的推理逻辑载体。",
+      "not_equivalent_to": [
+        "事实数据",
+        "Prompt 文本"
+      ],
+      "section_ids": [
+        "5.3.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-3-2-p088-p089"
+      ],
+      "content_hash": "e432a5519b7ce2cf7f404525b6dafdec5378d189cd595810b04b71b7b6d2cadd",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-ontology-semantic-model-c1989f40",
+      "term_key": "oadm:term:ontology-semantic-model",
+      "preferred_label": "本体语义模型",
+      "aliases": [],
+      "definition": "事理模型的一种具象化管理单元，基于形式化语义规范表达特定 AI 推理任务的业务逻辑。",
+      "not_equivalent_to": [
+        "所有事理表达形式"
+      ],
+      "section_ids": [
+        "5.3.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-3-2-p088-p089"
+      ],
+      "content_hash": "b29d5b89e4e3ec52158c4c188c5738ae8a59fb8cdf439a1e2fd028fc89e9fec4",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-inference-result-data-02210b95",
+      "term_key": "oadm:term:inference-result-data",
+      "preferred_label": "推理结果数据",
+      "aliases": [
+        "AI 推理结果数据"
+      ],
+      "definition": "每次 AI 推理任务产生的结果与过程日志，作为可关联任务、来源版本和评估的业务痕迹。",
+      "not_equivalent_to": [
+        "事实数据"
+      ],
+      "section_ids": [
+        "5.3.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-3-3-p089-p090"
+      ],
+      "content_hash": "06406ac4bc9f2ede1063209a2fb01decde652bce1cc7d0e6bbaecac022346204",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-data-owner-c214d736",
+      "term_key": "oadm:term:data-owner",
+      "preferred_label": "数据 Owner",
+      "aliases": [
+        "数据所有者"
+      ],
+      "definition": "作者所述的业务数据端到端责任角色，负责数据体系、质量、底座服务、安全授权与定密等。",
+      "not_equivalent_to": [
+        "AI 数据集责任人"
+      ],
+      "section_ids": [
+        "5.2.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-2-3-p082-p084"
+      ],
+      "content_hash": "d426afa52b26471864134a087f4736098716492270845e4e311a31034ea746b4",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-dataset-steward-b92aa788",
+      "term_key": "oadm:term:dataset-steward",
+      "preferred_label": "AI 数据集责任人",
+      "aliases": [
+        "数据集提供方责任人"
+      ],
+      "definition": "负责 AI 数据集采集、注册、质量、发布、更新、许可、安全和生命周期的供给责任角色。",
+      "not_equivalent_to": [
+        "数据 Owner",
+        "AI 数据集使用责任人"
+      ],
+      "section_ids": [
+        "5.2.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-2-3-p082-p084"
+      ],
+      "content_hash": "fd88170ee3b13960eff51726d9d5d24c92589852c3d5da099f6d7eb76bd87926",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-dataset-use-owner-2949f5a5",
+      "term_key": "oadm:term:dataset-use-owner",
+      "preferred_label": "AI 数据集使用责任人",
+      "aliases": [
+        "数据集消费方责任人"
+      ],
+      "definition": "对 AI 数据集在许可范围内的安全、隐私、合规、质量和使用结束后的处置承担责任的消费角色。",
+      "not_equivalent_to": [
+        "AI 数据集责任人"
+      ],
+      "section_ids": [
+        "5.2.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-2-3-p082-p084"
+      ],
+      "content_hash": "36947bc5fb424f4af5697395e863ba18e1159a2ae8e1e7492e8169291c36fced",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-rdf-fd1dab07",
+      "term_key": "oadm:term:rdf",
+      "preferred_label": "RDF",
+      "aliases": [
+        "Resource Description Framework"
+      ],
+      "definition": "作者映射为以主语、谓语、宾语三元组描述业务资源和事实关联的基础语义标准。",
+      "not_equivalent_to": [
+        "OWL",
+        "SPARQL"
+      ],
+      "section_ids": [
+        "5.4.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-4-1-p090-p092"
+      ],
+      "content_hash": "4d26920598523e1988773a11a31c5b2773bd2eced594af80f4bedd07074bddb3",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-owl-9d481b03",
+      "term_key": "oadm:term:owl",
+      "preferred_label": "OWL",
+      "aliases": [
+        "Web Ontology Language"
+      ],
+      "definition": "作者映射为表达类层级、属性约束、等价和基数等逻辑语义的本体语言。",
+      "not_equivalent_to": [
+        "RDF",
+        "SWRL"
+      ],
+      "section_ids": [
+        "5.4.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-4-2-p092-p092"
+      ],
+      "content_hash": "08f5a12f4f98d20f6e2ea6bf26e5e7a1a9a0249c80d17c6ecb91812eb6fcc9b9",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-skos-a7ffd3db",
+      "term_key": "oadm:term:skos",
+      "preferred_label": "SKOS",
+      "aliases": [
+        "Simple Knowledge Organization System"
+      ],
+      "definition": "作者映射为统一术语定义、分类和关联，建立受控词表与语义共识的标准。",
+      "not_equivalent_to": [
+        "OWL"
+      ],
+      "section_ids": [
+        "5.4.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-4-3-p092-p092"
+      ],
+      "content_hash": "941138b5921a245317f80357c1a1e22e47ebb5de984958241faa2e0b20568131",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-swrl-2c2a1add",
+      "term_key": "oadm:term:swrl",
+      "preferred_label": "SWRL",
+      "aliases": [
+        "Semantic Web Rule Language"
+      ],
+      "definition": "作者映射为以如果—那么规则组合事实与约束并推导结论的规则语言。",
+      "not_equivalent_to": [
+        "OWL"
+      ],
+      "section_ids": [
+        "5.4.4"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-4-4-p092-p092"
+      ],
+      "content_hash": "c4f14a0232b5b3f7aa6d3c6b9833e521e0c2384a3c74858938fe53660292e03e",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-owl-s-2ad01f94",
+      "term_key": "oadm:term:owl-s",
+      "preferred_label": "OWL-S",
+      "aliases": [
+        "Web Ontology Language for Services"
+      ],
+      "definition": "作者映射为用输入、输出、前置条件和效果描述服务、流程活动与行动原语的语义规范。",
+      "not_equivalent_to": [
+        "BPMN",
+        "OWL"
+      ],
+      "section_ids": [
+        "5.4.5"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-4-5-p092-p092"
+      ],
+      "content_hash": "f56bea0d8e4e9214ce067849147b1c6135648d105745ee8810691918a06fef72",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-odrl-789f3a94",
+      "term_key": "oadm:term:odrl",
+      "preferred_label": "ODRL",
+      "aliases": [
+        "Open Digital Rights Language"
+      ],
+      "definition": "作者映射为表达许可、禁止、义务、资产和使用约束的权限与策略语言。",
+      "not_equivalent_to": [
+        "身份认证系统"
+      ],
+      "section_ids": [
+        "5.4.6"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-4-6-p092-p093"
+      ],
+      "content_hash": "9799c17e92e3ea735987c7d04581d411cadadc75c72714f6f8c10c6927a51d0f",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-sparql-9878a6e8",
+      "term_key": "oadm:term:sparql",
+      "preferred_label": "SPARQL",
+      "aliases": [
+        "SPARQL Protocol and RDF Query Language"
+      ],
+      "definition": "作者映射为查询和操作 RDF 图数据、支持 Agent 按意图取用本体数据的接口语言。",
+      "not_equivalent_to": [
+        "RDF"
+      ],
+      "section_ids": [
+        "5.4.7"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-4-7-p093-p093"
+      ],
+      "content_hash": "330825f3cb603332ecce099c29113ecd2261ef2284f783d46a201c0cc856153c",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-goal-evaluation-ed38b4f4",
+      "term_key": "oadm:term:goal-evaluation",
+      "preferred_label": "目标与评估",
+      "aliases": [
+        "目标评估规范"
+      ],
+      "definition": "7+1 中用于明确 AI 任务、业务效果、质控标准和所依赖事理的结构化维度。",
+      "not_equivalent_to": [
+        "单一模型指标"
+      ],
+      "section_ids": [
+        "5.4.8"
+      ],
+      "source_span_ids": [
+        "oadm-span-s5-4-8-p093-p093"
+      ],
+      "content_hash": "fa2ede18ebf7b6a336648e21e1d064cbba99b4c64473b2e1199bb127f112e4a9",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    }
+  ]
+}

@@ -1,0 +1,539 @@
+{
+  "schema_version": "1.0.0",
+  "document_id": "book-ontology-ai-data-management-2026",
+  "domain_id": "ontology-ai-data-management-draft",
+  "batch_id": "m2b-core-theory-ch04-ch05",
+  "id_policy": {
+    "semantic_key_pattern": "oadm:<subject-area>:<semantic-slug>",
+    "card_id_pattern": "oadm-<semantic-slug>-<sha256(semantic-key)[0:10]>",
+    "content_hash_policy": "sha256(canonical-json-of-card-seed)",
+    "sorting_independent": true
+  },
+  "card_count": 24,
+  "cards": [
+    {
+      "card_id": "oadm-human-machine-semantics-425a6b2adc",
+      "semantic_key": "oadm:ontology:human-machine-semantics",
+      "title": "本体作为人机共享的业务意义框架",
+      "card_type": "concept",
+      "relative_path": "03-core-theory/cards/oadm-human-machine-semantics-425a6b2adc.md",
+      "content_hash": "5247ba60bf0151641af2743bfde27be993d51395bf9b6b8cdca4be6153c8e78a",
+      "file_hash": "578004bcd77ab7bf9e00359cee8d2b7b9ebba1fe1e7ccbfc7f9e641d71344b1c",
+      "source_span_ids": [
+        "oadm-span-s4-1-1-p053-p055"
+      ],
+      "section_ids": [
+        "4.1.1"
+      ],
+      "pdf_page_start": 53,
+      "pdf_page_end": 55,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-semantic-interconnection-reasoning-1ad9f4a05a",
+      "semantic_key": "oadm:ontology:semantic-interconnection-reasoning",
+      "title": "从语义互联到语义推理",
+      "card_type": "framework",
+      "relative_path": "03-core-theory/cards/oadm-semantic-interconnection-reasoning-1ad9f4a05a.md",
+      "content_hash": "589684625a7dd62a6d1bcf7065a2ea83bc8884535c69e26ce7ea4328e44ba3db",
+      "file_hash": "1895cb56125d841cc0e651f253629b85be11e1a529bd4d6e267fa0ee47c6cd5a",
+      "source_span_ids": [
+        "oadm-span-s4-1-3-p057-p059"
+      ],
+      "section_ids": [
+        "4.1.3"
+      ],
+      "pdf_page_start": 57,
+      "pdf_page_end": 59,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-ontology-museum-antipattern-eae207943e",
+      "semantic_key": "oadm:ontology:ontology-museum-antipattern",
+      "title": "“本体博物馆”反模式",
+      "card_type": "risk",
+      "relative_path": "03-core-theory/cards/oadm-ontology-museum-antipattern-eae207943e.md",
+      "content_hash": "563ae0e6168f0f66649f1e693bd3900dd20552450778cbb2a31f2b607c5fef09",
+      "file_hash": "62fc47396c5577c9d73c2da9a487e58c2b332469daa1933e08948ffa8cf668f1",
+      "source_span_ids": [
+        "oadm-span-s4-1-3-p057-p059"
+      ],
+      "section_ids": [
+        "4.1.3"
+      ],
+      "pdf_page_start": 57,
+      "pdf_page_end": 59,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-symbolic-connectionist-hybrid-bb37b876d0",
+      "semantic_key": "oadm:ai-paradigm:symbolic-connectionist-hybrid",
+      "title": "符号主义与联结主义融合的混合智能",
+      "card_type": "principle",
+      "relative_path": "03-core-theory/cards/oadm-symbolic-connectionist-hybrid-bb37b876d0.md",
+      "content_hash": "bd382062c28ed3d3f4649985d35fcfa0eac4481c8023b00613fe77958d1df823",
+      "file_hash": "7c1846236cd70667ae1f17271aa9ee7a611faa8151e068478c52275168e7a987",
+      "source_span_ids": [
+        "oadm-span-s4-1-4-p059-p060"
+      ],
+      "section_ids": [
+        "4.1.4"
+      ],
+      "pdf_page_start": 59,
+      "pdf_page_end": 60,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-ontology-llm-three-connections-578bb66efc",
+      "semantic_key": "oadm:ontology-llm:three-connections",
+      "title": "本体模型与大模型的三重连接",
+      "card_type": "framework",
+      "relative_path": "03-core-theory/cards/oadm-ontology-llm-three-connections-578bb66efc.md",
+      "content_hash": "12221d9aacb33a66851ce65a107027d7ab28a4cdef25c61367eb22467f1d2d8b",
+      "file_hash": "36c84512e1218c5efbe4baedaa10f98579703438f3b39009b5c16acb198371e1",
+      "source_span_ids": [
+        "oadm-span-s4-2-1-p060-p063"
+      ],
+      "section_ids": [
+        "4.2.1"
+      ],
+      "pdf_page_start": 60,
+      "pdf_page_end": 63,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-representation-reasoning-validation-bf357f4567",
+      "semantic_key": "oadm:ontology-llm:representation-reasoning-validation",
+      "title": "本体增强推理的表示—推理—验证三阶段",
+      "card_type": "method",
+      "relative_path": "03-core-theory/cards/oadm-representation-reasoning-validation-bf357f4567.md",
+      "content_hash": "72e01c99d4993eb8ed4581e5ea4529ad84c640970aeeb5c16c1822a6486f0001",
+      "file_hash": "5a690f1f3719c98ff1047bc3b8245a648264744819247a56d5ac4e977d347bfc",
+      "source_span_ids": [
+        "oadm-span-s4-2-2-p063-p064"
+      ],
+      "section_ids": [
+        "4.2.2"
+      ],
+      "pdf_page_start": 63,
+      "pdf_page_end": 64,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-ontology-ai-integration-matrix-5864150c68",
+      "semantic_key": "oadm:ontology-llm:technology-integration-matrix",
+      "title": "本体与 AI 技术融合矩阵",
+      "card_type": "framework",
+      "relative_path": "03-core-theory/cards/oadm-ontology-ai-integration-matrix-5864150c68.md",
+      "content_hash": "a53e9b93c50bcdf521451eef2f2109330023707ff32f18594ea5dcf69edaf988",
+      "file_hash": "986a548c97891ee1c4d68cdbe8206c38b0758f97203160b01fe6c10b517c3de0",
+      "source_span_ids": [
+        "oadm-span-s4-2-3-p064-p066"
+      ],
+      "section_ids": [
+        "4.2.3"
+      ],
+      "pdf_page_start": 64,
+      "pdf_page_end": 66,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-w3c-semantic-stack-bc94d749c7",
+      "semantic_key": "oadm:semantic-standard:w3c-stack",
+      "title": "W3C 语义技术栈的作者映射",
+      "card_type": "framework",
+      "relative_path": "03-core-theory/cards/oadm-w3c-semantic-stack-bc94d749c7.md",
+      "content_hash": "7a0c0b405ca8da9c5f9c347cc92e32d879bf8dbd8002655a854730bcd52e8adf",
+      "file_hash": "dd3e297a3518f42fd09b8113604dcab6ca627def4227fd7479824e17f54755b2",
+      "source_span_ids": [
+        "oadm-span-s4-3-1-p066-p067"
+      ],
+      "section_ids": [
+        "4.3.1"
+      ],
+      "pdf_page_start": 66,
+      "pdf_page_end": 67,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-ai-assisted-ontology-modeling-bfcd56b66d",
+      "semantic_key": "oadm:ontology-engineering:ai-assisted-modeling",
+      "title": "AI 辅助业务专家进行本体建模",
+      "card_type": "method",
+      "relative_path": "03-core-theory/cards/oadm-ai-assisted-ontology-modeling-bfcd56b66d.md",
+      "content_hash": "1dac142f6859c3c50b14d1fc78f4f77b40afa19acdf668753ab6da15c195beaa",
+      "file_hash": "6494259ab64e58475c5505da1553b51f51533a429803734bb25141983982eab2",
+      "source_span_ids": [
+        "oadm-span-s4-3-2-p067-p068"
+      ],
+      "section_ids": [
+        "4.3.2"
+      ],
+      "pdf_page_start": 67,
+      "pdf_page_end": 68,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-enterprise-architecture-semantic-layer-559e5b63a7",
+      "semantic_key": "oadm:enterprise-architecture:semantic-layer",
+      "title": "企业架构中的本体语义层",
+      "card_type": "model",
+      "relative_path": "03-core-theory/cards/oadm-enterprise-architecture-semantic-layer-559e5b63a7.md",
+      "content_hash": "8533cf9a44ab6966c67dacb1c3073d2ede7b6dd6ad5075678a50a0bb096947eb",
+      "file_hash": "d0e0574243f4a9574720a92fcb06b9bd1df59af015e9a86e41d2142260a1c621",
+      "source_span_ids": [
+        "oadm-span-s4-4-1-p068-p069"
+      ],
+      "section_ids": [
+        "4.4.1"
+      ],
+      "pdf_page_start": 68,
+      "pdf_page_end": 69,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-entity-ontology-complement-1535903339",
+      "semantic_key": "oadm:enterprise-architecture:entity-ontology-complement",
+      "title": "实体建模与本体建模互补",
+      "card_type": "comparison",
+      "relative_path": "03-core-theory/cards/oadm-entity-ontology-complement-1535903339.md",
+      "content_hash": "cf181606f8cc216dc3350caa023453ce2396f8399198d5300ca7b62bb3bb2952",
+      "file_hash": "5e1ade596420e9e13c80f722a38d5382bbdc4c4c8bbea13113babfcf29a915c0",
+      "source_span_ids": [
+        "oadm-span-s4-4-2-p069-p070"
+      ],
+      "section_ids": [
+        "4.4.2"
+      ],
+      "pdf_page_start": 69,
+      "pdf_page_end": 70,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-knowledge-graph-ontology-complement-96986134a0",
+      "semantic_key": "oadm:enterprise-architecture:knowledge-graph-ontology-complement",
+      "title": "知识图谱与本体的骨架—实例关系",
+      "card_type": "comparison",
+      "relative_path": "03-core-theory/cards/oadm-knowledge-graph-ontology-complement-96986134a0.md",
+      "content_hash": "36eb166434096407cbdd0ef5142f290bd2fa66fc288802962a8944531f79d9fc",
+      "file_hash": "6e79a2efc2e9da87bc5570f3495c62e47d2d58bc06932f419a1d3d6e9f7b14ec",
+      "source_span_ids": [
+        "oadm-span-s4-4-3-p070-p071"
+      ],
+      "section_ids": [
+        "4.4.3"
+      ],
+      "pdf_page_start": 70,
+      "pdf_page_end": 71,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-lake-kb-ontology-triad-d5e33d6b69",
+      "semantic_key": "oadm:knowledge-platform:lake-kb-ontology-triad",
+      "title": "数据湖—知识库—本体库的互补分工",
+      "card_type": "framework",
+      "relative_path": "03-core-theory/cards/oadm-lake-kb-ontology-triad-d5e33d6b69.md",
+      "content_hash": "8eb3eb6c27dc03f5ad82a8da6dcb464ebb113ffc4db336858a34bcbfe1f3c590",
+      "file_hash": "616514e5014baba4246b8fd4e4d08c2fe2bb2bf5ebf86b769c8e0e05c8d4c85f",
+      "source_span_ids": [
+        "oadm-span-s4-4-4-p071-p072"
+      ],
+      "section_ids": [
+        "4.4.4"
+      ],
+      "pdf_page_start": 71,
+      "pdf_page_end": 72,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-saas-agent-new-user-ecdc31ccb2",
+      "semantic_key": "oadm:enterprise-architecture:saas-agent-new-user",
+      "title": "AI Agent 作为 SaaS 新用户",
+      "card_type": "model",
+      "relative_path": "03-core-theory/cards/oadm-saas-agent-new-user-ecdc31ccb2.md",
+      "content_hash": "d9579198076d4d4736ba179a45e57adb20363bbc38bb7917dce83a64bf23e841",
+      "file_hash": "580fb212b491bdbc35e14a628fe7520bf947cf6abf5d0a69fe68c36932e01879",
+      "source_span_ids": [
+        "oadm-span-s4-4-5-p072-p073"
+      ],
+      "section_ids": [
+        "4.4.5"
+      ],
+      "pdf_page_start": 72,
+      "pdf_page_end": 73,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-three-data-asset-catalogs-f1116db4e9",
+      "semantic_key": "oadm:data-asset:three-catalogs",
+      "title": "作业—分析—AI 三类数据资产目录",
+      "card_type": "framework",
+      "relative_path": "03-core-theory/cards/oadm-three-data-asset-catalogs-f1116db4e9.md",
+      "content_hash": "f7ee5bb069708481ce07fd8fd5dbc1f17a0a3c2f9a40eb240edff64a22d25720",
+      "file_hash": "4ae03e280c603c5fafee369358ed208c1ad4ed37d0cdcf4c2b20a9a9fbf56d20",
+      "source_span_ids": [
+        "oadm-span-s5-1-1-p074-p076",
+        "oadm-span-s5-1-2-p076-p076",
+        "oadm-span-s5-1-3-p076-p080"
+      ],
+      "section_ids": [
+        "5.1.1",
+        "5.1.2",
+        "5.1.3"
+      ],
+      "pdf_page_start": 74,
+      "pdf_page_end": 80,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-ai-directory-hierarchy-5252a8be5d",
+      "semantic_key": "oadm:data-asset:ai-directory-hierarchy",
+      "title": "面向 AI 的数据资产目录层级",
+      "card_type": "model",
+      "relative_path": "03-core-theory/cards/oadm-ai-directory-hierarchy-5252a8be5d.md",
+      "content_hash": "3d8968e3c4c36a099da69148ab7a21d6fff618da5d054117109e78a594273011",
+      "file_hash": "9f65b4bba230973056f06c1282f37a3f7e753cdb63e6dda71bcb2105c9d0a292",
+      "source_span_ids": [
+        "oadm-span-s5-1-3-p076-p080"
+      ],
+      "section_ids": [
+        "5.1.3"
+      ],
+      "pdf_page_start": 76,
+      "pdf_page_end": 80,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-ai-dataset-admission-construction-2b03e1149f",
+      "semantic_key": "oadm:ai-dataset:admission-construction",
+      "title": "AI 数据集准入与构建原则",
+      "card_type": "governance-rule",
+      "relative_path": "03-core-theory/cards/oadm-ai-dataset-admission-construction-2b03e1149f.md",
+      "content_hash": "3f29ebde69c59806bc214287dbf691513fd5d74b09dee026adfb0b820fb1c63e",
+      "file_hash": "73b18e8dd19155af54d5a274115f0b2397a37d84d07414a61665349caab8af7a",
+      "source_span_ids": [
+        "oadm-span-s5-2-1-p080-p081",
+        "oadm-span-s5-2-2-p081-p082"
+      ],
+      "section_ids": [
+        "5.2.1",
+        "5.2.2"
+      ],
+      "pdf_page_start": 80,
+      "pdf_page_end": 82,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-ai-dataset-responsibility-triad-02ef1387b5",
+      "semantic_key": "oadm:ai-dataset:responsibility-triad",
+      "title": "数据 Owner—数据集责任人—使用责任人三方边界",
+      "card_type": "governance-rule",
+      "relative_path": "03-core-theory/cards/oadm-ai-dataset-responsibility-triad-02ef1387b5.md",
+      "content_hash": "c5aa5abf562934e4b3b0b9eee09a5297244be998b845c40c61e160e1556dc9a1",
+      "file_hash": "dcd5bfe8eb89aa1fa0555efb32f5141bb56a7acdf9866ef01e420eb8e0630de8",
+      "source_span_ids": [
+        "oadm-span-s5-2-3-p082-p084"
+      ],
+      "section_ids": [
+        "5.2.3"
+      ],
+      "pdf_page_start": 82,
+      "pdf_page_end": 84,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-ai-dataset-classification-versioning-97124ce95e",
+      "semantic_key": "oadm:ai-dataset:classification-versioning",
+      "title": "AI 数据集多维分类、统一 ID 与版本",
+      "card_type": "governance-rule",
+      "relative_path": "03-core-theory/cards/oadm-ai-dataset-classification-versioning-97124ce95e.md",
+      "content_hash": "f3ba20497a5d3cd647914f5e7c70780dd0a0dfe2b024210dba1669f727f6cbd3",
+      "file_hash": "36065a4ab6382a83009b2592e8998edfeb850368b9d0161f68d10151b4b8b538",
+      "source_span_ids": [
+        "oadm-span-s5-2-4-p084-p086",
+        "oadm-span-s5-2-5-p086-p087"
+      ],
+      "section_ids": [
+        "5.2.4",
+        "5.2.5"
+      ],
+      "pdf_page_start": 84,
+      "pdf_page_end": 87,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-inference-asset-triad-64d708aa8e",
+      "semantic_key": "oadm:inference-asset:fact-mechanism-result",
+      "title": "推理资产的事实—事理—结果三分法",
+      "card_type": "framework",
+      "relative_path": "03-core-theory/cards/oadm-inference-asset-triad-64d708aa8e.md",
+      "content_hash": "b15888055da494a8dd264904e7337bd8949ab222d178b807248d6c684bb628cb",
+      "file_hash": "7dbae1b5d7f78595dc7428df27ae6ea8f619462e84c20b21196124255fbcf34d",
+      "source_span_ids": [
+        "oadm-span-s5-3-1-p087-p088",
+        "oadm-span-s5-3-2-p088-p089",
+        "oadm-span-s5-3-3-p089-p090"
+      ],
+      "section_ids": [
+        "5.3.1",
+        "5.3.2",
+        "5.3.3"
+      ],
+      "pdf_page_start": 87,
+      "pdf_page_end": 90,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-inference-result-traceability-0d0557615e",
+      "semantic_key": "oadm:inference-asset:traceability",
+      "title": "推理结果与过程日志的全链路追溯",
+      "card_type": "governance-rule",
+      "relative_path": "03-core-theory/cards/oadm-inference-result-traceability-0d0557615e.md",
+      "content_hash": "73838631e27313c7c5aca14c84b3afb7ede7780b03d280c0dfe03fc05027b490",
+      "file_hash": "c41dd322118b0329f1cab840ef37196b1653078a58acc121e4a72c476b937216",
+      "source_span_ids": [
+        "oadm-span-s5-3-3-p089-p090"
+      ],
+      "section_ids": [
+        "5.3.3"
+      ],
+      "pdf_page_start": 89,
+      "pdf_page_end": 90,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-seven-plus-one-framework-4e7856904e",
+      "semantic_key": "oadm:semantic-framework:seven-plus-one",
+      "title": "事理模型的“7+1”语义规范框架",
+      "card_type": "framework",
+      "relative_path": "03-core-theory/cards/oadm-seven-plus-one-framework-4e7856904e.md",
+      "content_hash": "1595df89a4a22ce45d2e6bd89c6de1542d606bec609fbb4df52376176004a06e",
+      "file_hash": "71641363f20b52faad24d41e45252d0cca3fefbe88634cd23b12b605ea2044b0",
+      "source_span_ids": [
+        "oadm-span-s5-4-1-p090-p092",
+        "oadm-span-s5-4-2-p092-p092",
+        "oadm-span-s5-4-3-p092-p092",
+        "oadm-span-s5-4-4-p092-p092",
+        "oadm-span-s5-4-5-p092-p092",
+        "oadm-span-s5-4-6-p092-p093",
+        "oadm-span-s5-4-7-p093-p093",
+        "oadm-span-s5-4-8-p093-p093"
+      ],
+      "section_ids": [
+        "5.4.1",
+        "5.4.2",
+        "5.4.3",
+        "5.4.4",
+        "5.4.5",
+        "5.4.6",
+        "5.4.7",
+        "5.4.8"
+      ],
+      "pdf_page_start": 90,
+      "pdf_page_end": 93,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-semantic-standard-role-map-d76258da48",
+      "semantic_key": "oadm:semantic-standard:role-map",
+      "title": "7+1 维度与语义标准的作者映射",
+      "card_type": "mapping",
+      "relative_path": "03-core-theory/cards/oadm-semantic-standard-role-map-d76258da48.md",
+      "content_hash": "1d559a2b679c84e580094016533164c83c365e87cda4a7a890209d6e399ba4c5",
+      "file_hash": "0559df59068efda9506564300ca8d5b081ceb97e8970db8830b883be3ac5e0a7",
+      "source_span_ids": [
+        "oadm-span-s5-4-1-p090-p092",
+        "oadm-span-s5-4-2-p092-p092",
+        "oadm-span-s5-4-3-p092-p092",
+        "oadm-span-s5-4-4-p092-p092",
+        "oadm-span-s5-4-5-p092-p092",
+        "oadm-span-s5-4-6-p092-p093",
+        "oadm-span-s5-4-7-p093-p093",
+        "oadm-span-s5-4-8-p093-p093"
+      ],
+      "section_ids": [
+        "5.4.1",
+        "5.4.2",
+        "5.4.3",
+        "5.4.4",
+        "5.4.5",
+        "5.4.6",
+        "5.4.7",
+        "5.4.8"
+      ],
+      "pdf_page_start": 90,
+      "pdf_page_end": 93,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    },
+    {
+      "card_id": "oadm-fact-mechanism-action-landing-d10e3b9509",
+      "semantic_key": "oadm:agent:fact-mechanism-action-landing",
+      "title": "Agent 从明事实、懂事理到会行动的落地链",
+      "card_type": "method",
+      "relative_path": "03-core-theory/cards/oadm-fact-mechanism-action-landing-d10e3b9509.md",
+      "content_hash": "765c7ee7b59064262d0adc208372a7556fbafee8b9d37352c67674fe7f7b5877",
+      "file_hash": "7b93b12695fa794b2a902c7ba956ad2514ff871b7ded84ea09bc1749d00544e4",
+      "source_span_ids": [
+        "oadm-span-s5-5-1-p093-p094",
+        "oadm-span-s5-5-2-p094-p094",
+        "oadm-span-s5-5-3-p094-p095"
+      ],
+      "section_ids": [
+        "5.5.1",
+        "5.5.2",
+        "5.5.3"
+      ],
+      "pdf_page_start": 93,
+      "pdf_page_end": 95,
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending",
+      "version": 1
+    }
+  ]
+}

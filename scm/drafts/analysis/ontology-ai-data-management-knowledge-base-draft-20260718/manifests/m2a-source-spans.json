@@ -1,0 +1,508 @@
+{
+  "schema_version": "1.0.0",
+  "document_id": "book-ontology-ai-data-management-2026",
+  "domain_id": "ontology-ai-data-management-draft",
+  "batch_id": "m2a-strategic-cognition-ch01-ch03",
+  "span_count": 35,
+  "physical_pdf_page_is_primary_locator": true,
+  "raw_full_text_persisted": false,
+  "source_spans": [
+    {
+      "span_id": "oadm-span-s1-1-1-p008-p009",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 8,
+      "pdf_page_end": 9,
+      "section_path": "第 1 章 智能时代重构业务管理逻辑 / 1.1 开启智能新纪元 / 1.1.1 信息处理单元从比特到 Token",
+      "section_id": "1.1.1",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "85cc6a1a9ff8eecce90f1cbd0327fb9ec8f1597533ae81757a0d3bab07b61405",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s1-1-2-p009-p010",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 9,
+      "pdf_page_end": 10,
+      "section_path": "第 1 章 智能时代重构业务管理逻辑 / 1.1 开启智能新纪元 / 1.1.2 大模型的智能跃升",
+      "section_id": "1.1.2",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "c38383ed419f1551e500feec6e7c770ea288f644432deaf9e0b3ed1f1b7c356f",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s1-1-3-p010-p011",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 10,
+      "pdf_page_end": 11,
+      "section_path": "第 1 章 智能时代重构业务管理逻辑 / 1.1 开启智能新纪元 / 1.1.3 Agentic AI 的崛起",
+      "section_id": "1.1.3",
+      "figure_or_table_refs": [
+        "oadm-figure-1-1-p011"
+      ],
+      "derived_summary_hash": "0d0d145614916ab4a47f698c7c60bc3a1edff073102f089b6ca8638b9cb4c8d0",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s1-2-1-p011-p013",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 11,
+      "pdf_page_end": 13,
+      "section_path": "第 1 章 智能时代重构业务管理逻辑 / 1.2 智能体成为业务新主体 / 1.2.1 从“规则驱动”的 IT 应用到“自主进化”的智能体",
+      "section_id": "1.2.1",
+      "figure_or_table_refs": [
+        "oadm-figure-1-2-p012"
+      ],
+      "derived_summary_hash": "4ec1356dc60cc4714413a23373cb414e6087ee71c07cd7427dea9b3da1985375",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s1-2-2-p013-p014",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 13,
+      "pdf_page_end": 14,
+      "section_path": "第 1 章 智能时代重构业务管理逻辑 / 1.2 智能体成为业务新主体 / 1.2.2 智能体成为业务人员的“超级伙伴”",
+      "section_id": "1.2.2",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "6ef6d11fbbaf112c34ef6b5e4b80b8aef879107cc836a98ea40fad4bf806ec03",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s1-2-3-p014-p015",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 14,
+      "pdf_page_end": 15,
+      "section_path": "第 1 章 智能时代重构业务管理逻辑 / 1.2 智能体成为业务新主体 / 1.2.3 “建模思维”成为人与智能体协同的关键",
+      "section_id": "1.2.3",
+      "figure_or_table_refs": [
+        "oadm-figure-1-3-p014"
+      ],
+      "derived_summary_hash": "6bfc3df8a0740c33088a067ae42b24e5a3946ee7f8f98096cce8cb4341538f65",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s1-3-1-p015-p017",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 15,
+      "pdf_page_end": 17,
+      "section_path": "第 1 章 智能时代重构业务管理逻辑 / 1.3 数据是智能时代的基石与核心驱动力 / 1.3.1 数据从业务记录变为驱动智能体进化的“燃料”",
+      "section_id": "1.3.1",
+      "figure_or_table_refs": [
+        "oadm-figure-1-4-p016"
+      ],
+      "derived_summary_hash": "d96d8568fec0b50bef531f302c934873e9e66a837b80854476566b270b0c7445",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s1-3-2-p017-p018",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 17,
+      "pdf_page_end": 18,
+      "section_path": "第 1 章 智能时代重构业务管理逻辑 / 1.3 数据是智能时代的基石与核心驱动力 / 1.3.2 数据成为连接业务与智能体的纽带",
+      "section_id": "1.3.2",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "0eb5893e729d97d7ebdfde0376c7289315fdf110d144c1e6f34af4f3ce10dc1a",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s1-3-3-p018-p020",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 18,
+      "pdf_page_end": 20,
+      "section_path": "第 1 章 智能时代重构业务管理逻辑 / 1.3 数据是智能时代的基石与核心驱动力 / 1.3.3 数据成为业务事实与事理的完整载体",
+      "section_id": "1.3.3",
+      "figure_or_table_refs": [
+        "oadm-figure-1-5-p019"
+      ],
+      "derived_summary_hash": "50fd674885e52955e3e4c263667efdc9f1fc53715e30e7c83d274813982f6b8f",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s1-4-p020-p020",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 20,
+      "pdf_page_end": 20,
+      "section_path": "第 1 章 智能时代重构业务管理逻辑 / 1.4 本章小结",
+      "section_id": "1.4",
+      "figure_or_table_refs": [
+        "oadm-figure-1-6-p020"
+      ],
+      "derived_summary_hash": "e079124f875d2c5a894878bfb874df2b805165989ba06877f1d12fb58b107f8d",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s2-1-1-p021-p022",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 21,
+      "pdf_page_end": 22,
+      "section_path": "第 2 章 智能时代驱动数据治理重塑 / 2.1 智能时代数据治理的关键需求 / 2.1.1 赋能大模型掌握企业私域资产",
+      "section_id": "2.1.1",
+      "figure_or_table_refs": [
+        "oadm-figure-2-1-p021"
+      ],
+      "derived_summary_hash": "7359529bf7a1980fefa8a00612a490d9016f7de50c241bc13787f0811328c771",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s2-1-2-p022-p023",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 22,
+      "pdf_page_end": 23,
+      "section_path": "第 2 章 智能时代驱动数据治理重塑 / 2.1 智能时代数据治理的关键需求 / 2.1.2 破除知识壁垒，消除数据孤岛",
+      "section_id": "2.1.2",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "d95b991bad09b4cdfd3281a5bc3567b7bdff9f6aaef5312d9777c1444bf61c9d",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s2-1-3-p023-p024",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 23,
+      "pdf_page_end": 24,
+      "section_path": "第 2 章 智能时代驱动数据治理重塑 / 2.1 智能时代数据治理的关键需求 / 2.1.3 让 AI Agent 遵循企业逻辑规划执行任务",
+      "section_id": "2.1.3",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "f7076e98afe5c20a2cbf827500d6b24b4379b989384026dddaff6f1ae3c5aa07",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s2-1-4-p024-p025",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 24,
+      "pdf_page_end": 25,
+      "section_path": "第 2 章 智能时代驱动数据治理重塑 / 2.1 智能时代数据治理的关键需求 / 2.1.4 降低模型幻觉，提升决策可信度",
+      "section_id": "2.1.4",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "fd00a6038951205e9e934788cf22fb65b8c549f68fd78bc7145dfa16d84e4a15",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s2-2-1-p025-p026",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 25,
+      "pdf_page_end": 26,
+      "section_path": "第 2 章 智能时代驱动数据治理重塑 / 2.2 智能时代数据治理的四重转变 / 2.2.1 从面向业务人员到赋能 AI 伙伴",
+      "section_id": "2.2.1",
+      "figure_or_table_refs": [
+        "oadm-figure-2-2-p025"
+      ],
+      "derived_summary_hash": "acc89e10d0993cbcb01015444536361144e2be752d574ec61bd06d6b0a5d917e",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s2-2-2-p026-p027",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 26,
+      "pdf_page_end": 27,
+      "section_path": "第 2 章 智能时代驱动数据治理重塑 / 2.2 智能时代数据治理的四重转变 / 2.2.2 从功能叠加到认知融合",
+      "section_id": "2.2.2",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "38d12b838d508f9beab8650da6ec1cc665e177a78416177b82e1c7a9f5885e3d",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s2-2-3-p027-p028",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 27,
+      "pdf_page_end": 28,
+      "section_path": "第 2 章 智能时代驱动数据治理重塑 / 2.2 智能时代数据治理的四重转变 / 2.2.3 从汇聚事实到贯穿事理与行动",
+      "section_id": "2.2.3",
+      "figure_or_table_refs": [
+        "oadm-table-2-1-p027"
+      ],
+      "derived_summary_hash": "9972b9fbbed9267c47d97dd5d587e07fa614a9be15b031e52ca42a390a6cdfa8",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s2-2-4-p028-p029",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 28,
+      "pdf_page_end": 29,
+      "section_path": "第 2 章 智能时代驱动数据治理重塑 / 2.2 智能时代数据治理的四重转变 / 2.2.4 要像管理数据一样管理知识",
+      "section_id": "2.2.4",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "4e739133bf253bf81d20cda491a623b5fbd71f29e2dcfc2167b0c0f98ff43457",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s2-3-1-p029-p031",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 29,
+      "pdf_page_end": 31,
+      "section_path": "第 2 章 智能时代驱动数据治理重塑 / 2.3 智能时代数据治理转变的难点 / 2.3.1 静态向动态转型挑战",
+      "section_id": "2.3.1",
+      "figure_or_table_refs": [
+        "oadm-figure-2-3-p029",
+        "oadm-figure-2-4-p030"
+      ],
+      "derived_summary_hash": "47164c1d7bc10e372ac9afe3af059a6ccfd41e677627a5e1dd9ca96b6e4890f0",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s2-3-2-p031-p032",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 31,
+      "pdf_page_end": 32,
+      "section_path": "第 2 章 智能时代驱动数据治理重塑 / 2.3 智能时代数据治理转变的难点 / 2.3.2 确定性向创造力升级难题",
+      "section_id": "2.3.2",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "bab34b21fd5de3e7df102c69d9135a8ed1249d975731cdfcc3d039e1c54a7f6d",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s2-3-3-p032-p034",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 32,
+      "pdf_page_end": 34,
+      "section_path": "第 2 章 智能时代驱动数据治理重塑 / 2.3 智能时代数据治理转变的难点 / 2.3.3 规模与异构治理瓶颈",
+      "section_id": "2.3.3",
+      "figure_or_table_refs": [
+        "oadm-figure-2-5-p033",
+        "oadm-figure-2-6-p033"
+      ],
+      "derived_summary_hash": "9965b9c46efebd642627e9e441c1564513ba92c5af800448f7ce0b37b8f079c9",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s2-3-4-p034-p035",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 34,
+      "pdf_page_end": 35,
+      "section_path": "第 2 章 智能时代驱动数据治理重塑 / 2.3 智能时代数据治理转变的难点 / 2.3.4 知识体系治理短板",
+      "section_id": "2.3.4",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "2c52ff6192518f998593cd39c92d8b04d8e36678ea90626242fa2375e9565d05",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s2-4-p035-p036",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 35,
+      "pdf_page_end": 36,
+      "section_path": "第 2 章 智能时代驱动数据治理重塑 / 2.4 本章小结",
+      "section_id": "2.4",
+      "figure_or_table_refs": [
+        "oadm-figure-2-7-p035"
+      ],
+      "derived_summary_hash": "50ff7a72024de1415060198ec7dd276f0cdf43fb42ab5e9390a6f419595aa8ac",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s3-1-1-p037-p038",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 37,
+      "pdf_page_end": 38,
+      "section_path": "第 3 章 智能时代数据治理的破局之道：统一结构化表达 / 3.1 智能时代的业务建模 / 3.1.1 从“人用”到“人机共用”的双向适配模型",
+      "section_id": "3.1.1",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "2611ef79b877fba0b27ac27f65109fd7f5f64f29b765967676c6fc02fcfaabd3",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s3-1-2-p038-p040",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 38,
+      "pdf_page_end": 40,
+      "section_path": "第 3 章 智能时代数据治理的破局之道：统一结构化表达 / 3.1 智能时代的业务建模 / 3.1.2 实现“业务逻辑+系统逻辑”双轮驱动模型",
+      "section_id": "3.1.2",
+      "figure_or_table_refs": [
+        "oadm-figure-3-1-p038",
+        "oadm-figure-3-2-p039"
+      ],
+      "derived_summary_hash": "376bfa82a8ce346c43e366be505a2eb1172c569a2f883e221b0827418c5954f6",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s3-1-3-p040-p042",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 40,
+      "pdf_page_end": 42,
+      "section_path": "第 3 章 智能时代数据治理的破局之道：统一结构化表达 / 3.1 智能时代的业务建模 / 3.1.3 构建“事实-事理-行动”一体化动态模型",
+      "section_id": "3.1.3",
+      "figure_or_table_refs": [
+        "oadm-figure-3-3-p040"
+      ],
+      "derived_summary_hash": "a5074636f1e701f533085412ae19c8519fd0c6f69d8fb3369bac09a7960b9839",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s3-1-4-p042-p044",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 42,
+      "pdf_page_end": 44,
+      "section_path": "第 3 章 智能时代数据治理的破局之道：统一结构化表达 / 3.1 智能时代的业务建模 / 3.1.4 实现企业专有知识资产模型化",
+      "section_id": "3.1.4",
+      "figure_or_table_refs": [
+        "oadm-figure-3-4-p043"
+      ],
+      "derived_summary_hash": "c8b80b7f7392a01903078cae8141c01ed0be740a3d8ae25abe0a043ac6a7fe2c",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s3-1-5-p044-p046",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 44,
+      "pdf_page_end": 46,
+      "section_path": "第 3 章 智能时代数据治理的破局之道：统一结构化表达 / 3.1 智能时代的业务建模 / 3.1.5 业务建模的业界实践",
+      "section_id": "3.1.5",
+      "figure_or_table_refs": [
+        "oadm-figure-3-5-p045",
+        "oadm-table-3-1-p045"
+      ],
+      "derived_summary_hash": "39701232f4ba1780a6649d37035e08a4f970ebfd34bb02c0e1b809472741125c",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s3-2-1-p046-p047",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 46,
+      "pdf_page_end": 47,
+      "section_path": "第 3 章 智能时代数据治理的破局之道：统一结构化表达 / 3.2 连接业务数据、逻辑与行动 / 3.2.1 多源异构多模态数据的接入与互联互通",
+      "section_id": "3.2.1",
+      "figure_or_table_refs": [
+        "oadm-figure-3-6-p046"
+      ],
+      "derived_summary_hash": "126afd5d608cb7b88abac8e705e0c6b5e03dff1d0a505a3f310374e4bb200b0b",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s3-2-2-p047-p047",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 47,
+      "pdf_page_end": 47,
+      "section_path": "第 3 章 智能时代数据治理的破局之道：统一结构化表达 / 3.2 连接业务数据、逻辑与行动 / 3.2.2 整合企业碎片、冗余、各种形态的知识表征",
+      "section_id": "3.2.2",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "ce8188e23e917cdea70925e12fcba45c8415bc3049a624729c7262ac0ac43d91",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s3-2-3-p047-p048",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 47,
+      "pdf_page_end": 48,
+      "section_path": "第 3 章 智能时代数据治理的破局之道：统一结构化表达 / 3.2 连接业务数据、逻辑与行动 / 3.2.3 连接系统分散、功能割裂的 IT 应用",
+      "section_id": "3.2.3",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "bb4d74e5a3917691036e38a0b5fd1ecefe92704cb839cb619c92a0d318fdb470",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s3-3-1-p048-p049",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 48,
+      "pdf_page_end": 49,
+      "section_path": "第 3 章 智能时代数据治理的破局之道：统一结构化表达 / 3.3 人机通用的结构化表达 / 3.3.1 支撑业务活动中的人",
+      "section_id": "3.3.1",
+      "figure_or_table_refs": [
+        "oadm-table-3-2-p048"
+      ],
+      "derived_summary_hash": "cc0d3a1f45559aee6e5fef35c57a0cd1bf4a118d336defe753c3eae757592feb",
+      "raw_text_persisted": false,
+      "visual_review_status": "pending",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s3-3-2-p049-p050",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 49,
+      "pdf_page_end": 50,
+      "section_path": "第 3 章 智能时代数据治理的破局之道：统一结构化表达 / 3.3 人机通用的结构化表达 / 3.3.2 支撑业务活动中的 AI",
+      "section_id": "3.3.2",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "15b18e729322dcc0e251e04a5cdee4ea74cc529756bfd6db37ff30ac288ce1ad",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s3-3-3-p050-p052",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 50,
+      "pdf_page_end": 52,
+      "section_path": "第 3 章 智能时代数据治理的破局之道：统一结构化表达 / 3.3 人机通用的结构化表达 / 3.3.3 人与 AI 的 DIKW 双循环",
+      "section_id": "3.3.3",
+      "figure_or_table_refs": [
+        "oadm-figure-3-7-p051"
+      ],
+      "derived_summary_hash": "8c5c449472761522bcce2381cfe39967cb7c593f993c5ac812cf3a681dbb3cf3",
+      "raw_text_persisted": false,
+      "visual_review_status": "reviewed",
+      "extraction_status": "paraphrased_and_mapped"
+    },
+    {
+      "span_id": "oadm-span-s3-4-p052-p052",
+      "document_id": "book-ontology-ai-data-management-2026",
+      "pdf_page_start": 52,
+      "pdf_page_end": 52,
+      "section_path": "第 3 章 智能时代数据治理的破局之道：统一结构化表达 / 3.4 本章小结",
+      "section_id": "3.4",
+      "figure_or_table_refs": [],
+      "derived_summary_hash": "de9e5d5ee6c6ecba9ecf7a87480e089b504160090f602cc3f4e2053721f658b2",
+      "raw_text_persisted": false,
+      "visual_review_status": "not_required",
+      "extraction_status": "paraphrased_and_mapped"
+    }
+  ]
+}

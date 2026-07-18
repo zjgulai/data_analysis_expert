@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "document_id": "book-ontology-ai-data-management-2026",
+  "batch_id": "m2b-core-theory-ch04-ch05",
+  "method": "pdftoppm-selected-pages-manual-review",
+  "full_page_images_persisted": false,
+  "reviews": [
+    {"pdf_page":55,"artifact_ids":["oadm-table-4-1-p055"],"status":"reviewed","finding":"表格明确对比传统建模与本体建模在事实、事理和行动三层的差异，支持 4.1.2 摘要。"},
+    {"pdf_page":60,"artifact_ids":["oadm-figure-4-5-p060"],"status":"reviewed","finding":"图文明确列出人机协同、模型和内容三重连接，支持本体增强混合智能框架。"},
+    {"pdf_page":65,"artifact_ids":["oadm-figure-4-8-p065"],"status":"reviewed","finding":"图示围绕本体列出 Prompt、RAG、Agent、MCP、XAI、Tool Use、KG、Fine-tuning 和 CoT 等融合方式。"},
+    {"pdf_page":66,"artifact_ids":["oadm-figure-4-9-p066"],"status":"reviewed","finding":"页面将 W3C Semantic Web 作为本体建模标准语言体系的来源背景；具体标准角色仍按作者映射处理。"},
+    {"pdf_page":70,"artifact_ids":["oadm-figure-4-10-p070"],"status":"reviewed","finding":"图文区分实体侧事实建模与本体侧事理建模，并呈现应用、建模和存储层互补。"},
+    {"pdf_page":73,"artifact_ids":["oadm-figure-4-11-p073"],"status":"reviewed","finding":"图文呈现 SaaS 元数据底座与本体加 AI Agent 双引擎，以及 Agent 作为 SaaS 新用户的定位。"},
+    {"pdf_page":77,"artifact_ids":["oadm-figure-5-3-p077"],"status":"reviewed","finding":"图示展示作业、分析、AI 三类目录，并将 AI 目录细化到训练数据集、事实、事理和推理结果。"},
+    {"pdf_page":81,"artifact_ids":["oadm-figure-5-5-p081"],"status":"reviewed","finding":"图示列出责任人单一、来源合规、密级权限隐私一致、类别归一、目的相关和易追溯更新六项原则。"},
+    {"pdf_page":82,"artifact_ids":["oadm-figure-5-6-p082"],"status":"reviewed","finding":"图示区分数据 Owner、AI 数据集责任人和使用责任人的责任范围与传递关系。"},
+    {"pdf_page":85,"artifact_ids":["oadm-figure-5-7-p085"],"status":"reviewed","finding":"图示按基本、治理和消费属性呈现 AI 数据集多维分类。"},
+    {"pdf_page":91,"artifact_ids":["oadm-figure-5-8-p091","oadm-table-5-27-p091"],"status":"reviewed","finding":"图示确认 7+1 框架；表题视觉上连排为“表 5-27 类语义总表”，可能意指“表 5-2”与“7 类语义总表”的连接，保留原检测 ID 并列为待出版源确认项。"}
+  ]
+}

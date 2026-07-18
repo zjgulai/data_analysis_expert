@@ -1,0 +1,345 @@
+{
+  "schema_version": "1.0.0",
+  "document_id": "book-ontology-ai-data-management-2026",
+  "domain_id": "ontology-ai-data-management-draft",
+  "batch_id": "m2d-agent-engineering-applications-ch07-ch08",
+  "term_count": 16,
+  "terms": [
+    {
+      "term_id": "oadm-term-intent-ontology-alignment-4771904b",
+      "term_key": "oadm:term:intent-ontology-alignment",
+      "preferred_label": "意图与本体对齐",
+      "aliases": [
+        "意图本体映射"
+      ],
+      "definition": "将 Agent 任务语义与本体中相关概念、规则和知识边界建立映射的调用前置过程。",
+      "not_equivalent_to": [
+        "本体检索"
+      ],
+      "section_ids": [
+        "7.1.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-1-2-p130-p131"
+      ],
+      "content_hash": "1a903ca15055564bd4154f5ca6b78952267edd8f712ee74602b901095d8c09fd",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-minimal-necessary-ontology-524b5980",
+      "term_key": "oadm:term:minimal-necessary-ontology",
+      "preferred_label": "最小必要本体",
+      "aliases": [
+        "最小本体片段"
+      ],
+      "definition": "仅包含当前任务决策必需概念、关系、规则与约束的按需加载本体子集。",
+      "not_equivalent_to": [
+        "完整本体库"
+      ],
+      "section_ids": [
+        "7.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-1-3-p131-p133"
+      ],
+      "content_hash": "01b165b49b81c35ae41193ccacf8d476e8939e91df827c490f0a4bc918f20e9f",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-graph-vector-retrieval-784ced9e",
+      "term_key": "oadm:term:graph-vector-retrieval",
+      "preferred_label": "图向量库检索",
+      "aliases": [
+        "本体向量检索"
+      ],
+      "definition": "将本体节点或子图编码为向量并按语义相似度召回候选知识的检索方式。",
+      "not_equivalent_to": [
+        "图数据库精确查询"
+      ],
+      "section_ids": [
+        "7.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-1-3-p131-p133"
+      ],
+      "content_hash": "b5dc848564bab0ab318377ca8de7da345c1586eb65ce0ccc3278f26a64f518a8",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-memory-augmented-ontology-call-c132df93",
+      "term_key": "oadm:term:memory-augmented-ontology-call",
+      "preferred_label": "记忆增强调用",
+      "aliases": [
+        "本体记忆调用"
+      ],
+      "definition": "结合 Agent 短期上下文与长期成功模式动态筛选本体片段的调用方式。",
+      "not_equivalent_to": [
+        "静态映射"
+      ],
+      "section_ids": [
+        "7.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-1-3-p131-p133"
+      ],
+      "content_hash": "a1e971bcf8bb99b121337f21e722231148d87cf169f994c1dd1554db695ce6bf",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-ontology-skill-2de0b8a1",
+      "term_key": "oadm:term:ontology-skill",
+      "preferred_label": "本体 Skill",
+      "aliases": [
+        "本体技能封装"
+      ],
+      "definition": "包含功能、输入输出和本体逻辑，可被 Agent 规划与渐进调用的模块化知识单元。",
+      "not_equivalent_to": [
+        "普通提示词"
+      ],
+      "section_ids": [
+        "7.1.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-1-3-p131-p133"
+      ],
+      "content_hash": "a916dffe29e3ea4c0a4bcbe7cd0d654e379bd2629318dc1e2e10d5325fa8a8f0",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-ontology-embedding-d4194651",
+      "term_key": "oadm:term:ontology-embedding",
+      "preferred_label": "本体嵌入",
+      "aliases": [
+        "本体模型嵌入"
+      ],
+      "definition": "将符号化本体逻辑转译为模型可理解和遵循的业务上下文或训练信号。",
+      "not_equivalent_to": [
+        "向量嵌入"
+      ],
+      "section_ids": [
+        "7.1.4"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-1-4-p133-p134"
+      ],
+      "content_hash": "6545b03d76b806cfeed49317576ace2b290403efedc8ef3e0c1f5b6e0d68c46b",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-constraint-strength-75c2dea9",
+      "term_key": "oadm:term:constraint-strength",
+      "preferred_label": "本体约束强度",
+      "aliases": [
+        "规则约束等级"
+      ],
+      "definition": "按场景风险配置规则对 Agent 推理自主空间限制程度的强、中、弱等级概念。",
+      "not_equivalent_to": [
+        "模型置信度"
+      ],
+      "section_ids": [
+        "7.2.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-2-2-p136-p138"
+      ],
+      "content_hash": "3e7e6ac633db2aa9ffd4fe7761e6ffa780c7cab0f9d89644ae11eb16f44d70f8",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-execution-event-bus-caf9021d",
+      "term_key": "oadm:term:execution-event-bus",
+      "preferred_label": "执行事件总线",
+      "aliases": [
+        "多 Agent 执行总线"
+      ],
+      "definition": "由本体定义任务、状态和异常语义，用于主子 Agent 传递指令与反馈的交互通道。",
+      "not_equivalent_to": [
+        "消息队列产品"
+      ],
+      "section_ids": [
+        "7.3.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-3-3-p143-p144"
+      ],
+      "content_hash": "c7125563b4b1c959dbdc47da41f59eb7bffc3382061adf3eaadd429e7b7f4508",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-dynamic-fact-association-6c7c36d6",
+      "term_key": "oadm:term:dynamic-fact-association",
+      "preferred_label": "动态事实关联",
+      "aliases": [
+        "动态事实关联机制"
+      ],
+      "definition": "通过摄取、语义映射和关系构建把多源数据持续转成可查询语义事实网络的机制。",
+      "not_equivalent_to": [
+        "一次性数据导入"
+      ],
+      "section_ids": [
+        "7.4.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-4-1-p144-p146"
+      ],
+      "content_hash": "4a11c823cacda5d4cf6d4c67457c302319a89e51b341d5b57a523e998d86e6fb",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-dynamic-action-association-63dec742",
+      "term_key": "oadm:term:dynamic-action-association",
+      "preferred_label": "动态 Action 关联",
+      "aliases": [
+        "动态行动关联"
+      ],
+      "definition": "把决策结果转为受协议、参数、安全校验和反馈约束的可执行数字动作机制。",
+      "not_equivalent_to": [
+        "自由文本建议"
+      ],
+      "section_ids": [
+        "7.4.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-4-2-p146-p147"
+      ],
+      "content_hash": "b061fe587f2c28d4cbd46996f1d0059169c5a233f3cff713c3851b353a118f2f",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-ontology-as-a-service-f60b713a",
+      "term_key": "oadm:term:ontology-as-a-service",
+      "preferred_label": "本体即服务",
+      "aliases": [
+        "Ontology as a Service"
+      ],
+      "definition": "通过标准接口按意图提供可版本化、可授权、可组合本体片段的运行时服务理念。",
+      "not_equivalent_to": [
+        "静态本体文件"
+      ],
+      "section_ids": [
+        "7.4.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-4-3-p147-p147"
+      ],
+      "content_hash": "a87a62e655474498bbc4bbbe1c4d18df963e7d62cbf4bd5d0f033e29ef4d61b0",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-semantic-middleware-feead58c",
+      "term_key": "oadm:term:semantic-middleware",
+      "preferred_label": "语义中间件",
+      "aliases": [
+        "统一语义中间件"
+      ],
+      "definition": "在平台模块之间统一解析、转换、传递和查询本体知识的集成枢纽。",
+      "not_equivalent_to": [
+        "通用 API 网关"
+      ],
+      "section_ids": [
+        "7.5.5"
+      ],
+      "source_span_ids": [
+        "oadm-span-s7-5-5-p153-p154"
+      ],
+      "content_hash": "43342ffc97bdcc5a8e07a2c00921cd1c441801370b605fb6ac1fcd6123d95333",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-penetration-validation-730e43f3",
+      "term_key": "oadm:term:penetration-validation",
+      "preferred_label": "穿刺式验证",
+      "aliases": [
+        "快速穿刺验证"
+      ],
+      "definition": "以轻量本体、极简 Agent、真实小样本和量化结果快速检验技术链路可行性的作者策略。",
+      "not_equivalent_to": [
+        "规模化生产验收"
+      ],
+      "section_ids": [
+        "8.3.1"
+      ],
+      "source_span_ids": [
+        "oadm-span-s8-3-1-p173-p174"
+      ],
+      "content_hash": "a8ce9383d187330e63547130fc4386b390433ff1290b275c3d5ecebb015701dd",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-one-plus-four-organization-c511478f",
+      "term_key": "oadm:term:one-plus-four-organization",
+      "preferred_label": "1+4 组织协同",
+      "aliases": [
+        "总体组加四专业小队"
+      ],
+      "definition": "总体组统筹本体认知、数据感知、Agent 决策和行动执行四类专业小队的作者组织模式。",
+      "not_equivalent_to": [
+        "固定组织架构标准"
+      ],
+      "section_ids": [
+        "8.3.2"
+      ],
+      "source_span_ids": [
+        "oadm-span-s8-3-2-p174-p175"
+      ],
+      "content_hash": "44d0b815d52bcf4c43cd34cf61c554262a0b6b160b119f7156f6a5084ff72b18",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-ai-translation-cf72fd7e",
+      "term_key": "oadm:term:ai-translation",
+      "preferred_label": "AI 转译",
+      "aliases": [
+        "知识资产 AI 转译"
+      ],
+      "definition": "由 AI 将半结构化业务知识初步转换为机器可读本体，再经专家校验和数据连接的过程。",
+      "not_equivalent_to": [
+        "自动认证知识"
+      ],
+      "section_ids": [
+        "8.3.3"
+      ],
+      "source_span_ids": [
+        "oadm-span-s8-3-3-p175-p177"
+      ],
+      "content_hash": "661a0616e63661bc5e35140f22b88d7979c82d9e10b9f34975baf790db72850e",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    },
+    {
+      "term_id": "oadm-term-multi-agent-pdca-b1392d3b",
+      "term_key": "oadm:term:multi-agent-pdca",
+      "preferred_label": "多 Agent PDCA",
+      "aliases": [
+        "多场景 PDCA 自闭环"
+      ],
+      "definition": "由统筹 Agent 与环节 Agent 按计划、执行、检查、处理协作运行的闭环模式。",
+      "not_equivalent_to": [
+        "单 Agent 工作流"
+      ],
+      "section_ids": [
+        "8.2.6"
+      ],
+      "source_span_ids": [
+        "oadm-span-s8-2-6-p169-p172"
+      ],
+      "content_hash": "9a8e070f3707322cc3ac708e5f51f97caaa8a86a575bab22f2f9f0c526aba00b",
+      "evidence_level": "published-book-derived-candidate",
+      "review_status": "pending"
+    }
+  ]
+}

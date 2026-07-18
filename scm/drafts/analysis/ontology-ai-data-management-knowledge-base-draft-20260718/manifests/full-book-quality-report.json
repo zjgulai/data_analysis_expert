@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0.0",
+  "report_scope": "full-book-m1-through-m2e",
+  "document_id": "book-ontology-ai-data-management-2026",
+  "coverage": {
+    "chapter_count": 10,
+    "source_content_pdf_page_start": 8,
+    "source_content_pdf_page_end": 209,
+    "section_record_count": 151,
+    "substantive_subsection_count": 141,
+    "chapter_summary_count": 10,
+    "m1_subsection_count": 141,
+    "missing_subsection_ids": [],
+    "unexpected_subsection_ids": []
+  },
+  "inventory": {
+    "card_count": 89,
+    "term_count": 81,
+    "relation_count": 155,
+    "source_span_count": 151
+  },
+  "exact_duplicates": {
+    "card_semantic_keys": [],
+    "card_ids": [],
+    "term_keys": [],
+    "term_ids": [],
+    "relation_ids": [],
+    "relation_edges": []
+  },
+  "semantic_duplicate_candidates": [],
+  "relation_integrity": {
+    "missing_subject_nodes": [],
+    "missing_object_nodes": [],
+    "m2e_orphan_card_keys": [],
+    "m2e_orphan_term_keys": [],
+    "explicit_contradiction_relation_ids": [
+      "oadm-rel-f540ece68852"
+    ],
+    "explicit_contradiction_edge_count": 1,
+    "semantic_contradiction_review_status": "manual_review_required"
+  },
+  "source_integrity": {
+    "missing_card_source_span_ids": [],
+    "missing_term_source_span_ids": [],
+    "missing_relation_source_span_ids": [],
+    "pending_visual_review_span_ids": [
+      "oadm-span-s1-2-1-p011-p013",
+      "oadm-span-s1-3-1-p015-p017",
+      "oadm-span-s1-3-3-p018-p020",
+      "oadm-span-s1-4-p020-p020",
+      "oadm-span-s2-2-3-p027-p028",
+      "oadm-span-s2-3-1-p029-p031",
+      "oadm-span-s2-3-3-p032-p034",
+      "oadm-span-s3-1-2-p038-p040",
+      "oadm-span-s3-1-4-p042-p044",
+      "oadm-span-s3-2-1-p046-p047",
+      "oadm-span-s3-3-1-p048-p049",
+      "oadm-span-s4-1-2-p055-p057",
+      "oadm-span-s4-1-3-p057-p059",
+      "oadm-span-s4-1-4-p059-p060",
+      "oadm-span-s4-2-1-p060-p063",
+      "oadm-span-s5-1-1-p074-p076",
+      "oadm-span-s5-1-2-p076-p076",
+      "oadm-span-s5-1-3-p076-p080",
+      "oadm-span-s5-2-5-p086-p087",
+      "oadm-span-s6-1-2-p098-p099",
+      "oadm-span-s6-2-1-p102-p103",
+      "oadm-span-s6-2-3-p106-p109",
+      "oadm-span-s6-3-2-p111-p113",
+      "oadm-span-s6-4-2-p117-p119",
+      "oadm-span-s7-2-2-p136-p138",
+      "oadm-span-s8-2-1-p158-p161",
+      "oadm-span-s8-2-2-p161-p162",
+      "oadm-span-s8-2-4-p164-p166",
+      "oadm-span-s8-2-5-p166-p169",
+      "oadm-span-s8-2-6-p169-p172"
+    ]
+  },
+  "boundaries": {
+    "exact_duplicate_scan_complete": true,
+    "normalized_title_candidate_scan_complete": true,
+    "semantic_equivalence_fully_proven": false,
+    "semantic_contradiction_fully_proven": false,
+    "scm_crosswalk_performed": false,
+    "database_write": false,
+    "provider_call": false
+  }
+}

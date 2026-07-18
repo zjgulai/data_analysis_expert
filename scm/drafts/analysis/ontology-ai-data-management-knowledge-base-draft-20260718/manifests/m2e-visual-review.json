@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "m2e-agent-governance-future-enterprise-ch09-ch10",
+  "full_page_images_persisted": false,
+  "reviews": [
+    {"pdf_page":180,"artifact_ids":["oadm-figure-9-1-p180"],"status":"reviewed","finding":"治理框架图把人、应用、数据、本体增强 Agent 与六类链上证明分层连接，支持本体约束加候选可信底座的摘要。"},
+    {"pdf_page":183,"artifact_ids":["oadm-figure-9-2-p183"],"status":"reviewed","finding":"示意图对照规则驱动旧世界与自主进化新世界；它是概念插图，不构成架构成熟度证据。"},
+    {"pdf_page":185,"artifact_ids":["oadm-figure-9-3-p185"],"status":"reviewed","finding":"身份档案链图展示签发者、持有者、验证者、DID 与可验证凭证关系，支持统一身份候选模式。"},
+    {"pdf_page":186,"artifact_ids":["oadm-figure-9-4-p186"],"status":"reviewed","finding":"资产产权链图展示集合、单项资产、哈希与 NFT 式凭证层级，仅支持作者提出的确权结构。"},
+    {"pdf_page":187,"artifact_ids":["oadm-figure-9-5-p187","oadm-figure-9-6-p187"],"status":"reviewed","finding":"两图分别展示条件化权限凭证和规则加数据驱动的智能合约流水线；示例阈值不可直接复用。"},
+    {"pdf_page":189,"artifact_ids":["oadm-figure-9-7-p189","oadm-figure-9-8-p189"],"status":"reviewed","finding":"两图分别展示哈希链追溯和多维贡献计量；责任证据效力与激励公平性仍需制度和实测验证。"},
+    {"pdf_page":190,"artifact_ids":[],"status":"reviewed","finding":"页面列举 0G、Fetch.ai 与 Near Protocol 的作者案例，无结构图；未执行外部事实核验，保留为 author_industry_example。"},
+    {"pdf_page":199,"artifact_ids":["oadm-figure-10-1-p199"],"status":"reviewed","finding":"三重世界图以世界模型、本体模型和大模型 Agent 构成相互连接的数字世界，支持统一认知底座概念。"}
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-07-18T10:19:20.963Z",
+  "document_id": "book-ontology-ai-data-management-2026",
+  "domain_id": "ontology-ai-data-management-draft",
+  "status": "draft",
+  "evidence_level": "published-book-derived-candidate",
+  "source_locator": "user-provided-local-attachment://book-ontology-ai-data-management-2026",
+  "source_absolute_path_persisted": false,
+  "source_file_name": "本体驱动的AI数据管理.pdf",
+  "media_type": "application/pdf",
+  "sha256": "462dd347c6361ddb2d6bacf98103d053e9d9106f2105fee0600d2a2fbce2be35",
+  "file_size_bytes": 15917846,
+  "pdf_metadata": {
+    "title": "本体驱动的AI数据管理",
+    "author": "《本体驱动的AI数据管理》编写组",
+    "creator": "WPS 文字",
+    "creation_date": "Mon Jul 13 17:04:04 2026 CST",
+    "modification_date": "Mon Jul 13 17:06:00 2026 CST",
+    "pages": 211,
+    "page_size": "612 x 792 pts (letter)",
+    "tagged": "no",
+    "encrypted": "no",
+    "javascript": "no",
+    "pdf_version": "1.7"
+  },
+  "extraction_policy": {
+    "text_method": "pdftotext-layout",
+    "visual_method": "pdftoppm-selected-pages",
+    "raw_full_text_persisted": false,
+    "full_page_images_persisted": false,
+    "page_level_hashes_persisted": true,
+    "physical_pdf_page_is_primary_locator": true
+  },
+  "toolchain": {
+    "node": "v22.22.0",
+    "pdfinfo": "pdfinfo version 26.02.0",
+    "pdftotext": "pdftotext version 26.02.0",
+    "pdfimages": "pdfimages version 26.02.0",
+    "pdftoppm": "pdftoppm version 26.02.0"
+  },
+  "structure_summary": {
+    "front_matter": 7,
+    "parts": 4,
+    "chapters": 10,
+    "sections": 46,
+    "subsections": 141
+  },
+  "coverage_summary": {
+    "total_pages": 211,
+    "text_extracted_pages": 208,
+    "low_text_pages": 1,
+    "empty_text_pages": 2,
+    "pages_with_image_objects": 90,
+    "image_and_mask_objects": 122,
+    "figure_records": 74,
+    "table_records": 21,
+    "visually_reviewed_pages": [
+      1,
+      2,
+      40,
+      91,
+      97,
+      126,
+      145,
+      211
+    ]
+  },
+  "rights_and_access": {
+    "access_scope": "private-project-derived-use",
+    "redistribution": "prohibited_by_project_policy",
+    "tracked_artifacts": "metadata-derived-structure-and-later-paraphrased-knowledge-cards-only",
+    "owner_review_required_for_promotion": true
+  }
+}
