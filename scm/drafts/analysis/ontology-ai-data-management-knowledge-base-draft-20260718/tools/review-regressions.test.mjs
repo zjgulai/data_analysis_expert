@@ -32,16 +32,16 @@ test("verification helpers enforce page locators and portable personal-path dete
   assert.equal(helpers.artifactWithinPageRange({ pdf_page: 12 }, 13, 14), false);
 
   for (const value of [
-    "/Users/alice/Documents/source.pdf",
-    "/home/alice/source.pdf",
-    "C:\\Users\\alice\\Desktop\\source.pdf",
-    "C:\\Users\\Alice Smith\\source.pdf",
-    "source: `/Users/alice/Documents/source.pdf`",
-    "source: `${HOME}/project/source.pdf`",
-    "$HOME/Library/source.pdf",
-    "~/Library/source.pdf",
-    "%USERPROFILE%\\source.pdf",
-    "$env:USERPROFILE\\source.pdf"
+    "/Users/alice/Documents/source.pdf", // intentional-personal-path-fixture
+    "/home/alice/source.pdf", // intentional-personal-path-fixture
+    "C:\\Users\\alice\\Desktop\\source.pdf", // intentional-personal-path-fixture
+    "C:\\Users\\Alice Smith\\source.pdf", // intentional-personal-path-fixture
+    "source: `/Users/alice/Documents/source.pdf`", // intentional-personal-path-fixture
+    "source: `${HOME}/project/source.pdf`", // intentional-personal-path-fixture
+    "$HOME/Library/source.pdf", // intentional-personal-path-fixture
+    "~/Library/source.pdf", // intentional-personal-path-fixture
+    "%USERPROFILE%\\source.pdf", // intentional-personal-path-fixture
+    "$env:USERPROFILE\\source.pdf" // intentional-personal-path-fixture
   ]) {
     assert.equal(helpers.containsPersonalAbsolutePath(value), true, value);
   }

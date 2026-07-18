@@ -226,21 +226,49 @@ test "$ACTUAL_TOOLS" = "$EXPECTED_TOOLS"
 - [ ] 检查没有 PDF、原始全文、整页图片、绝对源路径或临时输出：
 
 ```bash
+set -euo pipefail
 git -C "$CLEAN_ROOT" status --short
 KB_ROOT="$CLEAN_ROOT/scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718"
 INGESTION_PLAN="$CLEAN_ROOT/scm/drafts/analysis/ontology-driven-ai-data-management-kb-ingestion-plan-draft-20260718.md"
 RECONCILIATION_PLAN="$CLEAN_ROOT/scm/drafts/analysis/aip-scm-node-deepdive-optimization-draft-20260627/93-post-merge-wip-reconciliation-and-ontology-kb-integration-plan-draft-20260718.md"
-rg -n '/[U]sers/|/[h]ome/|[A-Za-z]:[\\/]+[U]sers[\\/]+|\$[H]OME[\\/]+|\$\{[H]OME\}[\\/]+|~[\\/]+|%[U]SERPROFILE%[\\/]+|\$env:[U]SERPROFILE[\\/]+|file:/{2,3}|桌面[[:space:]]+-[[:space:]]+Pray|BEGIN (RSA |OPENSSH )?PRIVATE KEY|sk-[A-Za-z0-9]{20,}' \
-  --glob '!tools/review-regressions.test.mjs' \
-  --glob '!tools/verification-helpers.mjs' \
-  "$KB_ROOT" \
-  "$INGESTION_PLAN" \
-  "$RECONCILIATION_PLAN"
-find "$KB_ROOT" \
-  -type f \( -iname '*.pdf' -o -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' \) -print
+test -d "$KB_ROOT" && test -f "$INGESTION_PLAN" && test -f "$RECONCILIATION_PLAN"
+set +e
+PATH_HITS="$(rg --no-ignore -n '/[U]sers/|/[h]ome/|[A-Za-z]:[\\/]+[U]sers[\\/]+|\$[H]OME[\\/]+|\$\{[H]OME\}[\\/]+|~[\\/]+|%[U]SERPROFILE%[\\/]+|\$env:[U]SERPROFILE[\\/]+|file:/{2,3}' \
+  "$KB_ROOT" "$INGESTION_PLAN" "$RECONCILIATION_PLAN" 2>&1)"
+PATH_SCAN_STATUS=$?
+set -e
+test "$PATH_SCAN_STATUS" -le 1 || { printf '%s\n' "$PATH_HITS" >&2; exit "$PATH_SCAN_STATUS"; }
+FIXTURE_HIT_COUNT=0
+while IFS= read -r hit; do
+  test -z "$hit" && continue
+  case "$hit" in
+    */tools/review-regressions.test.mjs:*intentional-personal-path-fixture*)
+      FIXTURE_HIT_COUNT=$((FIXTURE_HIT_COUNT + 1))
+      ;;
+    *)
+      printf 'Unexpected personal-path hit: %s\n' "$hit" >&2
+      exit 1
+      ;;
+  esac
+done <<EOF
+$PATH_HITS
+EOF
+test "$FIXTURE_HIT_COUNT" -eq 10
+set +e
+rg --no-ignore -n '桌面[[:space:]]+-[[:space:]]+Pray|BEGIN (RSA |OPENSSH )?PRIVATE KEY|sk-[A-Za-z0-9]{20,}' \
+  "$KB_ROOT" "$INGESTION_PLAN" "$RECONCILIATION_PLAN"
+SECRET_SCAN_STATUS=$?
+set -e
+case "$SECRET_SCAN_STATUS" in
+  0) exit 1 ;;
+  1) ;;
+  *) exit "$SECRET_SCAN_STATUS" ;;
+esac
+BINARY_HITS="$(find "$KB_ROOT" -type f \( -iname '*.pdf' -o -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' \) -print)"
+test -z "$BINARY_HITS"
 ```
 
-预期两条扫描均无输出。命中时停止并人工判定，不能用自动替换掩盖敏感信息。
+预期过滤已标记的个人路径测试夹具后，路径扫描无剩余命中；凭证/PII 扫描与二进制扫描均无输出。`--no-ignore` 保证被父仓 `tools/` 规则隐藏的文件仍被扫描；只有带 `intentional-personal-path-fixture` 标记的测试输入可豁免路径命中，helper/test 的其余内容不豁免。命中时停止并人工判定，不能用自动替换掩盖敏感信息。
 
 ### Task 3：K0 结构与内容验证
 
