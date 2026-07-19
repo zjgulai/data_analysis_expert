@@ -1637,9 +1637,9 @@ knowledgeDomains.forEach((domain) => {
     const raw = readFileSync(filePath, "utf8");
     const title = extractTitle(raw, filePath);
     const clean = redactWorkstationPaths(stripMarkdown(raw));
-    const topic = inferTopic(filePath, raw);
-    const refs = inferRefs(`${filePath} ${raw}`);
     const domainRelativePath = normalizeKnowledgeRelativePath(relative(domain.root, filePath));
+    const topic = inferTopic(domainRelativePath, raw);
+    const refs = inferRefs(`${domainRelativePath} ${raw}`);
     const cardId = knowledgeCardIdForPath(domain.id, domainRelativePath);
     if (importedKnowledgeCardIds.has(cardId)) {
       throw new Error(`Duplicate knowledge-card ID generated: ${cardId}`);
