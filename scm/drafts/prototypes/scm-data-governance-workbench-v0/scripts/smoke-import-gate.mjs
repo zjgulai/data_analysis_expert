@@ -764,7 +764,7 @@ try {
       const cardFixture = rebuiltDb.prepare("SELECT id, source_path, summary FROM knowledge_cards WHERE title = ?").get("Portable path fixture");
       stableKnowledgeCardIdBefore = cardFixture?.id || null;
       const keywordBoundaryCard = rebuiltDb.prepare(
-        "SELECT topic, object_refs FROM knowledge_cards WHERE title = ?"
+        "SELECT id, topic, object_refs, metric_refs, rule_refs, source_path FROM knowledge_cards WHERE title = ?"
       ).get("Keyword boundary fixture");
       const standaloneKeywordCard = rebuiltDb.prepare(
         "SELECT topic, object_refs FROM knowledge_cards WHERE title = ?"
@@ -855,7 +855,10 @@ try {
         ],
         [escapedDomainCardCount === 0, "knowledge import must skip Markdown symlinks that escape the configured domain"],
         [unresolvedKnowledgeReferences === 0, `all active knowledge references must resolve, got ${unresolvedKnowledgeReferences}`],
-        [keywordBoundaryCard?.topic === "general-supply-chain", "short po/bi keywords must not match substrings in ordinary English words"],
+        [
+          keywordBoundaryCard?.topic === "general-supply-chain",
+          `short po/bi keywords must not match substrings in ordinary English words; observed=${JSON.stringify(keywordBoundaryCard || null)}`
+        ],
         [
           !JSON.parse(keywordBoundaryCard?.object_refs || "[]").includes("po"),
           "po object reference must require a standalone token"
