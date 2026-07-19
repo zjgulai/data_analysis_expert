@@ -1,0 +1,159 @@
+{
+  "schema_version": "1.0.0",
+  "scope": "m3a-candidate-only",
+  "generated_at": "2026-07-18T00:00:00.000Z",
+  "unmapped_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+  "accept_candidates": [
+    {
+      "candidate_card_id": "oadm-integrated-multidimensional-decision-3b85562879",
+      "applicability_reason": "该卡片描述多维决策对计划、预测版本和库存批次的联合使用，可作为三个现有 SCM 对象的候选方法论说明。",
+      "targets": [
+        { "scm_target_type": "object", "scm_target_id": "forecast_version" },
+        { "scm_target_type": "object", "scm_target_id": "purchase_plan" },
+        { "scm_target_type": "object", "scm_target_id": "inventory_batch" }
+      ]
+    },
+    {
+      "candidate_card_id": "oadm-ontology-asset-registration-5b7e350efb",
+      "applicability_reason": "从验证态到资产服务态的准入语义与现有晋升状态就绪率指标存在直接候选关联。",
+      "targets": [
+        { "scm_target_type": "metric", "scm_target_id": "SCM-MECE-L3-104" }
+      ]
+    },
+    {
+      "candidate_card_id": "oadm-ontology-lifecycle-operations-968c388b34",
+      "applicability_reason": "本体生命周期运维同时覆盖定义版本与证据等级治理，可候选支持对应覆盖率指标。",
+      "targets": [
+        { "scm_target_type": "metric", "scm_target_id": "SCM-MECE-L3-100" },
+        { "scm_target_type": "metric", "scm_target_id": "SCM-MECE-L3-103" }
+      ]
+    },
+    {
+      "candidate_card_id": "oadm-scenario-validation-loop-65cbb0ff79",
+      "applicability_reason": "专家审核和场景测试闭环可作为样本证据支持率的候选方法论证据。",
+      "targets": [
+        { "scm_target_type": "metric", "scm_target_id": "SCM-MECE-L3-110" }
+      ]
+    },
+    {
+      "candidate_card_id": "oadm-continuous-tool-ecosystem-9eabee007d",
+      "applicability_reason": "持续集成和双向反馈同时涉及定义版本及公式血缘维护，可作为两个治理指标的候选说明。",
+      "targets": [
+        { "scm_target_type": "metric", "scm_target_id": "SCM-MECE-L3-100" },
+        { "scm_target_type": "metric", "scm_target_id": "SCM-MECE-L3-102" }
+      ]
+    },
+    {
+      "candidate_card_id": "oadm-modeling-admission-review-fd13d2a7bf",
+      "applicability_reason": "建模准入审核与现有晋升状态就绪率指标存在直接候选关联。",
+      "targets": [
+        { "scm_target_type": "metric", "scm_target_id": "SCM-MECE-L3-104" }
+      ]
+    }
+  ],
+  "reject_candidates": [
+    {
+      "candidate_card_id": "oadm-inference-result-traceability-0d0557615e",
+      "conflict_reason": "Agent 推理结果与过程日志追溯不等于指标公式血缘，直接映射会混淆执行可观测性与度量定义治理。",
+      "considered_targets": [
+        { "scm_target_type": "metric", "scm_target_id": "SCM-MECE-L3-102" }
+      ]
+    },
+    {
+      "candidate_card_id": "oadm-ai-dataset-classification-versioning-97124ce95e",
+      "conflict_reason": "AI 数据集版本不等于指标定义版本，直接映射会混淆数据资产版本与度量语义版本。",
+      "considered_targets": [
+        { "scm_target_type": "metric", "scm_target_id": "SCM-MECE-L3-100" }
+      ]
+    },
+    {
+      "candidate_card_id": "oadm-dual-model-validation-eff49bdf82",
+      "conflict_reason": "双模型生成、审核与仲裁流程不等于样本证据支持率，直接映射会把流程结构误写成覆盖率度量。",
+      "considered_targets": [
+        { "scm_target_type": "metric", "scm_target_id": "SCM-MECE-L3-110" }
+      ]
+    }
+  ],
+  "unmapped_candidates": [
+    "oadm-execution-event-bus-24482106d6",
+    "oadm-risk-routed-execution-5fd5f72377",
+    "oadm-safe-dynamic-action-loop-e794577c2f",
+    "oadm-five-component-stack-018338d550",
+    "oadm-ontology-runtime-service-8328263439",
+    "oadm-human-multi-agent-modes-2d191ac219",
+    "oadm-explicit-ontology-embedding-cc9cf156e5",
+    "oadm-intent-ontology-activation-42d6a2b68d",
+    "oadm-minimal-ontology-retrieval-bc8ea50e30",
+    "oadm-ontology-blockchain-layered-governance-d1edf7ae3a",
+    "oadm-tri-pillar-risk-governance-a3ee65e56e",
+    "oadm-four-module-implementation-5ef6abe282",
+    "oadm-constraint-strength-traceability-778b4ec0f4",
+    "oadm-fact-mechanism-goal-1b4a142306",
+    "oadm-dynamic-authorization-contract-control-3d407cd756",
+    "oadm-hybrid-identity-asset-provenance-056bb03eec",
+    "oadm-industry-exploration-evidence-boundary-ec30c7d9bf",
+    "oadm-six-proof-accountability-system-392f0d445c",
+    "oadm-traceability-contribution-accountability-8d512e3160",
+    "oadm-fact-mechanism-action-landing-d10e3b9509",
+    "oadm-understand-decide-act-07d64e037b",
+    "oadm-reasoning-memory-action-c613d2da56",
+    "oadm-ai-dataset-admission-construction-2b03e1149f",
+    "oadm-ai-dataset-responsibility-triad-02ef1387b5",
+    "oadm-symbolic-connectionist-hybrid-bb37b876d0",
+    "oadm-autonomous-operations-86671e6b03",
+    "oadm-cross-domain-dynamic-collaboration-7e1ec3cc54",
+    "oadm-intelligent-workflow-automation-daaab69b1f",
+    "oadm-knowledge-parsing-autonomous-reasoning-ed0de008fc",
+    "oadm-legacy-knowledge-ai-translation-6927accaa2",
+    "oadm-multi-scene-pdca-fec4de2912",
+    "oadm-one-plus-four-operating-model-8d8a61fe06",
+    "oadm-penetration-validation-strategy-a17f83fa24",
+    "oadm-scenario-portfolio-selection-39626e3606",
+    "oadm-three-stage-landing-strategy-e8681d951c",
+    "oadm-dikw-dual-loop-910e77a245",
+    "oadm-ai-directory-hierarchy-5252a8be5d",
+    "oadm-three-data-asset-catalogs-f1116db4e9",
+    "oadm-fact-and-mechanism-carrier-8339594ba8",
+    "oadm-controlled-ai-ontology-modeling-db667058ad",
+    "oadm-five-loop-method-ca9bb22b58",
+    "oadm-knowledge-preprocessing-29-sentences-20eba05512",
+    "oadm-ontology-tooling-platform-34aa02435d",
+    "oadm-entity-ontology-complement-1535903339",
+    "oadm-knowledge-graph-ontology-complement-96986134a0",
+    "oadm-saas-agent-new-user-ecdc31ccb2",
+    "oadm-enterprise-architecture-semantic-layer-559e5b63a7",
+    "oadm-semantic-handshake-old-new-worlds-5ff7bf2d5e",
+    "oadm-four-dimensional-business-ontology-b9a2487d33",
+    "oadm-physical-logical-dual-learning-954c0d339b",
+    "oadm-ontology-world-model-fusion-61b7f67680",
+    "oadm-triple-world-digital-twin-af3291a296",
+    "oadm-intelligent-native-enterprise-91d3aeda52",
+    "oadm-agent-centered-network-ca63aa00e6",
+    "oadm-four-enterprise-ai-needs-8e5afd7ee4",
+    "oadm-four-governance-transformations-80d616f5fd",
+    "oadm-four-transition-challenges-7c14af5425",
+    "oadm-federated-cross-domain-integration-c97fddf870",
+    "oadm-legacy-asset-evolution-8cfff4942d",
+    "oadm-point-line-surface-08ab3b75c8",
+    "oadm-inference-asset-triad-64d708aa8e",
+    "oadm-bit-to-token-a10e8a8d88",
+    "oadm-lake-kb-ontology-triad-d5e33d6b69",
+    "oadm-abstract-structure-evolve-f14dbd0c04",
+    "oadm-business-system-dual-drive-b276acbff6",
+    "oadm-fact-mechanism-action-2bdf3db6c5",
+    "oadm-human-machine-bidirectional-ae9dd60c37",
+    "oadm-modeler-user-coevolution-b71499df72",
+    "oadm-ai-assisted-ontology-modeling-bfcd56b66d",
+    "oadm-dynamic-connection-strength-8bfddada49",
+    "oadm-representation-reasoning-validation-bf357f4567",
+    "oadm-ontology-ai-integration-matrix-5864150c68",
+    "oadm-ontology-llm-three-connections-578bb66efc",
+    "oadm-multimodal-dynamic-modeling-afcdd6cb46",
+    "oadm-human-machine-semantics-425a6b2adc",
+    "oadm-ontology-museum-antipattern-eae207943e",
+    "oadm-semantic-interconnection-reasoning-1ad9f4a05a",
+    "oadm-seven-plus-one-framework-4e7856904e",
+    "oadm-semantic-standard-role-map-d76258da48",
+    "oadm-w3c-semantic-stack-bc94d749c7"
+  ]
+}

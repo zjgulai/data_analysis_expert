@@ -1,0 +1,3005 @@
+{
+  "schema_version": "1.2.0",
+  "generated_at": "2026-07-18T00:00:00.000Z",
+  "scope": "m3a-candidate-only",
+  "source_card_manifest": "manifests/knowledge-card-manifest.json",
+  "source_card_manifest_sha256": "8651171aeb1688e1bcff7f68112bcb354327bfa3186e1d20e6e23292f094ad2e",
+  "seed_sha256": "da8fefa353ecf58e29a273242f729390036e4f8a44a84d7992e9af5e13fbdeb3",
+  "owner_review_source": "07-scm-crosswalk/owner-review-decisions.json",
+  "owner_review_source_sha256": "6800a6fe64ac37cb3957c509176b90966144e684473b252dbfbbacc80784c107",
+  "baseline_database": {
+    "relative_path": "scm/drafts/prototypes/scm-data-governance-workbench-v0/data/governance_workbench.sqlite",
+    "expected_sha256": "3d972e46ec43a64ad69265f295af4ffd9039dfe721a0e9f7f22d02e9b7652af7",
+    "observed_sha256": "3d972e46ec43a64ad69265f295af4ffd9039dfe721a0e9f7f22d02e9b7652af7",
+    "open_mode": "readonly+immutable",
+    "database_write": false
+  },
+  "relation_registry": {
+    "runtime_target_types": [
+      "object",
+      "metric"
+    ],
+    "runtime_relation_types": {
+      "object": "DESCRIBES_OBJECT",
+      "metric": "SUPPORTS_METRIC"
+    },
+    "stable_rule_registry_available": false,
+    "rule_mapping_policy": "unmapped"
+  },
+  "card_count": 89,
+  "mapping_status_counts": {
+    "accept_candidate": 6,
+    "reject_candidate": 3,
+    "unmapped": 80
+  },
+  "effective_mapping_status_counts": {
+    "approved": 0,
+    "rejected": 8,
+    "deferred": 1,
+    "unmapped": 80
+  },
+  "disposition_source": "explicit-three-way-seed-partition",
+  "seed_partition_counts": {
+    "accept_candidate": 6,
+    "reject_candidate": 3,
+    "unmapped": 80
+  },
+  "accepted_target_reference_count": 10,
+  "owner_review_summary": {
+    "mode": "owner-delegated-codex",
+    "review_authority": "user-authorized-2026-07-19",
+    "reviewed_on": "2026-07-19",
+    "human_owner_sign_off": false,
+    "reviewed_edge_count": 13,
+    "decision_counts": {
+      "approved": 0,
+      "rejected": 12,
+      "deferred": 1
+    },
+    "reviewed_card_count": 9,
+    "not_in_scope_card_count": 80,
+    "promotion_count": 0,
+    "scm_verified_true_count": 0
+  },
+  "dispositions": [
+    {
+      "candidate_card_id": "oadm-execution-event-bus-24482106d6",
+      "semantic_key": "oadm:agent-action:execution-event-bus",
+      "title": "本体定义的多 Agent 执行事件总线",
+      "source_pages": {
+        "pdf_page_start": 143,
+        "pdf_page_end": 144
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-risk-routed-execution-5fd5f72377",
+      "semantic_key": "oadm:agent-action:risk-routed-execution",
+      "title": "按风险路由的三类决策—行动方式",
+      "source_pages": {
+        "pdf_page_start": 141,
+        "pdf_page_end": 144
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-safe-dynamic-action-loop-e794577c2f",
+      "semantic_key": "oadm:agent-action:safe-dynamic-action-loop",
+      "title": "动态 Action 的执行前校验与反馈闭环",
+      "source_pages": {
+        "pdf_page_start": 146,
+        "pdf_page_end": 147
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-five-component-stack-018338d550",
+      "semantic_key": "oadm:agent-architecture:five-component-stack",
+      "title": "本体增强 Agent 的五组件能力栈",
+      "source_pages": {
+        "pdf_page_start": 144,
+        "pdf_page_end": 149
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-ontology-runtime-service-8328263439",
+      "semantic_key": "oadm:agent-architecture:ontology-runtime-service",
+      "title": "按意图加载、可版本化的本体运行时服务",
+      "source_pages": {
+        "pdf_page_start": 147,
+        "pdf_page_end": 147
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-human-multi-agent-modes-2d191ac219",
+      "semantic_key": "oadm:agent-decision:human-multi-agent-modes",
+      "title": "人机协同与多 Agent 联合决策模式",
+      "source_pages": {
+        "pdf_page_start": 138,
+        "pdf_page_end": 140
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-explicit-ontology-embedding-cc9cf156e5",
+      "semantic_key": "oadm:agent-engineering:explicit-ontology-embedding",
+      "title": "保留显式逻辑结构的本体嵌入策略",
+      "source_pages": {
+        "pdf_page_start": 133,
+        "pdf_page_end": 134
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-intent-ontology-activation-42d6a2b68d",
+      "semantic_key": "oadm:agent-engineering:intent-ontology-activation",
+      "title": "意图—本体—模型的动态激活链",
+      "source_pages": {
+        "pdf_page_start": 128,
+        "pdf_page_end": 131
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-minimal-ontology-retrieval-bc8ea50e30",
+      "semantic_key": "oadm:agent-engineering:minimal-ontology-retrieval",
+      "title": "最小必要本体与混合检索调用",
+      "source_pages": {
+        "pdf_page_start": 131,
+        "pdf_page_end": 133
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-ontology-blockchain-layered-governance-d1edf7ae3a",
+      "semantic_key": "oadm:agent-governance:ontology-blockchain-layered-governance",
+      "title": "本体约束、候选可信底座与分层治理框架",
+      "source_pages": {
+        "pdf_page_start": 181,
+        "pdf_page_end": 184
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-tri-pillar-risk-governance-a3ee65e56e",
+      "semantic_key": "oadm:agent-governance:tri-pillar-risk-governance",
+      "title": "本体约束、AI 智能与人类监督三支柱治理",
+      "source_pages": {
+        "pdf_page_start": 191,
+        "pdf_page_end": 192
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-four-module-implementation-5ef6abe282",
+      "semantic_key": "oadm:agent-platform:four-module-implementation",
+      "title": "四模块加平台集成的能力建设路径",
+      "source_pages": {
+        "pdf_page_start": 149,
+        "pdf_page_end": 154
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-constraint-strength-traceability-778b4ec0f4",
+      "semantic_key": "oadm:agent-reasoning:constraint-strength-traceability",
+      "title": "可配置约束强度与逐步推理溯源",
+      "source_pages": {
+        "pdf_page_start": 136,
+        "pdf_page_end": 138
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-fact-mechanism-goal-1b4a142306",
+      "semantic_key": "oadm:agent-reasoning:fact-mechanism-goal",
+      "title": "事实—事理—目标三位一体的增强推理",
+      "source_pages": {
+        "pdf_page_start": 135,
+        "pdf_page_end": 140
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-dynamic-authorization-contract-control-3d407cd756",
+      "semantic_key": "oadm:agent-trust:dynamic-authorization-contract-control",
+      "title": "动态权限凭证与智能合约执行控制",
+      "source_pages": {
+        "pdf_page_start": 186,
+        "pdf_page_end": 188
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-hybrid-identity-asset-provenance-056bb03eec",
+      "semantic_key": "oadm:agent-trust:hybrid-identity-asset-provenance",
+      "title": "碳硅混合身份与数字资产来源链",
+      "source_pages": {
+        "pdf_page_start": 185,
+        "pdf_page_end": 186
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-industry-exploration-evidence-boundary-ec30c7d9bf",
+      "semantic_key": "oadm:agent-trust:industry-exploration-evidence-boundary",
+      "title": "区块链加 AI 业界探索的证据边界",
+      "source_pages": {
+        "pdf_page_start": 190,
+        "pdf_page_end": 190
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-six-proof-accountability-system-392f0d445c",
+      "semantic_key": "oadm:agent-trust:six-proof-accountability-system",
+      "title": "身份、资产、授权、合约、追溯、贡献六类证明",
+      "source_pages": {
+        "pdf_page_start": 185,
+        "pdf_page_end": 189
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-traceability-contribution-accountability-8d512e3160",
+      "semantic_key": "oadm:agent-trust:traceability-contribution-accountability",
+      "title": "操作哈希链与贡献计量的责任闭环",
+      "source_pages": {
+        "pdf_page_start": 188,
+        "pdf_page_end": 189
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-fact-mechanism-action-landing-d10e3b9509",
+      "semantic_key": "oadm:agent:fact-mechanism-action-landing",
+      "title": "Agent 从明事实、懂事理到会行动的落地链",
+      "source_pages": {
+        "pdf_page_start": 93,
+        "pdf_page_end": 95
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-understand-decide-act-07d64e037b",
+      "semantic_key": "oadm:agentic-ai:understand-decide-act",
+      "title": "Agentic AI 的理解—决策—行动闭环",
+      "source_pages": {
+        "pdf_page_start": 10,
+        "pdf_page_end": 11
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-reasoning-memory-action-c613d2da56",
+      "semantic_key": "oadm:ai-capability:reasoning-memory-action",
+      "title": "大模型能力跃升的推理—记忆—行动三要素",
+      "source_pages": {
+        "pdf_page_start": 9,
+        "pdf_page_end": 10
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-ai-dataset-admission-construction-2b03e1149f",
+      "semantic_key": "oadm:ai-dataset:admission-construction",
+      "title": "AI 数据集准入与构建原则",
+      "source_pages": {
+        "pdf_page_start": 80,
+        "pdf_page_end": 82
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-ai-dataset-classification-versioning-97124ce95e",
+      "semantic_key": "oadm:ai-dataset:classification-versioning",
+      "title": "AI 数据集多维分类、统一 ID 与版本",
+      "source_pages": {
+        "pdf_page_start": 84,
+        "pdf_page_end": 87
+      },
+      "mapping_status": "reject_candidate",
+      "effective_mapping_status": "rejected",
+      "targets": [],
+      "considered_targets": [
+        {
+          "scm_target_type": "metric",
+          "scm_target_id": "SCM-MECE-L3-100",
+          "relation_type": "CANDIDATE_CROSSWALK",
+          "runtime_relation_type": "SUPPORTS_METRIC",
+          "target_exists": true,
+          "owner_review": {
+            "status": "completed",
+            "candidate_origin_status": "reject_candidate",
+            "owner_decision": "maintain_reject",
+            "decision_outcome": "rejected",
+            "reason": "AI 数据集版本不等于指标定义版本，直接映射会混淆数据资产版本与度量语义版本。",
+            "confidence": "high",
+            "reviewer": "owner-delegated-codex",
+            "review_authority": "user-authorized-2026-07-19",
+            "reviewed_on": "2026-07-19",
+            "promotion_status": "none",
+            "scm_verified_fact": false
+          }
+        }
+      ],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "AI 数据集版本不等于指标定义版本，直接映射会混淆数据资产版本与度量语义版本。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "completed",
+        "edge_decision_count": 1,
+        "reviewer": "owner-delegated-codex",
+        "review_authority": "user-authorized-2026-07-19",
+        "reviewed_on": "2026-07-19",
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-ai-dataset-responsibility-triad-02ef1387b5",
+      "semantic_key": "oadm:ai-dataset:responsibility-triad",
+      "title": "数据 Owner—数据集责任人—使用责任人三方边界",
+      "source_pages": {
+        "pdf_page_start": 82,
+        "pdf_page_end": 84
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-symbolic-connectionist-hybrid-bb37b876d0",
+      "semantic_key": "oadm:ai-paradigm:symbolic-connectionist-hybrid",
+      "title": "符号主义与联结主义融合的混合智能",
+      "source_pages": {
+        "pdf_page_start": 59,
+        "pdf_page_end": 60
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-autonomous-operations-86671e6b03",
+      "semantic_key": "oadm:application:autonomous-operations",
+      "title": "数据规则驱动的自主运营模式",
+      "source_pages": {
+        "pdf_page_start": 161,
+        "pdf_page_end": 162
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-cross-domain-dynamic-collaboration-7e1ec3cc54",
+      "semantic_key": "oadm:application:cross-domain-dynamic-collaboration",
+      "title": "跨领域动态智能协同模式",
+      "source_pages": {
+        "pdf_page_start": 164,
+        "pdf_page_end": 166
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-integrated-multidimensional-decision-3b85562879",
+      "semantic_key": "oadm:application:integrated-multidimensional-decision",
+      "title": "多维度一体化智能决策模式",
+      "source_pages": {
+        "pdf_page_start": 162,
+        "pdf_page_end": 164
+      },
+      "mapping_status": "accept_candidate",
+      "effective_mapping_status": "rejected",
+      "targets": [
+        {
+          "scm_target_type": "object",
+          "scm_target_id": "forecast_version",
+          "relation_type": "CANDIDATE_CROSSWALK",
+          "runtime_relation_type": "DESCRIBES_OBJECT",
+          "target_exists": true,
+          "owner_review": {
+            "status": "completed",
+            "candidate_origin_status": "accept_candidate",
+            "owner_decision": "reject_semantic_mismatch",
+            "decision_outcome": "rejected",
+            "reason": "卡片只提到预测输入，没有描述由 forecast_version 与 period 共同界定的 canonical forecast_version 资产粒度。",
+            "confidence": "high",
+            "reviewer": "owner-delegated-codex",
+            "review_authority": "user-authorized-2026-07-19",
+            "reviewed_on": "2026-07-19",
+            "promotion_status": "none",
+            "scm_verified_fact": false
+          }
+        },
+        {
+          "scm_target_type": "object",
+          "scm_target_id": "purchase_plan",
+          "relation_type": "CANDIDATE_CROSSWALK",
+          "runtime_relation_type": "DESCRIBES_OBJECT",
+          "target_exists": true,
+          "owner_review": {
+            "status": "completed",
+            "candidate_origin_status": "accept_candidate",
+            "owner_decision": "reject_semantic_mismatch",
+            "decision_outcome": "rejected",
+            "reason": "卡片没有描述由 plan_id 与 version 标识的采购或补货计划资产，不能据一般计划语义映射到 purchase_plan。",
+            "confidence": "high",
+            "reviewer": "owner-delegated-codex",
+            "review_authority": "user-authorized-2026-07-19",
+            "reviewed_on": "2026-07-19",
+            "promotion_status": "none",
+            "scm_verified_fact": false
+          }
+        },
+        {
+          "scm_target_type": "object",
+          "scm_target_id": "inventory_batch",
+          "relation_type": "CANDIDATE_CROSSWALK",
+          "runtime_relation_type": "DESCRIBES_OBJECT",
+          "target_exists": true,
+          "owner_review": {
+            "status": "completed",
+            "candidate_origin_status": "accept_candidate",
+            "owner_decision": "reject_semantic_mismatch",
+            "decision_outcome": "rejected",
+            "reason": "卡片中的库存概念不等于由 batch_no、sku 与 warehouse 界定的 inventory_batch；候选目标粒度过细。",
+            "confidence": "high",
+            "reviewer": "owner-delegated-codex",
+            "review_authority": "user-authorized-2026-07-19",
+            "reviewed_on": "2026-07-19",
+            "promotion_status": "none",
+            "scm_verified_fact": false
+          }
+        }
+      ],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": "该卡片描述多维决策对计划、预测版本和库存批次的联合使用，可作为三个现有 SCM 对象的候选方法论说明。",
+      "conflict_reason": null,
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "completed",
+        "edge_decision_count": 3,
+        "reviewer": "owner-delegated-codex",
+        "review_authority": "user-authorized-2026-07-19",
+        "reviewed_on": "2026-07-19",
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-intelligent-workflow-automation-daaab69b1f",
+      "semantic_key": "oadm:application:intelligent-workflow-automation",
+      "title": "本体驱动的智能流程自动化模式",
+      "source_pages": {
+        "pdf_page_start": 158,
+        "pdf_page_end": 161
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-knowledge-parsing-autonomous-reasoning-ed0de008fc",
+      "semantic_key": "oadm:application:knowledge-parsing-autonomous-reasoning",
+      "title": "知识解析与多模态纠偏的自主推理模式",
+      "source_pages": {
+        "pdf_page_start": 166,
+        "pdf_page_end": 169
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-legacy-knowledge-ai-translation-6927accaa2",
+      "semantic_key": "oadm:application:legacy-knowledge-ai-translation",
+      "title": "存量知识资产的 AI 转译与语义连接",
+      "source_pages": {
+        "pdf_page_start": 175,
+        "pdf_page_end": 178
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-multi-scene-pdca-fec4de2912",
+      "semantic_key": "oadm:application:multi-scene-pdca",
+      "title": "多场景综合统筹的多 Agent PDCA 模式",
+      "source_pages": {
+        "pdf_page_start": 169,
+        "pdf_page_end": 172
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-one-plus-four-operating-model-8d8a61fe06",
+      "semantic_key": "oadm:application:one-plus-four-operating-model",
+      "title": "总体组加四专业小队的 1+4 协同模式",
+      "source_pages": {
+        "pdf_page_start": 174,
+        "pdf_page_end": 175
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-penetration-validation-strategy-a17f83fa24",
+      "semantic_key": "oadm:application:penetration-validation-strategy",
+      "title": "Bootcamps 小队的穿刺式技术验证",
+      "source_pages": {
+        "pdf_page_start": 173,
+        "pdf_page_end": 174
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-scenario-portfolio-selection-39626e3606",
+      "semantic_key": "oadm:application:scenario-portfolio-selection",
+      "title": "以痛点、价值和结构化适配度选择场景",
+      "source_pages": {
+        "pdf_page_start": 154,
+        "pdf_page_end": 158
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-three-stage-landing-strategy-e8681d951c",
+      "semantic_key": "oadm:application:three-stage-landing-strategy",
+      "title": "穿刺验证—小切口价值—存量转译三阶段策略",
+      "source_pages": {
+        "pdf_page_start": 173,
+        "pdf_page_end": 177
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-dikw-dual-loop-910e77a245",
+      "semantic_key": "oadm:collaboration:dikw-dual-loop",
+      "title": "人与 AI 的 DIKW 双循环",
+      "source_pages": {
+        "pdf_page_start": 50,
+        "pdf_page_end": 52
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-ai-directory-hierarchy-5252a8be5d",
+      "semantic_key": "oadm:data-asset:ai-directory-hierarchy",
+      "title": "面向 AI 的数据资产目录层级",
+      "source_pages": {
+        "pdf_page_start": 76,
+        "pdf_page_end": 80
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-three-data-asset-catalogs-f1116db4e9",
+      "semantic_key": "oadm:data-asset:three-catalogs",
+      "title": "作业—分析—AI 三类数据资产目录",
+      "source_pages": {
+        "pdf_page_start": 74,
+        "pdf_page_end": 80
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-fact-and-mechanism-carrier-8339594ba8",
+      "semantic_key": "oadm:data-role:fact-and-mechanism-carrier",
+      "title": "数据应同时承载业务事实与事理",
+      "source_pages": {
+        "pdf_page_start": 18,
+        "pdf_page_end": 20
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-controlled-ai-ontology-modeling-db667058ad",
+      "semantic_key": "oadm:engineering:controlled-ai-ontology-modeling",
+      "title": "受控输入驱动的 AI 本体建模",
+      "source_pages": {
+        "pdf_page_start": 102,
+        "pdf_page_end": 103
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-dual-model-validation-eff49bdf82",
+      "semantic_key": "oadm:engineering:dual-model-validation",
+      "title": "生成—审核—仲裁的双大模型校验",
+      "source_pages": {
+        "pdf_page_start": 103,
+        "pdf_page_end": 106
+      },
+      "mapping_status": "reject_candidate",
+      "effective_mapping_status": "rejected",
+      "targets": [],
+      "considered_targets": [
+        {
+          "scm_target_type": "metric",
+          "scm_target_id": "SCM-MECE-L3-110",
+          "relation_type": "CANDIDATE_CROSSWALK",
+          "runtime_relation_type": "SUPPORTS_METRIC",
+          "target_exists": true,
+          "owner_review": {
+            "status": "completed",
+            "candidate_origin_status": "reject_candidate",
+            "owner_decision": "maintain_reject",
+            "decision_outcome": "rejected",
+            "reason": "双模型生成、审核与仲裁流程不等于样本证据支持率，直接映射会把流程结构误写成覆盖率度量。",
+            "confidence": "high",
+            "reviewer": "owner-delegated-codex",
+            "review_authority": "user-authorized-2026-07-19",
+            "reviewed_on": "2026-07-19",
+            "promotion_status": "none",
+            "scm_verified_fact": false
+          }
+        }
+      ],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "双模型生成、审核与仲裁流程不等于样本证据支持率，直接映射会把流程结构误写成覆盖率度量。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "completed",
+        "edge_decision_count": 1,
+        "reviewer": "owner-delegated-codex",
+        "review_authority": "user-authorized-2026-07-19",
+        "reviewed_on": "2026-07-19",
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-five-loop-method-ca9bb22b58",
+      "semantic_key": "oadm:engineering:five-loop-method",
+      "title": "预处理—建模—入库—平台—实施五环工程闭环",
+      "source_pages": {
+        "pdf_page_start": 127,
+        "pdf_page_end": 127
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-knowledge-preprocessing-29-sentences-20eba05512",
+      "semantic_key": "oadm:engineering:knowledge-preprocessing-29-sentences",
+      "title": "用“29 句话”统一显性与隐性知识预处理",
+      "source_pages": {
+        "pdf_page_start": 96,
+        "pdf_page_end": 99
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-modeling-admission-review-fd13d2a7bf",
+      "semantic_key": "oadm:engineering:modeling-admission-review",
+      "title": "形式化建模前的准入审核与测试增强循环",
+      "source_pages": {
+        "pdf_page_start": 100,
+        "pdf_page_end": 101
+      },
+      "mapping_status": "accept_candidate",
+      "effective_mapping_status": "rejected",
+      "targets": [
+        {
+          "scm_target_type": "metric",
+          "scm_target_id": "SCM-MECE-L3-104",
+          "relation_type": "CANDIDATE_CROSSWALK",
+          "runtime_relation_type": "SUPPORTS_METRIC",
+          "target_exists": true,
+          "owner_review": {
+            "status": "completed",
+            "candidate_origin_status": "accept_candidate",
+            "owner_decision": "reject_semantic_mismatch",
+            "decision_outcome": "rejected",
+            "reason": "知识制品的建模准入不等于指标 production-ready；卡片自身边界也不覆盖 SCM 指标晋升状态。",
+            "confidence": "high",
+            "reviewer": "owner-delegated-codex",
+            "review_authority": "user-authorized-2026-07-19",
+            "reviewed_on": "2026-07-19",
+            "promotion_status": "none",
+            "scm_verified_fact": false
+          }
+        }
+      ],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": "建模准入审核与现有晋升状态就绪率指标存在直接候选关联。",
+      "conflict_reason": null,
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "completed",
+        "edge_decision_count": 1,
+        "reviewer": "owner-delegated-codex",
+        "review_authority": "user-authorized-2026-07-19",
+        "reviewed_on": "2026-07-19",
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-ontology-asset-registration-5b7e350efb",
+      "semantic_key": "oadm:engineering:ontology-asset-registration",
+      "title": "本体模型从验证态到资产服务态的注册入库",
+      "source_pages": {
+        "pdf_page_start": 111,
+        "pdf_page_end": 111
+      },
+      "mapping_status": "accept_candidate",
+      "effective_mapping_status": "rejected",
+      "targets": [
+        {
+          "scm_target_type": "metric",
+          "scm_target_id": "SCM-MECE-L3-104",
+          "relation_type": "CANDIDATE_CROSSWALK",
+          "runtime_relation_type": "SUPPORTS_METRIC",
+          "target_exists": true,
+          "owner_review": {
+            "status": "completed",
+            "candidate_origin_status": "accept_candidate",
+            "owner_decision": "reject_semantic_mismatch",
+            "decision_outcome": "rejected",
+            "reason": "卡片描述本体资产注册，而 SCM-MECE-L3-104 衡量指标晋升状态就绪比例；两者的资产类型与生命周期均不同。",
+            "confidence": "high",
+            "reviewer": "owner-delegated-codex",
+            "review_authority": "user-authorized-2026-07-19",
+            "reviewed_on": "2026-07-19",
+            "promotion_status": "none",
+            "scm_verified_fact": false
+          }
+        }
+      ],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": "从验证态到资产服务态的准入语义与现有晋升状态就绪率指标存在直接候选关联。",
+      "conflict_reason": null,
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "completed",
+        "edge_decision_count": 1,
+        "reviewer": "owner-delegated-codex",
+        "review_authority": "user-authorized-2026-07-19",
+        "reviewed_on": "2026-07-19",
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-ontology-lifecycle-operations-968c388b34",
+      "semantic_key": "oadm:engineering:ontology-lifecycle-operations",
+      "title": "数据—语义双重运维与“建用优复”运营",
+      "source_pages": {
+        "pdf_page_start": 111,
+        "pdf_page_end": 115
+      },
+      "mapping_status": "accept_candidate",
+      "effective_mapping_status": "rejected",
+      "targets": [
+        {
+          "scm_target_type": "metric",
+          "scm_target_id": "SCM-MECE-L3-100",
+          "relation_type": "CANDIDATE_CROSSWALK",
+          "runtime_relation_type": "SUPPORTS_METRIC",
+          "target_exists": true,
+          "owner_review": {
+            "status": "completed",
+            "candidate_origin_status": "accept_candidate",
+            "owner_decision": "reject_semantic_mismatch",
+            "decision_outcome": "rejected",
+            "reason": "卡片描述本体版本运维，不支持 SCM-MECE-L3-100 的 metric_definition_version 覆盖口径、采集或计算证据。",
+            "confidence": "high",
+            "reviewer": "owner-delegated-codex",
+            "review_authority": "user-authorized-2026-07-19",
+            "reviewed_on": "2026-07-19",
+            "promotion_status": "none",
+            "scm_verified_fact": false
+          }
+        },
+        {
+          "scm_target_type": "metric",
+          "scm_target_id": "SCM-MECE-L3-103",
+          "relation_type": "CANDIDATE_CROSSWALK",
+          "runtime_relation_type": "SUPPORTS_METRIC",
+          "target_exists": true,
+          "owner_review": {
+            "status": "completed",
+            "candidate_origin_status": "accept_candidate",
+            "owner_decision": "reject_semantic_mismatch",
+            "decision_outcome": "rejected",
+            "reason": "卡片没有定义 evidence_level 的赋值或覆盖机制，不能支持 SCM-MECE-L3-103 的指标口径。",
+            "confidence": "high",
+            "reviewer": "owner-delegated-codex",
+            "review_authority": "user-authorized-2026-07-19",
+            "reviewed_on": "2026-07-19",
+            "promotion_status": "none",
+            "scm_verified_fact": false
+          }
+        }
+      ],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": "本体生命周期运维同时覆盖定义版本与证据等级治理，可候选支持对应覆盖率指标。",
+      "conflict_reason": null,
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "completed",
+        "edge_decision_count": 2,
+        "reviewer": "owner-delegated-codex",
+        "review_authority": "user-authorized-2026-07-19",
+        "reviewed_on": "2026-07-19",
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-ontology-tooling-platform-34aa02435d",
+      "semantic_key": "oadm:engineering:ontology-tooling-platform",
+      "title": "三类角色协同的端到端本体工具平台",
+      "source_pages": {
+        "pdf_page_start": 115,
+        "pdf_page_end": 121
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-scenario-validation-loop-65cbb0ff79",
+      "semantic_key": "oadm:engineering:scenario-validation-loop",
+      "title": "可视化专家审核与场景测试闭环",
+      "source_pages": {
+        "pdf_page_start": 106,
+        "pdf_page_end": 110
+      },
+      "mapping_status": "accept_candidate",
+      "effective_mapping_status": "deferred",
+      "targets": [
+        {
+          "scm_target_type": "metric",
+          "scm_target_id": "SCM-MECE-L3-110",
+          "relation_type": "CANDIDATE_CROSSWALK",
+          "runtime_relation_type": "SUPPORTS_METRIC",
+          "target_exists": true,
+          "owner_review": {
+            "status": "completed",
+            "candidate_origin_status": "accept_candidate",
+            "owner_decision": "defer_insufficient_target_model",
+            "decision_outcome": "deferred",
+            "reason": "卡片与黄金用例验证相关，但 SCM-MECE-L3-110 的分子为支持结论数、分母为已分析规则数；rule grain 以及测试结果转为 evidence 的机制尚未定义。",
+            "confidence": "medium",
+            "reviewer": "owner-delegated-codex",
+            "review_authority": "user-authorized-2026-07-19",
+            "reviewed_on": "2026-07-19",
+            "promotion_status": "none",
+            "scm_verified_fact": false
+          }
+        }
+      ],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": "专家审核和场景测试闭环可作为样本证据支持率的候选方法论证据。",
+      "conflict_reason": null,
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "completed",
+        "edge_decision_count": 1,
+        "reviewer": "owner-delegated-codex",
+        "review_authority": "user-authorized-2026-07-19",
+        "reviewed_on": "2026-07-19",
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-entity-ontology-complement-1535903339",
+      "semantic_key": "oadm:enterprise-architecture:entity-ontology-complement",
+      "title": "实体建模与本体建模互补",
+      "source_pages": {
+        "pdf_page_start": 69,
+        "pdf_page_end": 70
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-knowledge-graph-ontology-complement-96986134a0",
+      "semantic_key": "oadm:enterprise-architecture:knowledge-graph-ontology-complement",
+      "title": "知识图谱与本体的骨架—实例关系",
+      "source_pages": {
+        "pdf_page_start": 70,
+        "pdf_page_end": 71
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-saas-agent-new-user-ecdc31ccb2",
+      "semantic_key": "oadm:enterprise-architecture:saas-agent-new-user",
+      "title": "AI Agent 作为 SaaS 新用户",
+      "source_pages": {
+        "pdf_page_start": 72,
+        "pdf_page_end": 73
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-enterprise-architecture-semantic-layer-559e5b63a7",
+      "semantic_key": "oadm:enterprise-architecture:semantic-layer",
+      "title": "企业架构中的本体语义层",
+      "source_pages": {
+        "pdf_page_start": 68,
+        "pdf_page_end": 69
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-semantic-handshake-old-new-worlds-5ff7bf2d5e",
+      "semantic_key": "oadm:enterprise-evolution:semantic-handshake-old-new-worlds",
+      "title": "旧系统与自治 Agent 的非侵入式语义握手",
+      "source_pages": {
+        "pdf_page_start": 181,
+        "pdf_page_end": 183
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-four-dimensional-business-ontology-b9a2487d33",
+      "semantic_key": "oadm:enterprise-governance:four-dimensional-business-ontology",
+      "title": "知识、数据、流程、IT 四维融合的业务本体",
+      "source_pages": {
+        "pdf_page_start": 206,
+        "pdf_page_end": 209
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-physical-logical-dual-learning-954c0d339b",
+      "semantic_key": "oadm:enterprise-learning:physical-logical-dual-learning",
+      "title": "面向物理规律与业务逻辑的 AI 双重学习",
+      "source_pages": {
+        "pdf_page_start": 200,
+        "pdf_page_end": 202
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-ontology-world-model-fusion-61b7f67680",
+      "semantic_key": "oadm:enterprise-model:ontology-world-model-fusion",
+      "title": "本体模型与世界模型的四层动态融合",
+      "source_pages": {
+        "pdf_page_start": 202,
+        "pdf_page_end": 203
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-triple-world-digital-twin-af3291a296",
+      "semantic_key": "oadm:enterprise-model:triple-world-digital-twin",
+      "title": "物理、逻辑、智能三重世界的企业数字孪生",
+      "source_pages": {
+        "pdf_page_start": 199,
+        "pdf_page_end": 200
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-intelligent-native-enterprise-91d3aeda52",
+      "semantic_key": "oadm:enterprise-operating-model:intelligent-native-enterprise",
+      "title": "智慧资产、自主流程与弹性智力的智能原生企业",
+      "source_pages": {
+        "pdf_page_start": 203,
+        "pdf_page_end": 205
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-agent-centered-network-ca63aa00e6",
+      "semantic_key": "oadm:enterprise-organization:agent-centered-network",
+      "title": "角色、协作、层级、考核驱动的 Agent 组织网络",
+      "source_pages": {
+        "pdf_page_start": 205,
+        "pdf_page_end": 206
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-four-enterprise-ai-needs-8e5afd7ee4",
+      "semantic_key": "oadm:governance:four-enterprise-ai-needs",
+      "title": "企业 AI 数据治理的四项关键需求",
+      "source_pages": {
+        "pdf_page_start": 21,
+        "pdf_page_end": 25
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-four-governance-transformations-80d616f5fd",
+      "semantic_key": "oadm:governance:four-transformations",
+      "title": "智能时代数据治理的四重转变",
+      "source_pages": {
+        "pdf_page_start": 25,
+        "pdf_page_end": 29
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-four-transition-challenges-7c14af5425",
+      "semantic_key": "oadm:governance:four-transition-challenges",
+      "title": "AI 数据治理转型的四类挑战",
+      "source_pages": {
+        "pdf_page_start": 29,
+        "pdf_page_end": 35
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-federated-cross-domain-integration-c97fddf870",
+      "semantic_key": "oadm:implementation:federated-cross-domain-integration",
+      "title": "桥接本体与联邦查询的跨域整合",
+      "source_pages": {
+        "pdf_page_start": 124,
+        "pdf_page_end": 126
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-legacy-asset-evolution-8cfff4942d",
+      "semantic_key": "oadm:implementation:legacy-asset-evolution",
+      "title": "存量数据湖与知识图谱的三阶段语义演进",
+      "source_pages": {
+        "pdf_page_start": 126,
+        "pdf_page_end": 127
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-point-line-surface-08ab3b75c8",
+      "semantic_key": "oadm:implementation:point-line-surface",
+      "title": "从场景点到领域线再到企业面的迭代路径",
+      "source_pages": {
+        "pdf_page_start": 121,
+        "pdf_page_end": 126
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-inference-asset-triad-64d708aa8e",
+      "semantic_key": "oadm:inference-asset:fact-mechanism-result",
+      "title": "推理资产的事实—事理—结果三分法",
+      "source_pages": {
+        "pdf_page_start": 87,
+        "pdf_page_end": 90
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-inference-result-traceability-0d0557615e",
+      "semantic_key": "oadm:inference-asset:traceability",
+      "title": "推理结果与过程日志的全链路追溯",
+      "source_pages": {
+        "pdf_page_start": 89,
+        "pdf_page_end": 90
+      },
+      "mapping_status": "reject_candidate",
+      "effective_mapping_status": "rejected",
+      "targets": [],
+      "considered_targets": [
+        {
+          "scm_target_type": "metric",
+          "scm_target_id": "SCM-MECE-L3-102",
+          "relation_type": "CANDIDATE_CROSSWALK",
+          "runtime_relation_type": "SUPPORTS_METRIC",
+          "target_exists": true,
+          "owner_review": {
+            "status": "completed",
+            "candidate_origin_status": "reject_candidate",
+            "owner_decision": "maintain_reject",
+            "decision_outcome": "rejected",
+            "reason": "Agent 推理结果与过程日志追溯不等于指标公式血缘，直接映射会混淆执行可观测性与度量定义治理。",
+            "confidence": "high",
+            "reviewer": "owner-delegated-codex",
+            "review_authority": "user-authorized-2026-07-19",
+            "reviewed_on": "2026-07-19",
+            "promotion_status": "none",
+            "scm_verified_fact": false
+          }
+        }
+      ],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "Agent 推理结果与过程日志追溯不等于指标公式血缘，直接映射会混淆执行可观测性与度量定义治理。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "completed",
+        "edge_decision_count": 1,
+        "reviewer": "owner-delegated-codex",
+        "review_authority": "user-authorized-2026-07-19",
+        "reviewed_on": "2026-07-19",
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-bit-to-token-a10e8a8d88",
+      "semantic_key": "oadm:information-unit:bit-to-token",
+      "title": "信息处理单元从比特扩展到 Token",
+      "source_pages": {
+        "pdf_page_start": 8,
+        "pdf_page_end": 9
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-lake-kb-ontology-triad-d5e33d6b69",
+      "semantic_key": "oadm:knowledge-platform:lake-kb-ontology-triad",
+      "title": "数据湖—知识库—本体库的互补分工",
+      "source_pages": {
+        "pdf_page_start": 71,
+        "pdf_page_end": 72
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-abstract-structure-evolve-f14dbd0c04",
+      "semantic_key": "oadm:modeling-thinking:abstract-structure-evolve",
+      "title": "建模思维的抽象—结构化—演化方法",
+      "source_pages": {
+        "pdf_page_start": 14,
+        "pdf_page_end": 15
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-business-system-dual-drive-b276acbff6",
+      "semantic_key": "oadm:modeling:business-system-dual-drive",
+      "title": "业务逻辑与系统逻辑双轮驱动模型",
+      "source_pages": {
+        "pdf_page_start": 38,
+        "pdf_page_end": 40
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-fact-mechanism-action-2bdf3db6c5",
+      "semantic_key": "oadm:modeling:fact-mechanism-action",
+      "title": "事实—事理—行动一体化动态模型",
+      "source_pages": {
+        "pdf_page_start": 40,
+        "pdf_page_end": 42
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-human-machine-bidirectional-ae9dd60c37",
+      "semantic_key": "oadm:modeling:human-machine-bidirectional",
+      "title": "人机共用的双向适配模型",
+      "source_pages": {
+        "pdf_page_start": 37,
+        "pdf_page_end": 38
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-modeler-user-coevolution-b71499df72",
+      "semantic_key": "oadm:ontology-ai:modeler-user-coevolution",
+      "title": "大模型作为本体建模师与使用者的双向演进",
+      "source_pages": {
+        "pdf_page_start": 194,
+        "pdf_page_end": 196
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-ai-assisted-ontology-modeling-bfcd56b66d",
+      "semantic_key": "oadm:ontology-engineering:ai-assisted-modeling",
+      "title": "AI 辅助业务专家进行本体建模",
+      "source_pages": {
+        "pdf_page_start": 67,
+        "pdf_page_end": 68
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-continuous-tool-ecosystem-9eabee007d",
+      "semantic_key": "oadm:ontology-engineering:continuous-tool-ecosystem",
+      "title": "本体持续集成、双向反馈与工具生态",
+      "source_pages": {
+        "pdf_page_start": 197,
+        "pdf_page_end": 198
+      },
+      "mapping_status": "accept_candidate",
+      "effective_mapping_status": "rejected",
+      "targets": [
+        {
+          "scm_target_type": "metric",
+          "scm_target_id": "SCM-MECE-L3-100",
+          "relation_type": "CANDIDATE_CROSSWALK",
+          "runtime_relation_type": "SUPPORTS_METRIC",
+          "target_exists": true,
+          "owner_review": {
+            "status": "completed",
+            "candidate_origin_status": "accept_candidate",
+            "owner_decision": "reject_semantic_mismatch",
+            "decision_outcome": "rejected",
+            "reason": "卡片描述本体 CI 与版本控制，不支持 SCM-MECE-L3-100 的指标定义版本覆盖口径、采集或计算证据。",
+            "confidence": "high",
+            "reviewer": "owner-delegated-codex",
+            "review_authority": "user-authorized-2026-07-19",
+            "reviewed_on": "2026-07-19",
+            "promotion_status": "none",
+            "scm_verified_fact": false
+          }
+        },
+        {
+          "scm_target_type": "metric",
+          "scm_target_id": "SCM-MECE-L3-102",
+          "relation_type": "CANDIDATE_CROSSWALK",
+          "runtime_relation_type": "SUPPORTS_METRIC",
+          "target_exists": true,
+          "owner_review": {
+            "status": "completed",
+            "candidate_origin_status": "accept_candidate",
+            "owner_decision": "reject_semantic_mismatch",
+            "decision_outcome": "rejected",
+            "reason": "卡片的工程变更追踪没有给出 SCM-MECE-L3-102 的指标分子、分母或源字段血缘，不能支持该指标。",
+            "confidence": "high",
+            "reviewer": "owner-delegated-codex",
+            "review_authority": "user-authorized-2026-07-19",
+            "reviewed_on": "2026-07-19",
+            "promotion_status": "none",
+            "scm_verified_fact": false
+          }
+        }
+      ],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": "持续集成和双向反馈同时涉及定义版本及公式血缘维护，可作为两个治理指标的候选说明。",
+      "conflict_reason": null,
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "completed",
+        "edge_decision_count": 2,
+        "reviewer": "owner-delegated-codex",
+        "review_authority": "user-authorized-2026-07-19",
+        "reviewed_on": "2026-07-19",
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-dynamic-connection-strength-8bfddada49",
+      "semantic_key": "oadm:ontology-governance:dynamic-connection-strength",
+      "title": "以连接强度衡量本体动态治理",
+      "source_pages": {
+        "pdf_page_start": 192,
+        "pdf_page_end": 193
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-representation-reasoning-validation-bf357f4567",
+      "semantic_key": "oadm:ontology-llm:representation-reasoning-validation",
+      "title": "本体增强推理的表示—推理—验证三阶段",
+      "source_pages": {
+        "pdf_page_start": 63,
+        "pdf_page_end": 64
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-ontology-ai-integration-matrix-5864150c68",
+      "semantic_key": "oadm:ontology-llm:technology-integration-matrix",
+      "title": "本体与 AI 技术融合矩阵",
+      "source_pages": {
+        "pdf_page_start": 64,
+        "pdf_page_end": 66
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-ontology-llm-three-connections-578bb66efc",
+      "semantic_key": "oadm:ontology-llm:three-connections",
+      "title": "本体模型与大模型的三重连接",
+      "source_pages": {
+        "pdf_page_start": 60,
+        "pdf_page_end": 63
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-multimodal-dynamic-modeling-afcdd6cb46",
+      "semantic_key": "oadm:ontology-modeling:multimodal-dynamic-modeling",
+      "title": "多模态语义提取、对齐与本体动态更新",
+      "source_pages": {
+        "pdf_page_start": 193,
+        "pdf_page_end": 194
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-human-machine-semantics-425a6b2adc",
+      "semantic_key": "oadm:ontology:human-machine-semantics",
+      "title": "本体作为人机共享的业务意义框架",
+      "source_pages": {
+        "pdf_page_start": 53,
+        "pdf_page_end": 55
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-ontology-museum-antipattern-eae207943e",
+      "semantic_key": "oadm:ontology:ontology-museum-antipattern",
+      "title": "“本体博物馆”反模式",
+      "source_pages": {
+        "pdf_page_start": 57,
+        "pdf_page_end": 59
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-semantic-interconnection-reasoning-1ad9f4a05a",
+      "semantic_key": "oadm:ontology:semantic-interconnection-reasoning",
+      "title": "从语义互联到语义推理",
+      "source_pages": {
+        "pdf_page_start": 57,
+        "pdf_page_end": 59
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-seven-plus-one-framework-4e7856904e",
+      "semantic_key": "oadm:semantic-framework:seven-plus-one",
+      "title": "事理模型的“7+1”语义规范框架",
+      "source_pages": {
+        "pdf_page_start": 90,
+        "pdf_page_end": 93
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-semantic-standard-role-map-d76258da48",
+      "semantic_key": "oadm:semantic-standard:role-map",
+      "title": "7+1 维度与语义标准的作者映射",
+      "source_pages": {
+        "pdf_page_start": 90,
+        "pdf_page_end": 93
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    },
+    {
+      "candidate_card_id": "oadm-w3c-semantic-stack-bc94d749c7",
+      "semantic_key": "oadm:semantic-standard:w3c-stack",
+      "title": "W3C 语义技术栈的作者映射",
+      "source_pages": {
+        "pdf_page_start": 66,
+        "pdf_page_end": 67
+      },
+      "mapping_status": "unmapped",
+      "effective_mapping_status": "unmapped",
+      "targets": [],
+      "considered_targets": [],
+      "book_evidence_level": "published-book-derived-candidate",
+      "applicability_evidence_level": "project-applicability-inference",
+      "scm_verified_fact": false,
+      "applicability_reason": null,
+      "conflict_reason": "当前 SCM 没有与该卡片直接等价的 ontology object、metric 或稳定 rule target；需后续模型扩展或 owner 设计后再评估。",
+      "reviewer": null,
+      "review_status": "pending",
+      "owner_review": {
+        "status": "not_in_scope",
+        "edge_decision_count": 0,
+        "reviewer": null,
+        "review_authority": null,
+        "reviewed_on": null,
+        "human_owner_sign_off": false,
+        "promotion_status": "none",
+        "scm_verified_fact": false
+      }
+    }
+  ]
+}

@@ -5,7 +5,7 @@ module: scm
 topic: ontology-ai-data-management-knowledge-ingestion
 status: draft
 created: 2026-07-18
-updated: 2026-07-18
+updated: 2026-07-20
 owner: self
 source: human+ai
 ---
@@ -16,7 +16,7 @@ source: human+ai
 
 推荐采用“源文件冻结 → 页级结构化抽取 → 原子知识卡 → 本体关系层 → 隔离候选库 → 检索与引用验收 → 人工晋升”的完整链路。
 
-现已按批准完成 M1 与 M2-A 至 M2-E：全书第 1–10 章的 141 个三级正文小节和 10 个章末小结均已形成 151 条来源记录；PR 评审修正后聚合为 89 张知识卡、81 个术语和 154 条候选关系，并输出全书覆盖与图谱质量报告。候选分支和 PR #28 已存在；仍未执行 SCM crosswalk、知识库导入、SQLite 写入、工作台 provider 调用或 merge。本文不以静态句子声称远端最新 commit/check 状态；第 13 节另行保留 M2-E 首次内容完成时的 49/155 历史快照。
+现已按批准完成 M1 与 M2-A 至 M2-E：全书第 1–10 章的 141 个三级正文小节和 10 个章末小结均已形成 151 条来源记录；PR 评审修正后聚合为 89 张知识卡、81 个术语和 154 条候选关系，并输出全书覆盖与图谱质量报告。PR #28 已合并到 `main`，合并提交为 `e99f7089791b31891a7b5bb9cc352f161852c8e3`。M3-A 已在该提交派生的本地分支生成 candidate-only SCM crosswalk：原始快照保持 6 张 `accept_candidate`、3 张 `reject_candidate`、80 张 `unmapped`；2026-07-19 用户授权的 `owner-delegated-codex` 语义评审已完成 13 条边的 0 approved / 12 rejected / 1 deferred，但这不是人类 owner 亲自签字，也不构成 SCM verified 或 active/certified 晋升。截至 2026-07-20，M3-A candidate asset commit `dc56a773a7685d6f310612e7d046ee3546a29791` 已 push 至 PR #29，PR 保持 open、尚未 merge。自动证据覆盖 Git scope、覆盖层记录状态与 SQLite 只读哈希门禁；知识库导入、工作台 provider 调用和 active/certified 晋升仅记录为本批未执行声明，不由 builder 独立验证。第 13 节另行保留 M2-E 首次内容完成时的 49/155 历史快照。
 
 不建议直接执行现有 `npm run import`，原因如下：
 
@@ -433,7 +433,11 @@ flowchart LR
   - [x] M2-C：新增 24 条候选关系，主体、客体和证据引用错误为 0，M2-C 卡片孤儿数为 0。
   - [x] M2-D：新增 46 条候选关系，主体、客体和证据引用错误为 0，M2-D 卡片孤儿数为 0。
   - [x] M2-E：新增 48 条候选关系，主体、客体和证据引用错误为 0，M2-E 卡片与术语孤儿数为 0。
-- [ ] 建立 candidate card → SCM object/metric/rule crosswalk。
+- [x] 建立 candidate card → SCM object/metric/rule 的只读 candidate-only crosswalk。
+  - [x] M3-A：89 张卡逐卡处置为 6 张 `accept_candidate`、3 张 `reject_candidate`、80 张 `unmapped`；10 条候选 target reference 全部使用现有 `ontology_objects.id` 或 `metrics.id`。
+  - [x] M3-A：记录 3 条语义拒绝、2 个 many-to-one 目标和完整反向索引；当前无稳定 rule registry，规则类映射保持 `unmapped`。
+  - [x] M3-A：按 `review_authority=user-authorized-2026-07-19` 完成 `owner-delegated-codex` 覆盖层评审；13 条边为 0 approved、12 rejected、1 deferred，未写入 runtime 或晋升状态。
+- [ ] 人类 owner sign-off；本轮 AI 代理评审不等于人类 owner 亲自复核，也不产生 SCM verified、active 或 certified 状态。
 - [x] 输出重复、冲突、孤儿和未覆盖报告。
 
 ### D. importer 安全改造
@@ -720,6 +724,19 @@ node "$KB_ROOT/tools/verify-m2e-content.mjs" \
 
 验收结果：`m2e_verification_passed`；25 条 section records、25 条 source spans、18 张 cards、21 个 terms、48 条 relations；全书 151 条来源记录、141 个三级小节、89 张卡、81 个术语、154 条关系，稳定 ID、确定性重跑、零遗漏、零精确重复、零 M2-E 关系孤儿和无数据库写入门禁均通过。
 
-### 18.3 下一断点
+### 18.3 M3-A 候选结果
 
-M3-A：只设计并评审 `candidate card → SCM object/metric/rule` 的 crosswalk 规则、映射模板、证据等级、冲突处理和接受/拒绝门禁；先生成只读候选映射报告，不修改 importer、不创建或写入 candidate SQLite。只有 M3-A 人工评审通过后，才制定 M4 importer 安全改造计划。
+- 基线：PR #28 已合并到 `main`，本地 M3-A 分支基于 `e99f7089791b31891a7b5bb9cc352f161852c8e3`。
+- 原始产物：89 张卡逐卡覆盖；6 张 `accept_candidate`、3 张 `reject_candidate`、80 张 `unmapped`，接受候选共引用 10 个 SCM target；历史 `mapping_status` 未改写。
+- owner-delegated 覆盖层：2026-07-19 用户授权 Codex 进行语义评审，身份为 `owner-delegated-codex`，依据为 `review_authority=user-authorized-2026-07-19`。13/13 条候选边决策为 0 approved、12 rejected、1 deferred；卡片有效结果为 8 张 `rejected`、1 张 `deferred`、80 张 `unmapped`。
+- 权限边界：本轮不是人类 owner 亲自复核或签字，`human_owner_sign_off=false`；所有 `scm_verified_fact=false`，没有 active/certified 或其他 promotion。
+- 门禁：canonical object/metric target 均存在；owner decision 的遗漏、重复/重叠、未知边、非法 enum、reviewer/authority 不匹配均为 0；9 张卡完成覆盖层评审，80 张原 `unmapped` 卡为 `not_in_scope`。
+- 规则边界：当前 runtime 只稳定解析 `object|metric`，`rule_refs` 不是稳定规则主键，未创建规则映射。
+- 延期问题：`SCM-MECE-L3-110` 的 rule grain、“支持结论数 / 已分析规则数”公式以及场景测试结果转 evidence 的机制尚未定义，相关边保持 `deferred`。
+- 自动门禁：SQLite 通过 `readonly+immutable` 打开且前后哈希一致；历史候选字段仍为 `review_status=pending`、`reviewer=null`，覆盖层单独记录已完成评审；Git scope 检查未发现 allowlist 外路径或 importer 变更。
+- 本批执行声明：未执行 provider call、external promotion、deploy 或 standalone sync；这些声明标记为 `verification=not_verified_by_builder`，不参与自动通过判定。
+- Git 状态：截至 2026-07-20，M3-A candidate asset commit 为 `dc56a773a7685d6f310612e7d046ee3546a29791`，已 push 至 PR #29；PR 保持 open，尚未 merge。
+
+### 18.4 下一断点
+
+下一断点：完成 PR #29 的人工代码审阅/批准门禁，获得独立 merge 授权后再合并；或先补齐 `SCM-MECE-L3-110` 的 rule grain、公式与 evidence 转换模型后重审 1 条 deferred 边。两者都不自动进入 M4；M4 importer 安全改造尚未执行，且仍需单独授权。人类 owner sign-off 仍未勾选。

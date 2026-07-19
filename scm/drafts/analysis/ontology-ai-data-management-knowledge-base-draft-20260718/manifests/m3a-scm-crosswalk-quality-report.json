@@ -1,0 +1,249 @@
+{
+  "schema_version": "1.2.0",
+  "generated_at": "2026-07-18T00:00:00.000Z",
+  "scope": "m3a-readonly-owner-delegated-quality-report",
+  "source_coverage": {
+    "source_card_count": 89,
+    "disposition_count": 89,
+    "missing_dispositions": [],
+    "unknown_dispositions": [],
+    "passed": true
+  },
+  "mapping_status_counts": {
+    "accept_candidate": 6,
+    "reject_candidate": 3,
+    "unmapped": 80
+  },
+  "effective_mapping_status_counts": {
+    "approved": 0,
+    "rejected": 8,
+    "deferred": 1,
+    "unmapped": 80
+  },
+  "target_existence": {
+    "accepted_target_reference_count": 10,
+    "accepted_missing_target_count": 0,
+    "considered_target_reference_count": 3,
+    "considered_missing_target_count": 0,
+    "passed": true
+  },
+  "exact_duplicate": {
+    "accepted_duplicate_edges": [],
+    "considered_duplicate_edges": [],
+    "passed": true
+  },
+  "many_to_one": {
+    "target_count": 2,
+    "targets": [
+      {
+        "scm_target": "metric:SCM-MECE-L3-100",
+        "candidate_card_ids": [
+          "oadm-continuous-tool-ecosystem-9eabee007d",
+          "oadm-ontology-lifecycle-operations-968c388b34"
+        ]
+      },
+      {
+        "scm_target": "metric:SCM-MECE-L3-104",
+        "candidate_card_ids": [
+          "oadm-modeling-admission-review-fd13d2a7bf",
+          "oadm-ontology-asset-registration-5b7e350efb"
+        ]
+      }
+    ],
+    "review_required": true,
+    "reported": true
+  },
+  "conflict": {
+    "reject_candidate_count": 3,
+    "rejected_without_reason": [],
+    "passed": true
+  },
+  "orphan": {
+    "cards_without_disposition": [],
+    "dispositions_without_card": [],
+    "passed": true
+  },
+  "reverse_index": {
+    "target_count": 8,
+    "entries": [
+      {
+        "scm_target": "metric:SCM-MECE-L3-100",
+        "candidate_card_ids": [
+          "oadm-continuous-tool-ecosystem-9eabee007d",
+          "oadm-ontology-lifecycle-operations-968c388b34"
+        ]
+      },
+      {
+        "scm_target": "metric:SCM-MECE-L3-102",
+        "candidate_card_ids": [
+          "oadm-continuous-tool-ecosystem-9eabee007d"
+        ]
+      },
+      {
+        "scm_target": "metric:SCM-MECE-L3-103",
+        "candidate_card_ids": [
+          "oadm-ontology-lifecycle-operations-968c388b34"
+        ]
+      },
+      {
+        "scm_target": "metric:SCM-MECE-L3-104",
+        "candidate_card_ids": [
+          "oadm-modeling-admission-review-fd13d2a7bf",
+          "oadm-ontology-asset-registration-5b7e350efb"
+        ]
+      },
+      {
+        "scm_target": "metric:SCM-MECE-L3-110",
+        "candidate_card_ids": [
+          "oadm-scenario-validation-loop-65cbb0ff79"
+        ]
+      },
+      {
+        "scm_target": "object:forecast_version",
+        "candidate_card_ids": [
+          "oadm-integrated-multidimensional-decision-3b85562879"
+        ]
+      },
+      {
+        "scm_target": "object:inventory_batch",
+        "candidate_card_ids": [
+          "oadm-integrated-multidimensional-decision-3b85562879"
+        ]
+      },
+      {
+        "scm_target": "object:purchase_plan",
+        "candidate_card_ids": [
+          "oadm-integrated-multidimensional-decision-3b85562879"
+        ]
+      }
+    ],
+    "passed": true
+  },
+  "rule_registry_gap": {
+    "inspected_tables": [
+      "rules",
+      "rule_refs",
+      "rule_registry"
+    ],
+    "present_tables": [],
+    "stable_rule_registry_available": false,
+    "accepted_rule_mapping_count": 0,
+    "policy": "unmapped",
+    "passed": true
+  },
+  "record_boundary": {
+    "record_count": 89,
+    "non_pending_card_ids": [],
+    "reviewer_assigned_card_ids": [],
+    "scm_verified_true_card_ids": [],
+    "passed": true
+  },
+  "owner_review_quality": {
+    "review_mode": "owner-delegated-codex",
+    "review_authority": "user-authorized-2026-07-19",
+    "reviewed_on": "2026-07-19",
+    "human_owner_sign_off": false,
+    "expected_edge_count": 13,
+    "reviewed_edge_count": 13,
+    "accepted_reference_count": 10,
+    "expected_accepted_reference_count": 10,
+    "considered_reference_count": 3,
+    "expected_considered_reference_count": 3,
+    "expected_contract_edge_count": 13,
+    "expected_contract_mismatches": [],
+    "missing_edges": [],
+    "duplicate_edges": [],
+    "overlapping_edges": [],
+    "unknown_edges": [],
+    "invalid_decisions": [],
+    "decision_counts": {
+      "approved": 0,
+      "rejected": 12,
+      "deferred": 1
+    },
+    "expected_decision_counts": {
+      "approved": 0,
+      "rejected": 12,
+      "deferred": 1
+    },
+    "reviewed_card_count": 9,
+    "expected_reviewed_card_count": 9,
+    "not_in_scope_card_count": 80,
+    "expected_not_in_scope_card_count": 80,
+    "effective_mapping_status_counts": {
+      "approved": 0,
+      "rejected": 8,
+      "deferred": 1,
+      "unmapped": 80
+    },
+    "reviewer_mismatch_edges": [],
+    "authority_mismatch_edges": [],
+    "reviewed_on_mismatch_edges": [],
+    "promoted_edges": [],
+    "promotion_count": 0,
+    "scm_verified_true_edges": [],
+    "scm_verified_true_card_ids": [],
+    "passed": true
+  },
+  "database_boundary": {
+    "database_before_sha256": "3d972e46ec43a64ad69265f295af4ffd9039dfe721a0e9f7f22d02e9b7652af7",
+    "database_after_sha256": "3d972e46ec43a64ad69265f295af4ffd9039dfe721a0e9f7f22d02e9b7652af7",
+    "expected_sha256": "3d972e46ec43a64ad69265f295af4ffd9039dfe721a0e9f7f22d02e9b7652af7",
+    "expected_hash_matched": true,
+    "database_hash_unchanged": true,
+    "open_mode": "readonly+immutable",
+    "readonly_open_mode_verified": true,
+    "database_write_observed": false
+  },
+  "repository_scope": {
+    "baseline_commit": "e99f7089791b31891a7b5bb9cc352f161852c8e3",
+    "changed_paths": [
+      "scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/07-scm-crosswalk/00-crosswalk-policy.md",
+      "scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/07-scm-crosswalk/build-m3a-crosswalk.mjs",
+      "scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/07-scm-crosswalk/crosswalk-lib.mjs",
+      "scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/07-scm-crosswalk/crosswalk-regressions.test.mjs",
+      "scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/07-scm-crosswalk/crosswalk-seeds.json",
+      "scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/07-scm-crosswalk/owner-review-decisions.json",
+      "scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/07-scm-crosswalk/verify-m3a-crosswalk.mjs",
+      "scm/drafts/analysis/ontology-driven-ai-data-management-kb-ingestion-plan-draft-20260718.md"
+    ],
+    "scope_input_paths": [
+      "scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/07-scm-crosswalk/00-crosswalk-policy.md",
+      "scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/07-scm-crosswalk/build-m3a-crosswalk.mjs",
+      "scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/07-scm-crosswalk/crosswalk-lib.mjs",
+      "scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/07-scm-crosswalk/crosswalk-regressions.test.mjs",
+      "scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/07-scm-crosswalk/crosswalk-seeds.json",
+      "scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/07-scm-crosswalk/owner-review-decisions.json",
+      "scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/07-scm-crosswalk/verify-m3a-crosswalk.mjs",
+      "scm/drafts/analysis/ontology-driven-ai-data-management-kb-ingestion-plan-draft-20260718.md"
+    ],
+    "generated_artifact_paths": [
+      "scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/07-scm-crosswalk/01-candidate-crosswalk-review.md",
+      "scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/manifests/m3a-scm-crosswalk-candidates.json",
+      "scm/drafts/analysis/ontology-ai-data-management-knowledge-base-draft-20260718/manifests/m3a-scm-crosswalk-quality-report.json"
+    ],
+    "unauthorized_paths": [],
+    "importer_modified": false,
+    "scope_passed": true
+  },
+  "execution_declarations": {
+    "provider_call": {
+      "declared": false,
+      "verification": "not_verified_by_builder"
+    },
+    "external_promotion": {
+      "declared": false,
+      "verification": "not_verified_by_builder"
+    },
+    "deploy": {
+      "declared": false,
+      "verification": "not_verified_by_builder"
+    },
+    "standalone_sync": {
+      "declared": false,
+      "verification": "not_verified_by_builder"
+    }
+  },
+  "automatic_checks_passed": true,
+  "final_gate": "passed-owner-delegated-review"
+}
