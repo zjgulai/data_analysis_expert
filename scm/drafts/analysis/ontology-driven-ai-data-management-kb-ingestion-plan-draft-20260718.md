@@ -5,7 +5,7 @@ module: scm
 topic: ontology-ai-data-management-knowledge-ingestion
 status: draft
 created: 2026-07-18
-updated: 2026-07-18
+updated: 2026-07-20
 owner: self
 source: human+ai
 ---
@@ -16,7 +16,7 @@ source: human+ai
 
 推荐采用“源文件冻结 → 页级结构化抽取 → 原子知识卡 → 本体关系层 → 隔离候选库 → 检索与引用验收 → 人工晋升”的完整链路。
 
-现已按批准完成 M1 与 M2-A 至 M2-E：全书第 1–10 章的 141 个三级正文小节和 10 个章末小结均已形成 151 条来源记录；PR 评审修正后聚合为 89 张知识卡、81 个术语和 154 条候选关系，并输出全书覆盖与图谱质量报告。PR #28 已合并到 `main`，合并提交为 `e99f7089791b31891a7b5bb9cc352f161852c8e3`。M3-A 已在该提交派生的本地分支生成 candidate-only SCM crosswalk：原始快照保持 6 张 `accept_candidate`、3 张 `reject_candidate`、80 张 `unmapped`；2026-07-19 用户授权的 `owner-delegated-codex` 语义评审已完成 13 条边的 0 approved / 12 rejected / 1 deferred，但这不是人类 owner 亲自签字，也不构成 SCM verified 或 active/certified 晋升。当前仍未 commit/push。自动证据覆盖 Git scope、覆盖层记录状态与 SQLite 只读哈希门禁；知识库导入、工作台 provider 调用和 active/certified 晋升仅记录为本批未执行声明，不由 builder 独立验证。第 13 节另行保留 M2-E 首次内容完成时的 49/155 历史快照。
+现已按批准完成 M1 与 M2-A 至 M2-E：全书第 1–10 章的 141 个三级正文小节和 10 个章末小结均已形成 151 条来源记录；PR 评审修正后聚合为 89 张知识卡、81 个术语和 154 条候选关系，并输出全书覆盖与图谱质量报告。PR #28 已合并到 `main`，合并提交为 `e99f7089791b31891a7b5bb9cc352f161852c8e3`。M3-A 已在该提交派生的本地分支生成 candidate-only SCM crosswalk：原始快照保持 6 张 `accept_candidate`、3 张 `reject_candidate`、80 张 `unmapped`；2026-07-19 用户授权的 `owner-delegated-codex` 语义评审已完成 13 条边的 0 approved / 12 rejected / 1 deferred，但这不是人类 owner 亲自签字，也不构成 SCM verified 或 active/certified 晋升。截至 2026-07-20，M3-A docs-only 资产已 commit 并 push 至 PR #29（`dc56a773a7685d6f310612e7d046ee3546a29791`），PR 保持 open、尚未 merge。自动证据覆盖 Git scope、覆盖层记录状态与 SQLite 只读哈希门禁；知识库导入、工作台 provider 调用和 active/certified 晋升仅记录为本批未执行声明，不由 builder 独立验证。第 13 节另行保留 M2-E 首次内容完成时的 49/155 历史快照。
 
 不建议直接执行现有 `npm run import`，原因如下：
 
@@ -724,7 +724,7 @@ node "$KB_ROOT/tools/verify-m2e-content.mjs" \
 
 验收结果：`m2e_verification_passed`；25 条 section records、25 条 source spans、18 张 cards、21 个 terms、48 条 relations；全书 151 条来源记录、141 个三级小节、89 张卡、81 个术语、154 条关系，稳定 ID、确定性重跑、零遗漏、零精确重复、零 M2-E 关系孤儿和无数据库写入门禁均通过。
 
-### 18.3 M3-A 本地候选结果
+### 18.3 M3-A 候选结果
 
 - 基线：PR #28 已合并到 `main`，本地 M3-A 分支基于 `e99f7089791b31891a7b5bb9cc352f161852c8e3`。
 - 原始产物：89 张卡逐卡覆盖；6 张 `accept_candidate`、3 张 `reject_candidate`、80 张 `unmapped`，接受候选共引用 10 个 SCM target；历史 `mapping_status` 未改写。
@@ -735,8 +735,8 @@ node "$KB_ROOT/tools/verify-m2e-content.mjs" \
 - 延期问题：`SCM-MECE-L3-110` 的 rule grain、“支持结论数 / 已分析规则数”公式以及场景测试结果转 evidence 的机制尚未定义，相关边保持 `deferred`。
 - 自动门禁：SQLite 通过 `readonly+immutable` 打开且前后哈希一致；历史候选字段仍为 `review_status=pending`、`reviewer=null`，覆盖层单独记录已完成评审；Git scope 检查未发现 allowlist 外路径或 importer 变更。
 - 本批执行声明：未执行 provider call、external promotion、deploy 或 standalone sync；这些声明标记为 `verification=not_verified_by_builder`，不参与自动通过判定。
-- Git 状态：M3-A 结果仍为本地未提交改动，未 commit、push 或 merge。
+- Git 状态：截至 2026-07-20，M3-A 资产已 commit 并 push 至 PR #29（head `dc56a773a7685d6f310612e7d046ee3546a29791`）；PR 保持 open，尚未 merge。
 
 ### 18.4 下一断点
 
-下一断点二选一：进入 M3-A commit/push gate，或先补齐 `SCM-MECE-L3-110` 的 rule grain、公式与 evidence 转换模型后重审 1 条 deferred 边。两者都不自动进入 M4；M4 importer 安全改造尚未执行，且仍需单独授权。人类 owner sign-off 仍未勾选。
+下一断点：完成 PR #29 的人工代码审阅/批准门禁，获得独立 merge 授权后再合并；或先补齐 `SCM-MECE-L3-110` 的 rule grain、公式与 evidence 转换模型后重审 1 条 deferred 边。两者都不自动进入 M4；M4 importer 安全改造尚未执行，且仍需单独授权。人类 owner sign-off 仍未勾选。
