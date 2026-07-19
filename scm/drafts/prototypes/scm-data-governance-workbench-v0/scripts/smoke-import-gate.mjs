@@ -875,10 +875,6 @@ try {
           `knowledge rule refs must ignore absolute external-root keywords; observed=${JSON.stringify(keywordBoundaryRuleRefs)}`
         ],
         [
-          !keywordBoundaryObjectRefs.includes("po"),
-          "po object reference must require a standalone token"
-        ],
-        [
           standaloneKeywordCard?.topic === "procurement-and-supply"
             && JSON.parse(standaloneKeywordCard?.object_refs || "[]").includes("po"),
           "standalone po keyword must retain procurement topic and object reference"

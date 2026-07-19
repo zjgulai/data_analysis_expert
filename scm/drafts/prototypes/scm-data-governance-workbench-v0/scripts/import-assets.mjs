@@ -1539,8 +1539,8 @@ function extractTitle(text, filePath) {
   return filePath.split("/").pop().replace(/\.md$/, "");
 }
 
-function inferTopic(filePath, text) {
-  const source = `${filePath} ${text.slice(0, 1200)}`.toLowerCase();
+function inferTopic(domainRelativePath, text) {
+  const source = `${domainRelativePath} ${text.slice(0, 1200)}`.toLowerCase();
   if (/warehouse|库存|仓库|库龄|inventory/.test(source)) return "inventory-and-warehouse";
   if (/purchase|采购|供应商|supplier|\bpo\b/.test(source)) return "procurement-and-supply";
   if (/logistics|物流|shipment|头程|运输|carrier/.test(source)) return "logistics-and-fulfillment";
